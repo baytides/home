@@ -1,0 +1,92 @@
+<!-- Skip to main content link for accessibility -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Header -->
+<header role="banner">
+  <div class="container">
+    <div class="header-content">
+      <a href="/" class="logo">
+        <img src="assets/images/logo.png" alt="Bay Tides Logo" width="50" height="50">
+        <span class="logo-text">Bay Tides</span>
+      </a>
+
+      <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span class="hamburger-icon" aria-hidden="true">&#9776;</span>
+      </button>
+
+      <nav id="main-nav" role="navigation" aria-label="Main navigation">
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="volunteer.html">Volunteer</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="donate.html" class="btn btn-primary">Donate</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-tools">
+        <button class="tool-btn" id="search-toggle" aria-label="Open search" aria-expanded="false" aria-controls="search-overlay">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </button>
+        <button class="tool-btn" id="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+          </svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search Bay Tides" hidden>
+  <div class="search-container">
+    <button class="search-close" id="search-close" aria-label="Close search">&times;</button>
+    <h2 id="search-heading">Search Bay Tides</h2>
+    <input type="text" class="search-input" id="search-input" placeholder="Search pages..." aria-labelledby="search-heading" autocomplete="off">
+    <div class="search-results" id="search-results" role="listbox" aria-label="Search results">
+      <a href="index.html" class="search-result" role="option">
+        <strong>Home</strong>
+        <span>Protecting the San Francisco Bay</span>
+      </a>
+      <a href="about.html" class="search-result" role="option">
+        <strong>About Us</strong>
+        <span>Our mission, who we are, and our approach</span>
+      </a>
+      <a href="projects.html" class="search-result" role="option">
+        <strong>Projects</strong>
+        <span>Bay Area Discounts and other digital initiatives</span>
+      </a>
+      <a href="volunteer.html" class="search-result" role="option">
+        <strong>Volunteer</strong>
+        <span>Shoreline cleanups, habitat restoration, community events</span>
+      </a>
+      <a href="donate.html" class="search-result" role="option">
+        <strong>Donate</strong>
+        <span>Support habitat restoration and education programs</span>
+      </a>
+      <a href="contact.html" class="search-result" role="option">
+        <strong>Contact</strong>
+        <span>Get in touch, send us a message</span>
+      </a>
+      <a href="privacy.html" class="search-result" role="option">
+        <strong>Privacy Policy</strong>
+        <span>How we protect your data and privacy</span>
+      </a>
+      <a href="terms.html" class="search-result" role="option">
+        <strong>Terms of Service</strong>
+        <span>Terms and conditions for using our website</span>
+      </a>
+    </div>
+    <p class="search-hint" aria-live="polite">
+      <kbd>Esc</kbd> to close &middot; <kbd>Ctrl</kbd>+<kbd>K</kbd> to open
+    </p>
+  </div>
+</div>

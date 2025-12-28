@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Bay Tides</title>
+  <meta name="description" content="Get in touch with Bay Tides. Questions about volunteering, partnerships, or donations? We'd love to hear from you.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://baytides.org/contact.html">
+  <meta property="og:title" content="Contact | Bay Tides">
+  <meta property="og:description" content="Get in touch with Bay Tides. Questions about volunteering, partnerships, or donations? We'd love to hear from you.">
+  <meta property="og:image" content="https://baytides.org/assets/images/hero-bg.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script defer data-domain="baytides.org" src="https://plausible.baytides.org/js/script.js"></script>
+</head>
+<body>
+  <!-- Header loaded dynamically -->
+  <div id="header-placeholder"></div>
+
+  <main id="main-content">
+    <!-- Page Hero -->
+    <section class="hero hero-page">
+      <div class="container">
+        <h1>Get in Touch</h1>
+        <p>We'd love to hear from you</p>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-form">
+            <h2>Send Us a Message</h2>
+            <p>Have questions? Want to volunteer or partner with us? Fill out the form below and we'll get back to you soon.</p>
+
+            <!-- Web3Forms - Free form backend (250 submissions/month free) -->
+            <!-- Get your access key at https://web3forms.com (no signup required) -->
+            <form action="https://api.web3forms.com/submit" method="POST">
+              <!-- Replace with your Web3Forms access key -->
+              <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+              <input type="hidden" name="subject" value="New Contact Form Submission - Bay Tides">
+              <input type="hidden" name="from_name" value="Bay Tides Website">
+              <!-- Redirect after submission (optional) -->
+              <input type="hidden" name="redirect" value="https://baytides.org/contact.html?submitted=true">
+              <!-- Honeypot spam protection -->
+              <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+              <div class="form-group">
+                <label for="name">Name <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name">
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email">
+              </div>
+
+              <div class="form-group">
+                <label for="topic">What can we help you with?</label>
+                <select id="topic" name="topic">
+                  <option value="">Select a topic...</option>
+                  <option value="volunteer">I want to volunteer</option>
+                  <option value="partnership">Partnership inquiry</option>
+                  <option value="donation">Donation question</option>
+                  <option value="media">Media inquiry</option>
+                  <option value="general">General question</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Message <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                <textarea id="message" name="message" placeholder="Your message..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+          </div>
+
+          <div class="contact-info-panel">
+            <h2>Contact Information</h2>
+
+            <div class="contact-item">
+              <div class="contact-item-icon" aria-hidden="true">&#127758;</div>
+              <div>
+                <strong>Service Area</strong>
+                <p>San Francisco Bay Area, CA</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-item-icon" aria-hidden="true">&#128197;</div>
+              <div>
+                <strong>Established</strong>
+                <p>2023</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-item-icon" aria-hidden="true">&#9993;</div>
+              <div>
+                <strong>Reach Us</strong>
+                <p>Use the form to send us a message</p>
+              </div>
+            </div>
+
+            <div class="contact-cta">
+              <h3>Want to make an immediate impact?</h3>
+              <a href="donate.html" class="btn btn-secondary">Make a Donation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="newsletter">
+      <div class="container">
+        <div class="newsletter-content">
+          <h2>Stay Connected</h2>
+          <p>Subscribe to our newsletter for updates on events, volunteer opportunities, and conservation news.</p>
+          <!-- Web3Forms for newsletter signup -->
+          <form class="newsletter-form" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+            <input type="hidden" name="subject" value="New Newsletter Signup - Bay Tides">
+            <input type="hidden" name="from_name" value="Bay Tides Newsletter">
+            <input type="hidden" name="redirect" value="https://baytides.org/contact.html?subscribed=true">
+            <input type="checkbox" name="botcheck" style="display: none;">
+            <label for="newsletter-email" class="sr-only">Email address</label>
+            <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" required autocomplete="email">
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer loaded dynamically -->
+  <div id="footer-placeholder"></div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
