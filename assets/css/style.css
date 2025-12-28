@@ -88,6 +88,22 @@
   background: var(--card-bg);
 }
 
+[data-theme="dark"] .contact-info-panel h2 {
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .contact-item strong {
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .contact-cta {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .contact-cta h3 {
+  color: var(--text-dark);
+}
+
 [data-theme="dark"] .newsletter {
   background: var(--bg-secondary);
 }
@@ -104,8 +120,30 @@
   background: var(--bg-secondary);
 }
 
+[data-theme="dark"] .cta h2 {
+  color: var(--text-dark);
+}
+
 [data-theme="dark"] .cta p {
   color: var(--text-light);
+}
+
+[data-theme="dark"] .cta .highlight {
+  color: var(--primary-blue);
+}
+
+[data-theme="dark"] .impact {
+  background: linear-gradient(135deg, #2d3748 0%, #1a365d 100%);
+}
+
+[data-theme="dark"] .impact .btn-outline {
+  color: #e2e8f0;
+  border-color: #e2e8f0;
+}
+
+[data-theme="dark"] .impact .btn-outline:hover {
+  background: #e2e8f0;
+  color: #1a202c;
 }
 
 [data-theme="dark"] .pillars {
@@ -123,6 +161,17 @@
 
 [data-theme="dark"] .btn-secondary:hover {
   background: var(--primary-blue);
+  color: #1a202c;
+}
+
+[data-theme="dark"] .cta .btn-secondary {
+  background: var(--primary-blue);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .cta .btn-secondary:hover {
+  background: var(--accent-blue);
+  color: #1a202c;
 }
 
 [data-theme="dark"] p {
@@ -140,6 +189,11 @@
   padding: 5px;
 }
 
+[data-theme="dark"] .benefit h3,
+[data-theme="dark"] .benefit h4 {
+  color: var(--primary-blue);
+}
+
 [data-theme="dark"] .benefit p {
   color: var(--text-light);
 }
@@ -148,12 +202,69 @@
   color: var(--text-light);
 }
 
+[data-theme="dark"] .cta .btn-outline {
+  color: var(--text-dark);
+  border-color: var(--text-dark);
+}
+
+[data-theme="dark"] .cta .btn-outline:hover {
+  background: var(--text-dark);
+  color: var(--bg-secondary);
+}
+
 [data-theme="dark"] .giving-option p {
   color: var(--text-light);
 }
 
 [data-theme="dark"] .content-centered p {
   color: var(--text-light);
+}
+
+[data-theme="dark"] li {
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .card-list li {
+  color: var(--text-light);
+}
+
+[data-theme="dark"] .contact-form input,
+[data-theme="dark"] .contact-form select,
+[data-theme="dark"] .contact-form textarea {
+  background: var(--bg-secondary);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .contact-form label {
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .giving-option {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .giving-option h3,
+[data-theme="dark"] .giving-option h4 {
+  color: var(--primary-blue);
+}
+
+[data-theme="dark"] .newsletter-form input {
+  background: var(--bg-primary);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .newsletter-form input::placeholder {
+  color: var(--text-light);
+}
+
+[data-theme="dark"] .pillars.alt-bg {
+  background: var(--bg-alt);
+}
+
+[data-theme="dark"] .alt-bg .card {
+  background: var(--card-bg);
 }
 
 /* Theme toggle icon visibility */
