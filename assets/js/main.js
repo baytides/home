@@ -319,11 +319,95 @@
   }
 
   // ============================================
+  // Sponsors Carousel
+  // ============================================
+  function initSponsorsCarousel() {
+    const wrapper = document.querySelector('.sponsors-wrapper');
+    if (!wrapper) return;
+
+    const track = wrapper.querySelector('.sponsors-track');
+    const prevBtn = wrapper.querySelector('.sponsors-nav.prev');
+    const nextBtn = wrapper.querySelector('.sponsors-nav.next');
+    const viewport = wrapper.querySelector('.sponsors-viewport');
+
+    if (!track || !prevBtn || !nextBtn || !viewport) return;
+
+    let position = 0;
+    let autoScrollInterval = null;
+    const scrollAmount = 200; // pixels to scroll per step
+
+    function getMaxScroll() {
+      return track.scrollWidth - viewport.offsetWidth;
+    }
+
+    function scrollTo(newPosition) {
+      const maxScroll = getMaxScroll();
+      position = Math.max(0, Math.min(newPosition, maxScroll));
+
+      // Loop back to start when reaching the end
+      if (position >= maxScroll) {
+        position = 0;
+      }
+
+      track.style.transform = `translateX(-${position}px)`;
+    }
+
+    function scrollNext() {
+      scrollTo(position + scrollAmount);
+    }
+
+    function scrollPrev() {
+      const maxScroll = getMaxScroll();
+      if (position <= 0) {
+        position = maxScroll;
+      }
+      scrollTo(position - scrollAmount);
+    }
+
+    function startAutoScroll() {
+      stopAutoScroll();
+      autoScrollInterval = setInterval(scrollNext, 3000);
+    }
+
+    function stopAutoScroll() {
+      if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+      }
+    }
+
+    // Button click handlers
+    nextBtn.addEventListener('click', () => {
+      scrollNext();
+      startAutoScroll(); // Reset timer after manual interaction
+    });
+
+    prevBtn.addEventListener('click', () => {
+      scrollPrev();
+      startAutoScroll(); // Reset timer after manual interaction
+    });
+
+    // Pause on hover
+    wrapper.addEventListener('mouseenter', stopAutoScroll);
+    wrapper.addEventListener('mouseleave', startAutoScroll);
+
+    // Pause on focus for accessibility
+    wrapper.addEventListener('focusin', stopAutoScroll);
+    wrapper.addEventListener('focusout', startAutoScroll);
+
+    // Respect reduced motion preference
+    if (!prefersReducedMotion.matches) {
+      startAutoScroll();
+    }
+  }
+
+  // ============================================
   // Initialize
   // ============================================
   function init() {
     initPartials();
     initFocusVisibility();
+    initSponsorsCarousel();
   }
 
   // Run when DOM is ready
