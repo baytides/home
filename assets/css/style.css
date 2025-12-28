@@ -860,6 +860,10 @@ section {
   background: var(--white);
 }
 
+.pillars.alt-bg {
+  background: var(--light-blue);
+}
+
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

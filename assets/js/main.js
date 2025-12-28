@@ -329,39 +329,63 @@
     const prevBtn = wrapper.querySelector('.sponsors-nav.prev');
     const nextBtn = wrapper.querySelector('.sponsors-nav.next');
     const viewport = wrapper.querySelector('.sponsors-viewport');
+    const logosContainer = wrapper.querySelector('.sponsors-logos');
 
-    if (!track || !prevBtn || !nextBtn || !viewport) return;
+    if (!track || !prevBtn || !nextBtn || !viewport || !logosContainer) return;
+
+    // Clone logos for seamless infinite scroll
+    const logos = Array.from(logosContainer.querySelectorAll('.sponsor-logo'));
+    const logoWidth = logos[0] ? logos[0].offsetWidth + 64 : 104; // width + gap (4rem = 64px)
+    const totalLogosWidth = logos.length * logoWidth;
+
+    // Clone logos to fill the track for seamless looping
+    logos.forEach(logo => {
+      const clone = logo.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.removeAttribute('alt');
+      logosContainer.appendChild(clone);
+    });
 
     let position = 0;
     let autoScrollInterval = null;
-    const scrollAmount = 200; // pixels to scroll per step
+    let isTransitioning = false;
 
-    function getMaxScroll() {
-      return track.scrollWidth - viewport.offsetWidth;
-    }
+    function scrollTo(newPosition, animate = true) {
+      if (isTransitioning) return;
 
-    function scrollTo(newPosition) {
-      const maxScroll = getMaxScroll();
-      position = Math.max(0, Math.min(newPosition, maxScroll));
-
-      // Loop back to start when reaching the end
-      if (position >= maxScroll) {
+      // Seamless loop: when we've scrolled past all original logos, reset
+      if (newPosition >= totalLogosWidth) {
+        // Instantly jump back to start without animation
+        track.style.transition = 'none';
         position = 0;
+        track.style.transform = `translateX(-${position}px)`;
+        // Force reflow
+        track.offsetHeight;
+        // Re-enable transition for next scroll
+        track.style.transition = 'transform 0.5s ease';
+        return;
       }
 
+      if (newPosition < 0) {
+        // Jump to the end for reverse seamless loop
+        track.style.transition = 'none';
+        position = totalLogosWidth - logoWidth;
+        track.style.transform = `translateX(-${position}px)`;
+        track.offsetHeight;
+        track.style.transition = 'transform 0.5s ease';
+        return;
+      }
+
+      position = newPosition;
       track.style.transform = `translateX(-${position}px)`;
     }
 
     function scrollNext() {
-      scrollTo(position + scrollAmount);
+      scrollTo(position + logoWidth);
     }
 
     function scrollPrev() {
-      const maxScroll = getMaxScroll();
-      if (position <= 0) {
-        position = maxScroll;
-      }
-      scrollTo(position - scrollAmount);
+      scrollTo(position - logoWidth);
     }
 
     function startAutoScroll() {
@@ -379,12 +403,12 @@
     // Button click handlers
     nextBtn.addEventListener('click', () => {
       scrollNext();
-      startAutoScroll(); // Reset timer after manual interaction
+      startAutoScroll();
     });
 
     prevBtn.addEventListener('click', () => {
       scrollPrev();
-      startAutoScroll(); // Reset timer after manual interaction
+      startAutoScroll();
     });
 
     // Pause on hover
