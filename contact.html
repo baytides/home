@@ -148,7 +148,11 @@
 
             <div class="contact-info-panel">
               <h2>Our Service Area</h2>
-              <p>Bay Tides serves communities throughout the San Francisco Bay Area.</p>
+              <p>
+                Our primary focus is
+                <strong>San Mateo County</strong>
+                , but we serve communities throughout the San Francisco Bay Area.
+              </p>
 
               <div
                 id="bay-area-map"
@@ -228,12 +232,14 @@
         '06041', // Marin
         '06055', // Napa
         '06075', // San Francisco
-        '06081', // San Mateo
+        '06081', // San Mateo (primary focus)
         '06085', // Santa Clara
         '06087', // Santa Cruz
         '06095', // Solano
         '06097', // Sonoma
       ];
+
+      const sanMateoFIPS = '06081';
 
       map.on('load', () => {
         // Add county boundaries from Mapbox's built-in data
@@ -242,7 +248,7 @@
           url: 'mapbox://mapbox.82pkq93d',
         });
 
-        // Highlight Bay Area counties with fill
+        // Highlight other Bay Area counties with green fill
         map.addLayer(
           {
             id: 'bay-area-fill',
@@ -251,14 +257,30 @@
             'source-layer': 'original',
             paint: {
               'fill-color': '#2d6a4f',
-              'fill-opacity': 0.35,
+              'fill-opacity': 0.3,
             },
-            filter: ['in', 'FIPS', ...bayAreaCounties],
+            filter: ['all', ['in', 'FIPS', ...bayAreaCounties], ['!=', 'FIPS', sanMateoFIPS]],
           },
           'waterway-label'
         );
 
-        // Add county borders
+        // Highlight San Mateo County with orange fill (primary focus)
+        map.addLayer(
+          {
+            id: 'san-mateo-fill',
+            type: 'fill',
+            source: 'counties',
+            'source-layer': 'original',
+            paint: {
+              'fill-color': '#e85d04',
+              'fill-opacity': 0.45,
+            },
+            filter: ['==', 'FIPS', sanMateoFIPS],
+          },
+          'waterway-label'
+        );
+
+        // Add county borders for other Bay Area counties
         map.addLayer(
           {
             id: 'bay-area-borders',
@@ -267,9 +289,25 @@
             'source-layer': 'original',
             paint: {
               'line-color': '#1b4332',
-              'line-width': 2,
+              'line-width': 1.5,
             },
-            filter: ['in', 'FIPS', ...bayAreaCounties],
+            filter: ['all', ['in', 'FIPS', ...bayAreaCounties], ['!=', 'FIPS', sanMateoFIPS]],
+          },
+          'waterway-label'
+        );
+
+        // Add border for San Mateo County
+        map.addLayer(
+          {
+            id: 'san-mateo-border',
+            type: 'line',
+            source: 'counties',
+            'source-layer': 'original',
+            paint: {
+              'line-color': '#9d0208',
+              'line-width': 2.5,
+            },
+            filter: ['==', 'FIPS', sanMateoFIPS],
           },
           'waterway-label'
         );
