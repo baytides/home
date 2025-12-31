@@ -3,15 +3,15 @@
 // ==========================================================================
 
 .hero {
-  background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-blue) 100%);
-  color: var(--white);
+  background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+  color: #fff;
   padding: 10rem 0 6rem;
   text-align: center;
   margin-top: 70px;
   position: relative;
 
   h1 {
-    color: var(--white);
+    color: #fff;
     font-size: 3rem;
     margin-bottom: 1.5rem;
     animation: fadeInUp 0.8s ease;

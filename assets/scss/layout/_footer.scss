@@ -3,8 +3,8 @@
 // ==========================================================================
 
 footer {
-  background: var(--primary-navy);
-  color: var(--white);
+  background: #1a365d;
+  color: #fff;
   padding: 4rem 0 2rem;
 }
 
@@ -27,7 +27,7 @@ footer {
 .footer-links,
 .footer-contact {
   h3 {
-    color: var(--white);
+    color: #fff;
     margin-bottom: 1rem;
     font-size: 1.125rem;
   }
@@ -45,7 +45,7 @@ footer {
     transition: color 0.3s ease;
 
     &:hover {
-      color: var(--white);
+      color: #fff;
     }
   }
 }
@@ -60,7 +60,7 @@ footer {
     color: rgba(255, 255, 255, 0.7);
 
     &:hover {
-      color: var(--white);
+      color: #fff;
     }
   }
 }

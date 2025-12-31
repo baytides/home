@@ -292,11 +292,11 @@
   }
 
   .btn-secondary {
-    background: var(--primary-navy);
-    color: var(--white);
+    background: #1a365d;
+    color: #fff;
 
     &:hover {
-      background: var(--primary-blue);
+      background: #2b6cb0;
     }
   }
 }

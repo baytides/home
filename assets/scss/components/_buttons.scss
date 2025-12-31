@@ -14,23 +14,23 @@
 
   &-primary {
     background: #2b6cb0;
-    color: var(--white);
+    color: #fff;
 
     &:hover {
-      background: var(--primary-navy);
-      color: var(--white);
+      background: #1a365d;
+      color: #fff;
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(66, 153, 225, 0.4);
     }
   }
 
   &-secondary {
-    background: var(--primary-navy);
-    color: var(--white);
+    background: #1a365d;
+    color: #fff;
 
     &:hover {
-      background: var(--primary-blue);
-      color: var(--white);
+      background: #2b6cb0;
+      color: #fff;
       transform: translateY(-2px);
     }
   }
@@ -42,7 +42,7 @@
 
     &:hover {
       background: var(--primary-navy);
-      color: var(--white);
+      color: #fff;
     }
   }
 
@@ -95,12 +95,12 @@
 // Hero/Impact button overrides
 .hero .btn-outline,
 .impact .btn-outline {
-  color: var(--white);
-  border-color: var(--white);
+  color: #fff;
+  border-color: #fff;
 
   &:hover {
-    background: var(--white);
-    color: var(--primary-navy);
+    background: #fff;
+    color: #1a365d;
   }
 }
 
@@ -111,7 +111,7 @@
 
   &:hover {
     background: var(--primary-navy);
-    color: var(--white);
+    color: #fff;
   }
 }
 
