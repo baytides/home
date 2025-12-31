@@ -10,8 +10,8 @@ TO_EMAIL = "admin@baytides.org"
 # KV namespace for rate limiting
 [[kv_namespaces]]
 binding = "RATE_LIMIT_KV"
-id = "RATE_LIMIT_KV_ID"
-preview_id = "RATE_LIMIT_KV_PREVIEW_ID"
+id = "038623c17b2145489317437f27bbc611"
+preview_id = "61ca59d39dbd4777a2a9e24ae7417bf4"
 
 # Custom domain - Cloudflare will automatically set up DNS
 [[routes]]
