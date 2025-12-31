@@ -1,0 +1,197 @@
+// ==========================================================================
+// Forms
+// ==========================================================================
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-dark);
+  }
+}
+
+.contact-form {
+  h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  > p {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: var(--white);
+
+    &:focus {
+      outline: 0;
+      border-color: var(--primary-blue);
+    }
+  }
+
+  textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+}
+
+// Form status messages
+.form-status {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+
+  &.success {
+    background: #c6f6d5;
+    color: #22543d;
+    border: 1px solid #9ae6b4;
+  }
+
+  &.error {
+    background: #fed7d7;
+    color: #822727;
+    border: 1px solid #fc8181;
+  }
+}
+
+// Field errors
+.field-error,
+.error-message {
+  color: #c53030;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.form-group {
+  input.error,
+  select.error,
+  textarea.error {
+    border-color: #c53030;
+  }
+}
+
+input[aria-invalid='true'],
+select[aria-invalid='true'],
+textarea[aria-invalid='true'] {
+  border-color: #c53030;
+}
+
+// Dark theme adjustments
+[data-theme='dark'] {
+  .contact-form {
+    input,
+    select,
+    textarea {
+      background: var(--bg-secondary);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: var(--text-dark);
+    }
+
+    label {
+      color: var(--text-dark);
+    }
+  }
+
+  .form-status {
+    &.success {
+      background: #22543d;
+      color: #c6f6d5;
+    }
+
+    &.error {
+      background: #822727;
+      color: #fed7d7;
+    }
+  }
+
+  .field-error,
+  .error-message {
+    color: #fc8181;
+  }
+
+  .form-group {
+    input.error,
+    select.error,
+    textarea.error {
+      border-color: #fc8181;
+    }
+  }
+
+  input[aria-invalid='true'],
+  select[aria-invalid='true'],
+  textarea[aria-invalid='true'] {
+    border-color: #fc8181;
+  }
+}
+
+// ==========================================================================
+// Newsletter Form
+// ==========================================================================
+
+.newsletter {
+  background: var(--cream);
+  text-align: center;
+
+  &-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+
+  input {
+    flex: 1;
+    padding: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+
+    &:focus {
+      outline: 0;
+      border-color: var(--primary-blue);
+    }
+  }
+}
+
+[data-theme='dark'] {
+  .newsletter {
+    background: var(--bg-secondary);
+  }
+
+  .newsletter-form input {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+
+    &::placeholder {
+      color: var(--text-light);
+    }
+  }
+}

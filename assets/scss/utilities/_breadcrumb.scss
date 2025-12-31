@@ -1,0 +1,62 @@
+// ==========================================================================
+// Breadcrumb Navigation
+// ==========================================================================
+
+.breadcrumb {
+  background: var(--bg-secondary);
+  padding: 0.75rem 0;
+  margin-top: 70px;
+
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    color: var(--text-light);
+    font-size: 0.9rem;
+
+    &:not(:last-child)::after {
+      content: '/';
+      margin-left: 0.5rem;
+      color: var(--text-light);
+    }
+  }
+
+  a {
+    color: var(--primary-blue);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // When breadcrumb is followed by hero, remove hero's top margin
+  & + .hero {
+    margin-top: 0;
+  }
+}
+
+// Dark theme
+[data-theme='dark'] .breadcrumb {
+  background: var(--bg-alt);
+}
+
+// Mobile styles
+@media (max-width: 768px) {
+  .breadcrumb {
+    padding: 0.5rem 0;
+
+    li {
+      font-size: 0.8rem;
+    }
+  }
+}

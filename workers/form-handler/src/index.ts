@@ -1,0 +1,372 @@
+/**
+ * Bay Tides Form Handler Worker
+ * Handles contact form and newsletter submissions
+ * Sends email notifications via MailChannels
+ * Adds newsletter subscribers to MailerLite
+ * Validates Cloudflare Turnstile tokens for spam protection
+ * Includes persistent rate limiting via Cloudflare KV
+ */
+
+// ==========================================================================
+// Types
+// ==========================================================================
+
+interface Env {
+  RATE_LIMIT_KV: KVNamespace;
+  ALLOWED_ORIGIN: string;
+  TO_EMAIL: string;
+  TURNSTILE_SECRET_KEY?: string;
+  MAILERLITE_API_KEY?: string;
+  MAILERLITE_GROUP_ID?: string;
+}
+
+interface RateLimitRecord {
+  count: number;
+}
+
+interface InMemoryRateLimitRecord {
+  count: number;
+  resetAt: number;
+}
+
+interface TurnstileResponse {
+  success: boolean;
+  'error-codes'?: string[];
+}
+
+// ==========================================================================
+// Rate Limiting Configuration
+// ==========================================================================
+
+const RATE_LIMIT = {
+  maxRequests: 5,
+  windowSeconds: 60,
+} as const;
+
+// In-memory fallback (resets on worker restart)
+const rateLimitMap = new Map<string, InMemoryRateLimitRecord>();
+
+// ==========================================================================
+// Rate Limiting Functions
+// ==========================================================================
+
+async function isRateLimited(ip: string, env: Env): Promise<boolean> {
+  if (env.RATE_LIMIT_KV) {
+    const key = `rate:${ip}`;
+    const record = await env.RATE_LIMIT_KV.get<RateLimitRecord>(key, { type: 'json' });
+
+    if (!record) {
+      await env.RATE_LIMIT_KV.put(key, JSON.stringify({ count: 1 }), {
+        expirationTtl: RATE_LIMIT.windowSeconds,
+      });
+      return false;
+    }
+
+    if (record.count >= RATE_LIMIT.maxRequests) {
+      return true;
+    }
+
+    await env.RATE_LIMIT_KV.put(key, JSON.stringify({ count: record.count + 1 }), {
+      expirationTtl: RATE_LIMIT.windowSeconds,
+    });
+    return false;
+  }
+
+  return isRateLimitedInMemory(ip);
+}
+
+function isRateLimitedInMemory(ip: string): boolean {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+
+  if (!record) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT.windowSeconds * 1000 });
+    return false;
+  }
+
+  if (now > record.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT.windowSeconds * 1000 });
+    return false;
+  }
+
+  if (record.count >= RATE_LIMIT.maxRequests) {
+    return true;
+  }
+
+  record.count++;
+  return false;
+}
+
+function cleanupRateLimits(): void {
+  const now = Date.now();
+  for (const [ip, record] of rateLimitMap.entries()) {
+    if (now > record.resetAt) {
+      rateLimitMap.delete(ip);
+    }
+  }
+}
+
+// ==========================================================================
+// CORS Helpers
+// ==========================================================================
+
+function isAllowedOrigin(origin: string | null, env: Env): boolean {
+  const allowed = [
+    env.ALLOWED_ORIGIN,
+    'https://baytides-website.pages.dev',
+    'http://localhost:8080',
+    'http://127.0.0.1:8080',
+  ];
+  return allowed.some((a) => origin?.startsWith(a) || origin?.includes('baytides'));
+}
+
+function corsHeaders(env: Env): Record<string, string> {
+  return {
+    'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+}
+
+function handleCORS(env: Env): Response {
+  return new Response(null, {
+    status: 204,
+    headers: corsHeaders(env),
+  });
+}
+
+// ==========================================================================
+// Turnstile Verification
+// ==========================================================================
+
+async function verifyTurnstile(
+  token: string,
+  secretKey: string,
+  ip: string | null
+): Promise<boolean> {
+  const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      secret: secretKey,
+      response: token,
+      remoteip: ip,
+    }),
+  });
+  const result = await response.json<TurnstileResponse>();
+  return result.success === true;
+}
+
+// ==========================================================================
+// MailerLite Integration
+// ==========================================================================
+
+async function addToMailerLite(
+  env: Env,
+  email: string,
+  groupId?: string | null
+): Promise<Response> {
+  const apiKey = env.MAILERLITE_API_KEY;
+
+  const subscriberData: { email: string; groups?: string[] } = {
+    email: email,
+  };
+
+  if (groupId || env.MAILERLITE_GROUP_ID) {
+    subscriberData.groups = [groupId || env.MAILERLITE_GROUP_ID!];
+  }
+
+  const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify(subscriberData),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('MailerLite error:', errorText);
+  }
+
+  return response;
+}
+
+// ==========================================================================
+// Email Sending
+// ==========================================================================
+
+async function sendEmail(
+  env: Env,
+  subject: string,
+  body: string,
+  replyTo?: string
+): Promise<Response> {
+  const toEmail = env.TO_EMAIL || 'admin@baytides.org';
+
+  const emailRequest = new Request('https://api.mailchannels.net/tx/v1/send', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      personalizations: [
+        {
+          to: [{ email: toEmail, name: 'Bay Tides' }],
+        },
+      ],
+      from: {
+        email: 'noreply@baytides.org',
+        name: 'Bay Tides Website',
+      },
+      reply_to: replyTo ? { email: replyTo } : undefined,
+      subject: subject,
+      content: [
+        {
+          type: 'text/plain',
+          value: body,
+        },
+      ],
+    }),
+  });
+
+  const response = await fetch(emailRequest);
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('MailChannels error:', errorText);
+    throw new Error(`Failed to send email: ${response.status}`);
+  }
+
+  return response;
+}
+
+// ==========================================================================
+// Redirect Helpers
+// ==========================================================================
+
+function redirectWithError(formData: FormData, error: string): Response {
+  const redirect =
+    (formData.get('redirect') as string | null) || 'https://baytides.org/contact.html';
+  const redirectUrl = new URL(redirect);
+  redirectUrl.searchParams.set('error', error);
+  return Response.redirect(redirectUrl.toString(), 303);
+}
+
+// ==========================================================================
+// Main Handler
+// ==========================================================================
+
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    // Handle CORS preflight
+    if (request.method === 'OPTIONS') {
+      return handleCORS(env);
+    }
+
+    // Only allow POST requests
+    if (request.method !== 'POST') {
+      return new Response('Method not allowed', { status: 405 });
+    }
+
+    // Verify origin
+    const origin = request.headers.get('Origin');
+    if (!isAllowedOrigin(origin, env)) {
+      return new Response('Forbidden', { status: 403 });
+    }
+
+    // Rate limiting check
+    const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+    if (await isRateLimited(clientIP, env)) {
+      return new Response('Too many requests. Please try again later.', {
+        status: 429,
+        headers: {
+          ...corsHeaders(env),
+          'Retry-After': '60',
+        },
+      });
+    }
+
+    // Clean up old rate limit entries in the background
+    ctx.waitUntil(Promise.resolve(cleanupRateLimits()));
+
+    try {
+      const formData = await request.formData();
+
+      // Honeypot check - if filled, it's a bot
+      if (formData.get('botcheck')) {
+        return redirectWithError(formData, 'spam');
+      }
+
+      // Verify Turnstile token (if present)
+      const turnstileToken = formData.get('cf-turnstile-response') as string | null;
+      if (turnstileToken && env.TURNSTILE_SECRET_KEY) {
+        const turnstileValid = await verifyTurnstile(
+          turnstileToken,
+          env.TURNSTILE_SECRET_KEY,
+          request.headers.get('CF-Connecting-IP')
+        );
+        if (!turnstileValid) {
+          return redirectWithError(formData, 'captcha');
+        }
+      }
+
+      const formType = (formData.get('form_type') as string | null) || 'contact';
+      const email = formData.get('email') as string;
+
+      if (formType === 'newsletter') {
+        // Add subscriber to MailerLite
+        if (env.MAILERLITE_API_KEY) {
+          await addToMailerLite(env, email);
+        }
+
+        // Also send notification email
+        const subject = 'New Newsletter Signup - Bay Tides';
+        const emailContent = `
+New newsletter subscription:
+
+Email: ${email}
+Date: ${new Date().toISOString()}
+        `.trim();
+        await sendEmail(env, subject, emailContent, email);
+      } else {
+        // Contact form
+        const name = formData.get('name') as string;
+        const topic = (formData.get('topic') as string | null) || 'Not specified';
+        const message = formData.get('message') as string;
+
+        const subject = `New Contact Form Submission - Bay Tides (${topic})`;
+        const emailContent = `
+New contact form submission:
+
+Name: ${name}
+Email: ${email}
+Topic: ${topic}
+Message:
+${message}
+
+---
+Submitted: ${new Date().toISOString()}
+        `.trim();
+
+        await sendEmail(env, subject, emailContent, email);
+      }
+
+      // Redirect back to the page with success parameter
+      const redirect =
+        (formData.get('redirect') as string | null) || 'https://baytides.org/contact.html';
+      const redirectUrl = new URL(redirect);
+      redirectUrl.searchParams.set(formType === 'newsletter' ? 'subscribed' : 'submitted', 'true');
+
+      return Response.redirect(redirectUrl.toString(), 303);
+    } catch (error) {
+      console.error('Form submission error:', error);
+      return new Response('An error occurred. Please try again.', {
+        status: 500,
+        headers: corsHeaders(env),
+      });
+    }
+  },
+};

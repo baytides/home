@@ -1,0 +1,159 @@
+// ==========================================================================
+// Buttons
+// ==========================================================================
+
+.btn {
+  display: inline-block;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+
+  &-primary {
+    background: #2b6cb0;
+    color: var(--white);
+
+    &:hover {
+      background: var(--primary-navy);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(66, 153, 225, 0.4);
+    }
+  }
+
+  &-secondary {
+    background: var(--primary-navy);
+    color: var(--white);
+
+    &:hover {
+      background: var(--primary-blue);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+  }
+
+  &-outline {
+    background: transparent;
+    color: var(--primary-navy);
+    border: 2px solid var(--primary-navy);
+
+    &:hover {
+      background: var(--primary-navy);
+      color: var(--white);
+    }
+  }
+
+  &-large {
+    padding: 1.125rem 3rem;
+    font-size: 1.125rem;
+  }
+
+  // Loading state
+  &.loading {
+    position: relative;
+    color: transparent;
+    pointer-events: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      margin: -10px 0 0 -10px;
+      border: 2px solid transparent;
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: btn-spin 0.6s linear infinite;
+    }
+  }
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Button groups
+.hero-buttons,
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-buttons {
+  animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+// Hero/Impact button overrides
+.hero .btn-outline,
+.impact .btn-outline {
+  color: var(--white);
+  border-color: var(--white);
+
+  &:hover {
+    background: var(--white);
+    color: var(--primary-navy);
+  }
+}
+
+// CTA section button overrides
+.cta .btn-outline {
+  color: var(--primary-navy);
+  border-color: var(--primary-navy);
+
+  &:hover {
+    background: var(--primary-navy);
+    color: var(--white);
+  }
+}
+
+// Dark theme adjustments
+[data-theme='dark'] {
+  .btn-secondary {
+    background: var(--accent-blue);
+    color: #1a202c;
+
+    &:hover {
+      background: var(--primary-blue);
+      color: #1a202c;
+    }
+  }
+
+  .cta .btn-secondary {
+    background: var(--primary-blue);
+    color: #fff;
+
+    &:hover {
+      background: var(--accent-blue);
+      color: #1a202c;
+    }
+  }
+
+  .cta .btn-outline {
+    color: var(--text-dark);
+    border-color: var(--text-dark);
+
+    &:hover {
+      background: var(--text-dark);
+      color: var(--bg-secondary);
+    }
+  }
+
+  .impact .btn-outline {
+    color: #e2e8f0;
+    border-color: #e2e8f0;
+
+    &:hover {
+      background: #e2e8f0;
+      color: #1a202c;
+    }
+  }
+}

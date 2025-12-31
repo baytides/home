@@ -1,0 +1,25 @@
+// ==========================================================================
+// Map Utilities
+// ==========================================================================
+
+.map-description {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  font-size: 0.9375rem;
+}
+
+// External link icon
+.external-link-icon {
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  margin-left: 0.25em;
+  vertical-align: baseline;
+}
+
+// Dark theme
+[data-theme='dark'] .map-description {
+  background: var(--bg-alt);
+}

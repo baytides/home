@@ -1,0 +1,117 @@
+// ==========================================================================
+// CSS Variables / Design Tokens
+// ==========================================================================
+
+:root {
+  // Focus styles
+  --focus-ring: 3px solid #005fcc;
+  --focus-ring-offset: 2px;
+
+  // Brand colors
+  --primary-navy: #1a365d;
+  --primary-blue: #2b6cb0;
+  --accent-blue: #4299e1;
+  --light-blue: #ebf8ff;
+  --cream: #f5f0e6;
+
+  // Text colors
+  --text-dark: #2d3748;
+  --text-light: #718096;
+  --white: #ffffff;
+
+  // Background colors
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f0e6;
+  --bg-alt: #ebf8ff;
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --card-bg: #ffffff;
+  --footer-bg: #1a365d;
+}
+
+// ==========================================================================
+// Dark Theme
+// ==========================================================================
+
+[data-theme='dark'] {
+  --primary-navy: #90cdf4;
+  --primary-blue: #63b3ed;
+  --accent-blue: #4299e1;
+  --light-blue: #1a365d;
+  --cream: #1a202c;
+  --text-dark: #e2e8f0;
+  --text-light: #a0aec0;
+  --white: #1a202c;
+  --bg-primary: #1a202c;
+  --bg-secondary: #2d3748;
+  --bg-alt: #2d3748;
+  --header-bg: rgba(26, 32, 44, 0.95);
+  --card-bg: #2d3748;
+  --footer-bg: #0d1117;
+  --focus-ring: 3px solid #90cdf4;
+}
+
+// ==========================================================================
+// High Contrast Mode
+// ==========================================================================
+
+[data-high-contrast='true'] {
+  --primary-navy: #000;
+  --primary-blue: #0000cc;
+  --text-dark: #000;
+  --text-light: #333;
+  --bg-primary: #fff;
+  --bg-secondary: #f0f0f0;
+  --focus-ring: 3px solid #000;
+
+  a {
+    text-decoration: underline;
+  }
+
+  .btn {
+    border: 2px solid #000;
+  }
+}
+
+[data-high-contrast='true'][data-theme='dark'] {
+  --primary-navy: #fff;
+  --primary-blue: #99ccff;
+  --text-dark: #fff;
+  --text-light: #ccc;
+  --bg-primary: #000;
+  --bg-secondary: #1a1a1a;
+  --focus-ring: 3px solid #fff;
+}
+
+// ==========================================================================
+// Font Size Modes
+// ==========================================================================
+
+[data-font-size='large'] {
+  body {
+    font-size: 1.125rem;
+  }
+  h1 {
+    font-size: 2.75rem;
+  }
+  h2 {
+    font-size: 2.25rem;
+  }
+  h3 {
+    font-size: 1.75rem;
+  }
+}
+
+[data-font-size='xlarge'] {
+  body {
+    font-size: 1.25rem;
+  }
+  h1 {
+    font-size: 3rem;
+  }
+  h2 {
+    font-size: 2.5rem;
+  }
+  h3 {
+    font-size: 2rem;
+  }
+}

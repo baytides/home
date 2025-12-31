@@ -1,0 +1,115 @@
+// ==========================================================================
+// Footer
+// ==========================================================================
+
+footer {
+  background: var(--primary-navy);
+  color: var(--white);
+  padding: 4rem 0 2rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-logo {
+  height: 60px;
+}
+
+.footer-brand p {
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 1rem;
+}
+
+.footer-links,
+.footer-contact {
+  h3 {
+    color: var(--white);
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+  }
+}
+
+.footer-links {
+  ul {
+    list-style: none;
+  }
+
+  a {
+    color: rgba(255, 255, 255, 0.7);
+    display: block;
+    padding: 0.35rem 0;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--white);
+    }
+  }
+}
+
+.footer-contact {
+  p {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.5rem;
+  }
+
+  a {
+    color: rgba(255, 255, 255, 0.7);
+
+    &:hover {
+      color: var(--white);
+    }
+  }
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 2rem;
+  text-align: center;
+
+  p {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+  }
+}
+
+// ==========================================================================
+// Dark Theme Adjustments
+// ==========================================================================
+
+[data-theme='dark'] {
+  footer {
+    background: var(--footer-bg);
+  }
+
+  .footer-contact h3,
+  .footer-links h3 {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .footer-logo {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    padding: 5px;
+  }
+}
+
+// ==========================================================================
+// Mobile Styles
+// ==========================================================================
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    margin: 0 auto;
+  }
+}

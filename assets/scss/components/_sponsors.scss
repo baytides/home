@@ -1,0 +1,112 @@
+// ==========================================================================
+// Sponsors Carousel
+// ==========================================================================
+
+.sponsors {
+  padding: 3rem 0;
+  background: var(--bg-secondary);
+  overflow: hidden;
+
+  .section-title {
+    margin-bottom: 2rem;
+  }
+}
+
+.sponsors-wrapper {
+  position: relative;
+  max-width: 100%;
+}
+
+.sponsors-viewport {
+  overflow: hidden;
+  margin: 0 3rem;
+}
+
+.sponsors-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.sponsors-logos {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  padding: 0 2rem;
+  flex-shrink: 0;
+}
+
+.sponsor-logo {
+  height: 40px;
+  width: auto;
+  opacity: 0.7;
+  transition:
+    opacity 0.3s ease,
+    filter 0.3s ease;
+  filter: grayscale(100%);
+
+  &:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+  }
+}
+
+.sponsors-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  min-width: 44px;
+  min-height: 44px;
+  background: var(--bg-primary);
+  border: 2px solid var(--primary-navy);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+
+  &:hover {
+    background: var(--primary-navy);
+    color: var(--white);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  &.prev {
+    left: 0;
+  }
+
+  &.next {
+    right: 0;
+  }
+}
+
+// Dark theme adjustments
+[data-theme='dark'] {
+  .sponsor-logo {
+    filter: grayscale(100%) invert(1);
+
+    &:hover {
+      filter: grayscale(0%) invert(0);
+      opacity: 1;
+    }
+  }
+
+  .sponsors-nav {
+    background: var(--bg-secondary);
+    border-color: var(--primary-blue);
+    color: var(--text-dark);
+
+    &:hover {
+      background: var(--primary-blue);
+      color: #1a202c;
+    }
+  }
+}

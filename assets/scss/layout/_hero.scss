@@ -1,0 +1,91 @@
+// ==========================================================================
+// Hero Section
+// ==========================================================================
+
+.hero {
+  background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-blue) 100%);
+  color: var(--white);
+  padding: 10rem 0 6rem;
+  text-align: center;
+  margin-top: 70px;
+  position: relative;
+
+  h1 {
+    color: var(--white);
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.8s ease;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    animation: fadeInUp 0.8s ease 0.2s both;
+  }
+}
+
+.hero-home {
+  background:
+    linear-gradient(rgba(26, 54, 93, 0.85), rgba(43, 108, 176, 0.85)),
+    url('../images/hero-bg.webp') center/cover no-repeat;
+  padding: 12rem 0 8rem;
+}
+
+.hero-page {
+  background:
+    linear-gradient(rgba(26, 54, 93, 0.85), rgba(43, 108, 176, 0.85)),
+    url('../images/hero-bg.webp') center/cover no-repeat;
+  padding: 8rem 0 4rem;
+}
+
+// Animation keyframe
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ==========================================================================
+// Dark Theme Adjustments
+// ==========================================================================
+
+[data-theme='dark'] {
+  .hero {
+    h1 {
+      color: #fff;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.9);
+    }
+  }
+}
+
+// ==========================================================================
+// Mobile Styles
+// ==========================================================================
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 8rem 0 4rem;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+  }
+
+  .hero-home {
+    padding: 9rem 0 5rem;
+  }
+}
