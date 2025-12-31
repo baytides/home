@@ -194,6 +194,8 @@ function initSearch(): void {
     searchOverlay!.hidden = false;
     searchOverlay!.classList.add('active');
     searchToggle!.setAttribute('aria-expanded', 'true');
+    searchInput!.value = '';
+    results.forEach((result) => (result.style.display = 'none'));
     searchInput!.focus();
     document.body.style.overflow = 'hidden';
   }
@@ -229,16 +231,18 @@ function initSearch(): void {
   // Filter results
   searchInput.addEventListener('input', (e) => {
     const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+    if (query === '') {
+      results.forEach((result) => (result.style.display = 'none'));
+      return;
+    }
     let count = 0;
     results.forEach((result) => {
       const text = result.textContent?.toLowerCase() ?? '';
-      const matches = query === '' || text.includes(query);
+      const matches = text.includes(query);
       result.style.display = matches ? 'block' : 'none';
       if (matches) count++;
     });
-    if (query.length > 0) {
-      announce(`${count} result${count !== 1 ? 's' : ''} found`);
-    }
+    announce(`${count} result${count !== 1 ? 's' : ''} found`);
   });
 
   // Trap focus
