@@ -22,6 +22,10 @@
     <link rel="icon" type="image/png" href="assets/images/favicon.png" />
     <link rel="apple-touch-icon" href="assets/images/logo.png" />
 
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://api.mapbox.com" crossorigin />
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin />
+
     <!-- Preload critical assets -->
     <link rel="preload" href="assets/images/hero-bg.webp" as="image" type="image/webp" />
     <link rel="preload" href="assets/css/style.css" as="style" />
@@ -32,7 +36,7 @@
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
     <!-- Mapbox -->
-    <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js" async defer></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
 
     <!-- Structured Data (JSON-LD) -->

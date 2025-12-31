@@ -296,8 +296,15 @@ function initBackToTop(): void {
   </svg>`;
   document.body.appendChild(btn);
 
+  let ticking = false;
   window.addEventListener('scroll', () => {
-    btn.classList.toggle('visible', window.scrollY > 300);
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        btn.classList.toggle('visible', window.scrollY > 300);
+        ticking = false;
+      });
+      ticking = true;
+    }
   });
 
   btn.addEventListener('click', () => {

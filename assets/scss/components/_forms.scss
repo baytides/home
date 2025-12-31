@@ -69,7 +69,7 @@
 // Field errors
 .field-error,
 .error-message {
-  color: #c53030;
+  color: var(--error);
   font-size: 0.875rem;
   margin-top: 0.25rem;
   display: block;
@@ -79,14 +79,14 @@
   input.error,
   select.error,
   textarea.error {
-    border-color: #c53030;
+    border-color: var(--error);
   }
 }
 
 input[aria-invalid='true'],
 select[aria-invalid='true'],
 textarea[aria-invalid='true'] {
-  border-color: #c53030;
+  border-color: var(--error);
 }
 
 // Dark theme adjustments
@@ -115,25 +115,6 @@ textarea[aria-invalid='true'] {
       background: #822727;
       color: #fed7d7;
     }
-  }
-
-  .field-error,
-  .error-message {
-    color: #fc8181;
-  }
-
-  .form-group {
-    input.error,
-    select.error,
-    textarea.error {
-      border-color: #fc8181;
-    }
-  }
-
-  input[aria-invalid='true'],
-  select[aria-invalid='true'],
-  textarea[aria-invalid='true'] {
-    border-color: #fc8181;
   }
 }
 

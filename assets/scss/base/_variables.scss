@@ -26,6 +26,12 @@
   --header-bg: rgba(255, 255, 255, 0.95);
   --card-bg: #ffffff;
   --footer-bg: #1a365d;
+
+  // Status colors
+  --error: #c53030;
+  --error-light: #fc8181;
+  --success: #22543d;
+  --success-light: #9ae6b4;
 }
 
 // ==========================================================================
@@ -48,6 +54,10 @@
   --card-bg: #2d3748;
   --footer-bg: #0d1117;
   --focus-ring: 3px solid #90cdf4;
+  --error: #fc8181;
+  --error-light: #fc8181;
+  --success: #9ae6b4;
+  --success-light: #9ae6b4;
 }
 
 // ==========================================================================

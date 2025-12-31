@@ -11,7 +11,7 @@
   }
 
   p {
-    color: #4a5568;
+    color: var(--text-light);
     max-width: 600px;
     margin: 0 auto;
   }
@@ -156,7 +156,7 @@
   p {
     max-width: 600px;
     margin: 0 auto 2rem;
-    color: #4a5568;
+    color: var(--text-light);
   }
 }
 

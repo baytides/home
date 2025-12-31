@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const STATIC_CACHE = `baytides-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `baytides-dynamic-${CACHE_VERSION}`;
 const IMAGE_CACHE = `baytides-images-${CACHE_VERSION}`;
@@ -10,13 +10,14 @@ const STATIC_ASSETS = [
   '/about.html',
   '/projects.html',
   '/volunteer.html',
+  '/events.html',
   '/donate.html',
   '/contact.html',
   '/privacy.html',
   '/terms.html',
+  '/accessibility.html',
   '/404.html',
   '/assets/css/style.css',
-  '/assets/js/main.js',
   '/assets/images/logo.webp',
   '/assets/images/favicon.png',
   '/partials/header.html',

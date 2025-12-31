@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events | Bay Tides</title>
+    <meta
+      name="description"
+      content="Join Bay Tides at our upcoming volunteer events, workshops, and community gatherings. Find opportunities to help protect the San Francisco Bay."
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://baytides.org/events.html" />
+    <meta property="og:title" content="Events | Bay Tides" />
+    <meta
+      property="og:description"
+      content="Join Bay Tides at our upcoming volunteer events, workshops, and community gatherings."
+    />
+    <meta property="og:image" content="https://baytides.org/assets/images/hero-bg.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/images/logo.png" />
+
+    <!-- Preload critical assets -->
+    <link rel="preload" href="assets/images/hero-bg.webp" as="image" type="image/webp" />
+    <link rel="preload" href="assets/css/style.css" as="style" />
+
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Bay Tides Events",
+        "description": "Upcoming volunteer events, workshops, and community gatherings",
+        "publisher": {
+          "@type": "NonprofitOrganization",
+          "name": "Bay Tides",
+          "url": "https://baytides.org"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Header loaded dynamically -->
+    <div id="header-placeholder"></div>
+
+    <main id="main-content">
+      <!-- Breadcrumb Navigation -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <div class="container">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li aria-current="page">Events</li>
+          </ol>
+        </div>
+      </nav>
+
+      <!-- Page Hero -->
+      <section class="hero hero-page">
+        <div class="container">
+          <h1>Upcoming Events</h1>
+          <p>Join us in protecting the San Francisco Bay</p>
+        </div>
+      </section>
+
+      <!-- Events Grid -->
+      <section class="content-section">
+        <div class="container">
+          <div class="section-title">
+            <h2>Calendar</h2>
+            <p>Find volunteer opportunities and community events near you</p>
+          </div>
+
+          <div class="cards-grid">
+            <!-- Example Event Card -->
+            <article class="card">
+              <div class="card-icon" aria-hidden="true">&#127754;</div>
+              <h3>Monthly Shoreline Cleanup</h3>
+              <p>
+                <strong>First Saturday of every month</strong>
+                <br />
+                9:00 AM - 12:00 PM
+              </p>
+              <p>
+                Join fellow volunteers for our regular shoreline cleanup along the Peninsula coast.
+                All supplies provided. Meet at Coyote Point Recreation Area.
+              </p>
+              <a href="volunteer.html" class="btn btn-secondary">Sign Up</a>
+            </article>
+
+            <article class="card">
+              <div class="card-icon" aria-hidden="true">&#127807;</div>
+              <h3>Native Plant Workshop</h3>
+              <p>
+                <strong>Coming Soon</strong>
+                <br />
+                Date TBD
+              </p>
+              <p>
+                Learn about native plants of the Bay Area and how to incorporate them into your
+                garden. Hands-on planting demonstration included.
+              </p>
+              <a href="contact.html" class="btn btn-secondary">Get Notified</a>
+            </article>
+
+            <article class="card">
+              <div class="card-icon" aria-hidden="true">&#128101;</div>
+              <h3>Community Fair Outreach</h3>
+              <p>
+                <strong>Coming Soon</strong>
+                <br />
+                Date TBD
+              </p>
+              <p>
+                Help us spread the word about Bay conservation at local community fairs. Great for
+                those who love talking with people about environmental issues.
+              </p>
+              <a href="contact.html" class="btn btn-secondary">Get Notified</a>
+            </article>
+          </div>
+
+          <div class="content-centered" style="margin-top: 3rem">
+            <h2>Stay Updated</h2>
+            <p>
+              Want to be the first to know about new events? Subscribe to our newsletter for event
+              announcements, volunteer opportunities, and conservation news.
+            </p>
+            <a href="contact.html" class="btn btn-primary">Subscribe to Newsletter</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Host an Event -->
+      <section class="content-section alt-bg">
+        <div class="container">
+          <div class="content-centered">
+            <h2>Host a Cleanup or Workshop</h2>
+            <p>
+              Interested in organizing a cleanup event in your neighborhood or hosting an
+              educational workshop? We'd love to partner with you! Contact us to discuss how we can
+              support your community-led conservation efforts.
+            </p>
+            <a href="contact.html" class="btn btn-secondary">Contact Us</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Past Events -->
+      <section class="content-section">
+        <div class="container">
+          <div class="content-centered">
+            <h2>Past Events</h2>
+            <p>
+              Bay Tides was founded in 2023 and is actively building our event calendar. Check back
+              soon for updates on our upcoming volunteer opportunities and community events.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer loaded dynamically -->
+    <div id="footer-placeholder"></div>
+
+    <script type="module" src="assets/js/main.ts"></script>
+  </body>
+</html>
