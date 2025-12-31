@@ -37,6 +37,10 @@
 
     <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+    <!-- Mapbox -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
   </head>
   <body>
     <!-- Header loaded dynamically -->
@@ -147,17 +151,15 @@
               <p>Bay Tides serves communities throughout the San Francisco Bay Area.</p>
 
               <div
-                class="map-container"
-                style="border-radius: 8px; overflow: hidden; margin: 1.5rem 0"
-              >
-                <iframe
-                  title="San Francisco Bay Area Map"
-                  src="https://www.openstreetmap.org/export/embed.html?bbox=-122.6,37.4,-121.8,37.9&layer=mapnik"
-                  style="width: 100%; height: 300px; border: none"
-                  loading="lazy"
-                  referrerpolicy="no-referrer"
-                ></iframe>
-              </div>
+                id="bay-area-map"
+                style="
+                  border-radius: 8px;
+                  overflow: hidden;
+                  margin: 1.5rem 0;
+                  width: 100%;
+                  height: 300px;
+                "
+              ></div>
 
               <div class="contact-cta">
                 <h3>Want to make an immediate impact?</h3>
@@ -206,5 +208,72 @@
     <div id="footer-placeholder"></div>
 
     <script src="assets/js/main.js"></script>
+    <script>
+      // Initialize Mapbox map with Bay Area counties highlighted
+      mapboxgl.accessToken =
+        'pk.eyJ1IjoiYmF5dGlkZXMiLCJhIjoiY21qdGt1NjVmNHQ2djNlcHlpa3p0MnViaSJ9.FHuSFIzE8EXe_9Vp5QpM2Q';
+
+      const map = new mapboxgl.Map({
+        container: 'bay-area-map',
+        style: 'mapbox://styles/mapbox/light-v11',
+        center: [-122.2, 37.6],
+        zoom: 8,
+        interactive: false,
+      });
+
+      // Bay Area county FIPS codes (state 06 = California)
+      const bayAreaCounties = [
+        '06001', // Alameda
+        '06013', // Contra Costa
+        '06041', // Marin
+        '06055', // Napa
+        '06075', // San Francisco
+        '06081', // San Mateo
+        '06085', // Santa Clara
+        '06087', // Santa Cruz
+        '06095', // Solano
+        '06097', // Sonoma
+      ];
+
+      map.on('load', () => {
+        // Add county boundaries from Mapbox's built-in data
+        map.addSource('counties', {
+          type: 'vector',
+          url: 'mapbox://mapbox.82pkq93d',
+        });
+
+        // Highlight Bay Area counties with fill
+        map.addLayer(
+          {
+            id: 'bay-area-fill',
+            type: 'fill',
+            source: 'counties',
+            'source-layer': 'original',
+            paint: {
+              'fill-color': '#0077b6',
+              'fill-opacity': 0.3,
+            },
+            filter: ['in', 'FIPS', ...bayAreaCounties],
+          },
+          'waterway-label'
+        );
+
+        // Add county borders
+        map.addLayer(
+          {
+            id: 'bay-area-borders',
+            type: 'line',
+            source: 'counties',
+            'source-layer': 'original',
+            paint: {
+              'line-color': '#0077b6',
+              'line-width': 2,
+            },
+            filter: ['in', 'FIPS', ...bayAreaCounties],
+          },
+          'waterway-label'
+        );
+      });
+    </script>
   </body>
 </html>
