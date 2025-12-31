@@ -5,7 +5,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   X-XSS-Protection: 1; mode=block
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://plausible.baytides.org 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://plausible.baytides.org https://baytides-form-handler.autumn-disk-6090.workers.dev; frame-src https://donorbox.org
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://plausible.baytides.org https://challenges.cloudflare.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://plausible.baytides.org https://forms.baytides.org; frame-src https://donorbox.org https://www.openstreetmap.org https://challenges.cloudflare.com
 
 # Cache static assets aggressively
 /assets/*
