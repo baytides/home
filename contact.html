@@ -43,14 +43,9 @@
             <h2>Send Us a Message</h2>
             <p>Have questions? Want to volunteer or partner with us? Fill out the form below and we'll get back to you soon.</p>
 
-            <!-- Web3Forms - Free form backend (250 submissions/month free) -->
-            <!-- Get your access key at https://web3forms.com (no signup required) -->
-            <form action="https://api.web3forms.com/submit" method="POST">
-              <!-- Replace with your Web3Forms access key -->
-              <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-              <input type="hidden" name="subject" value="New Contact Form Submission - Bay Tides">
-              <input type="hidden" name="from_name" value="Bay Tides Website">
-              <!-- Redirect after submission (optional) -->
+            <!-- Cloudflare Worker form handler -->
+            <form action="https://baytides-form-handler.autumn-disk-6090.workers.dev" method="POST">
+              <input type="hidden" name="form_type" value="contact">
               <input type="hidden" name="redirect" value="https://baytides.org/contact.html?submitted=true">
               <!-- Honeypot spam protection -->
               <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
@@ -128,11 +123,9 @@
         <div class="newsletter-content">
           <h2>Stay Connected</h2>
           <p>Subscribe to our newsletter for updates on events, volunteer opportunities, and conservation news.</p>
-          <!-- Web3Forms for newsletter signup -->
-          <form class="newsletter-form" action="https://api.web3forms.com/submit" method="POST">
-            <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-            <input type="hidden" name="subject" value="New Newsletter Signup - Bay Tides">
-            <input type="hidden" name="from_name" value="Bay Tides Newsletter">
+          <!-- Cloudflare Worker newsletter handler -->
+          <form class="newsletter-form" action="https://baytides-form-handler.autumn-disk-6090.workers.dev" method="POST">
+            <input type="hidden" name="form_type" value="newsletter">
             <input type="hidden" name="redirect" value="https://baytides.org/contact.html?subscribed=true">
             <input type="checkbox" name="botcheck" style="display: none;">
             <label for="newsletter-email" class="sr-only">Email address</label>
