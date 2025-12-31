@@ -66,8 +66,11 @@
                 we'll get back to you soon.
               </p>
 
+              <!-- Form status announcements -->
+              <div id="contact-form-status" aria-live="polite" aria-atomic="true"></div>
+
               <!-- Cloudflare Worker form handler -->
-              <form action="https://forms.baytides.org" method="POST">
+              <form action="https://forms.baytides.org" method="POST" id="contact-form">
                 <input type="hidden" name="form_type" value="contact" />
                 <input
                   type="hidden"
@@ -75,7 +78,14 @@
                   value="https://baytides.org/contact.html?submitted=true"
                 />
                 <!-- Honeypot spam protection -->
-                <input type="checkbox" name="botcheck" class="hidden" style="display: none" />
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  class="hidden"
+                  style="display: none"
+                  aria-hidden="true"
+                  tabindex="-1"
+                />
 
                 <div class="form-group">
                   <label for="name">
@@ -136,11 +146,17 @@
                 </div>
 
                 <!-- Cloudflare Turnstile widget -->
-                <div
-                  class="cf-turnstile"
-                  data-sitekey="0x4AAAAAACJ4PUuzOaD_Xf63"
-                  data-theme="auto"
-                ></div>
+                <fieldset
+                  class="turnstile-fieldset"
+                  style="border: none; padding: 0; margin: 0 0 1rem"
+                >
+                  <legend class="sr-only">Security verification</legend>
+                  <div
+                    class="cf-turnstile"
+                    data-sitekey="0x4AAAAAACJ4PUuzOaD_Xf63"
+                    data-theme="auto"
+                  ></div>
+                </fieldset>
 
                 <button type="submit" class="btn btn-primary">Send Message</button>
               </form>
@@ -153,6 +169,8 @@
 
               <div
                 id="bay-area-map"
+                role="img"
+                aria-label="Map showing Bay Area service region with San Mateo County highlighted"
                 style="
                   border-radius: 8px;
                   overflow: hidden;
@@ -161,6 +179,11 @@
                   height: 300px;
                 "
               ></div>
+              <div class="map-description">
+                <strong>Counties we serve:</strong>
+                San Mateo (primary), Alameda, Contra Costa, Marin, Napa, San Francisco, Santa Clara,
+                Santa Cruz, Solano, and Sonoma.
+              </div>
 
               <div class="contact-cta">
                 <h3>Want to make an immediate impact?</h3>
@@ -180,15 +203,28 @@
               Subscribe to our newsletter for updates on events, volunteer opportunities, and
               conservation news.
             </p>
+            <!-- Newsletter status announcements -->
+            <div id="newsletter-form-status" aria-live="polite" aria-atomic="true"></div>
             <!-- Cloudflare Worker newsletter handler -->
-            <form class="newsletter-form" action="https://forms.baytides.org" method="POST">
+            <form
+              class="newsletter-form"
+              action="https://forms.baytides.org"
+              method="POST"
+              id="newsletter-form"
+            >
               <input type="hidden" name="form_type" value="newsletter" />
               <input
                 type="hidden"
                 name="redirect"
                 value="https://baytides.org/contact.html?subscribed=true"
               />
-              <input type="checkbox" name="botcheck" style="display: none" />
+              <input
+                type="checkbox"
+                name="botcheck"
+                style="display: none"
+                aria-hidden="true"
+                tabindex="-1"
+              />
               <label for="newsletter-email" class="sr-only">Email address</label>
               <input
                 type="email"
