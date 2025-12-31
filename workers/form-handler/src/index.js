@@ -4,7 +4,50 @@
  * Sends email notifications via MailChannels
  * Adds newsletter subscribers to MailerLite
  * Validates Cloudflare Turnstile tokens for spam protection
+ * Includes rate limiting to prevent abuse
  */
+
+// Rate limiting configuration
+const RATE_LIMIT = {
+  maxRequests: 5, // Max requests per window
+  windowMs: 60000, // 1 minute window
+};
+
+// Simple in-memory rate limiting (resets on worker restart)
+// For production, consider using Cloudflare KV or Durable Objects
+const rateLimitMap = new Map();
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+
+  if (!record) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT.windowMs });
+    return false;
+  }
+
+  if (now > record.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT.windowMs });
+    return false;
+  }
+
+  if (record.count >= RATE_LIMIT.maxRequests) {
+    return true;
+  }
+
+  record.count++;
+  return false;
+}
+
+// Clean up old entries periodically
+function cleanupRateLimits() {
+  const now = Date.now();
+  for (const [ip, record] of rateLimitMap.entries()) {
+    if (now > record.resetAt) {
+      rateLimitMap.delete(ip);
+    }
+  }
+}
 
 export default {
   async fetch(request, env, ctx) {
@@ -23,6 +66,21 @@ export default {
     if (!isAllowedOrigin(origin, env)) {
       return new Response('Forbidden', { status: 403 });
     }
+
+    // Rate limiting check
+    const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+    if (isRateLimited(clientIP)) {
+      return new Response('Too many requests. Please try again later.', {
+        status: 429,
+        headers: {
+          ...corsHeaders(env),
+          'Retry-After': '60',
+        },
+      });
+    }
+
+    // Clean up old rate limit entries in the background
+    ctx.waitUntil(Promise.resolve(cleanupRateLimits()));
 
     try {
       const formData = await request.formData();

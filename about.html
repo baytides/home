@@ -1,117 +1,244 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us | Bay Tides</title>
-  <meta name="description" content="Learn about Bay Tides, a community-driven nonprofit dedicated to fostering environmental stewardship on the San Francisco Bay Peninsula.">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us | Bay Tides</title>
+    <meta
+      name="description"
+      content="Learn about Bay Tides, a community-driven nonprofit dedicated to fostering environmental stewardship on the San Francisco Bay Peninsula."
+    />
 
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://baytides.org/about.html">
-  <meta property="og:title" content="About Us | Bay Tides">
-  <meta property="og:description" content="Learn about Bay Tides, a community-driven nonprofit dedicated to fostering environmental stewardship on the San Francisco Bay Peninsula.">
-  <meta property="og:image" content="https://baytides.org/assets/images/hero-bg.jpg">
-  <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://baytides.org/about.html" />
+    <meta property="og:title" content="About Us | Bay Tides" />
+    <meta
+      property="og:description"
+      content="Learn about Bay Tides, a community-driven nonprofit dedicated to fostering environmental stewardship on the San Francisco Bay Peninsula."
+    />
+    <meta property="og:image" content="https://baytides.org/assets/images/hero-bg.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
 
-  <link rel="icon" type="image/png" href="assets/images/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/images/logo.png" />
 
-  <!-- Privacy-friendly analytics by Plausible -->
-  <script defer data-domain="baytides.org" src="https://plausible.baytides.org/js/script.js"></script>
-</head>
-<body>
-  <!-- Header loaded dynamically -->
-  <div id="header-placeholder"></div>
+    <!-- Preload critical assets -->
+    <link rel="preload" href="assets/images/hero-bg.webp" as="image" type="image/webp" />
+    <link rel="preload" href="assets/css/style.css" as="style" />
+    <link rel="preload" href="assets/js/main.js" as="script" />
 
-  <main id="main-content">
-    <!-- Page Hero -->
-    <section class="hero hero-page">
-      <div class="container">
-        <h1>About Bay Tides</h1>
-        <p>Building a grassroots movement rooted in respect for our environment</p>
-      </div>
-    </section>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
-    <!-- Mission Section -->
-    <section class="content-section">
-      <div class="container">
-        <div class="content-grid">
-          <div class="content-text">
-            <h2>Our Mission</h2>
-            <p>At Bay Tides, we're passionate about protecting the natural beauty and health of the San Francisco Bay. While our primary focus is on the Peninsula, our mission is to mobilize individuals in our local community to take an active role in preserving the Bay Area's shoreline and ecosystem.</p>
-            <p>Through hands-on projects, educational programs, and collaborative conservation efforts, we empower residents to make a meaningful impact in their backyard.</p>
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      defer
+      data-domain="baytides.org"
+      src="https://plausible.baytides.org/js/script.js"
+    ></script>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "mainEntity": {
+          "@type": "NonprofitOrganization",
+          "name": "Bay Tides",
+          "url": "https://baytides.org",
+          "logo": "https://baytides.org/assets/images/logo.png",
+          "description": "Bay Tides empowers communities to protect and preserve the beauty of the San Francisco Bay through education, advocacy, and hands-on action.",
+          "foundingDate": "2023",
+          "areaServed": {
+            "@type": "Place",
+            "name": "San Francisco Bay Area, California"
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Header loaded dynamically -->
+    <div id="header-placeholder"></div>
+
+    <main id="main-content">
+      <!-- Breadcrumb Navigation -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <div class="container">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li aria-current="page">About</li>
+          </ol>
+        </div>
+      </nav>
+
+      <!-- Page Hero -->
+      <section class="hero hero-page">
+        <div class="container">
+          <h1>About Bay Tides</h1>
+          <p>Building a grassroots movement rooted in respect for our environment</p>
+        </div>
+      </section>
+
+      <!-- Mission Section -->
+      <section class="content-section">
+        <div class="container">
+          <div class="content-grid">
+            <div class="content-text">
+              <h2>Our Mission</h2>
+              <p>
+                At Bay Tides, we're passionate about protecting the natural beauty and health of the
+                San Francisco Bay. While our primary focus is on the Peninsula, our mission is to
+                mobilize individuals in our local community to take an active role in preserving the
+                Bay Area's shoreline and ecosystem.
+              </p>
+              <p>
+                Through hands-on projects, educational programs, and collaborative conservation
+                efforts, we empower residents to make a meaningful impact in their backyard.
+              </p>
+            </div>
+            <div class="content-image">
+              <picture>
+                <source srcset="assets/images/egret.webp" type="image/webp" />
+                <img
+                  src="assets/images/egret.jpg"
+                  alt="Wildlife at San Francisco Bay"
+                  width="600"
+                  height="400"
+                  loading="lazy"
+                />
+              </picture>
+            </div>
           </div>
-          <div class="content-image">
-            <img src="assets/images/egret.jpg" alt="Wildlife at San Francisco Bay" width="600" height="400" loading="lazy">
+        </div>
+      </section>
+
+      <!-- Who We Are -->
+      <section class="content-section alt-bg">
+        <div class="container">
+          <div class="content-centered">
+            <h2>Who We Are</h2>
+            <p>
+              Founded in 2023, Bay Tides is a community-driven nonprofit dedicated to fostering
+              environmental stewardship on the Peninsula of the San Francisco Bay Area, while
+              remaining mindful of the broader Bay Area.
+            </p>
+            <p>
+              We believe the best way to protect our cherished shoreline is through local action in
+              three key areas:
+              <strong>Educate</strong>
+              ,
+              <strong>Advocate</strong>
+              , and
+              <strong>Action</strong>
+              . By connecting community members of all ages with opportunities to learn, volunteer,
+              and engage, we're building a grassroots movement rooted in respect for our environment
+              and a commitment to its preservation.
+            </p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Who We Are -->
-    <section class="content-section alt-bg">
-      <div class="container">
-        <div class="content-centered">
-          <h2>Who We Are</h2>
-          <p>Founded in 2023, Bay Tides is a community-driven nonprofit dedicated to fostering environmental stewardship on the Peninsula of the San Francisco Bay Area, while remaining mindful of the broader Bay Area.</p>
-          <p>We believe the best way to protect our cherished shoreline is through local action in three key areas: <strong>Educate</strong>, <strong>Advocate</strong>, and <strong>Action</strong>. By connecting community members of all ages with opportunities to learn, volunteer, and engage, we're building a grassroots movement rooted in respect for our environment and a commitment to its preservation.</p>
+      <!-- Three Pillars -->
+      <section class="pillars">
+        <div class="container">
+          <div class="section-title">
+            <h2>Our Approach</h2>
+            <p>Three pillars guide everything we do</p>
+          </div>
+
+          <div class="cards-grid">
+            <article class="card">
+              <div class="card-icon" aria-hidden="true">&#128218;</div>
+              <h3>Educate</h3>
+              <p>
+                We believe that knowledge is the foundation of change. Through workshops, community
+                partnerships, and public programs, we provide accessible education on environmental
+                issues, conservation practices, and the critical role of the bay.
+              </p>
+              <p>
+                By raising awareness, we inspire individuals to take ownership of their impact on
+                the bay.
+              </p>
+            </article>
+
+            <article class="card">
+              <div class="card-icon" aria-hidden="true">&#128227;</div>
+              <h3>Advocate</h3>
+              <p>
+                Our advocacy efforts empower residents to champion policies and initiatives that
+                protect the bay's future. We engage with local leaders, collaborate with
+                environmental organizations, and encourage community members to raise their voices
+                for sustainable solutions.
+              </p>
+              <p>
+                Together, we aim to drive systemic change that ensures long-term protection of our
+                cherished shoreline.
+              </p>
+            </article>
+
+            <article class="card">
+              <div class="card-icon" aria-hidden="true">&#127793;</div>
+              <h3>Action</h3>
+              <p>
+                Taking action is at the heart of our mission. From habitat restoration projects to
+                volunteer-led conservation efforts, we mobilize our community to make a tangible
+                difference.
+              </p>
+              <p>
+                Whether it's cleaning up pollution, planting native species, or restoring habitats,
+                our actions directly contribute to a healthier and more vibrant Bay Area.
+              </p>
+            </article>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Three Pillars -->
-    <section class="pillars">
-      <div class="container">
-        <div class="section-title">
-          <h2>Our Approach</h2>
-          <p>Three pillars guide everything we do</p>
+      <!-- Why It Matters -->
+      <section class="impact">
+        <div class="container">
+          <div class="impact-content">
+            <h2>Why Our Work Matters</h2>
+            <p>
+              The San Francisco Bay is more than just a natural landmark&mdash;it's a vital
+              ecosystem that protects critical and endangered wildlife and enriches our community.
+            </p>
+            <p>
+              Yet, this ecosystem faces ongoing, life-altering threats from human-induced pollution,
+              climate change, and habitat loss. At Bay Tides, we believe that protecting the bay
+              starts with each of us.
+            </p>
+            <p class="highlight">
+              With your support, we can ensure a thriving, resilient Bay Area for generations to
+              come.
+            </p>
+            <a href="donate.html" class="btn btn-primary">Support Our Mission</a>
+          </div>
         </div>
+      </section>
+    </main>
 
-        <div class="cards-grid">
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">&#128218;</div>
-            <h3>Educate</h3>
-            <p>We believe that knowledge is the foundation of change. Through workshops, community partnerships, and public programs, we provide accessible education on environmental issues, conservation practices, and the critical role of the bay.</p>
-            <p>By raising awareness, we inspire individuals to take ownership of their impact on the bay.</p>
-          </article>
+    <!-- Footer loaded dynamically -->
+    <div id="footer-placeholder"></div>
 
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">&#128227;</div>
-            <h3>Advocate</h3>
-            <p>Our advocacy efforts empower residents to champion policies and initiatives that protect the bay's future. We engage with local leaders, collaborate with environmental organizations, and encourage community members to raise their voices for sustainable solutions.</p>
-            <p>Together, we aim to drive systemic change that ensures long-term protection of our cherished shoreline.</p>
-          </article>
-
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">&#127793;</div>
-            <h3>Action</h3>
-            <p>Taking action is at the heart of our mission. From habitat restoration projects to volunteer-led conservation efforts, we mobilize our community to make a tangible difference.</p>
-            <p>Whether it's cleaning up pollution, planting native species, or restoring habitats, our actions directly contribute to a healthier and more vibrant Bay Area.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Why It Matters -->
-    <section class="impact">
-      <div class="container">
-        <div class="impact-content">
-          <h2>Why Our Work Matters</h2>
-          <p>The San Francisco Bay is more than just a natural landmark&mdash;it's a vital ecosystem that protects critical and endangered wildlife and enriches our community.</p>
-          <p>Yet, this ecosystem faces ongoing, life-altering threats from human-induced pollution, climate change, and habitat loss. At Bay Tides, we believe that protecting the bay starts with each of us.</p>
-          <p class="highlight">With your support, we can ensure a thriving, resilient Bay Area for generations to come.</p>
-          <a href="donate.html" class="btn btn-primary">Support Our Mission</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer loaded dynamically -->
-  <div id="footer-placeholder"></div>
-
-  <script src="assets/js/main.js"></script>
-</body>
+    <script src="assets/js/main.js"></script>
+  </body>
 </html>

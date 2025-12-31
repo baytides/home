@@ -20,12 +20,32 @@
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/images/logo.png" />
+
+    <!-- Preload critical assets -->
+    <link rel="preload" href="assets/images/hero-bg.webp" as="image" type="image/webp" />
+    <link rel="preload" href="assets/css/style.css" as="style" />
+    <link rel="preload" href="assets/js/main.js" as="script" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+
     <link rel="stylesheet" href="assets/css/style.css" />
 
     <!-- Privacy-friendly analytics by Plausible -->
@@ -41,12 +61,39 @@
     <!-- Mapbox -->
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "mainEntity": {
+          "@type": "NonprofitOrganization",
+          "name": "Bay Tides",
+          "url": "https://baytides.org",
+          "areaServed": {
+            "@type": "Place",
+            "name": "San Francisco Bay Area, California"
+          }
+        }
+      }
+    </script>
   </head>
   <body>
     <!-- Header loaded dynamically -->
     <div id="header-placeholder"></div>
 
     <main id="main-content">
+      <!-- Breadcrumb Navigation -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <div class="container">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li aria-current="page">Contact</li>
+          </ol>
+        </div>
+      </nav>
+
       <!-- Page Hero -->
       <section class="hero hero-page">
         <div class="container">

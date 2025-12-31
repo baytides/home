@@ -1,46 +1,108 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Not Found | Bay Tides</title>
-  <link rel="icon" type="image/png" href="assets/images/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found | Bay Tides</title>
+    <meta
+      name="description"
+      content="The page you're looking for could not be found. Navigate back to Bay Tides' main pages."
+    />
 
-  <!-- Privacy-friendly analytics by Plausible -->
-  <script defer data-domain="baytides.org" src="https://plausible.baytides.org/js/script.js"></script>
-</head>
-<body>
-  <!-- Header loaded dynamically -->
-  <div id="header-placeholder"></div>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/images/logo.png" />
 
-  <main id="main-content">
-    <!-- 404 Content -->
-    <section class="hero" style="min-height: calc(100vh - 250px);">
-      <div class="container">
-        <h1 style="font-size: 6rem; margin-bottom: 0.5rem;">404</h1>
-        <h2 style="color: var(--white); margin-bottom: 1rem;">Page Not Found</h2>
-        <p>The page you're looking for seems to have drifted away with the tide.</p>
-        <div class="hero-buttons">
-          <a href="/" class="btn btn-primary">Back to Home</a>
-          <a href="contact.html" class="btn btn-outline">Contact Us</a>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      defer
+      data-domain="baytides.org"
+      src="https://plausible.baytides.org/js/script.js"
+    ></script>
+  </head>
+  <body>
+    <!-- Header loaded dynamically -->
+    <div id="header-placeholder"></div>
+
+    <main id="main-content">
+      <!-- 404 Content -->
+      <section class="hero" style="min-height: 50vh">
+        <div class="container">
+          <h1 style="font-size: 6rem; margin-bottom: 0.5rem">404</h1>
+          <h2 style="color: var(--white); margin-bottom: 1rem">Page Not Found</h2>
+          <p>The page you're looking for seems to have drifted away with the tide.</p>
+          <div class="hero-buttons">
+            <a href="/" class="btn btn-primary">Back to Home</a>
+            <a href="contact.html" class="btn btn-outline">Contact Us</a>
+          </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
 
-  <!-- Footer -->
-  <footer role="contentinfo">
-    <div class="container">
-      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
-        <p>&copy; 2025 Bay Tides. All rights reserved. | A 501(c)(3) nonprofit organization.</p>
-      </div>
-    </div>
-  </footer>
+      <!-- Helpful Links -->
+      <section class="content-section">
+        <div class="container">
+          <div class="section-title">
+            <h2>Helpful Links</h2>
+            <p>Here are some pages you might be looking for</p>
+          </div>
+          <div class="cards-grid">
+            <a href="about.html" class="card" style="text-decoration: none">
+              <div class="card-icon" aria-hidden="true">&#128220;</div>
+              <h3>About Us</h3>
+              <p>Learn about our mission to protect the San Francisco Bay.</p>
+            </a>
+            <a href="volunteer.html" class="card" style="text-decoration: none">
+              <div class="card-icon" aria-hidden="true">&#129309;</div>
+              <h3>Volunteer</h3>
+              <p>Join our community of environmental stewards.</p>
+            </a>
+            <a href="donate.html" class="card" style="text-decoration: none">
+              <div class="card-icon" aria-hidden="true">&#128153;</div>
+              <h3>Donate</h3>
+              <p>Support our conservation and education programs.</p>
+            </a>
+            <a href="projects.html" class="card" style="text-decoration: none">
+              <div class="card-icon" aria-hidden="true">&#128640;</div>
+              <h3>Projects</h3>
+              <p>Explore our digital initiatives and tools.</p>
+            </a>
+            <a href="contact.html" class="card" style="text-decoration: none">
+              <div class="card-icon" aria-hidden="true">&#128231;</div>
+              <h3>Contact</h3>
+              <p>Get in touch with our team.</p>
+            </a>
+            <a href="news.html" class="card" style="text-decoration: none">
+              <div class="card-icon" aria-hidden="true">&#128240;</div>
+              <h3>News</h3>
+              <p>Read our latest updates and stories.</p>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
 
-  <script src="assets/js/main.js"></script>
-</body>
+    <!-- Footer loaded dynamically -->
+    <div id="footer-placeholder"></div>
+
+    <script src="assets/js/main.js"></script>
+  </body>
 </html>
