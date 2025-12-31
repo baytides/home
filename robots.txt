@@ -1,0 +1,9 @@
+# Bay Tides - robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://baytides.org/sitemap.xml
+
+# Disallow admin/system paths (none currently, but good practice)
+Disallow: /workers/

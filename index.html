@@ -28,6 +28,29 @@
 
   <!-- Privacy-friendly analytics by Plausible -->
   <script defer data-domain="baytides.org" src="https://plausible.baytides.org/js/script.js"></script>
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NonprofitOrganization",
+    "name": "Bay Tides",
+    "url": "https://baytides.org",
+    "logo": "https://baytides.org/assets/images/logo.png",
+    "description": "Bay Tides empowers communities to protect and preserve the beauty of the San Francisco Bay through education, advocacy, and hands-on action.",
+    "foundingDate": "2023",
+    "areaServed": {
+      "@type": "Place",
+      "name": "San Francisco Bay Area, California"
+    },
+    "sameAs": [],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "General Inquiries",
+      "url": "https://baytides.org/contact.html"
+    }
+  }
+  </script>
 </head>
 <body>
   <!-- Header loaded dynamically -->
@@ -56,7 +79,10 @@
             <a href="about.html" class="btn btn-secondary">Learn More About Us</a>
           </div>
           <div class="mission-image">
-            <img src="assets/images/egret.jpg" alt="Snowy Egret at San Francisco Bay" width="600" height="400" loading="lazy">
+            <picture>
+              <source srcset="assets/images/egret.webp" type="image/webp">
+              <img src="assets/images/egret.jpg" alt="Snowy Egret at San Francisco Bay" width="600" height="400" loading="lazy">
+            </picture>
           </div>
         </div>
       </div>
