@@ -54,6 +54,11 @@
 
 .content-section {
   padding: 5rem 0;
+  background: var(--bg-primary);
+
+  &.alt-bg {
+    background: var(--bg-secondary);
+  }
 }
 
 .content-grid {
@@ -114,14 +119,16 @@
   }
 
   p {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.85);
     font-size: 1.125rem;
+    font-weight: 400;
   }
 
   .highlight {
     font-weight: 600;
     font-size: 1.25rem;
     margin: 2rem 0;
+    color: #fff;
   }
 
   .btn {
