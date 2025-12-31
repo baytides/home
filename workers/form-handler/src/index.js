@@ -1,7 +1,8 @@
 /**
  * Bay Tides Form Handler Worker
  * Handles contact form and newsletter submissions
- * Sends email notifications via Cloudflare Email Workers (MailChannels)
+ * Sends email notifications via MailChannels
+ * Adds newsletter subscribers to MailerLite
  * Validates Cloudflare Turnstile tokens for spam protection
  */
 
@@ -45,27 +46,31 @@ export default {
       }
 
       const formType = formData.get('form_type') || 'contact';
-
-      let emailContent;
-      let subject;
+      const email = formData.get('email');
 
       if (formType === 'newsletter') {
-        const email = formData.get('email');
-        subject = 'New Newsletter Signup - Bay Tides';
-        emailContent = `
+        // Add subscriber to MailerLite
+        if (env.MAILERLITE_API_KEY) {
+          await addToMailerLite(env, email);
+        }
+
+        // Also send notification email
+        const subject = 'New Newsletter Signup - Bay Tides';
+        const emailContent = `
 New newsletter subscription:
 
 Email: ${email}
 Date: ${new Date().toISOString()}
         `.trim();
+        await sendEmail(env, subject, emailContent, email);
       } else {
+        // Contact form
         const name = formData.get('name');
-        const email = formData.get('email');
         const topic = formData.get('topic') || 'Not specified';
         const message = formData.get('message');
 
-        subject = `New Contact Form Submission - Bay Tides (${topic})`;
-        emailContent = `
+        const subject = `New Contact Form Submission - Bay Tides (${topic})`;
+        const emailContent = `
 New contact form submission:
 
 Name: ${name}
@@ -77,10 +82,9 @@ ${message}
 ---
 Submitted: ${new Date().toISOString()}
         `.trim();
-      }
 
-      // Send email via MailChannels (free for Cloudflare Workers)
-      await sendEmail(env, subject, emailContent, formData.get('email'));
+        await sendEmail(env, subject, emailContent, email);
+      }
 
       // Redirect back to the page with success parameter
       const redirect = formData.get('redirect') || 'https://baytides.org/contact.html';
@@ -97,6 +101,38 @@ Submitted: ${new Date().toISOString()}
     }
   },
 };
+
+async function addToMailerLite(env, email, groupId = null) {
+  const apiKey = env.MAILERLITE_API_KEY;
+
+  const subscriberData = {
+    email: email,
+  };
+
+  // Add to specific group if provided
+  if (groupId || env.MAILERLITE_GROUP_ID) {
+    subscriberData.groups = [groupId || env.MAILERLITE_GROUP_ID];
+  }
+
+  const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify(subscriberData),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('MailerLite error:', errorText);
+    // Don't throw - we still want to complete the form submission
+    // even if MailerLite fails
+  }
+
+  return response;
+}
 
 async function verifyTurnstile(token, secretKey, ip) {
   const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
