@@ -43,9 +43,13 @@ footer {
     display: block;
     padding: 0.35rem 0;
     transition: color 0.3s ease;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-underline-offset: 2px;
 
     &:hover {
       color: #fff;
+      text-decoration-color: #fff;
     }
   }
 }
@@ -58,9 +62,13 @@ footer {
 
   a {
     color: rgba(255, 255, 255, 0.7);
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-underline-offset: 2px;
 
     &:hover {
       color: #fff;
+      text-decoration-color: #fff;
     }
   }
 }
@@ -74,6 +82,18 @@ footer {
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 0.25rem;
     font-size: 1rem;
+  }
+
+  a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: #fff;
+      text-decoration-color: #fff;
+    }
   }
 }
 
