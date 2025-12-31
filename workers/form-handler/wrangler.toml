@@ -5,3 +5,9 @@ compatibility_date = "2024-01-01"
 [vars]
 ALLOWED_ORIGIN = "https://baytides.org"
 TO_EMAIL = "admin@baytides.org"
+
+# Custom domain route - requires DNS record to be set up in Cloudflare
+# Add a CNAME record: forms.baytides.org -> baytides-form-handler.autumn-disk-6090.workers.dev
+routes = [
+  { pattern = "forms.baytides.org", custom_domain = true }
+]

@@ -1,0 +1,5 @@
+node_modules
+assets/css/style.css
+assets/js/main.js
+*.min.js
+*.min.css

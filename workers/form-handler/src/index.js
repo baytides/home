@@ -2,6 +2,7 @@
  * Bay Tides Form Handler Worker
  * Handles contact form and newsletter submissions
  * Sends email notifications via Cloudflare Email Workers (MailChannels)
+ * Validates Cloudflare Turnstile tokens for spam protection
  */
 
 export default {
@@ -27,7 +28,20 @@ export default {
 
       // Honeypot check - if filled, it's a bot
       if (formData.get('botcheck')) {
-        return redirectWithParam(formData, 'spam=true');
+        return redirectWithError(formData, 'spam');
+      }
+
+      // Verify Turnstile token (if present)
+      const turnstileToken = formData.get('cf-turnstile-response');
+      if (turnstileToken && env.TURNSTILE_SECRET_KEY) {
+        const turnstileValid = await verifyTurnstile(
+          turnstileToken,
+          env.TURNSTILE_SECRET_KEY,
+          request.headers.get('CF-Connecting-IP')
+        );
+        if (!turnstileValid) {
+          return redirectWithError(formData, 'captcha');
+        }
       }
 
       const formType = formData.get('form_type') || 'contact';
@@ -70,30 +84,49 @@ Submitted: ${new Date().toISOString()}
 
       // Redirect back to the page with success parameter
       const redirect = formData.get('redirect') || 'https://baytides.org/contact.html';
-      const successParam = formType === 'newsletter' ? 'subscribed=true' : 'submitted=true';
       const redirectUrl = new URL(redirect);
       redirectUrl.searchParams.set(formType === 'newsletter' ? 'subscribed' : 'submitted', 'true');
 
       return Response.redirect(redirectUrl.toString(), 303);
-
     } catch (error) {
       console.error('Form submission error:', error);
       return new Response('An error occurred. Please try again.', {
         status: 500,
-        headers: corsHeaders(env)
+        headers: corsHeaders(env),
       });
     }
-  }
+  },
 };
+
+async function verifyTurnstile(token, secretKey, ip) {
+  const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      secret: secretKey,
+      response: token,
+      remoteip: ip,
+    }),
+  });
+  const result = await response.json();
+  return result.success === true;
+}
+
+function redirectWithError(formData, error) {
+  const redirect = formData.get('redirect') || 'https://baytides.org/contact.html';
+  const redirectUrl = new URL(redirect);
+  redirectUrl.searchParams.set('error', error);
+  return Response.redirect(redirectUrl.toString(), 303);
+}
 
 function isAllowedOrigin(origin, env) {
   const allowed = [
     env.ALLOWED_ORIGIN,
     'https://baytides-website.pages.dev',
     'http://localhost:8080',
-    'http://127.0.0.1:8080'
+    'http://127.0.0.1:8080',
   ];
-  return allowed.some(a => origin?.startsWith(a) || origin?.includes('baytides'));
+  return allowed.some((a) => origin?.startsWith(a) || origin?.includes('baytides'));
 }
 
 function corsHeaders(env) {
@@ -107,7 +140,7 @@ function corsHeaders(env) {
 function handleCORS(env) {
   return new Response(null, {
     status: 204,
-    headers: corsHeaders(env)
+    headers: corsHeaders(env),
   });
 }
 

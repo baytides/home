@@ -1,0 +1,39 @@
+{
+  "name": "baytides-website",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Bay Tides nonprofit website",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baytides/home.git"
+  },
+  "author": "Bay Tides",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baytides/home/issues"
+  },
+  "homepage": "https://baytides.org",
+  "devDependencies": {
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.4"
+  },
+  "lint-staged": {
+    "*.{js,json}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{html,css,md}": [
+      "prettier --write"
+    ]
+  }
+}

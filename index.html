@@ -1,151 +1,217 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bay Tides | Protecting the San Francisco Bay</title>
-  <meta name="description" content="Bay Tides empowers communities to protect and preserve the beauty of the San Francisco Bay through education, advocacy, and hands-on action.">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bay Tides | Protecting the San Francisco Bay</title>
+    <meta
+      name="description"
+      content="Bay Tides empowers communities to protect and preserve the beauty of the San Francisco Bay through education, advocacy, and hands-on action."
+    />
 
-  <!-- Open Graph / Social Media -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://baytides.org/">
-  <meta property="og:title" content="Bay Tides | Protecting the San Francisco Bay">
-  <meta property="og:description" content="Empowering communities to protect and preserve the beauty of the San Francisco Bay through education, advocacy, and hands-on action.">
-  <meta property="og:image" content="https://baytides.org/assets/images/hero-bg.jpg">
-  <meta name="twitter:card" content="summary_large_image">
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://baytides.org/" />
+    <meta property="og:title" content="Bay Tides | Protecting the San Francisco Bay" />
+    <meta
+      property="og:description"
+      content="Empowering communities to protect and preserve the beauty of the San Francisco Bay through education, advocacy, and hands-on action."
+    />
+    <meta property="og:image" content="https://baytides.org/assets/images/hero-bg.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/images/favicon.png">
-  <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/images/logo.png" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Preload critical assets -->
+    <link rel="preload" href="assets/images/hero-bg.webp" as="image" type="image/webp" />
+    <link rel="preload" href="assets/css/style.css" as="style" />
+    <link rel="preload" href="assets/js/main.js" as="script" />
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
-  <!-- Privacy-friendly analytics by Plausible -->
-  <script defer data-domain="baytides.org" src="https://plausible.baytides.org/js/script.js"></script>
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/style.css" />
 
-  <!-- Structured Data (JSON-LD) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "NonprofitOrganization",
-    "name": "Bay Tides",
-    "url": "https://baytides.org",
-    "logo": "https://baytides.org/assets/images/logo.png",
-    "description": "Bay Tides empowers communities to protect and preserve the beauty of the San Francisco Bay through education, advocacy, and hands-on action.",
-    "foundingDate": "2023",
-    "areaServed": {
-      "@type": "Place",
-      "name": "San Francisco Bay Area, California"
-    },
-    "sameAs": [],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "General Inquiries",
-      "url": "https://baytides.org/contact.html"
-    }
-  }
-  </script>
-</head>
-<body>
-  <!-- Header loaded dynamically -->
-  <div id="header-placeholder"></div>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      defer
+      data-domain="baytides.org"
+      src="https://plausible.baytides.org/js/script.js"
+    ></script>
 
-  <main id="main-content">
-    <!-- Hero Section with Background Image -->
-    <section class="hero hero-home">
-      <div class="container">
-        <h1>Protecting the San Francisco Bay</h1>
-        <p>Empowering communities to protect and preserve the beauty of the San Francisco Bay through education, advocacy, and hands-on action.</p>
-        <div class="hero-buttons">
-          <a href="volunteer.html" class="btn btn-primary">Get Involved</a>
-          <a href="donate.html" class="btn btn-outline">Support Our Mission</a>
-        </div>
-      </div>
-    </section>
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "NonprofitOrganization",
+        "name": "Bay Tides",
+        "url": "https://baytides.org",
+        "logo": "https://baytides.org/assets/images/logo.png",
+        "description": "Bay Tides empowers communities to protect and preserve the beauty of the San Francisco Bay through education, advocacy, and hands-on action.",
+        "foundingDate": "2023",
+        "areaServed": {
+          "@type": "Place",
+          "name": "San Francisco Bay Area, California"
+        },
+        "sameAs": [],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "General Inquiries",
+          "url": "https://baytides.org/contact.html"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Header loaded dynamically -->
+    <div id="header-placeholder"></div>
 
-    <!-- Mission Preview -->
-    <section class="mission-preview">
-      <div class="container">
-        <div class="mission-content">
-          <div class="mission-text">
-            <h2>Our Mission</h2>
-            <p>At Bay Tides, we're passionate about protecting the natural beauty and health of the San Francisco Bay. Through hands-on projects, educational programs, and collaborative conservation efforts, we empower residents to make a meaningful impact in their backyard.</p>
-            <a href="about.html" class="btn btn-secondary">Learn More About Us</a>
+    <main id="main-content">
+      <!-- Hero Section with Background Image -->
+      <section class="hero hero-home">
+        <div class="container">
+          <h1>Protecting the San Francisco Bay</h1>
+          <p>
+            Empowering communities to protect and preserve the beauty of the San Francisco Bay
+            through education, advocacy, and hands-on action.
+          </p>
+          <div class="hero-buttons">
+            <a href="volunteer.html" class="btn btn-primary">Get Involved</a>
+            <a href="donate.html" class="btn btn-outline">Support Our Mission</a>
           </div>
-          <div class="mission-image">
-            <picture>
-              <source srcset="assets/images/egret.webp" type="image/webp">
-              <img src="assets/images/egret.jpg" alt="Snowy Egret at San Francisco Bay" width="600" height="400" loading="lazy">
-            </picture>
+        </div>
+      </section>
+
+      <!-- Mission Preview -->
+      <section class="mission-preview">
+        <div class="container">
+          <div class="mission-content">
+            <div class="mission-text">
+              <h2>Our Mission</h2>
+              <p>
+                At Bay Tides, we're passionate about protecting the natural beauty and health of the
+                San Francisco Bay. Through hands-on projects, educational programs, and
+                collaborative conservation efforts, we empower residents to make a meaningful impact
+                in their backyard.
+              </p>
+              <a href="about.html" class="btn btn-secondary">Learn More About Us</a>
+            </div>
+            <div class="mission-image">
+              <picture>
+                <source srcset="assets/images/egret.webp" type="image/webp" />
+                <img
+                  src="assets/images/egret.jpg"
+                  alt="Snowy Egret at San Francisco Bay"
+                  width="600"
+                  height="400"
+                  loading="lazy"
+                />
+              </picture>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Three Pillars Section -->
-    <section class="pillars">
-      <div class="container">
-        <div class="section-title">
-          <h2>What We Do</h2>
-          <p>Our approach to protecting the San Francisco Bay</p>
+      <!-- Three Pillars Section -->
+      <section class="pillars">
+        <div class="container">
+          <div class="section-title">
+            <h2>What We Do</h2>
+            <p>Our approach to protecting the San Francisco Bay</p>
+          </div>
+
+          <div class="cards-grid">
+            <article class="card">
+              <div class="card-icon" aria-hidden="true">&#128218;</div>
+              <h3>Educate</h3>
+              <p>
+                Through workshops, community partnerships, and public programs, we provide
+                accessible education on environmental issues and conservation practices.
+              </p>
+            </article>
+
+            <article class="card">
+              <div class="card-icon" aria-hidden="true">&#128227;</div>
+              <h3>Advocate</h3>
+              <p>
+                We empower residents to champion policies and initiatives that protect the bay's
+                future, engaging with local leaders and environmental organizations.
+              </p>
+            </article>
+
+            <article class="card">
+              <div class="card-icon" aria-hidden="true">&#127793;</div>
+              <h3>Action</h3>
+              <p>
+                From habitat restoration to volunteer-led conservation efforts, we mobilize our
+                community to make a tangible difference for the Bay Area.
+              </p>
+            </article>
+          </div>
         </div>
+      </section>
 
-        <div class="cards-grid">
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">&#128218;</div>
-            <h3>Educate</h3>
-            <p>Through workshops, community partnerships, and public programs, we provide accessible education on environmental issues and conservation practices.</p>
-          </article>
-
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">&#128227;</div>
-            <h3>Advocate</h3>
-            <p>We empower residents to champion policies and initiatives that protect the bay's future, engaging with local leaders and environmental organizations.</p>
-          </article>
-
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">&#127793;</div>
-            <h3>Action</h3>
-            <p>From habitat restoration to volunteer-led conservation efforts, we mobilize our community to make a tangible difference for the Bay Area.</p>
-          </article>
+      <!-- Impact Statement -->
+      <section class="impact">
+        <div class="container">
+          <div class="impact-content">
+            <h2>Why Our Work Matters</h2>
+            <p>
+              The San Francisco Bay is more than just a natural landmark&mdash;it's a vital
+              ecosystem that protects critical and endangered wildlife and enriches our community.
+            </p>
+            <p class="highlight">
+              With your support, we can ensure a thriving, resilient Bay Area for generations to
+              come.
+            </p>
+            <a href="donate.html" class="btn btn-primary">Support Our Mission</a>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Impact Statement -->
-    <section class="impact">
-      <div class="container">
-        <div class="impact-content">
-          <h2>Why Our Work Matters</h2>
-          <p>The San Francisco Bay is more than just a natural landmark&mdash;it's a vital ecosystem that protects critical and endangered wildlife and enriches our community.</p>
-          <p class="highlight">With your support, we can ensure a thriving, resilient Bay Area for generations to come.</p>
-          <a href="donate.html" class="btn btn-primary">Support Our Mission</a>
+      <!-- Call to Action -->
+      <section class="cta">
+        <div class="container">
+          <h2>Ready to Make a Difference?</h2>
+          <p>
+            Join our community of dedicated environmental stewards and help protect the San
+            Francisco Bay.
+          </p>
+          <div class="cta-buttons">
+            <a href="volunteer.html" class="btn btn-primary">Volunteer With Us</a>
+            <a href="contact.html" class="btn btn-outline">Get in Touch</a>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- Call to Action -->
-    <section class="cta">
-      <div class="container">
-        <h2>Ready to Make a Difference?</h2>
-        <p>Join our community of dedicated environmental stewards and help protect the San Francisco Bay.</p>
-        <div class="cta-buttons">
-          <a href="volunteer.html" class="btn btn-primary">Volunteer With Us</a>
-          <a href="contact.html" class="btn btn-outline">Get in Touch</a>
-        </div>
-      </div>
-    </section>
-  </main>
+    <!-- Footer loaded dynamically -->
+    <div id="footer-placeholder"></div>
 
-  <!-- Footer loaded dynamically -->
-  <div id="footer-placeholder"></div>
-
-  <script src="assets/js/main.js"></script>
-</body>
+    <script src="assets/js/main.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      }
+    </script>
+  </body>
 </html>
