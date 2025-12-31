@@ -7,6 +7,12 @@ workers_dev = true
 ALLOWED_ORIGIN = "https://baytides.org"
 TO_EMAIL = "admin@baytides.org"
 
+# KV namespace for rate limiting
+[[kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "RATE_LIMIT_KV_ID"
+preview_id = "RATE_LIMIT_KV_PREVIEW_ID"
+
 # Custom domain - Cloudflare will automatically set up DNS
 [[routes]]
 pattern = "forms.baytides.org"

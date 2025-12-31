@@ -4,30 +4,60 @@
  * Sends email notifications via MailChannels
  * Adds newsletter subscribers to MailerLite
  * Validates Cloudflare Turnstile tokens for spam protection
- * Includes rate limiting to prevent abuse
+ * Includes persistent rate limiting via Cloudflare KV
  */
 
 // Rate limiting configuration
 const RATE_LIMIT = {
   maxRequests: 5, // Max requests per window
-  windowMs: 60000, // 1 minute window
+  windowSeconds: 60, // 1 minute window
 };
 
-// Simple in-memory rate limiting (resets on worker restart)
-// For production, consider using Cloudflare KV or Durable Objects
+/**
+ * Check if an IP is rate limited using Cloudflare KV
+ * Falls back to in-memory if KV is not available
+ */
+async function isRateLimited(ip, env) {
+  // Use KV if available for persistent rate limiting
+  if (env.RATE_LIMIT_KV) {
+    const key = `rate:${ip}`;
+    const record = await env.RATE_LIMIT_KV.get(key, { type: 'json' });
+
+    if (!record) {
+      await env.RATE_LIMIT_KV.put(key, JSON.stringify({ count: 1 }), {
+        expirationTtl: RATE_LIMIT.windowSeconds,
+      });
+      return false;
+    }
+
+    if (record.count >= RATE_LIMIT.maxRequests) {
+      return true;
+    }
+
+    await env.RATE_LIMIT_KV.put(key, JSON.stringify({ count: record.count + 1 }), {
+      expirationTtl: RATE_LIMIT.windowSeconds,
+    });
+    return false;
+  }
+
+  // Fallback to in-memory rate limiting
+  return isRateLimitedInMemory(ip);
+}
+
+// In-memory fallback (resets on worker restart)
 const rateLimitMap = new Map();
 
-function isRateLimited(ip) {
+function isRateLimitedInMemory(ip) {
   const now = Date.now();
   const record = rateLimitMap.get(ip);
 
   if (!record) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT.windowMs });
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT.windowSeconds * 1000 });
     return false;
   }
 
   if (now > record.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT.windowMs });
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT.windowSeconds * 1000 });
     return false;
   }
 
@@ -69,7 +99,7 @@ export default {
 
     // Rate limiting check
     const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
-    if (isRateLimited(clientIP)) {
+    if (await isRateLimited(clientIP, env)) {
       return new Response('Too many requests. Please try again later.', {
         status: 429,
         headers: {
