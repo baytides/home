@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Bay Tides | Protecting the San Francisco Bay",
+    "description": "Bay Tides empowers communities to protect and preserve the San Francisco Bay's environment through education, community mobilization, and innovative digital tools.",
+    "url": "/",
+    "keywords": ["home", "bay tides", "environment", "conservation"]
+  },
+  {
+    "title": "About Us",
+    "description": "Learn about Bay Tides, a community-driven nonprofit dedicated to fostering environmental stewardship on the San Francisco Bay Peninsula.",
+    "url": "/about.html",
+    "keywords": ["about", "mission", "team", "history", "nonprofit"]
+  },
+  {
+    "title": "Our Projects",
+    "description": "Explore Bay Tides' initiatives to protect the San Francisco Bay. From community resources to conservation programs, see how we're making an impact.",
+    "url": "/projects.html",
+    "keywords": ["projects", "initiatives", "bay navigator", "programs"]
+  },
+  {
+    "title": "Volunteer",
+    "description": "Join Bay Tides as a volunteer and help protect the San Francisco Bay through shoreline cleanups, habitat restoration, and community events.",
+    "url": "/volunteer.html",
+    "keywords": ["volunteer", "help", "join", "community", "events"]
+  },
+  {
+    "title": "Donate",
+    "description": "Support Bay Tides with a donation. Your contribution helps fund habitat restoration, educational programs, and advocacy efforts to protect the San Francisco Bay.",
+    "url": "/donate.html",
+    "keywords": ["donate", "support", "give", "contribution", "funding"]
+  },
+  {
+    "title": "Contact",
+    "description": "Get in touch with Bay Tides. Questions about volunteering, partnerships, or donations? We'd love to hear from you.",
+    "url": "/contact.html",
+    "keywords": ["contact", "email", "reach", "message", "get in touch"]
+  },
+  {
+    "title": "Events",
+    "description": "Join Bay Tides at our upcoming volunteer events, workshops, and community gatherings. Find opportunities to help protect the San Francisco Bay.",
+    "url": "/events.html",
+    "keywords": ["events", "calendar", "activities", "workshops", "cleanup"]
+  },
+  {
+    "title": "Privacy Policy",
+    "description": "Bay Tides privacy policy. Our commitment to protecting your privacy while you learn about our conservation work.",
+    "url": "/privacy.html",
+    "keywords": ["privacy", "policy", "data", "information", "cookies"]
+  },
+  {
+    "title": "Terms of Service",
+    "description": "Bay Tides Terms of Service. Review the terms and conditions for using our website and services.",
+    "url": "/terms.html",
+    "keywords": ["terms", "service", "conditions", "legal", "agreement"]
+  },
+  {
+    "title": "Accessibility Statement",
+    "description": "Bay Tides' commitment to digital accessibility. Learn about our efforts to make our website accessible to all users.",
+    "url": "/accessibility.html",
+    "keywords": ["accessibility", "a11y", "wcag", "screen reader", "keyboard"]
+  }
+]

@@ -5,17 +5,23 @@
   "description": "Bay Tides nonprofit website",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:search && vite build",
+    "build:search": "node scripts/generate-search-index.js",
     "build:css": "sass assets/scss/style.scss assets/css/style.css --style=compressed",
     "build:worker": "cd workers/form-handler && wrangler deploy",
+    "build:all": "npm run build && npm run build:worker",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "typecheck:worker": "tsc --noEmit -p workers/form-handler/tsconfig.json",
+    "typecheck:all": "npm run typecheck && npm run typecheck:worker",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "husky"
+    "validate": "npm run typecheck:all && npm run lint && npm run format:check",
+    "prepare": "husky",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui"
   },
   "repository": {
     "type": "git",
@@ -29,6 +35,7 @@
   "homepage": "https://baytides.org",
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20251231.0",
+    "@playwright/test": "^1.49.0",
     "@types/node": "^25.0.3",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",

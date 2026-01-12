@@ -3,6 +3,7 @@ import js from '@eslint/js';
 export default [
   js.configs.recommended,
   {
+    files: ['**/*.js'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
@@ -23,14 +24,15 @@ export default [
         Response: 'readonly',
         URL: 'readonly',
         Promise: 'readonly',
+        process: 'readonly',
       },
     },
     rules: {
-      'no-unused-vars': 'warn',
-      'no-console': 'off',
+      'no-unused-vars': 'error',
+      'no-console': ['warn', { allow: ['warn', 'error', 'log'] }],
     },
   },
   {
-    ignores: ['node_modules/', 'assets/js/main.js', 'assets/css/'],
+    ignores: ['node_modules/', 'assets/js/main.js', 'assets/css/', '**/*.ts', '**/*.json'],
   },
 ];

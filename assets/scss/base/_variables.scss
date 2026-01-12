@@ -3,6 +3,11 @@
 // ==========================================================================
 
 :root {
+  // Animation timings
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
   // Focus styles
   --focus-ring: 3px solid #005fcc;
   --focus-ring-offset: 2px;
@@ -39,13 +44,14 @@
 // ==========================================================================
 
 [data-theme='dark'] {
-  --primary-navy: #90cdf4;
-  --primary-blue: #63b3ed;
-  --accent-blue: #4299e1;
+  // Improved contrast for dark mode - meets WCAG AA standards
+  --primary-navy: #a3d5ff; // Lightened for better contrast (was #90cdf4)
+  --primary-blue: #7ec8e8; // Lightened for better contrast (was #63b3ed)
+  --accent-blue: #5db8e8; // Adjusted for consistency
   --light-blue: #1a365d;
   --cream: #1a202c;
-  --text-dark: #e2e8f0;
-  --text-light: #a0aec0;
+  --text-dark: #f0f4f8; // Lightened for better contrast (was #e2e8f0)
+  --text-light: #b8c5d3; // Lightened for better contrast (was #a0aec0)
   --white: #1a202c;
   --bg-primary: #1a202c;
   --bg-secondary: #2d3748;
@@ -53,11 +59,11 @@
   --header-bg: rgba(26, 32, 44, 0.95);
   --card-bg: #2d3748;
   --footer-bg: #0d1117;
-  --focus-ring: 3px solid #90cdf4;
-  --error: #fc8181;
-  --error-light: #fc8181;
-  --success: #9ae6b4;
-  --success-light: #9ae6b4;
+  --focus-ring: 3px solid #a3d5ff;
+  --error: #fca5a5; // Lightened for better contrast
+  --error-light: #fca5a5;
+  --success: #a7f3d0; // Lightened for better contrast
+  --success-light: #a7f3d0;
 }
 
 // ==========================================================================

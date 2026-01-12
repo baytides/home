@@ -18,6 +18,21 @@ interface FieldValidationConfig {
 }
 
 // ==========================================================================
+// Utility Functions
+// ==========================================================================
+
+function debounce<T extends (...args: Parameters<T>) => void>(
+  fn: T,
+  ms: number
+): (...args: Parameters<T>) => void {
+  let timeout: ReturnType<typeof setTimeout>;
+  return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fn.apply(this, args), ms);
+  };
+}
+
+// ==========================================================================
 // Theme Management
 // ==========================================================================
 
@@ -228,9 +243,8 @@ function initSearch(): void {
     }
   });
 
-  // Filter results
-  searchInput.addEventListener('input', (e) => {
-    const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+  // Filter results with debounce for performance
+  const filterResults = debounce((query: string) => {
     if (query === '') {
       results.forEach((result) => (result.style.display = 'none'));
       return;
@@ -243,6 +257,11 @@ function initSearch(): void {
       if (matches) count++;
     });
     announce(`${count} result${count !== 1 ? 's' : ''} found`);
+  }, 150);
+
+  searchInput.addEventListener('input', (e) => {
+    const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+    filterResults(query);
   });
 
   // Trap focus
@@ -468,7 +487,15 @@ function initFormValidation(): void {
     }
   });
 
+  let isSubmitting = false;
+
   contactForm.addEventListener('submit', (e) => {
+    // Prevent double-submit
+    if (isSubmitting) {
+      e.preventDefault();
+      return;
+    }
+
     let isValid = true;
     Object.keys(fields).forEach((fieldName) => {
       const input = contactForm.querySelector<HTMLInputElement | HTMLTextAreaElement>(
@@ -482,7 +509,12 @@ function initFormValidation(): void {
     if (!isValid) {
       e.preventDefault();
       const firstError = contactForm.querySelector<HTMLElement>('[aria-invalid="true"]');
-      if (firstError) firstError.focus();
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        firstError.focus();
+      }
+    } else {
+      isSubmitting = true;
     }
   });
 }
@@ -538,8 +570,14 @@ function initSponsorsCarousel(): void {
   if (!track || !prevBtn || !nextBtn || !viewport || !logosContainer) return;
 
   const logos = Array.from(logosContainer.querySelectorAll<HTMLImageElement>('.sponsor-logo'));
-  const logoWidth = logos[0] ? logos[0].offsetWidth + 64 : 104;
-  const totalWidth = logos.length * logoWidth;
+
+  // Calculate dimensions
+  function getLogoWidth(): number {
+    return logos[0] ? logos[0].getBoundingClientRect().width + 64 : 104;
+  }
+
+  let logoWidth = getLogoWidth();
+  let totalWidth = logos.length * logoWidth;
 
   // Clone logos for infinite scroll
   logos.forEach((logo) => {
@@ -550,7 +588,9 @@ function initSponsorsCarousel(): void {
   });
 
   let position = 0;
-  let autoplayInterval: ReturnType<typeof setInterval> | null = null;
+  let autoplayAnimationId: number | null = null;
+  let lastAutoplayTime = 0;
+  const autoplayDelay = 3000;
 
   function slideTo(newPosition: number): void {
     if (newPosition >= totalWidth) {
@@ -577,15 +617,29 @@ function initSponsorsCarousel(): void {
     slideTo(position + logoWidth);
   }
 
+  // Use requestAnimationFrame for smoother autoplay
+  function autoplayLoop(timestamp: number): void {
+    if (!lastAutoplayTime) lastAutoplayTime = timestamp;
+    const elapsed = timestamp - lastAutoplayTime;
+
+    if (elapsed >= autoplayDelay) {
+      slideNext();
+      lastAutoplayTime = timestamp;
+    }
+
+    autoplayAnimationId = requestAnimationFrame(autoplayLoop);
+  }
+
   function startAutoplay(): void {
     stopAutoplay();
-    autoplayInterval = setInterval(slideNext, 3000);
+    lastAutoplayTime = 0;
+    autoplayAnimationId = requestAnimationFrame(autoplayLoop);
   }
 
   function stopAutoplay(): void {
-    if (autoplayInterval) {
-      clearInterval(autoplayInterval);
-      autoplayInterval = null;
+    if (autoplayAnimationId) {
+      cancelAnimationFrame(autoplayAnimationId);
+      autoplayAnimationId = null;
     }
   }
 
@@ -603,6 +657,19 @@ function initSponsorsCarousel(): void {
   wrapper.addEventListener('mouseleave', startAutoplay);
   wrapper.addEventListener('focusin', stopAutoplay);
   wrapper.addEventListener('focusout', startAutoplay);
+
+  // Recalculate on resize
+  const handleResize = debounce(() => {
+    logoWidth = getLogoWidth();
+    totalWidth = logos.length * logoWidth;
+    // Reset position if it's out of bounds
+    if (position > totalWidth) {
+      position = 0;
+      track!.style.transform = `translateX(-${position}px)`;
+    }
+  }, 150);
+
+  window.addEventListener('resize', handleResize);
 
   if (!prefersReducedMotion.matches) {
     startAutoplay();
@@ -626,12 +693,76 @@ function initKeyboardDetection(): void {
 }
 
 // ==========================================================================
+// Service Worker Update Notification
+// ==========================================================================
+
+function initServiceWorker(): void {
+  if (!('serviceWorker' in navigator)) return;
+
+  navigator.serviceWorker
+    .register('/sw.js')
+    .then((registration) => {
+      // Check for updates periodically
+      setInterval(() => registration.update(), 60 * 60 * 1000); // Check hourly
+
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        if (!newWorker) return;
+
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // New content is available, show notification
+            showUpdateNotification(registration);
+          }
+        });
+      });
+    })
+    .catch((error) => {
+      console.warn('Service worker registration failed:', error);
+    });
+}
+
+function showUpdateNotification(registration: ServiceWorkerRegistration): void {
+  const notification = document.createElement('div');
+  notification.className = 'update-notification';
+  notification.setAttribute('role', 'alert');
+  notification.innerHTML = `
+    <span>A new version is available.</span>
+    <button type="button" class="update-btn">Refresh</button>
+    <button type="button" class="dismiss-btn" aria-label="Dismiss">&times;</button>
+  `;
+
+  document.body.appendChild(notification);
+
+  // Animate in
+  requestAnimationFrame(() => {
+    notification.classList.add('visible');
+  });
+
+  const refreshBtn = notification.querySelector('.update-btn');
+  const dismissBtn = notification.querySelector('.dismiss-btn');
+
+  refreshBtn?.addEventListener('click', () => {
+    if (registration.waiting) {
+      registration.waiting.postMessage('skipWaiting');
+    }
+    window.location.reload();
+  });
+
+  dismissBtn?.addEventListener('click', () => {
+    notification.classList.remove('visible');
+    setTimeout(() => notification.remove(), 300);
+  });
+}
+
+// ==========================================================================
 // Initialize
 // ==========================================================================
 
 function init(): void {
   initPage();
   initKeyboardDetection();
+  initServiceWorker();
 }
 
 if (document.readyState === 'loading') {
