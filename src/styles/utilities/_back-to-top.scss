@@ -1,0 +1,73 @@
+// ==========================================================================
+// Back to Top Button
+// ==========================================================================
+
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  background: var(--primary-blue);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &:hover {
+    background: var(--primary-navy);
+    transform: translateY(-2px);
+  }
+
+  &:focus {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+// Dark theme
+[data-theme='dark'] .back-to-top {
+  background: var(--accent-blue);
+
+  &:hover {
+    background: var(--primary-blue);
+  }
+}
+
+// Mobile styles
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .accessibility-toggle {
+    bottom: 1rem;
+    right: 4rem;
+  }
+
+  .accessibility-panel {
+    bottom: 4rem;
+    right: 1rem;
+    left: 1rem;
+    min-width: auto;
+  }
+}

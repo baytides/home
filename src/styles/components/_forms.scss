@@ -1,0 +1,424 @@
+// ==========================================================================
+// Forms
+// ==========================================================================
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-dark);
+  }
+}
+
+.contact-form {
+  h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  > p {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: var(--white);
+
+    &:focus {
+      outline: 0;
+      border-color: var(--primary-blue);
+    }
+  }
+
+  textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+}
+
+// Form status messages
+.form-status {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+
+  &.success {
+    background: #c6f6d5;
+    color: #22543d;
+    border: 1px solid #9ae6b4;
+  }
+
+  &.error {
+    background: #fed7d7;
+    color: #822727;
+    border: 1px solid #fc8181;
+  }
+}
+
+// Field errors
+.field-error,
+.error-message {
+  color: var(--error);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.form-group {
+  input.error,
+  select.error,
+  textarea.error {
+    border-color: var(--error);
+  }
+}
+
+input[aria-invalid='true'],
+select[aria-invalid='true'],
+textarea[aria-invalid='true'] {
+  border-color: var(--error);
+}
+
+// Dark theme adjustments
+[data-theme='dark'] {
+  .contact-form {
+    input,
+    select,
+    textarea {
+      background: var(--bg-secondary);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: var(--text-dark);
+    }
+
+    label {
+      color: var(--text-dark);
+    }
+  }
+
+  .form-status {
+    &.success {
+      background: #22543d;
+      color: #c6f6d5;
+    }
+
+    &.error {
+      background: #822727;
+      color: #fed7d7;
+    }
+  }
+}
+
+// ==========================================================================
+// Newsletter Form
+// ==========================================================================
+
+.newsletter {
+  background: var(--cream);
+  text-align: center;
+
+  &-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+
+  input {
+    flex: 1;
+    padding: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+
+    &:focus {
+      outline: 0;
+      border-color: var(--primary-blue);
+    }
+  }
+}
+
+[data-theme='dark'] {
+  .newsletter {
+    background: var(--bg-secondary);
+  }
+
+  .newsletter-form input {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+
+    &::placeholder {
+      color: var(--text-light);
+    }
+  }
+}
+
+// ==========================================================================
+// Donation Form
+// ==========================================================================
+
+.donation-form-container {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.donation-type-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  padding: 4px;
+
+  .toggle-btn {
+    flex: 1;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-light);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: var(--text-dark);
+    }
+
+    &.active {
+      background: var(--primary-blue);
+      color: white;
+    }
+  }
+}
+
+.donation-amounts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+
+  .amount-btn {
+    padding: 1rem;
+    border: 2px solid #e2e8f0;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-dark);
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+    }
+
+    &.active {
+      border-color: var(--primary-blue);
+      background: var(--primary-blue);
+      color: white;
+    }
+  }
+}
+
+.custom-amount-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.custom-amount-input {
+  display: flex;
+  align-items: center;
+  background: var(--bg-primary);
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+
+  &:focus-within {
+    border-color: var(--primary-blue);
+  }
+
+  .currency-symbol {
+    padding: 1rem;
+    font-weight: 600;
+    color: var(--text-light);
+    background: var(--bg-secondary);
+  }
+
+  input {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    font-size: 1rem;
+    background: transparent;
+    color: var(--text-dark);
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: var(--text-light);
+    }
+  }
+}
+
+.fund-designation {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-dark);
+  }
+
+  select {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--bg-primary);
+    color: var(--text-dark);
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+    }
+  }
+}
+
+.donate-submit-btn {
+  width: 100%;
+  text-align: center;
+  padding: 1.25rem 2rem;
+  font-size: 1.125rem;
+}
+
+.secure-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--text-light);
+
+  svg {
+    color: var(--primary-blue);
+  }
+}
+
+.manage-donations {
+  margin-top: 1.5rem;
+  text-align: center;
+
+  p {
+    font-size: 0.9375rem;
+    color: var(--text-light);
+  }
+
+  a {
+    color: var(--primary-blue);
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Dark theme for donation form
+[data-theme='dark'] {
+  .donation-form-container {
+    background: var(--bg-secondary);
+  }
+
+  .donation-type-toggle {
+    background: var(--bg-primary);
+
+    .toggle-btn {
+      color: var(--text-light);
+
+      &:hover {
+        color: var(--text-dark);
+      }
+
+      &.active {
+        background: var(--accent-blue);
+        color: #1a202c;
+      }
+    }
+  }
+
+  .donation-amounts .amount-btn {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+
+    &:hover {
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+
+    &.active {
+      border-color: var(--accent-blue);
+      background: var(--accent-blue);
+      color: #1a202c;
+    }
+  }
+
+  .custom-amount-input {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.1);
+
+    .currency-symbol {
+      background: var(--bg-secondary);
+    }
+  }
+
+  .fund-designation select {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+  }
+}
+
+// Mobile responsive
+@media (max-width: 480px) {
+  .donation-amounts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .donation-form-container {
+    padding: 1.5rem;
+  }
+}

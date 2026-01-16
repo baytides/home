@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Card from '../components/Card.astro';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'NonprofitOrganization',
+  name: 'Bay Tides',
+  url: 'https://baytides.org',
+  logo: 'https://baytides.org/assets/images/logo.png',
+  description:
+    "Bay Tides empowers communities to protect and preserve the San Francisco Bay's environment through education, advocacy, hands-on action, and innovative digital tools.",
+  foundingDate: '2023',
+  areaServed: {
+    '@type': 'Place',
+    name: 'San Francisco Bay Area, California',
+  },
+  sameAs: [],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'General Inquiries',
+    url: 'https://baytides.org/contact',
+  },
+};
+---
+
+<BaseLayout
+  title="Bay Tides | Protecting the San Francisco Bay"
+  description="Bay Tides empowers communities to protect and preserve the San Francisco Bay's environment through education, community mobilization, and innovative digital tools."
+  canonicalUrl="https://baytides.org/"
+  structuredData={structuredData}
+  preloadImages={['/assets/images/hero-bg.webp']}
+>
+  <!-- Hero Section -->
+  <PageHero
+    title="Protecting the San Francisco Bay"
+    subtitle="Empowering communities to protect and preserve the San Francisco Bay's environment through education, community mobilization, and innovative digital tools."
+    variant="home"
+    buttons={[
+      { href: '/volunteer', label: 'Get Involved', variant: 'primary' },
+      { href: '/donate', label: 'Support Our Mission', variant: 'outline' },
+    ]}
+  />
+
+  <!-- Mission Preview -->
+  <section class="mission-preview">
+    <div class="container">
+      <div class="mission-content">
+        <div class="mission-text">
+          <h2>Our Mission</h2>
+          <p>
+            At Bay Tides, we're passionate about protecting the natural environment and health of
+            the San Francisco Bay. Through hands-on projects, educational programs, and
+            collaborative conservation efforts, we empower residents to make a meaningful impact in
+            their backyard.
+          </p>
+          <a href="/about" class="btn btn-secondary">Learn More About Us</a>
+        </div>
+        <div class="mission-image">
+          <picture>
+            <source srcset="/assets/images/egret.webp" type="image/webp" />
+            <img
+              src="/assets/images/egret.jpg"
+              alt="Snowy Egret at San Francisco Bay"
+              width="600"
+              height="400"
+              loading="lazy"
+            />
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Three Pillars Section -->
+  <section class="pillars">
+    <div class="container">
+      <div class="section-title">
+        <h2>What We Do</h2>
+        <p>Our approach to protecting the San Francisco Bay</p>
+      </div>
+
+      <div class="cards-grid">
+        <Card title="Educate" icon="📚">
+          <p>
+            Through workshops, community partnerships, and public programs, we provide accessible
+            education on environmental issues and conservation practices.
+          </p>
+        </Card>
+
+        <Card title="Mobilize" icon="🌱">
+          <p>
+            From habitat restoration to policy advocacy, we empower residents to take action and
+            champion initiatives that protect the bay's future.
+          </p>
+        </Card>
+
+        <Card title="Innovate" icon="💻">
+          <p>
+            We build open-source digital tools like Bay Navigator that make sustainability
+            accessible and connect residents with resources for a greener future.
+          </p>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Statement -->
+  <section class="impact">
+    <div class="container">
+      <div class="impact-content">
+        <h2>Why Our Work Matters</h2>
+        <p>
+          The San Francisco Bay is more than just a natural landmark&mdash;it's a vital ecosystem
+          that protects critical and endangered wildlife and enriches our community.
+        </p>
+        <p class="highlight">
+          With your support, we can ensure a thriving, resilient Bay Area for generations to come.
+        </p>
+        <a href="/donate" class="btn btn-primary">Support Our Mission</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to Make a Difference?</h2>
+      <p>
+        Join our community of dedicated environmental stewards and help protect the San Francisco
+        Bay.
+      </p>
+      <div class="cta-buttons">
+        <a href="/volunteer" class="btn btn-primary">Volunteer With Us</a>
+        <a href="/contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

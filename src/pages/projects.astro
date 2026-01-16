@@ -1,0 +1,266 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
+import Card from '../components/Card.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Bay Tides Projects',
+    description: "Explore Bay Tides' initiatives to protect the San Francisco Bay.",
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: [
+        {
+          '@type': 'SoftwareApplication',
+          name: 'Bay Navigator',
+          url: 'https://baynavigator.org',
+          applicationCategory: 'WebApplication',
+          description: 'A resource helping Bay Area residents discover savings programs.',
+        },
+      ],
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Projects' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Our Projects"
+  description="Explore Bay Tides' initiatives to protect the San Francisco Bay. From community resources to conservation programs, see how we're making an impact."
+  canonicalUrl="https://baytides.org/projects"
+  structuredData={structuredData}
+  preloadImages={['/assets/images/hero-bg.webp']}
+>
+  <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Projects' }]} />
+
+  <PageHero title="Our Initiatives" subtitle="Programs and tools serving the Bay Area community" />
+
+  <!-- Featured Project: Bay Navigator -->
+  <section class="content-section">
+    <div class="container">
+      <div class="content-grid">
+        <div class="content-text">
+          <span class="badge">Community Resource</span>
+          <h2>Bay Navigator</h2>
+          <p>
+            <strong>Helping residents discover savings programs across the Bay Area.</strong>
+          </p>
+          <p>
+            We started Bay Navigator with a simple observation:
+            <strong>
+              financial barriers often prevent people from making sustainable choices
+            </strong>. When money is tight, public transit, energy-efficient upgrades, and outdoor
+            recreation can feel out of reach.
+          </p>
+          <p>
+            As we built the tool, we realized its potential extended far beyond environmental
+            programs. The Bay Area is one of the most expensive regions in the country, and
+            residents deserve a single place to find all the assistance available to them.
+          </p>
+          <p>So we expanded. Today, Bay Navigator covers:</p>
+          <ul style="margin: 1rem 0; padding-left: 1.5rem">
+            <li>
+              <strong>Transit savings</strong>
+              — discounted fares for Clipper, BART, Caltrain, and more
+            </li>
+            <li>
+              <strong>Utility assistance</strong>
+              — programs like CARE and FERA for energy bills
+            </li>
+            <li>
+              <strong>Community resources</strong>
+              — libraries, food assistance, and local services
+            </li>
+            <li>
+              <strong>Parks and recreation</strong>
+              — free and discounted access to public lands
+            </li>
+            <li>
+              <strong>Healthcare and wellness</strong>
+              — sliding-scale and low-cost programs
+            </li>
+          </ul>
+          <p>
+            A stronger community starts with residents who can thrive. By connecting people with
+            resources, we're building a more resilient Bay Area—and staying true to our
+            environmental mission along the way.
+          </p>
+          <div style="margin-top: 1.5rem">
+            <a
+              href="https://baynavigator.org"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener"
+            >
+              Visit Bay Navigator
+              <span class="sr-only">(opens in new tab)</span>
+            </a>
+            <a
+              href="https://github.com/baytides/baynavigator"
+              class="btn btn-outline"
+              target="_blank"
+              rel="noopener"
+              style="margin-left: 0.5rem"
+            >
+              View on GitHub
+              <span class="sr-only">(opens in new tab)</span>
+            </a>
+          </div>
+        </div>
+        <div class="content-image">
+          <div class="project-logo-card">
+            <img
+              src="/assets/images/baynavigator-logo.svg"
+              alt="Bay Navigator logo"
+              width="200"
+              height="200"
+            />
+            <p>baynavigator.org</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Environmental Impact -->
+  <section class="content-section alt-bg">
+    <div class="container">
+      <div class="section-title">
+        <h2>How Discounts Help the Environment</h2>
+        <p>The connection between affordability and sustainability</p>
+      </div>
+
+      <div class="cards-grid">
+        <Card title="Reduced Emissions" icon="🚌">
+          <p>
+            Transit discounts make public transportation affordable, reducing car trips and lowering
+            carbon emissions across the Bay Area.
+          </p>
+        </Card>
+
+        <Card title="Energy Conservation" icon="⚡">
+          <p>
+            Utility assistance programs like CARE and FERA help residents afford energy-efficient
+            upgrades and reduce overall energy consumption.
+          </p>
+        </Card>
+
+        <Card title="Nature Connection" icon="🌳">
+          <p>
+            Free park passes and outdoor recreation discounts help residents connect with nature,
+            fostering the environmental stewardship we need.
+          </p>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Digital Principles -->
+  <section class="content-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Digital Principles</h2>
+        <p>Values that guide our technology projects</p>
+      </div>
+
+      <div class="cards-grid">
+        <Card title="Privacy-First" icon="🔒">
+          <p>
+            No accounts, no cookies, no tracking. We use privacy-friendly analytics and store
+            preferences only on your device. Your data stays yours.
+          </p>
+        </Card>
+
+        <Card title="Open Source" icon="🔗">
+          <p>
+            All our code is publicly available on GitHub. Anyone can inspect, audit, or contribute
+            to our projects. Transparency builds trust.
+          </p>
+        </Card>
+
+        <Card title="Fully Accessible" icon="♿">
+          <p>
+            Built to WCAG 2.2 AAA standards with keyboard navigation, screen reader support, and
+            adjustable display options. Everyone deserves access.
+          </p>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contribute -->
+  <section class="impact">
+    <div class="container">
+      <div class="impact-content">
+        <h2>Contribute to Our Projects</h2>
+        <p>
+          Our digital projects are open source and community-driven. Whether you're a developer,
+          designer, researcher, or just have ideas to share, we welcome your contributions.
+        </p>
+        <p>
+          Bay Navigator is just our first project. We're developing additional programs focused on
+          conservation, education, and community engagement throughout the Bay Area. Have an idea
+          for a project that could benefit the community?
+          <a href="/contact" style="color: inherit; text-decoration: underline">Get in touch</a>
+          with your suggestions.
+        </p>
+        <div style="margin-top: 1.5rem">
+          <a
+            href="https://github.com/baytides"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener"
+          >
+            Visit Our GitHub
+            <span class="sr-only">(opens in new tab)</span>
+          </a>
+          <a href="/volunteer" class="btn btn-outline" style="margin-left: 0.5rem">
+            Volunteer With Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .badge {
+    display: inline-block;
+    background: var(--primary-blue);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .project-logo-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .project-logo-card img {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+
+  .project-logo-card p {
+    color: var(--text-light);
+    margin-bottom: 0;
+  }
+</style>

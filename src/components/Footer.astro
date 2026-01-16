@@ -1,0 +1,59 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<!-- Footer -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <picture>
+          <source srcset="/assets/images/logo.webp" type="image/webp" />
+          <img
+            src="/assets/images/logo.png"
+            alt="Bay Tides"
+            class="footer-logo"
+            width="60"
+            height="60"
+            loading="lazy"
+          />
+        </picture>
+        <p>Empowering communities to protect and preserve the San Francisco Bay's environment.</p>
+      </div>
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/volunteer">Volunteer</a></li>
+          <li><a href="/donate">Donate</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h3>Connect</h3>
+        <p>
+          <a href="https://github.com/baytides" target="_blank" rel="noopener">
+            GitHub
+            <span class="sr-only">(opens in new tab)</span>
+          </a>
+        </p>
+        <p>
+          <a href="https://baynavigator.org" target="_blank" rel="noopener">
+            Bay Navigator
+            <span class="sr-only">(opens in new tab)</span>
+          </a>
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>
+        &copy; {currentYear} Bay Tides. All rights reserved. | A 501(c)(3) nonprofit organization. |
+        <a href="/privacy">Privacy Policy</a>
+        |
+        <a href="/terms">Terms of Service</a>
+        |
+        <a href="/sitemap">Sitemap</a>
+      </p>
+    </div>
+  </div>
+</footer>

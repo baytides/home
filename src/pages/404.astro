@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/Card.astro';
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description="The page you're looking for could not be found. Navigate back to Bay Tides' main pages."
+  canonicalUrl="https://baytides.org/404"
+>
+  <!-- 404 Content -->
+  <section class="hero" style="min-height: 50vh">
+    <div class="container">
+      <h1 style="font-size: 6rem; margin-bottom: 0.5rem">404</h1>
+      <h2 style="color: var(--white); margin-bottom: 1rem">Page Not Found</h2>
+      <p>The page you're looking for seems to have drifted away with the tide.</p>
+      <div class="hero-buttons">
+        <a href="/" class="btn btn-primary">Back to Home</a>
+        <a href="/contact" class="btn btn-outline">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Helpful Links -->
+  <section class="content-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Helpful Links</h2>
+        <p>Here are some pages you might be looking for</p>
+      </div>
+      <div class="cards-grid">
+        <a href="/about" class="card card-link">
+          <div class="card-icon" aria-hidden="true">&#128220;</div>
+          <h3>About Us</h3>
+          <p>Learn about our mission to protect the San Francisco Bay.</p>
+        </a>
+        <a href="/volunteer" class="card card-link">
+          <div class="card-icon" aria-hidden="true">&#129309;</div>
+          <h3>Volunteer</h3>
+          <p>Join our community of environmental stewards.</p>
+        </a>
+        <a href="/donate" class="card card-link">
+          <div class="card-icon" aria-hidden="true">&#128153;</div>
+          <h3>Donate</h3>
+          <p>Support our conservation and education programs.</p>
+        </a>
+        <a href="/projects" class="card card-link">
+          <div class="card-icon" aria-hidden="true">&#128640;</div>
+          <h3>Projects</h3>
+          <p>Explore our digital initiatives and tools.</p>
+        </a>
+        <a href="/contact" class="card card-link">
+          <div class="card-icon" aria-hidden="true">&#128231;</div>
+          <h3>Contact</h3>
+          <p>Get in touch with our team.</p>
+        </a>
+        <a href="/sitemap" class="card card-link">
+          <div class="card-icon" aria-hidden="true">&#128506;</div>
+          <h3>Sitemap</h3>
+          <p>View all pages on our website.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .card-link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+</style>

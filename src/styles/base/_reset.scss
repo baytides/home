@@ -1,0 +1,131 @@
+// ==========================================================================
+// CSS Reset & Base Styles
+// ==========================================================================
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+// Reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::after,
+  ::before {
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+[data-reduced-motion='true'] {
+  *,
+  ::after,
+  ::before {
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+  }
+}
+
+// ==========================================================================
+// Typography
+// ==========================================================================
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background: var(--white);
+  opacity: 1;
+  transition: opacity 0.2s ease;
+
+  &.page-transitioning {
+    opacity: 0;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--primary-navy);
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.5rem;
+}
+h4 {
+  font-size: 1.125rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  color: var(--text-dark);
+}
+
+a {
+  color: var(--primary-blue);
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--accent-blue);
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Content links (underlined)
+main p a:not(.btn),
+main li a:not(.btn),
+.content-section a:not(.btn) {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+
+// ==========================================================================
+// Container
+// ==========================================================================
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+// ==========================================================================
+// Section spacing
+// ==========================================================================
+
+section {
+  padding: 5rem 0;
+}
+
+.alt-bg {
+  background: var(--light-blue);
+}

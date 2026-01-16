@@ -1,0 +1,462 @@
+---
+import CheckoutLayout from '../layouts/CheckoutLayout.astro';
+---
+
+<CheckoutLayout
+  title="Donate"
+  description="Complete your donation to Bay Tides. Your contribution helps fund habitat restoration, educational programs, and advocacy efforts to protect the San Francisco Bay."
+>
+  <div class="checkout-container">
+    <!-- Progress Stepper -->
+    <div class="checkout-stepper">
+      <div class="stepper-step active" data-step="1">
+        <div class="stepper-number">1</div>
+        <span class="stepper-label">Amount</span>
+      </div>
+      <div class="stepper-line"></div>
+      <div class="stepper-step" data-step="2">
+        <div class="stepper-number">2</div>
+        <span class="stepper-label">Your Info</span>
+      </div>
+      <div class="stepper-line"></div>
+      <div class="stepper-step" data-step="3">
+        <div class="stepper-number">3</div>
+        <span class="stepper-label">Payment</span>
+      </div>
+      <div class="stepper-line"></div>
+      <div class="stepper-step" data-step="4">
+        <div class="stepper-number">4</div>
+        <span class="stepper-label">Complete</span>
+      </div>
+    </div>
+
+    <!-- Step 1: Amount -->
+    <section class="checkout-step active" id="step-1">
+      <h1 class="checkout-title">Choose Your Donation</h1>
+
+      <div class="checkout-card">
+        <div class="donation-type-toggle">
+          <button type="button" class="toggle-btn active" data-type="one-time">One-Time</button>
+          <button type="button" class="toggle-btn" data-type="monthly">Monthly</button>
+        </div>
+
+        <div class="donation-amounts">
+          <button type="button" class="amount-btn" data-amount="10">$10</button>
+          <button type="button" class="amount-btn" data-amount="25">$25</button>
+          <button type="button" class="amount-btn" data-amount="50">$50</button>
+          <button type="button" class="amount-btn active" data-amount="100">$100</button>
+          <button type="button" class="amount-btn" data-amount="250">$250</button>
+          <button type="button" class="amount-btn" data-amount="other">Other</button>
+        </div>
+
+        <div class="custom-amount-wrapper" id="custom-amount-wrapper" style="display: none">
+          <label for="custom-amount" class="sr-only">Custom amount</label>
+          <div class="custom-amount-input">
+            <span class="currency-symbol">$</span>
+            <input
+              type="number"
+              id="custom-amount"
+              name="custom-amount"
+              min="1"
+              placeholder="Enter amount"
+            />
+          </div>
+        </div>
+
+        <div class="checkout-field">
+          <label for="fund-select">Designate my gift to:</label>
+          <select id="fund-select" name="fund">
+            <option value="General Fund">Where needed most (General Fund)</option>
+            <option value="Programs">Programs</option>
+            <option value="Events">Events</option>
+            <option value="Capital Campaign">Capital Campaign</option>
+            <option value="Grants">Grants</option>
+          </select>
+        </div>
+
+        <div class="checkout-field">
+          <label for="tribute-type">Make this gift a tribute:</label>
+          <select id="tribute-type" name="tribute-type">
+            <option value="none">No tribute</option>
+            <option value="in_honor">In honor of someone</option>
+            <option value="in_memory">In memory of someone</option>
+          </select>
+        </div>
+
+        <div class="checkout-field" id="tribute-name-wrapper" style="display: none">
+          <label for="tribute-name">Honoree's name:</label>
+          <input type="text" id="tribute-name" name="tribute-name" placeholder="Enter name" />
+        </div>
+
+        <div class="checkout-checkbox">
+          <label class="checkbox-label">
+            <input type="checkbox" id="anonymous-checkbox" name="anonymous" />
+            <span>Make my donation anonymous</span>
+          </label>
+          <p class="checkbox-note">
+            Your name will not appear publicly, but we'll still send a receipt.
+          </p>
+        </div>
+      </div>
+
+      <div class="checkout-actions">
+        <button type="button" class="btn btn-primary btn-large" id="step1-next">
+          Continue
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Step 2: Your Info -->
+    <section class="checkout-step" id="step-2">
+      <h1 class="checkout-title">Your Information</h1>
+
+      <div class="checkout-card">
+        <div class="checkout-summary-mini">
+          <span class="summary-amount" id="summary-amount-2">$100</span>
+          <span class="summary-type" id="summary-type-2">One-time donation</span>
+          <button type="button" class="edit-link" data-goto="1">Edit</button>
+        </div>
+
+        <div class="donor-info-grid">
+          <div class="checkout-field">
+            <label for="donor-first-name">
+              First Name
+              <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="donor-first-name"
+              name="first-name"
+              required
+              autocomplete="given-name"
+            />
+          </div>
+          <div class="checkout-field">
+            <label for="donor-last-name">
+              Last Name
+              <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="donor-last-name"
+              name="last-name"
+              required
+              autocomplete="family-name"
+            />
+          </div>
+        </div>
+
+        <div class="checkout-field">
+          <label for="donor-email">
+            Email
+            <span class="required">*</span>
+          </label>
+          <input type="email" id="donor-email" name="email" required autocomplete="email" />
+        </div>
+
+        <div class="checkout-field">
+          <label for="donor-address">
+            Street Address
+            <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="donor-address"
+            name="address"
+            required
+            autocomplete="address-line1"
+          />
+        </div>
+
+        <div class="checkout-field">
+          <label for="donor-address2">
+            Address Line 2
+            <span class="optional">(optional)</span>
+          </label>
+          <input
+            type="text"
+            id="donor-address2"
+            name="address2"
+            autocomplete="address-line2"
+            placeholder="Apt, suite, unit, etc."
+          />
+        </div>
+
+        <div class="donor-info-grid donor-info-grid-3">
+          <div class="checkout-field">
+            <label for="donor-city">
+              City
+              <span class="required">*</span>
+            </label>
+            <input type="text" id="donor-city" name="city" required autocomplete="address-level2" />
+          </div>
+          <div class="checkout-field">
+            <label for="donor-state">
+              State
+              <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="donor-state"
+              name="state"
+              maxlength="2"
+              required
+              autocomplete="address-level1"
+              placeholder="CA"
+            />
+          </div>
+          <div class="checkout-field">
+            <label for="donor-zip">
+              ZIP
+              <span class="required">*</span>
+            </label>
+            <input type="text" id="donor-zip" name="zip" required autocomplete="postal-code" />
+          </div>
+        </div>
+
+        <div class="donor-info-grid">
+          <div class="checkout-field">
+            <label for="donor-phone">
+              Phone
+              <span class="optional">(optional)</span>
+            </label>
+            <input type="tel" id="donor-phone" name="phone" autocomplete="tel" />
+          </div>
+          <div class="checkout-field">
+            <label for="donor-org">
+              Organization
+              <span class="optional">(optional)</span>
+            </label>
+            <input type="text" id="donor-org" name="organization" autocomplete="organization" />
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout-actions checkout-actions-split">
+        <button type="button" class="btn btn-secondary" id="step2-back">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7"></path>
+          </svg>
+          Back
+        </button>
+        <button type="button" class="btn btn-primary btn-large" id="step2-next">
+          Continue to Payment
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Step 3: Payment -->
+    <section class="checkout-step" id="step-3">
+      <h1 class="checkout-title">Payment Details</h1>
+
+      <div class="checkout-card">
+        <div class="checkout-summary-mini">
+          <span class="summary-amount" id="summary-amount-3">$100</span>
+          <span class="summary-type" id="summary-type-3">One-time donation</span>
+          <button type="button" class="edit-link" data-goto="1">Edit</button>
+        </div>
+
+        <div class="payment-summary">
+          <div class="summary-row">
+            <span>Donation</span>
+            <span id="payment-donation-amount">$100.00</span>
+          </div>
+          <div class="summary-row" id="summary-fund-row">
+            <span>Fund</span>
+            <span id="payment-fund">General Fund</span>
+          </div>
+          <div class="summary-row summary-total">
+            <span>Total</span>
+            <span id="payment-total">$100.00</span>
+          </div>
+        </div>
+
+        <div class="payment-element-container">
+          <div id="payment-element"></div>
+          <div id="payment-errors" class="payment-errors" role="alert"></div>
+        </div>
+      </div>
+
+      <div class="checkout-actions checkout-actions-split">
+        <button type="button" class="btn btn-secondary" id="step3-back">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7"></path>
+          </svg>
+          Back
+        </button>
+        <button type="button" class="btn btn-primary btn-large" id="submit-payment" disabled>
+          <span class="btn-text">Complete Donation</span>
+          <span class="btn-spinner" style="display: none">
+            <svg class="spinner" width="20" height="20" viewBox="0 0 24 24">
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="3"
+                fill="none"
+                stroke-dasharray="60"
+                stroke-linecap="round"
+              >
+              </circle>
+            </svg>
+            Processing...
+          </span>
+        </button>
+      </div>
+
+      <p class="secure-notice">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        Secure payment powered by Stripe
+      </p>
+    </section>
+
+    <!-- Step 4: Complete -->
+    <section class="checkout-step" id="step-4">
+      <div class="checkout-success">
+        <div class="success-icon">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9 12l2 2 4-4"></path>
+          </svg>
+        </div>
+        <h1 class="checkout-title">Thank You!</h1>
+        <p class="success-message">
+          Your generous donation of
+          <strong id="final-amount">$100</strong>
+          has been received.
+          <span id="final-frequency-text"></span>
+        </p>
+        <p class="success-submessage">
+          A confirmation email has been sent to
+          <strong id="final-email">your email</strong>.
+        </p>
+
+        <div class="receipt-card">
+          <h2>Your Receipt</h2>
+          <div class="receipt-details">
+            <div class="receipt-row">
+              <span>Date</span>
+              <span id="receipt-date"></span>
+            </div>
+            <div class="receipt-row">
+              <span>Amount</span>
+              <span id="receipt-amount"></span>
+            </div>
+            <div class="receipt-row">
+              <span>Fund</span>
+              <span id="receipt-fund"></span>
+            </div>
+            <div class="receipt-row" id="receipt-tribute-row" style="display: none">
+              <span id="receipt-tribute-label">In honor of</span>
+              <span id="receipt-tribute-name"></span>
+            </div>
+            <div class="receipt-row">
+              <span>Transaction ID</span>
+              <span id="receipt-transaction-id"></span>
+            </div>
+          </div>
+          <p class="receipt-tax-note">
+            Bay Tides is a registered 501(c)(3) nonprofit organization (EIN: 93-3889081). This
+            donation is tax-deductible to the fullest extent allowed by law. No goods or services
+            were provided in exchange for this contribution.
+          </p>
+        </div>
+
+        <div class="receipt-actions">
+          <button type="button" class="btn btn-primary" id="download-receipt">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7,10 12,15 17,10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download PDF
+          </button>
+          <button type="button" class="btn btn-secondary" id="print-receipt">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6,9 6,2 18,2 18,9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2">
+              </path>
+              <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            Print Receipt
+          </button>
+        </div>
+
+        <div class="success-cta">
+          <a href="/" class="btn btn-outline">Return to Homepage</a>
+          <a href="/volunteer" class="btn btn-outline">Get Involved</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</CheckoutLayout>
+
+<script>
+  import '../scripts/checkout';
+</script>

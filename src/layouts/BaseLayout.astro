@@ -1,0 +1,92 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.scss';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogType?: string;
+  structuredData?: object | object[];
+  preloadImages?: string[];
+}
+
+const {
+  title,
+  description,
+  canonicalUrl = Astro.url.href,
+  ogImage = 'https://baytides.org/assets/images/hero-bg.jpg',
+  ogType = 'website',
+  structuredData,
+  preloadImages = [],
+} = Astro.props;
+
+const fullTitle = title.includes('Bay Tides') ? title : `${title} | Bay Tides`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+    <link rel="apple-touch-icon" href="/assets/images/logo.png" />
+
+    <!-- Preload critical assets -->
+    {
+      preloadImages.map((img) => (
+        <link
+          rel="preload"
+          href={img}
+          as="image"
+          type={img.endsWith('.webp') ? 'image/webp' : 'image/jpeg'}
+        />
+      ))
+    }
+
+    <!-- Structured Data (JSON-LD) -->
+    {
+      structuredData &&
+        (Array.isArray(structuredData) ? (
+          structuredData.map((data) => (
+            <script type="application/ld+json" set:html={JSON.stringify(data)} />
+          ))
+        ) : (
+          <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+        ))
+    }
+  </head>
+  <body>
+    <Header />
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <script>
+      // Service worker registration
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      }
+    </script>
+  </body>
+</html>

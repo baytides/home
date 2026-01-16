@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Sitemap',
+    description: 'Navigate Bay Tides website. Find all pages.',
+    publisher: {
+      '@type': 'NonprofitOrganization',
+      name: 'Bay Tides',
+      url: 'https://baytides.org',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Sitemap' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Sitemap"
+  description="Navigate Bay Tides website. Find all pages including information about our conservation work, volunteer opportunities, and how to donate."
+  canonicalUrl="https://baytides.org/sitemap"
+  structuredData={structuredData}
+>
+  <PageHero title="Sitemap" subtitle="Navigate our website" />
+
+  <section class="content-section">
+    <div class="container">
+      <div class="content-centered" style="text-align: left; max-width: 800px">
+        <h2>Main Pages</h2>
+        <ul class="sitemap-list">
+          <li>
+            <a href="/">Home</a>
+            — Learn about our mission to protect the San Francisco Bay
+          </li>
+          <li>
+            <a href="/about">About Us</a>
+            — Our story, vision, and impact
+          </li>
+          <li>
+            <a href="/projects">Projects</a>
+            — Digital initiatives including Bay Navigator
+          </li>
+          <li>
+            <a href="/volunteer">Volunteer</a>
+            — Join our team and make a difference
+          </li>
+          <li>
+            <a href="/donate">Donate</a>
+            — Support our conservation work
+          </li>
+          <li>
+            <a href="/contact">Contact</a>
+            — Get in touch with us
+          </li>
+          <li>
+            <a href="/events">Events</a>
+            — Volunteer events and community gatherings
+          </li>
+        </ul>
+
+        <h2>Legal &amp; Policies</h2>
+        <ul class="sitemap-list">
+          <li>
+            <a href="/privacy">Privacy Policy</a>
+            — How we protect your data
+          </li>
+          <li>
+            <a href="/terms">Terms of Service</a>
+            — Website usage terms
+          </li>
+          <li>
+            <a href="/accessibility">Accessibility</a>
+            — Our commitment to web accessibility
+          </li>
+        </ul>
+
+        <h2>External Resources</h2>
+        <ul class="sitemap-list">
+          <li>
+            <a href="https://baynavigator.org" target="_blank" rel="noopener">
+              Bay Navigator
+              <span class="sr-only">(opens in new tab)</span>
+            </a>
+            — Our community savings platform
+          </li>
+          <li>
+            <a href="https://github.com/baytides" target="_blank" rel="noopener">
+              GitHub
+              <span class="sr-only">(opens in new tab)</span>
+            </a>
+            — Our open source projects
+          </li>
+        </ul>
+
+        <h2>Technical</h2>
+        <ul class="sitemap-list">
+          <li>
+            <a href="/sitemap.xml">XML Sitemap</a>
+            — For search engines
+          </li>
+          <li>
+            <a href="/robots.txt">Robots.txt</a>
+            — Search engine crawling instructions
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .sitemap-list {
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+  }
+
+  .sitemap-list li {
+    margin-bottom: 0.5rem;
+  }
+</style>

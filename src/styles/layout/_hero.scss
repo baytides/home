@@ -1,0 +1,167 @@
+// ==========================================================================
+// Hero Section
+// ==========================================================================
+
+.hero {
+  background: linear-gradient(135deg, var(--primary-navy) 0%, #234e7a 40%, #2b6cb0 100%);
+  color: #fff;
+  padding: 10rem 0 6rem;
+  text-align: center;
+  margin-top: 70px;
+  position: relative;
+  overflow: hidden;
+
+  // Subtle wave pattern overlay
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.05' d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,133.3C672,139,768,181,864,181.3C960,181,1056,139,1152,128C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: bottom;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  // Floating particles effect
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size:
+      100px 100px,
+      150px 150px,
+      200px 200px;
+    animation: floatParticles 20s linear infinite;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    color: #fff;
+    font-size: clamp(2.25rem, 5vw, 3rem);
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.8s ease;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    animation: fadeInUp 0.8s ease 0.2s both;
+  }
+}
+
+.hero-home {
+  background:
+    linear-gradient(rgba(26, 54, 93, 0.75), rgba(43, 108, 176, 0.8)),
+    url('../images/hero-bg.webp') center/cover no-repeat;
+  padding: 12rem 0 8rem;
+}
+
+.hero-page {
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  padding: 8rem 0 4rem;
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 1.25rem;
+    max-width: 500px;
+  }
+}
+
+@keyframes floatParticles {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100px);
+  }
+}
+
+// Animation keyframe
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ==========================================================================
+// Dark Theme Adjustments
+// ==========================================================================
+
+[data-theme='dark'] {
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #1a365d 50%, #234e7a 100%);
+
+    h1 {
+      color: #fff;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.9);
+    }
+  }
+
+  .hero-home {
+    background:
+      linear-gradient(rgba(13, 17, 23, 0.8), rgba(26, 54, 93, 0.85)),
+      url('../images/hero-bg.webp') center/cover no-repeat;
+  }
+}
+
+// ==========================================================================
+// Mobile Styles
+// ==========================================================================
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 8rem 0 4rem;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+  }
+
+  .hero-home {
+    padding: 9rem 0 5rem;
+  }
+
+  .hero-page {
+    min-height: 250px;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1.0625rem;
+    }
+  }
+}

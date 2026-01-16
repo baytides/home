@@ -1,0 +1,205 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
+import Card from '../components/Card.astro';
+import SponsorsCarousel from '../components/SponsorsCarousel.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'DonateAction',
+    recipient: {
+      '@type': 'NonprofitOrganization',
+      name: 'Bay Tides',
+      url: 'https://baytides.org',
+      description: 'Bay Tides empowers communities to protect and preserve the San Francisco Bay.',
+    },
+    potentialAction: {
+      '@type': 'DonateAction',
+      target: 'https://baytides.org/checkout',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Donate' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Donate"
+  description="Support Bay Tides with a donation. Your contribution helps fund habitat restoration, educational programs, and advocacy efforts to protect the San Francisco Bay."
+  canonicalUrl="https://baytides.org/donate"
+  structuredData={structuredData}
+  preloadImages={['/assets/images/hero-bg.webp']}
+>
+  <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Donate' }]} />
+
+  <PageHero
+    title="Support Our Mission"
+    subtitle="Your generosity helps protect and restore the San Francisco Bay for future generations"
+  />
+
+  <!-- Donate Section -->
+  <section class="content-section">
+    <div class="container">
+      <div class="donate-content">
+        <div class="donate-text">
+          <h2>Make a Difference Today</h2>
+          <p>
+            Every donation, no matter the size, creates ripples of positive change. Your support
+            directly funds habitat restoration, youth education programs, and community advocacy
+            efforts that protect our cherished Bay shoreline.
+          </p>
+          <p>
+            Bay Tides is a registered 501(c)(3) nonprofit organization (EIN: 93-3889081). All
+            donations are tax-deductible to the fullest extent allowed by law.
+          </p>
+
+          <div class="donate-button-wrapper" id="donation-form">
+            <a href="/checkout" class="btn btn-primary btn-large">
+              Donate Now
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                style="vertical-align: middle; margin-left: 0.5rem"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </a>
+            <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-light)">
+              Secure checkout powered by Stripe
+            </p>
+          </div>
+
+          <div class="manage-donations" style="margin-top: 2rem">
+            <p>
+              Already a recurring donor?
+              <a
+                href="https://billing.stripe.com/p/login/5kQdR2f6pbC6eXu3GB6oo00"
+                target="_blank"
+                rel="noopener"
+              >
+                Manage your donations
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="donate-image">
+          <picture>
+            <source srcset="/assets/images/egret.webp" type="image/webp" />
+            <img
+              src="/assets/images/egret.jpg"
+              alt="Wildlife at San Francisco Bay"
+              width="600"
+              height="400"
+              loading="lazy"
+            />
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Section -->
+  <section class="pillars alt-bg">
+    <div class="container">
+      <div class="section-title">
+        <h2>Your Impact</h2>
+        <p>See how your donation makes a difference</p>
+      </div>
+
+      <div class="cards-grid">
+        <Card title="Habitat Restoration" icon="🌱">
+          <p>
+            Fund native plant installations, invasive species removal, and wetland restoration
+            projects along the Peninsula shoreline.
+          </p>
+        </Card>
+
+        <Card title="Education Programs" icon="📚">
+          <p>
+            Support workshops, school programs, and community events that teach environmental
+            stewardship to the next generation.
+          </p>
+        </Card>
+
+        <Card title="Advocacy Efforts" icon="📣">
+          <p>
+            Enable our work with local leaders and policymakers to champion environmental protection
+            initiatives.
+          </p>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Other Ways to Give -->
+  <section class="content-section">
+    <div class="container">
+      <div class="content-centered">
+        <h2>Other Ways to Give</h2>
+        <div class="giving-options">
+          <div class="giving-option">
+            <h3>Donor Advised Funds</h3>
+            <p>
+              Recommend a grant from your DAF to Bay Tides. Our EIN is available upon request for
+              easy processing through your fund administrator.
+            </p>
+          </div>
+          <div class="giving-option">
+            <h3>Stock Donations</h3>
+            <p>
+              Donating appreciated securities can provide tax advantages while supporting our
+              mission. We accept transfers of publicly traded stocks.
+            </p>
+          </div>
+          <div class="giving-option">
+            <h3>Corporate Matching</h3>
+            <p>
+              Many employers match charitable contributions. Check if your company has a matching
+              gift program to double your impact.
+            </p>
+          </div>
+          <div class="giving-option">
+            <h3>In-Kind Donations</h3>
+            <p>
+              We accept donations of supplies, equipment, and professional services. Contact us to
+              learn about current needs.
+            </p>
+          </div>
+        </div>
+        <div style="margin-top: 2.5rem">
+          <a href="/contact" class="btn btn-secondary">Contact Us About Giving</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology Sponsors -->
+  <SponsorsCarousel />
+
+  <!-- Thank You -->
+  <section class="impact">
+    <div class="container">
+      <div class="impact-content">
+        <h2>Thank You</h2>
+        <p>
+          Your generosity makes our work possible. Together, we can ensure a thriving, resilient Bay
+          Area for generations to come.
+        </p>
+        <a href="#donation-form" class="btn btn-primary">Donate Now</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

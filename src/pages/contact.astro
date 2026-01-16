@@ -1,0 +1,344 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    mainEntity: {
+      '@type': 'NonprofitOrganization',
+      name: 'Bay Tides',
+      url: 'https://baytides.org',
+      areaServed: {
+        '@type': 'Place',
+        name: 'San Francisco Bay Area, California',
+      },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Contact' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with Bay Tides. Questions about volunteering, partnerships, or donations? We'd love to hear from you."
+  canonicalUrl="https://baytides.org/contact"
+  structuredData={structuredData}
+  preloadImages={['/assets/images/hero-bg.webp']}
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://api.mapbox.com" crossorigin />
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js" async defer></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+  </Fragment>
+
+  <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
+
+  <PageHero title="Get in Touch" subtitle="We'd love to hear from you" />
+
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-form">
+          <h2>Send Us a Message</h2>
+          <p>
+            Have questions? Want to volunteer or partner with us? Fill out the form below and we'll
+            get back to you soon.
+          </p>
+
+          <div id="contact-form-status" aria-live="polite" aria-atomic="true"></div>
+
+          <form action="https://forms.baytides.org" method="POST" id="contact-form">
+            <input type="hidden" name="form_type" value="contact" />
+            <input
+              type="hidden"
+              name="redirect"
+              value="https://baytides.org/contact?submitted=true"
+            />
+            <input
+              type="checkbox"
+              name="botcheck"
+              class="hidden"
+              style="display: none"
+              aria-hidden="true"
+              tabindex="-1"
+            />
+
+            <div class="form-group">
+              <label for="name">
+                Name
+                <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Your name"
+                required
+                autocomplete="name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">
+                Email
+                <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="your@email.com"
+                required
+                autocomplete="email"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="topic">What can we help you with?</label>
+              <select id="topic" name="topic">
+                <option value="">Select a topic...</option>
+                <option value="volunteer">I want to volunteer</option>
+                <option value="partnership">Partnership inquiry</option>
+                <option value="donation">Donation question</option>
+                <option value="media">Media inquiry</option>
+                <option value="general">General question</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">
+                Message
+                <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </label>
+              <textarea id="message" name="message" placeholder="Your message..." required>
+              </textarea>
+            </div>
+
+            <fieldset class="turnstile-fieldset" style="border: none; padding: 0; margin: 0 0 1rem">
+              <legend class="sr-only">Security verification</legend>
+              <div class="cf-turnstile" data-sitekey="0x4AAAAAACJ4PUuzOaD_Xf63" data-theme="auto">
+              </div>
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          </form>
+        </div>
+
+        <div class="contact-info-panel">
+          <h2>Our Service Area</h2>
+          <p>
+            Our primary focus is <strong>San Mateo County</strong>, but we serve communities
+            throughout the San Francisco Bay Area.
+          </p>
+
+          <div
+            id="bay-area-map"
+            role="img"
+            aria-label="Map showing Bay Area service region with San Mateo County highlighted"
+            style="border-radius: 8px; overflow: hidden; margin: 1.5rem 0; width: 100%; height: 300px;"
+          >
+          </div>
+          <div class="map-description">
+            <strong>Counties we serve:</strong>
+            San Mateo (primary), Alameda, Contra Costa, Marin, Napa, San Francisco, Santa Clara, Santa
+            Cruz, Solano, and Sonoma.
+          </div>
+
+          <div class="contact-cta">
+            <h3>Want to make an immediate impact?</h3>
+            <a href="/donate" class="btn btn-secondary">Make a Donation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Signup -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="newsletter-content">
+        <h2>Stay Connected</h2>
+        <p>
+          Subscribe to our newsletter for updates on events, volunteer opportunities, and
+          conservation news.
+        </p>
+        <div id="newsletter-form-status" aria-live="polite" aria-atomic="true"></div>
+        <form
+          class="newsletter-form"
+          action="https://forms.baytides.org"
+          method="POST"
+          id="newsletter-form"
+        >
+          <input type="hidden" name="form_type" value="newsletter" />
+          <input
+            type="hidden"
+            name="redirect"
+            value="https://baytides.org/contact?subscribed=true"
+          />
+          <input
+            type="checkbox"
+            name="botcheck"
+            style="display: none"
+            aria-hidden="true"
+            tabindex="-1"
+          />
+          <label for="newsletter-email" class="sr-only">Email address</label>
+          <input
+            type="email"
+            id="newsletter-email"
+            name="email"
+            placeholder="Enter your email"
+            required
+            autocomplete="email"
+          />
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  function showFormStatus(container: HTMLElement, message: string, type: 'success' | 'error') {
+    const div = document.createElement('div');
+    div.className = `form-status ${type}`;
+    div.setAttribute('role', 'alert');
+    div.textContent = message;
+    container.textContent = '';
+    container.appendChild(div);
+  }
+
+  function initContactPage() {
+    const params = new URLSearchParams(window.location.search);
+    const statusDiv = document.getElementById('contact-form-status');
+    const newsletterStatusDiv = document.getElementById('newsletter-form-status');
+
+    if (params.get('submitted') === 'true' && statusDiv) {
+      showFormStatus(statusDiv, 'Thank you! Your message has been sent successfully.', 'success');
+    } else if (params.get('subscribed') === 'true' && newsletterStatusDiv) {
+      showFormStatus(
+        newsletterStatusDiv,
+        'Thank you for subscribing to our newsletter!',
+        'success'
+      );
+    } else if (params.get('error') && statusDiv) {
+      const errorMessages: Record<string, string> = {
+        spam: 'Your submission was flagged as spam.',
+        captcha: 'CAPTCHA verification failed. Please try again.',
+      };
+      const errorType = params.get('error') || '';
+      showFormStatus(
+        statusDiv,
+        errorMessages[errorType] || 'An error occurred. Please try again.',
+        'error'
+      );
+    }
+
+    // Initialize Mapbox map
+    if (typeof mapboxgl !== 'undefined') {
+      mapboxgl.accessToken =
+        'pk.eyJ1IjoiYmF5dGlkZXMiLCJhIjoiY21qdGt1NjVmNHQ2djNlcHlpa3p0MnViaSJ9.FHuSFIzE8EXe_9Vp5QpM2Q';
+
+      const map = new mapboxgl.Map({
+        container: 'bay-area-map',
+        style: 'mapbox://styles/mapbox/light-v11',
+        center: [-122.1, 37.75],
+        zoom: 7.2,
+        interactive: false,
+      });
+
+      const bayAreaCounties = [
+        '06001',
+        '06013',
+        '06041',
+        '06055',
+        '06075',
+        '06081',
+        '06085',
+        '06087',
+        '06095',
+        '06097',
+      ];
+      const sanMateoFIPS = '06081';
+
+      map.on('load', () => {
+        map.addSource('counties', {
+          type: 'vector',
+          url: 'mapbox://mapbox.82pkq93d',
+        });
+
+        map.addLayer(
+          {
+            id: 'bay-area-fill',
+            type: 'fill',
+            source: 'counties',
+            'source-layer': 'original',
+            paint: { 'fill-color': '#2d6a4f', 'fill-opacity': 0.3 },
+            filter: ['all', ['in', 'FIPS', ...bayAreaCounties], ['!=', 'FIPS', sanMateoFIPS]],
+          },
+          'waterway-label'
+        );
+
+        map.addLayer(
+          {
+            id: 'san-mateo-fill',
+            type: 'fill',
+            source: 'counties',
+            'source-layer': 'original',
+            paint: { 'fill-color': '#e85d04', 'fill-opacity': 0.45 },
+            filter: ['==', 'FIPS', sanMateoFIPS],
+          },
+          'waterway-label'
+        );
+
+        map.addLayer(
+          {
+            id: 'bay-area-borders',
+            type: 'line',
+            source: 'counties',
+            'source-layer': 'original',
+            paint: { 'line-color': '#1b4332', 'line-width': 1.5 },
+            filter: ['all', ['in', 'FIPS', ...bayAreaCounties], ['!=', 'FIPS', sanMateoFIPS]],
+          },
+          'waterway-label'
+        );
+
+        map.addLayer(
+          {
+            id: 'san-mateo-border',
+            type: 'line',
+            source: 'counties',
+            'source-layer': 'original',
+            paint: { 'line-color': '#9d0208', 'line-width': 2.5 },
+            filter: ['==', 'FIPS', sanMateoFIPS],
+          },
+          'waterway-label'
+        );
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initContactPage, 100);
+    });
+  } else {
+    setTimeout(initContactPage, 100);
+  }
+</script>

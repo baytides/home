@@ -1,0 +1,225 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
+import Card from '../components/Card.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Volunteer with Bay Tides',
+    description: 'Join Bay Tides as a volunteer and help protect the San Francisco Bay.',
+    mainEntity: {
+      '@type': 'VolunteerAction',
+      agent: {
+        '@type': 'NonprofitOrganization',
+        name: 'Bay Tides',
+      },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Volunteer' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Volunteer"
+  description="Join Bay Tides as a volunteer and help protect the San Francisco Bay through shoreline cleanups, habitat restoration, and community events."
+  canonicalUrl="https://baytides.org/volunteer"
+  structuredData={structuredData}
+  preloadImages={['/assets/images/hero-bg.webp']}
+>
+  <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Volunteer' }]} />
+
+  <PageHero
+    title="Volunteer With Us"
+    subtitle="Join our community of dedicated environmental stewards"
+  />
+
+  <!-- Intro -->
+  <section class="content-section">
+    <div class="container">
+      <div class="content-grid">
+        <div class="content-text">
+          <h2>Make a Difference</h2>
+          <p>
+            Volunteering with Bay Tides is more than just giving your time&mdash;it's about becoming
+            part of a community that cares deeply about the San Francisco Bay. Whether you have a
+            few hours or want to make a regular commitment, there's a place for you.
+          </p>
+          <p>
+            No experience necessary. We provide training and all the tools you need. Just bring your
+            enthusiasm and willingness to get involved!
+          </p>
+        </div>
+        <div class="content-image">
+          <picture>
+            <source srcset="/assets/images/egret.webp" type="image/webp" />
+            <img
+              src="/assets/images/egret.jpg"
+              alt="Bay Area wildlife - Snowy Egret"
+              width="600"
+              height="400"
+              loading="lazy"
+            />
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Volunteer Opportunities -->
+  <section class="pillars alt-bg">
+    <div class="container">
+      <div class="section-title">
+        <h2>Volunteer Opportunities</h2>
+        <p>Choose the activities that match your interests</p>
+      </div>
+
+      <div class="cards-grid">
+        <Card title="Shoreline Cleanups" icon="🌊">
+          <p>
+            Join us for regular cleanup events along the Peninsula shoreline. Help remove pollution
+            and debris while connecting with fellow community members who care about our bay.
+          </p>
+          <ul class="card-list">
+            <li>Monthly cleanup events</li>
+            <li>All ages welcome</li>
+            <li>Equipment provided</li>
+            <li>2-3 hours per event</li>
+          </ul>
+        </Card>
+
+        <Card title="Habitat Restoration" icon="🌿">
+          <p>
+            Get your hands dirty planting native species and restoring critical habitats. Our
+            restoration projects make a direct, visible impact on the health of our local ecosystem.
+          </p>
+          <ul class="card-list">
+            <li>Native plant installation</li>
+            <li>Invasive species removal</li>
+            <li>Wetland restoration</li>
+            <li>Training provided</li>
+          </ul>
+        </Card>
+
+        <Card title="Community Events" icon="👥">
+          <p>
+            Help us spread the word about environmental stewardship. Volunteer at educational
+            workshops, community fairs, and outreach events throughout the Bay Area.
+          </p>
+          <ul class="card-list">
+            <li>Educational workshops</li>
+            <li>Community fairs</li>
+            <li>School presentations</li>
+            <li>Tabling at local events</li>
+          </ul>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Volunteers -->
+  <section class="content-section">
+    <div class="container">
+      <div class="content-grid">
+        <div class="content-text">
+          <h2>Tech Volunteers Wanted</h2>
+          <p>
+            Are you a developer, designer, or tech enthusiast? Help us build digital tools that make
+            sustainable living accessible to everyone in the Bay Area.
+          </p>
+          <p>
+            Our flagship project,
+            <a href="https://baynavigator.org" target="_blank" rel="noopener">
+              Bay Navigator
+              <span class="sr-only">(opens in new tab)</span>
+            </a>
+            , is entirely open source. Contribute code, report bugs, suggest features, or help with documentation.
+            Every contribution makes a difference.
+          </p>
+          <p><strong>Skills we're looking for:</strong></p>
+          <ul style="margin: 1rem 0; padding-left: 1.5rem">
+            <li>Web development (HTML, CSS, JavaScript)</li>
+            <li>Mobile app development (iOS, Android)</li>
+            <li>UI/UX design and accessibility</li>
+            <li>Technical writing and documentation</li>
+            <li>Data research and program verification</li>
+          </ul>
+          <a
+            href="https://github.com/baytides"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener"
+          >
+            Contribute on GitHub
+            <span class="sr-only">(opens in new tab)</span>
+          </a>
+        </div>
+        <div class="content-image">
+          <div class="card" style="text-align: center">
+            <img
+              src="/assets/images/baynavigator-logo.svg"
+              alt="Bay Navigator logo"
+              class="tech-volunteer-logo"
+              width="160"
+              height="160"
+            />
+            <h3>Open Source</h3>
+            <p>All our projects are publicly available on GitHub</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="content-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Why Volunteer?</h2>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit">
+          <h3>Connect with Nature</h3>
+          <p>Spend time outdoors in beautiful Bay Area locations while making a positive impact.</p>
+        </div>
+        <div class="benefit">
+          <h3>Build Community</h3>
+          <p>Meet like-minded people who share your passion for environmental conservation.</p>
+        </div>
+        <div class="benefit">
+          <h3>Learn New Skills</h3>
+          <p>
+            Gain hands-on experience in habitat restoration, conservation, and environmental
+            science.
+          </p>
+        </div>
+        <div class="benefit">
+          <h3>Make an Impact</h3>
+          <p>
+            See the direct results of your work as you help restore and protect local ecosystems.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sign Up CTA -->
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to Get Started?</h2>
+      <p>
+        Fill out our volunteer interest form and we'll be in touch about upcoming opportunities.
+      </p>
+      <a href="/contact" class="btn btn-primary">Sign Up to Volunteer</a>
+    </div>
+  </section>
+</BaseLayout>

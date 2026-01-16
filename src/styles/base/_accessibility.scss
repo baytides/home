@@ -1,0 +1,536 @@
+// ==========================================================================
+// Accessibility Utilities
+// ==========================================================================
+
+// Skip link for keyboard navigation
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary-navy);
+  color: #fff;
+  padding: 1rem 2rem;
+  border-radius: 0 0 8px 8px;
+  z-index: 10000;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.2s ease;
+
+  &:focus {
+    top: 0;
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+// Ensure focused elements aren't hidden by fixed header
+*:target {
+  scroll-margin-top: 100px;
+}
+
+// Screen reader only content
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// ==========================================================================
+// Focus Styles
+// ==========================================================================
+
+:focus {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+:focus:not(:focus-visible) {
+  outline: 0;
+}
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: 4px;
+}
+
+.using-keyboard :focus {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+// ==========================================================================
+// Minimum Touch Target Size
+// WCAG 2.1 AAA recommends 44x44px minimum
+// ==========================================================================
+
+button,
+[role='button'],
+a.btn,
+input[type='submit'],
+input[type='button'],
+input[type='reset'],
+.tool-btn,
+.amount-btn,
+.toggle-btn {
+  min-height: var(--min-touch-target, 44px);
+  min-width: var(--min-touch-target, 44px);
+}
+
+// Checkbox and radio touch targets
+input[type='checkbox'],
+input[type='radio'] {
+  min-width: 20px;
+  min-height: 20px;
+
+  // Increase touch target with padding on parent label
+  + label,
+  + span {
+    padding: 0.5rem;
+    margin: -0.5rem;
+  }
+}
+
+// ==========================================================================
+// Accessibility Panel
+// ==========================================================================
+
+.accessibility-panel {
+  position: fixed;
+  bottom: 5rem;
+  left: 2rem; // Aligned with accessibility toggle (now on left side)
+  background: var(--bg-primary);
+  border: 1px solid var(--text-light);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 998;
+  display: none;
+  min-width: 240px;
+  max-width: 280px;
+  font-size: 0.875rem; // Smaller base font for panel
+
+  &.visible {
+    display: block;
+    animation: panelSlideIn 0.2s ease;
+  }
+
+  h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .panel-section {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    &:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+  }
+
+  .panel-section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    margin-bottom: 0.75rem;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    padding: 0.25rem 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      color: var(--primary-blue);
+    }
+  }
+
+  input[type='checkbox'] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary-blue);
+    flex-shrink: 0;
+  }
+
+  select {
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--text-light);
+    border-radius: 6px;
+    margin-top: 0.25rem;
+    background: var(--bg-primary);
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    cursor: pointer;
+
+    &:focus {
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-ring-offset);
+    }
+  }
+
+  .reset-btn {
+    width: 100%;
+    padding: 0.625rem 1rem;
+    background: transparent;
+    border: 1px solid var(--text-light);
+    border-radius: 6px;
+    color: var(--text-dark);
+    font-size: 0.875rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: var(--bg-secondary);
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+    }
+  }
+}
+
+@keyframes panelSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.accessibility-toggle {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem; // Moved to left side to avoid collision with back-to-top button
+  width: 48px;
+  height: 48px;
+  background: var(--primary-blue);
+  color: #fff;
+  border: 2px solid var(--bg-primary);
+  border-radius: 12px; // Rounded square to differentiate from circular back-to-top
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--primary-navy);
+    transform: scale(1.05);
+  }
+
+  &:focus {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  &[aria-expanded='true'] {
+    background: var(--primary-navy);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+// Dark theme adjustments
+[data-theme='dark'] {
+  .accessibility-panel {
+    background: var(--bg-secondary);
+    border-color: rgba(255, 255, 255, 0.2);
+
+    .panel-section {
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .reset-btn {
+      border-color: rgba(255, 255, 255, 0.2);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+
+  .accessibility-toggle {
+    background: #2b6cb0;
+    color: #fff;
+
+    &:hover,
+    &[aria-expanded='true'] {
+      background: #4299e1;
+    }
+  }
+}
+
+// ==========================================================================
+// Toast Notifications
+// ==========================================================================
+
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+  max-width: 90vw;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  font-size: 0.9rem;
+  font-weight: 500;
+  pointer-events: auto;
+  animation: toastSlideIn 0.3s ease;
+  max-width: 400px;
+
+  &.success {
+    background: var(--toast-success-bg);
+    color: var(--toast-success-text);
+  }
+
+  &.error {
+    background: var(--toast-error-bg);
+    color: var(--toast-error-text);
+  }
+
+  &.info {
+    background: var(--toast-info-bg);
+    color: var(--toast-info-text);
+  }
+
+  &.toast-exit {
+    animation: toastSlideOut 0.3s ease forwards;
+  }
+
+  .toast-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  .toast-message {
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  .toast-close {
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    color: inherit;
+    opacity: 0.7;
+    cursor: pointer;
+    padding: 0.5rem;
+    min-width: var(--min-touch-target, 44px);
+    min-height: var(--min-touch-target, 44px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: opacity 0.2s ease;
+    margin: -0.5rem -0.25rem -0.5rem 0; // Compensate for larger touch target
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &:focus {
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-ring-offset);
+    }
+  }
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+// ==========================================================================
+// Update Notification
+// ==========================================================================
+
+.update-notification {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--primary-navy);
+  color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  opacity: 0;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+
+  &.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  span {
+    font-size: 0.9rem;
+  }
+
+  .update-btn {
+    background: #fff;
+    color: var(--primary-navy);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.875rem;
+    min-height: 36px;
+
+    &:hover {
+      background: var(--light-blue);
+    }
+
+    &:focus {
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-ring-offset);
+    }
+  }
+
+  .dismiss-btn {
+    background: transparent;
+    color: #fff;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+    opacity: 0.7;
+    line-height: 1;
+    min-width: 32px;
+    min-height: 32px;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &:focus {
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-ring-offset);
+    }
+  }
+}
+
+[data-theme='dark'] {
+  .update-notification {
+    background: #2b6cb0;
+    color: #fff;
+
+    .update-btn {
+      background: #1a202c;
+      color: #fff;
+
+      &:hover {
+        background: #2d3748;
+      }
+    }
+
+    .dismiss-btn {
+      color: #fff;
+    }
+  }
+}
+
+// ==========================================================================
+// Mobile Adjustments
+// ==========================================================================
+
+@media (max-width: 768px) {
+  .accessibility-toggle {
+    bottom: 1.5rem;
+    left: 1rem;
+  }
+
+  .accessibility-panel {
+    bottom: 4.5rem;
+    left: 1rem;
+    right: 1rem;
+    max-width: none;
+  }
+
+  .toast-container {
+    bottom: 1.5rem;
+    left: 1rem;
+    right: 1rem;
+    transform: none;
+    max-width: none;
+  }
+
+  .toast {
+    max-width: none;
+  }
+}

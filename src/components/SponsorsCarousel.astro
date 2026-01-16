@@ -1,0 +1,175 @@
+---
+interface Sponsor {
+  name: string;
+  logo: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  sponsors?: Sponsor[];
+}
+
+const {
+  title = 'Technology Sponsors',
+  subtitle = "We're grateful to these companies for donating software and services",
+  sponsors = [
+    { name: 'Microsoft', logo: '/assets/images/sponsors/microsoft.svg' },
+    { name: 'GitHub', logo: '/assets/images/sponsors/github.svg' },
+    { name: 'Salesforce', logo: '/assets/images/sponsors/salesforce.svg' },
+    { name: 'Google', logo: '/assets/images/sponsors/google.svg' },
+    { name: 'Cloudflare', logo: '/assets/images/sponsors/cloudflare.svg' },
+    { name: 'Canva', logo: '/assets/images/sponsors/canva.svg' },
+    { name: 'Sentry', logo: '/assets/images/sponsors/sentry.svg' },
+    { name: 'Flickr', logo: '/assets/images/sponsors/flickr.svg' },
+  ],
+} = Astro.props;
+---
+
+<section class="sponsors" aria-label="Technology sponsors">
+  <div class="container">
+    <div class="section-title">
+      <h2>{title}</h2>
+      <p>{subtitle}</p>
+    </div>
+    <div class="sponsors-wrapper">
+      <button class="sponsors-nav prev" aria-label="Previous sponsors">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+        </svg>
+      </button>
+      <div class="sponsors-viewport">
+        <div class="sponsors-track">
+          <div class="sponsors-logos">
+            {
+              sponsors.map((sponsor) => (
+                <img
+                  src={sponsor.logo}
+                  alt={sponsor.name}
+                  title={sponsor.name}
+                  class="sponsor-logo"
+                  width="40"
+                  height="40"
+                />
+              ))
+            }
+          </div>
+        </div>
+      </div>
+      <button class="sponsors-nav next" aria-label="Next sponsors">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initSponsorsCarousel() {
+    const wrapper = document.querySelector<HTMLDivElement>('.sponsors-wrapper');
+    if (!wrapper) return;
+
+    const track = wrapper.querySelector<HTMLDivElement>('.sponsors-track');
+    const prevBtn = wrapper.querySelector<HTMLButtonElement>('.sponsors-nav.prev');
+    const nextBtn = wrapper.querySelector<HTMLButtonElement>('.sponsors-nav.next');
+    const logosContainer = wrapper.querySelector<HTMLDivElement>('.sponsors-logos');
+
+    if (!track || !prevBtn || !nextBtn || !logosContainer) return;
+
+    const logos = Array.from(logosContainer.querySelectorAll<HTMLImageElement>('.sponsor-logo'));
+
+    function getLogoWidth(): number {
+      return logos[0] ? logos[0].getBoundingClientRect().width + 64 : 104;
+    }
+
+    let logoWidth = getLogoWidth();
+    let totalWidth = logos.length * logoWidth;
+
+    // Clone logos for infinite scroll
+    logos.forEach((logo) => {
+      const clone = logo.cloneNode(true) as HTMLImageElement;
+      clone.setAttribute('aria-hidden', 'true');
+      clone.removeAttribute('alt');
+      logosContainer.appendChild(clone);
+    });
+
+    let position = 0;
+    let autoplayAnimationId: number | null = null;
+    let lastAutoplayTime = 0;
+    const autoplayDelay = 3000;
+
+    function slideTo(newPosition: number): void {
+      if (newPosition >= totalWidth) {
+        track!.style.transition = 'none';
+        position = 0;
+        track!.style.transform = `translateX(-${position}px)`;
+        track!.offsetHeight;
+        track!.style.transition = 'transform 0.5s ease';
+        return;
+      }
+      if (newPosition < 0) {
+        track!.style.transition = 'none';
+        position = totalWidth - logoWidth;
+        track!.style.transform = `translateX(-${position}px)`;
+        track!.offsetHeight;
+        track!.style.transition = 'transform 0.5s ease';
+        return;
+      }
+      position = newPosition;
+      track!.style.transform = `translateX(-${position}px)`;
+    }
+
+    function slideNext(): void {
+      slideTo(position + logoWidth);
+    }
+
+    function autoplayLoop(timestamp: number): void {
+      if (!lastAutoplayTime) lastAutoplayTime = timestamp;
+      const elapsed = timestamp - lastAutoplayTime;
+
+      if (elapsed >= autoplayDelay) {
+        slideNext();
+        lastAutoplayTime = timestamp;
+      }
+
+      autoplayAnimationId = requestAnimationFrame(autoplayLoop);
+    }
+
+    function startAutoplay(): void {
+      stopAutoplay();
+      lastAutoplayTime = 0;
+      autoplayAnimationId = requestAnimationFrame(autoplayLoop);
+    }
+
+    function stopAutoplay(): void {
+      if (autoplayAnimationId) {
+        cancelAnimationFrame(autoplayAnimationId);
+        autoplayAnimationId = null;
+      }
+    }
+
+    nextBtn.addEventListener('click', () => {
+      slideNext();
+      startAutoplay();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      slideTo(position - logoWidth);
+      startAutoplay();
+    });
+
+    wrapper.addEventListener('mouseenter', stopAutoplay);
+    wrapper.addEventListener('mouseleave', startAutoplay);
+    wrapper.addEventListener('focusin', stopAutoplay);
+    wrapper.addEventListener('focusout', startAutoplay);
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!prefersReducedMotion.matches) {
+      startAutoplay();
+    }
+  }
+
+  initSponsorsCarousel();
+  document.addEventListener('astro:after-swap', initSponsorsCarousel);
+</script>

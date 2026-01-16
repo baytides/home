@@ -1,0 +1,77 @@
+---
+import '../styles/global.scss';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const currentYear = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Bay Tides</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://baytides.org/checkout" />
+    <meta property="og:title" content={`${title} | Bay Tides`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://baytides.org/assets/images/hero-bg.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="canonical" href="https://baytides.org/checkout" />
+    <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+    <link rel="apple-touch-icon" href="/assets/images/logo.png" />
+
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- jsPDF for receipt generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  </head>
+  <body>
+    <!-- Minimal Header -->
+    <header class="checkout-header">
+      <div class="container">
+        <a href="/" class="checkout-logo">
+          <img src="/assets/images/logo.png" alt="Bay Tides" width="40" height="40" />
+          <span>Bay Tides</span>
+        </a>
+        <a href="/donate" class="checkout-back">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7"></path>
+          </svg>
+          Back
+        </a>
+      </div>
+    </header>
+
+    <main class="checkout-main">
+      <slot />
+    </main>
+
+    <!-- Minimal Footer -->
+    <footer class="checkout-footer">
+      <div class="container">
+        <p>
+          &copy; {currentYear} Bay Tides. All rights reserved. |
+          <a href="/privacy">Privacy Policy</a>
+          |
+          <a href="/terms">Terms of Service</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

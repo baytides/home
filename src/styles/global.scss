@@ -1,0 +1,33 @@
+// ==========================================================================
+// Bay Tides Main Stylesheet
+// ==========================================================================
+// This file imports all SCSS partials in the correct order.
+// Compiled by Vite during build process.
+// ==========================================================================
+
+// Base - Variables, reset, typography, accessibility
+@use 'base/variables';
+@use 'base/reset';
+@use 'base/accessibility';
+
+// Layout - Header, footer, hero, sections
+@use 'layout/header';
+@use 'layout/footer';
+@use 'layout/hero';
+@use 'layout/sections';
+
+// Components - Reusable UI components
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/forms';
+@use 'components/search';
+@use 'components/sponsors';
+
+// Utilities - Helper classes and small components
+@use 'utilities/breadcrumb';
+@use 'utilities/back-to-top';
+@use 'utilities/map';
+@use 'utilities/responsive';
+
+// Pages - Page-specific styles
+@use 'pages/donate';

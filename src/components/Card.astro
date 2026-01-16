@@ -1,0 +1,15 @@
+---
+interface Props {
+  title: string;
+  icon?: string;
+  class?: string;
+}
+
+const { title, icon, class: className } = Astro.props;
+---
+
+<article class:list={['card', className]}>
+  {icon && <div class="card-icon" aria-hidden="true" set:html={icon} />}
+  <h3>{title}</h3>
+  <slot />
+</article>

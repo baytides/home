@@ -1,0 +1,32 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  variant?: 'page' | 'home';
+  buttons?: Array<{
+    href: string;
+    label: string;
+    variant: 'primary' | 'outline';
+  }>;
+}
+
+const { title, subtitle, variant = 'page', buttons } = Astro.props;
+---
+
+<section class:list={['hero', `hero-${variant}`]}>
+  <div class="container">
+    <h1>{title}</h1>
+    {subtitle && <p>{subtitle}</p>}
+    {
+      buttons && buttons.length > 0 && (
+        <div class="hero-buttons">
+          {buttons.map((btn) => (
+            <a href={btn.href} class:list={['btn', `btn-${btn.variant}`]}>
+              {btn.label}
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>
