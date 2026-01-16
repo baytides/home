@@ -41,12 +41,21 @@
   opacity: 0.7;
   transition:
     opacity 0.3s ease,
-    filter 0.3s ease;
+    filter 0.3s ease,
+    transform 0.2s ease;
   filter: grayscale(100%);
+  cursor: pointer;
+  position: relative;
 
   &:hover {
     opacity: 1;
     filter: grayscale(0%);
+    transform: scale(1.1);
+  }
+
+  // Custom tooltip styling (uses title attribute)
+  &[title] {
+    position: relative;
   }
 }
 

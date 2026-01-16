@@ -105,16 +105,17 @@ input[type='radio'] {
 .accessibility-panel {
   position: fixed;
   bottom: 5rem;
-  right: 2rem;
+  left: 2rem; // Aligned with accessibility toggle (now on left side)
   background: var(--bg-primary);
   border: 1px solid var(--text-light);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 1.25rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   z-index: 998;
   display: none;
-  min-width: 260px;
-  max-width: 320px;
+  min-width: 240px;
+  max-width: 280px;
+  font-size: 0.875rem; // Smaller base font for panel
 
   &.visible {
     display: block;
@@ -233,13 +234,13 @@ input[type='radio'] {
 .accessibility-toggle {
   position: fixed;
   bottom: 2rem;
-  right: 5rem;
+  left: 2rem; // Moved to left side to avoid collision with back-to-top button
   width: 48px;
   height: 48px;
-  background: var(--primary-navy);
+  background: var(--primary-blue);
   color: #fff;
-  border: none;
-  border-radius: 50%;
+  border: 2px solid var(--bg-primary);
+  border-radius: 12px; // Rounded square to differentiate from circular back-to-top
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -249,7 +250,7 @@ input[type='radio'] {
   transition: all 0.2s ease;
 
   &:hover {
-    background: var(--primary-blue);
+    background: var(--primary-navy);
     transform: scale(1.05);
   }
 
@@ -259,7 +260,7 @@ input[type='radio'] {
   }
 
   &[aria-expanded='true'] {
-    background: var(--primary-blue);
+    background: var(--primary-navy);
   }
 
   svg {
@@ -511,13 +512,13 @@ input[type='radio'] {
 @media (max-width: 768px) {
   .accessibility-toggle {
     bottom: 1.5rem;
-    right: 1rem;
+    left: 1rem;
   }
 
   .accessibility-panel {
     bottom: 4.5rem;
-    right: 1rem;
     left: 1rem;
+    right: 1rem;
     max-width: none;
   }
 

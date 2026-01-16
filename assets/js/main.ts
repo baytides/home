@@ -1012,7 +1012,7 @@ function initDonationForm(): void {
 
   function buildOneTimePaymentLinkUrl(): string {
     // One-time "Customer chooses what to pay" Payment Link
-    const oneTimeLink = 'https://donate.stripe.com/5kQdR2f6pbC6eXu3GB';
+    const oneTimeLink = 'https://donate.stripe.com/5kQdR2f6pbC6eXu3GB6oo00';
     const params = new URLSearchParams();
 
     // Build metadata for client_reference_id (parsed by webhook later)
