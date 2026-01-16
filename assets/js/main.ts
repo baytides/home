@@ -779,9 +779,19 @@ function initDonationForm(): void {
 
   let donationType: 'one-time' | 'monthly' = 'one-time';
   let selectedAmount = 100;
+  let isCustomAmount = false;
   let isSubmitting = false;
 
-  // Cloudflare Worker API endpoint
+  // Monthly Payment Links (fixed amounts from Stripe Dashboard)
+  const monthlyPaymentLinks: Record<number, string> = {
+    10: 'https://donate.stripe.com/14AfZa5vPbC6bLib936oo02',
+    25: 'https://donate.stripe.com/cNi4gs7DX5dI9Dafpj6oo01',
+    50: 'https://donate.stripe.com/eVqcMY9M59tYcPmb936oo03',
+    100: 'https://donate.stripe.com/28EdR2bUdbC67v250V6oo04',
+    250: 'https://donate.stripe.com/cNicMY7DX5dI7v2a4Z6oo05',
+  };
+
+  // Cloudflare Worker for custom monthly amounts
   const apiEndpoint = 'https://donate.baytides.org/create-checkout';
 
   function updateDonateButton(): void {
@@ -806,6 +816,32 @@ function initDonationForm(): void {
     statusDiv.style.display = 'block';
   }
 
+  function buildOneTimePaymentLinkUrl(): string {
+    // One-time "Customer chooses what to pay" Payment Link
+    const oneTimeLink = 'https://donate.stripe.com/5kQdR2f6pbC6eXu3GB';
+    const params = new URLSearchParams();
+
+    // Build metadata for client_reference_id (parsed by webhook later)
+    const metadata = {
+      amount: selectedAmount,
+      fund: fundSelect?.value || 'General Fund',
+      tributeType: tributeTypeSelect?.value || 'none',
+      tributeName: tributeNameInput?.value || '',
+      anonymous: anonymousCheckbox?.checked || false,
+    };
+
+    // client_reference_id allows passing metadata through Payment Links (max 200 chars)
+    const metadataStr = JSON.stringify(metadata);
+    if (metadataStr.length <= 200) {
+      params.set('client_reference_id', metadataStr);
+    }
+
+    // prefilled_amount sets the default amount in cents for variable-price links
+    params.set('prefilled_amount', String(selectedAmount * 100));
+
+    return `${oneTimeLink}?${params.toString()}`;
+  }
+
   async function handleDonateClick(): Promise<void> {
     if (isSubmitting) return;
 
@@ -819,36 +855,47 @@ function initDonationForm(): void {
     donateBtn!.classList.add('loading');
     donateBtn!.setAttribute('aria-busy', 'true');
 
-    try {
-      const response = await fetch(apiEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount: selectedAmount,
-          frequency: donationType,
-          fund: fundSelect?.value || 'General Fund',
-          tributeType: tributeTypeSelect?.value || 'none',
-          tributeName: tributeNameInput?.value || '',
-          anonymous: anonymousCheckbox?.checked || false,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create checkout session');
-      }
-
-      const data = await response.json();
-      if (data.url) {
-        window.location.href = data.url;
+    if (donationType === 'monthly') {
+      // Check if we have a fixed Payment Link for this amount
+      if (!isCustomAmount && monthlyPaymentLinks[selectedAmount]) {
+        // Use the fixed monthly Payment Link
+        window.location.href = monthlyPaymentLinks[selectedAmount];
       } else {
-        throw new Error('No checkout URL returned');
+        // Custom amount - use Cloudflare Worker to create Checkout Session
+        try {
+          const response = await fetch(apiEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              amount: selectedAmount,
+              frequency: 'monthly',
+              fund: fundSelect?.value || 'General Fund',
+              tributeType: tributeTypeSelect?.value || 'none',
+              tributeName: tributeNameInput?.value || '',
+              anonymous: anonymousCheckbox?.checked || false,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to create checkout session');
+          }
+
+          const data = await response.json();
+          if (data.url) {
+            window.location.href = data.url;
+          } else {
+            throw new Error('No checkout URL returned');
+          }
+        } catch (error) {
+          isSubmitting = false;
+          donateBtn!.classList.remove('loading');
+          donateBtn!.removeAttribute('aria-busy');
+          showStatus('For custom monthly amounts, please contact us at info@baytides.org.', true);
+        }
       }
-    } catch (error) {
-      console.error('Donation error:', error);
-      showStatus('There was an error processing your donation. Please try again.', true);
-      isSubmitting = false;
-      donateBtn!.classList.remove('loading');
-      donateBtn!.removeAttribute('aria-busy');
+    } else {
+      // One-time donations use Payment Link with prefilled amount
+      window.location.href = buildOneTimePaymentLinkUrl();
     }
   }
 
@@ -870,12 +917,14 @@ function initDonationForm(): void {
 
       const amount = btn.dataset.amount;
       if (amount === 'other') {
+        isCustomAmount = true;
         if (customAmountWrapper) {
           customAmountWrapper.style.display = 'block';
           customAmountInput?.focus();
         }
         selectedAmount = customAmountInput ? parseInt(customAmountInput.value) || 0 : 0;
       } else {
+        isCustomAmount = false;
         if (customAmountWrapper) {
           customAmountWrapper.style.display = 'none';
         }
