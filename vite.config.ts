@@ -13,6 +13,7 @@ export default defineConfig({
         about: resolve(__dirname, 'about.html'),
         contact: resolve(__dirname, 'contact.html'),
         donate: resolve(__dirname, 'donate.html'),
+        checkout: resolve(__dirname, 'checkout.html'),
         volunteer: resolve(__dirname, 'volunteer.html'),
         projects: resolve(__dirname, 'projects.html'),
         events: resolve(__dirname, 'events.html'),
