@@ -311,6 +311,28 @@
           grid-template-columns: repeat(2, 1fr);
         }
       }
+
+      .loading-state {
+        text-align: center;
+        padding: 3rem;
+        color: var(--text-secondary, #666);
+      }
+
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid var(--border-color, #e0e0e0);
+        border-top-color: var(--primary-color, #2c5282);
+        border-radius: 50%;
+        margin: 0 auto 1rem;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
   <body>

@@ -2,28 +2,51 @@
  * Admin Tools - Email and Phone Verification
  *
  * Provides bulk validation interface for email and phone numbers.
+ * Uses the donate-tools worker API for server-side MX record validation.
  * Protected by Cloudflare Access - only accessible to @baytides.org email holders.
  */
 
-import {
-  validateEmails,
-  parseEmailList,
-  exportToCSV as exportEmailsToCSV,
-  type EmailValidationResult,
-  type BulkValidationResult,
-} from './email-verifier';
+import { parseEmailList } from './email-verifier';
+import { parsePhoneList } from './phone-verifier';
 
-import {
-  validatePhones,
-  parsePhoneList,
-  exportToCSV as exportPhonesToCSV,
-  type PhoneValidationResult,
-  type BulkPhoneValidationResult,
-} from './phone-verifier';
+const API_ENDPOINT = 'https://donate-tools.baytides.org';
+
+// API response types
+interface ApiEmailResult {
+  email: string;
+  isValid: boolean;
+  isDisposable: boolean;
+  errors: string[];
+  warnings: string[];
+  suggestion?: string;
+  hasMxRecord?: boolean;
+}
+
+interface ApiPhoneResult {
+  phone: string;
+  isValid: boolean;
+  normalized?: string;
+  errors: string[];
+  warnings: string[];
+}
+
+interface ApiResponse {
+  emails?: ApiEmailResult[];
+  phones?: ApiPhoneResult[];
+  summary: {
+    totalEmails?: number;
+    validEmails?: number;
+    invalidEmails?: number;
+    disposableEmails?: number;
+    totalPhones?: number;
+    validPhones?: number;
+    invalidPhones?: number;
+  };
+}
 
 // Store results for export
-let emailResults: BulkValidationResult | null = null;
-let phoneResults: BulkPhoneValidationResult | null = null;
+let emailResults: ApiResponse | null = null;
+let phoneResults: ApiResponse | null = null;
 
 // Safe element creation helpers
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -97,6 +120,13 @@ function createEmptyState(iconPath: string, message: string): HTMLElement {
   return createElement('div', { className: 'empty-state' }, [svg, p]);
 }
 
+// Create loading state
+function createLoadingState(message: string): HTMLElement {
+  const spinner = createElement('div', { className: 'loading-spinner' });
+  const p = createElement('p', {}, [message]);
+  return createElement('div', { className: 'loading-state' }, [spinner, p]);
+}
+
 // Create stat card
 function createStatCard(value: number, label: string, type?: string): HTMLElement {
   const valueEl = createElement('div', { className: 'stat-value' }, [value.toString()]);
@@ -108,6 +138,23 @@ function createStatCard(value: number, label: string, type?: string): HTMLElemen
 // Create status badge
 function createStatusBadge(status: string): HTMLElement {
   return createElement('span', { className: `status-badge ${status}` }, [status.toUpperCase()]);
+}
+
+// API call to verify contacts
+async function verifyContacts(emails?: string[], phones?: string[]): Promise<ApiResponse> {
+  const response = await fetch(`${API_ENDPOINT}/verify-contacts`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ emails, phones }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`API error: ${response.status}`);
+  }
+
+  return response.json();
 }
 
 // Email validation UI
@@ -123,7 +170,7 @@ function initEmailValidation(): void {
   const emailIconPath =
     'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z';
 
-  validateBtn.addEventListener('click', () => {
+  validateBtn.addEventListener('click', async () => {
     const emails = parseEmailList(input.value);
 
     if (emails.length === 0) {
@@ -137,9 +184,31 @@ function initEmailValidation(): void {
       return;
     }
 
-    emailResults = validateEmails(emails);
-    renderEmailResults(emailResults, resultsContainer);
-    exportBtn.disabled = false;
+    // Show loading state
+    validateBtn.disabled = true;
+    validateBtn.textContent = 'Validating...';
+    resultsContainer.replaceChildren(
+      createLoadingState(
+        `Validating ${emails.length} email${emails.length > 1 ? 's' : ''} (checking MX records)...`
+      )
+    );
+
+    try {
+      emailResults = await verifyContacts(emails, undefined);
+      renderEmailResults(emailResults, resultsContainer);
+      exportBtn.disabled = false;
+    } catch (error) {
+      resultsContainer.replaceChildren(
+        createEmptyState(
+          emailIconPath,
+          `Error: ${error instanceof Error ? error.message : 'Failed to validate emails'}`
+        )
+      );
+      exportBtn.disabled = true;
+    } finally {
+      validateBtn.disabled = false;
+      validateBtn.textContent = 'Validate Emails';
+    }
   });
 
   clearBtn.addEventListener('click', () => {
@@ -155,34 +224,42 @@ function initEmailValidation(): void {
   });
 
   exportBtn.addEventListener('click', () => {
-    if (!emailResults) return;
-    downloadCSV(exportEmailsToCSV(emailResults), 'email-validation-results.csv');
+    if (!emailResults?.emails) return;
+    const csv = exportEmailResultsToCSV(emailResults.emails);
+    downloadCSV(csv, 'email-validation-results.csv');
   });
 }
 
-function renderEmailResults(results: BulkValidationResult, container: HTMLElement): void {
-  const withWarnings = results.results.filter((r) => r.warnings.length > 0 && r.isValid).length;
+function renderEmailResults(results: ApiResponse, container: HTMLElement): void {
+  if (!results.emails) {
+    container.replaceChildren(createElement('p', {}, ['No results']));
+    return;
+  }
+
+  const withWarnings = results.emails.filter((r) => r.warnings.length > 0 && r.isValid).length;
+  const noMxRecord = results.emails.filter((r) => r.hasMxRecord === false).length;
 
   // Create summary
   const summary = createElement('div', { className: 'results-summary' }, [
-    createStatCard(results.total, 'Total'),
-    createStatCard(results.valid, 'Valid', 'valid'),
-    createStatCard(results.invalid, 'Invalid', 'invalid'),
-    createStatCard(withWarnings, 'Warnings', 'warning'),
-    createStatCard(results.disposable, 'Disposable', 'disposable'),
+    createStatCard(results.summary.totalEmails || 0, 'Total'),
+    createStatCard(results.summary.validEmails || 0, 'Valid', 'valid'),
+    createStatCard(results.summary.invalidEmails || 0, 'Invalid', 'invalid'),
+    createStatCard(noMxRecord, 'No MX Record', 'warning'),
+    createStatCard(results.summary.disposableEmails || 0, 'Disposable', 'disposable'),
   ]);
 
   // Create table
   const headerRow = createElement('tr', {}, [
     createElement('th', {}, ['Email']),
     createElement('th', {}, ['Status']),
+    createElement('th', {}, ['MX Record']),
     createElement('th', {}, ['Issues']),
     createElement('th', {}, ['Suggestion']),
   ]);
   const thead = createElement('thead', {}, [headerRow]);
 
   const tbody = createElement('tbody');
-  for (const result of results.results) {
+  for (const result of results.emails) {
     tbody.appendChild(createEmailRow(result));
   }
 
@@ -192,7 +269,7 @@ function renderEmailResults(results: BulkValidationResult, container: HTMLElemen
   container.replaceChildren(summary, tableContainer);
 }
 
-function createEmailRow(result: EmailValidationResult): HTMLElement {
+function createEmailRow(result: ApiEmailResult): HTMLElement {
   // Email cell
   const emailCode = createElement('code', {}, [result.email]);
   const emailCell = createElement('td', {}, [emailCode]);
@@ -207,6 +284,16 @@ function createEmailRow(result: EmailValidationResult): HTMLElement {
     statusBadge = createStatusBadge('valid');
   }
   const statusCell = createElement('td', {}, [statusBadge]);
+
+  // MX Record cell
+  const mxCell = createElement('td');
+  if (result.hasMxRecord === true) {
+    mxCell.appendChild(createElement('span', { className: 'status-badge valid' }, ['YES']));
+  } else if (result.hasMxRecord === false) {
+    mxCell.appendChild(createElement('span', { className: 'status-badge invalid' }, ['NO']));
+  } else {
+    mxCell.appendChild(createText('-'));
+  }
 
   // Issues cell
   const issuesCell = createElement('td');
@@ -248,7 +335,7 @@ function createEmailRow(result: EmailValidationResult): HTMLElement {
     suggestionCell.appendChild(createText('-'));
   }
 
-  return createElement('tr', {}, [emailCell, statusCell, issuesCell, suggestionCell]);
+  return createElement('tr', {}, [emailCell, statusCell, mxCell, issuesCell, suggestionCell]);
 }
 
 // Phone validation UI
@@ -264,7 +351,7 @@ function initPhoneValidation(): void {
   const phoneIconPath =
     'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z';
 
-  validateBtn.addEventListener('click', () => {
+  validateBtn.addEventListener('click', async () => {
     const phones = parsePhoneList(input.value);
 
     if (phones.length === 0) {
@@ -278,9 +365,31 @@ function initPhoneValidation(): void {
       return;
     }
 
-    phoneResults = validatePhones(phones);
-    renderPhoneResults(phoneResults, resultsContainer);
-    exportBtn.disabled = false;
+    // Show loading state
+    validateBtn.disabled = true;
+    validateBtn.textContent = 'Validating...';
+    resultsContainer.replaceChildren(
+      createLoadingState(
+        `Validating ${phones.length} phone number${phones.length > 1 ? 's' : ''}...`
+      )
+    );
+
+    try {
+      phoneResults = await verifyContacts(undefined, phones);
+      renderPhoneResults(phoneResults, resultsContainer);
+      exportBtn.disabled = false;
+    } catch (error) {
+      resultsContainer.replaceChildren(
+        createEmptyState(
+          phoneIconPath,
+          `Error: ${error instanceof Error ? error.message : 'Failed to validate phones'}`
+        )
+      );
+      exportBtn.disabled = true;
+    } finally {
+      validateBtn.disabled = false;
+      validateBtn.textContent = 'Validate Phones';
+    }
   });
 
   clearBtn.addEventListener('click', () => {
@@ -296,19 +405,25 @@ function initPhoneValidation(): void {
   });
 
   exportBtn.addEventListener('click', () => {
-    if (!phoneResults) return;
-    downloadCSV(exportPhonesToCSV(phoneResults), 'phone-validation-results.csv');
+    if (!phoneResults?.phones) return;
+    const csv = exportPhoneResultsToCSV(phoneResults.phones);
+    downloadCSV(csv, 'phone-validation-results.csv');
   });
 }
 
-function renderPhoneResults(results: BulkPhoneValidationResult, container: HTMLElement): void {
-  const withWarnings = results.results.filter((r) => r.warnings.length > 0 && r.isValid).length;
+function renderPhoneResults(results: ApiResponse, container: HTMLElement): void {
+  if (!results.phones) {
+    container.replaceChildren(createElement('p', {}, ['No results']));
+    return;
+  }
+
+  const withWarnings = results.phones.filter((r) => r.warnings.length > 0 && r.isValid).length;
 
   // Create summary
   const summary = createElement('div', { className: 'results-summary' }, [
-    createStatCard(results.total, 'Total'),
-    createStatCard(results.valid, 'Valid', 'valid'),
-    createStatCard(results.invalid, 'Invalid', 'invalid'),
+    createStatCard(results.summary.totalPhones || 0, 'Total'),
+    createStatCard(results.summary.validPhones || 0, 'Valid', 'valid'),
+    createStatCard(results.summary.invalidPhones || 0, 'Invalid', 'invalid'),
     createStatCard(withWarnings, 'International', 'warning'),
   ]);
 
@@ -317,13 +432,12 @@ function renderPhoneResults(results: BulkPhoneValidationResult, container: HTMLE
     createElement('th', {}, ['Original']),
     createElement('th', {}, ['Status']),
     createElement('th', {}, ['Normalized (E.164)']),
-    createElement('th', {}, ['Country']),
     createElement('th', {}, ['Issues']),
   ]);
   const thead = createElement('thead', {}, [headerRow]);
 
   const tbody = createElement('tbody');
-  for (const result of results.results) {
+  for (const result of results.phones) {
     tbody.appendChild(createPhoneRow(result));
   }
 
@@ -333,9 +447,9 @@ function renderPhoneResults(results: BulkPhoneValidationResult, container: HTMLE
   container.replaceChildren(summary, tableContainer);
 }
 
-function createPhoneRow(result: PhoneValidationResult): HTMLElement {
+function createPhoneRow(result: ApiPhoneResult): HTMLElement {
   // Original cell
-  const phoneCode = createElement('code', {}, [result.phoneNumber]);
+  const phoneCode = createElement('code', {}, [result.phone]);
   const phoneCell = createElement('td', {}, [phoneCode]);
 
   // Status cell
@@ -351,14 +465,11 @@ function createPhoneRow(result: PhoneValidationResult): HTMLElement {
 
   // Normalized cell
   const normalizedCell = createElement('td');
-  if (result.normalizedNumber) {
-    normalizedCell.appendChild(createElement('code', {}, [result.normalizedNumber]));
+  if (result.normalized) {
+    normalizedCell.appendChild(createElement('code', {}, [result.normalized]));
   } else {
     normalizedCell.appendChild(createText('-'));
   }
-
-  // Country cell
-  const countryCell = createElement('td', {}, [result.countryIso2 || '-']);
 
   // Issues cell
   const issuesCell = createElement('td');
@@ -377,7 +488,40 @@ function createPhoneRow(result: PhoneValidationResult): HTMLElement {
     issuesCell.appendChild(createText('-'));
   }
 
-  return createElement('tr', {}, [phoneCell, statusCell, normalizedCell, countryCell, issuesCell]);
+  return createElement('tr', {}, [phoneCell, statusCell, normalizedCell, issuesCell]);
+}
+
+// CSV export functions
+function exportEmailResultsToCSV(results: ApiEmailResult[]): string {
+  const headers = ['Email', 'Valid', 'MX Record', 'Disposable', 'Errors', 'Warnings', 'Suggestion'];
+  const rows = results.map((r) => [
+    r.email,
+    r.isValid ? 'Yes' : 'No',
+    r.hasMxRecord === true ? 'Yes' : r.hasMxRecord === false ? 'No' : 'Unknown',
+    r.isDisposable ? 'Yes' : 'No',
+    r.errors.join('; '),
+    r.warnings.join('; '),
+    r.suggestion || '',
+  ]);
+
+  return [headers, ...rows]
+    .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+    .join('\n');
+}
+
+function exportPhoneResultsToCSV(results: ApiPhoneResult[]): string {
+  const headers = ['Original', 'Valid', 'Normalized (E.164)', 'Errors', 'Warnings'];
+  const rows = results.map((r) => [
+    r.phone,
+    r.isValid ? 'Yes' : 'No',
+    r.normalized || '',
+    r.errors.join('; '),
+    r.warnings.join('; '),
+  ]);
+
+  return [headers, ...rows]
+    .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+    .join('\n');
 }
 
 // Utility function for CSV download
