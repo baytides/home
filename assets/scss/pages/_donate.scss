@@ -430,6 +430,237 @@
   }
 }
 
+// ==========================================================================
+// Stripe Payment Element Section
+// ==========================================================================
+
+.payment-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e2e8f0;
+  animation: slideDown 0.3s ease;
+}
+
+.payment-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--primary-navy);
+    margin: 0;
+  }
+
+  .edit-amount-btn {
+    background: transparent;
+    border: none;
+    color: var(--primary-blue);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(43, 108, 176, 0.1);
+      color: var(--primary-navy);
+    }
+  }
+}
+
+// Donor information grid
+.donor-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+
+  &.donor-info-grid-3 {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
+  .donor-field {
+    margin-bottom: 0;
+  }
+}
+
+.donor-field {
+  margin-bottom: 1rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-dark);
+
+    .required {
+      color: var(--error);
+    }
+
+    .optional {
+      font-weight: 400;
+      color: var(--text-light);
+      font-size: 0.8125rem;
+    }
+  }
+
+  input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: #fff;
+    color: var(--text-dark);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.1);
+    }
+
+    &::placeholder {
+      color: #a0aec0;
+    }
+
+    &:invalid:not(:placeholder-shown) {
+      border-color: var(--error);
+    }
+  }
+}
+
+.payment-subheading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  margin: 1.5rem 0 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+// Stripe Payment Element container
+#payment-element {
+  margin-bottom: 1.5rem;
+  min-height: 100px;
+
+  // Style the Stripe iframe container
+  .StripeElement {
+    padding: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background: #fff;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &--focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.1);
+    }
+
+    &--invalid {
+      border-color: var(--error);
+    }
+  }
+}
+
+.payment-errors {
+  color: var(--error);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  min-height: 1.25rem;
+
+  &:empty {
+    display: none;
+  }
+
+  // Email suggestion buttons
+  .email-suggestion-btn,
+  .email-suggestion-dismiss {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--primary-ocean);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+  }
+
+  .email-suggestion-btn {
+    color: var(--primary-ocean);
+    font-weight: 600;
+  }
+
+  .email-suggestion-dismiss {
+    color: var(--text-light);
+  }
+}
+
+// Amount section collapsible state
+.amount-selection-collapsed {
+  .donation-type-toggle,
+  .donation-amounts,
+  .custom-amount-wrapper,
+  .fund-designation,
+  .tribute-options,
+  .tribute-name-wrapper,
+  .anonymous-option {
+    display: none !important;
+  }
+}
+
+.donation-summary {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #e2e8f0;
+    }
+  }
+
+  .summary-label {
+    font-size: 0.875rem;
+    color: var(--text-light);
+  }
+
+  .summary-value {
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  .summary-total {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-navy);
+  }
+}
+
 // Secure notice
 .secure-notice {
   display: flex;
@@ -634,6 +865,38 @@
   .anonymous-option {
     background: rgba(0, 0, 0, 0.2);
     border-color: rgba(255, 255, 255, 0.05);
+  }
+
+  // Payment section dark theme
+  .payment-section {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .payment-section-header h3 {
+    color: var(--text-dark);
+  }
+
+  .donor-email-wrapper input {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+
+    &:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.2);
+    }
+  }
+
+  .donation-summary {
+    background: rgba(0, 0, 0, 0.2);
+
+    .summary-row:not(:last-child) {
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .summary-total {
+      color: var(--accent-blue);
+    }
   }
 
   .donate-submit-btn {

@@ -3,6 +3,9 @@
  * Handles theme, navigation, search, accessibility features, form validation, and more
  */
 
+import { validateEmail, type EmailValidationResult } from './email-verifier';
+import { validatePhone, type PhoneValidationResult } from './phone-verifier';
+
 // ==========================================================================
 // Types
 // ==========================================================================
@@ -950,13 +953,41 @@ function showUpdateNotification(registration: ServiceWorkerRegistration): void {
 }
 
 // ==========================================================================
-// Donation Form
+// Donation Form with Stripe Elements
 // ==========================================================================
+
+// Declare Stripe types
+declare const Stripe: (key: string) => {
+  elements: (options: { clientSecret: string; appearance?: object }) => {
+    create: (
+      type: string,
+      options?: object
+    ) => {
+      mount: (selector: string) => void;
+      on: (
+        event: string,
+        handler: (e: { complete: boolean; error?: { message: string } }) => void
+      ) => void;
+    };
+  };
+  confirmPayment: (options: {
+    elements: ReturnType<ReturnType<ReturnType<typeof Stripe>['elements']>['create']>;
+    confirmParams: { return_url: string; receipt_email?: string };
+    redirect?: 'if_required';
+  }) => Promise<{ error?: { message: string }; paymentIntent?: { status: string } }>;
+};
 
 function initDonationForm(): void {
   const donationForm = document.getElementById('donation-form');
   if (!donationForm) return;
 
+  // Check if Stripe is available
+  if (typeof Stripe === 'undefined') {
+    console.warn('Stripe.js not loaded');
+    return;
+  }
+
+  // Elements
   const typeButtons = donationForm.querySelectorAll<HTMLButtonElement>('.toggle-btn');
   const amountButtons = donationForm.querySelectorAll<HTMLButtonElement>('.amount-btn');
   const customAmountWrapper = document.getElementById('custom-amount-wrapper');
@@ -968,40 +999,66 @@ function initDonationForm(): void {
   const anonymousCheckbox = document.getElementById(
     'anonymous-checkbox'
   ) as HTMLInputElement | null;
-  const donateBtn = document.getElementById('donate-btn') as HTMLButtonElement | null;
   const statusDiv = document.getElementById('donation-status');
 
+  // Payment section elements
+  const paymentSection = document.getElementById('payment-section');
+  const amountSectionActions = document.getElementById('amount-section-actions');
+  const continueBtn = document.getElementById('continue-btn') as HTMLButtonElement | null;
+  const submitPaymentBtn = document.getElementById(
+    'submit-payment-btn'
+  ) as HTMLButtonElement | null;
+  const editAmountBtn = document.getElementById('edit-amount-btn');
+  const paymentErrorsDiv = document.getElementById('payment-errors');
+
+  // Donor info inputs
+  const donorFirstNameInput = document.getElementById(
+    'donor-first-name'
+  ) as HTMLInputElement | null;
+  const donorLastNameInput = document.getElementById('donor-last-name') as HTMLInputElement | null;
+  const donorEmailInput = document.getElementById('donor-email') as HTMLInputElement | null;
+  const donorAddressInput = document.getElementById('donor-address') as HTMLInputElement | null;
+  const donorCityInput = document.getElementById('donor-city') as HTMLInputElement | null;
+  const donorStateInput = document.getElementById('donor-state') as HTMLInputElement | null;
+  const donorZipInput = document.getElementById('donor-zip') as HTMLInputElement | null;
+  const donorPhoneInput = document.getElementById('donor-phone') as HTMLInputElement | null;
+  const donorOrgInput = document.getElementById('donor-org') as HTMLInputElement | null;
+
+  // State
   let donationType: 'one-time' | 'monthly' = 'one-time';
   let selectedAmount = 100;
   let isCustomAmount = false;
   let isSubmitting = false;
 
-  // Monthly Payment Links (fixed amounts from Stripe Dashboard)
-  const monthlyPaymentLinks: Record<number, string> = {
-    10: 'https://donate.stripe.com/14AfZa5vPbC6bLib936oo02',
-    25: 'https://donate.stripe.com/cNi4gs7DX5dI9Dafpj6oo01',
-    50: 'https://donate.stripe.com/eVqcMY9M59tYcPmb936oo03',
-    100: 'https://donate.stripe.com/28EdR2bUdbC67v250V6oo04',
-    250: 'https://donate.stripe.com/cNicMY7DX5dI7v2a4Z6oo05',
-  };
+  // Stripe state
+  const stripePublicKey =
+    'pk_live_51Qu3c4I4J9kYJwLIc8a3F2Y0d0QZZv5VvnBqw5gYhF1mzk4K6jNjjvx8hOvvPwI1hXO3KONWvL6YVf6Z4UGBx5Dd00EYr1ZKJI';
+  const stripe = Stripe(stripePublicKey);
+  let elements: ReturnType<typeof stripe.elements> | null = null;
+  let paymentElement: ReturnType<ReturnType<typeof stripe.elements>['create']> | null = null;
+  let clientSecret: string | null = null;
 
-  // Cloudflare Worker for custom monthly amounts
-  const apiEndpoint = 'https://donate.baytides.org/create-checkout';
+  const apiEndpoint = 'https://donate.baytides.org';
 
-  function updateDonateButton(): void {
-    if (!donateBtn) return;
-
-    // Update button text based on selection
+  function updateContinueButton(): void {
+    if (!continueBtn) return;
     const amountText = selectedAmount > 0 ? `$${selectedAmount}` : '';
     const typeText = donationType === 'monthly' ? '/month' : '';
-    donateBtn.textContent = `Donate${amountText ? ' ' + amountText : ''}${typeText}`;
+    continueBtn.textContent = `Continue to Payment${amountText ? ' • ' + amountText : ''}${typeText}`;
+  }
+
+  function updateSubmitButton(): void {
+    if (!submitPaymentBtn) return;
+    const amountText = selectedAmount > 0 ? `$${selectedAmount}` : '';
+    const typeText = donationType === 'monthly' ? '/month' : '';
+    submitPaymentBtn.textContent = isSubmitting
+      ? 'Processing...'
+      : `Complete Donation${amountText ? ' • ' + amountText : ''}${typeText}`;
   }
 
   function showStatus(message: string, isError: boolean): void {
     if (!statusDiv) return;
-    // Clear existing content
     statusDiv.textContent = '';
-    // Create status element safely
     const statusEl = document.createElement('div');
     statusEl.className = `form-status ${isError ? 'error' : 'success'}`;
     statusEl.setAttribute('role', 'alert');
@@ -1010,30 +1067,28 @@ function initDonationForm(): void {
     statusDiv.style.display = 'block';
   }
 
-  // One-time Payment Links (fixed amounts from Stripe Dashboard)
-  const oneTimePaymentLinks: Record<number, string> = {
-    25: 'https://donate.stripe.com/5kA4gs9M5aySgZC7sC',
-    50: 'https://donate.stripe.com/14k4gsf6p5dIgZC8wH',
-    100: 'https://donate.stripe.com/dR6eV6aSdaySbLi6ou',
-    250: 'https://donate.stripe.com/dR6bIU8I12bw9Da5ks',
-    500: 'https://donate.stripe.com/14keV61fz9uO6r28wF',
-  };
-
-  async function handleOneTimePayment(): Promise<void> {
-    // Check if we have a fixed Payment Link for this amount
-    if (!isCustomAmount && oneTimePaymentLinks[selectedAmount]) {
-      window.location.href = oneTimePaymentLinks[selectedAmount];
-      return;
+  function showPaymentError(message: string): void {
+    if (paymentErrorsDiv) {
+      paymentErrorsDiv.textContent = message;
     }
+  }
 
-    // Custom amount - use Cloudflare Worker to create Checkout Session
+  function clearPaymentError(): void {
+    if (paymentErrorsDiv) {
+      paymentErrorsDiv.textContent = '';
+    }
+  }
+
+  // Create Payment Intent and initialize Stripe Elements
+  async function initializePayment(): Promise<boolean> {
     try {
-      const response = await fetch(apiEndpoint, {
+      // Create payment intent via API
+      const response = await fetch(`${apiEndpoint}/create-payment-intent`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           amount: selectedAmount,
-          frequency: 'one-time',
+          frequency: donationType,
           fund: fundSelect?.value || 'General Fund',
           tributeType: tributeTypeSelect?.value || 'none',
           tributeName: tributeNameInput?.value || '',
@@ -1042,94 +1097,439 @@ function initDonationForm(): void {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create checkout session');
+        throw new Error('Failed to initialize payment');
       }
 
       const data = await response.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error('No checkout URL returned');
+      clientSecret = data.clientSecret;
+
+      if (!clientSecret) {
+        throw new Error('No client secret returned');
       }
+
+      // Get current theme
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+
+      // Create Stripe Elements with the client secret
+      const appearance = {
+        theme: isDark ? 'night' : 'stripe',
+        variables: {
+          colorPrimary: '#2b6cb0',
+          colorBackground: isDark ? '#1a202c' : '#ffffff',
+          colorText: isDark ? '#e2e8f0' : '#1a202c',
+          colorDanger: '#9b1c1c',
+          fontFamily: 'system-ui, -apple-system, sans-serif',
+          borderRadius: '12px',
+          spacingUnit: '4px',
+        },
+        rules: {
+          '.Input': {
+            border: '2px solid ' + (isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0'),
+            padding: '12px 16px',
+          },
+          '.Input:focus': {
+            border: '2px solid #2b6cb0',
+            boxShadow: '0 0 0 3px rgba(43, 108, 176, 0.1)',
+          },
+          '.Label': {
+            fontWeight: '600',
+            marginBottom: '8px',
+          },
+        },
+      };
+
+      elements = stripe.elements({ clientSecret, appearance });
+      paymentElement = elements.create('payment', {
+        layout: 'tabs',
+      });
+
+      // Mount the Payment Element
+      paymentElement.mount('#payment-element');
+
+      // Listen for changes to enable/disable submit button
+      paymentElement.on('change', (event: { complete: boolean; error?: { message: string } }) => {
+        if (submitPaymentBtn) {
+          submitPaymentBtn.disabled = !event.complete;
+        }
+        if (event.error) {
+          showPaymentError(event.error.message);
+        } else {
+          clearPaymentError();
+        }
+      });
+
+      return true;
     } catch (error) {
-      isSubmitting = false;
-      donateBtn!.classList.remove('loading');
-      donateBtn!.removeAttribute('aria-busy');
-      showStatus(
-        'Unable to process donation. Please try again or contact info@baytides.org.',
-        true
-      );
+      console.error('Payment initialization error:', error);
+      showPaymentError('Unable to initialize payment. Please try again.');
+      return false;
     }
   }
 
-  async function handleDonateClick(): Promise<void> {
-    if (isSubmitting) return;
-
-    // Validate amount
+  // Handle Continue button click - show payment section
+  async function handleContinue(): Promise<void> {
     if (selectedAmount < 1) {
-      showStatus('Please enter a valid donation amount.', true);
+      showStatus('Please select or enter a donation amount.', true);
       return;
     }
 
-    isSubmitting = true;
-    donateBtn!.classList.add('loading');
-    donateBtn!.setAttribute('aria-busy', 'true');
+    // Show loading state
+    if (continueBtn) {
+      continueBtn.textContent = 'Loading...';
+      continueBtn.disabled = true;
+    }
 
-    if (donationType === 'monthly') {
-      // Check if we have a fixed Payment Link for this amount
-      if (!isCustomAmount && monthlyPaymentLinks[selectedAmount]) {
-        // Use the fixed monthly Payment Link
-        window.location.href = monthlyPaymentLinks[selectedAmount];
-      } else {
-        // Custom amount - use Cloudflare Worker to create Checkout Session
-        try {
-          const response = await fetch(apiEndpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              amount: selectedAmount,
-              frequency: 'monthly',
-              fund: fundSelect?.value || 'General Fund',
-              tributeType: tributeTypeSelect?.value || 'none',
-              tributeName: tributeNameInput?.value || '',
-              anonymous: anonymousCheckbox?.checked || false,
-            }),
-          });
+    // Initialize payment
+    const success = await initializePayment();
 
-          if (!response.ok) {
-            throw new Error('Failed to create checkout session');
-          }
+    if (success) {
+      // Hide amount section actions, show payment section
+      if (amountSectionActions) amountSectionActions.style.display = 'none';
+      if (paymentSection) paymentSection.style.display = 'block';
 
-          const data = await response.json();
-          if (data.url) {
-            window.location.href = data.url;
-          } else {
-            throw new Error('No checkout URL returned');
-          }
-        } catch (error) {
-          isSubmitting = false;
-          donateBtn!.classList.remove('loading');
-          donateBtn!.removeAttribute('aria-busy');
-          showStatus('For custom monthly amounts, please contact us at info@baytides.org.', true);
-        }
-      }
+      // Create summary
+      createDonationSummary();
+
+      // Collapse amount selection
+      donationForm.classList.add('amount-selection-collapsed');
+
+      // Focus email input
+      donorEmailInput?.focus();
+
+      // Update submit button
+      updateSubmitButton();
     } else {
-      // One-time donations - use Payment Links for fixed amounts or API for custom
-      await handleOneTimePayment();
+      // Reset continue button
+      if (continueBtn) {
+        continueBtn.disabled = false;
+        updateContinueButton();
+      }
     }
   }
 
-  // Handle donation type toggle (one-time vs monthly)
+  // Create donation summary
+  function createDonationSummary(): void {
+    // Remove existing summary if any
+    const existingSummary = donationForm.querySelector('.donation-summary');
+    if (existingSummary) existingSummary.remove();
+
+    const summary = document.createElement('div');
+    summary.className = 'donation-summary';
+
+    const typeLabel = donationType === 'monthly' ? 'Monthly donation' : 'One-time donation';
+    const fund = fundSelect?.value || 'General Fund';
+
+    let html = `
+      <div class="summary-row">
+        <span class="summary-label">Type</span>
+        <span class="summary-value">${typeLabel}</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Fund</span>
+        <span class="summary-value">${fund}</span>
+      </div>
+    `;
+
+    if (tributeTypeSelect?.value && tributeTypeSelect.value !== 'none') {
+      const tributeLabel = tributeTypeSelect.value === 'in_honor' ? 'In honor of' : 'In memory of';
+      const tributeName = tributeNameInput?.value || '';
+      if (tributeName) {
+        html += `
+          <div class="summary-row">
+            <span class="summary-label">${tributeLabel}</span>
+            <span class="summary-value">${tributeName}</span>
+          </div>
+        `;
+      }
+    }
+
+    html += `
+      <div class="summary-row">
+        <span class="summary-label">Amount</span>
+        <span class="summary-value summary-total">$${selectedAmount}${donationType === 'monthly' ? '/month' : ''}</span>
+      </div>
+    `;
+
+    summary.innerHTML = html;
+
+    // Insert after payment section header
+    const header = paymentSection?.querySelector('.payment-section-header');
+    if (header) {
+      header.insertAdjacentElement('afterend', summary);
+    }
+  }
+
+  // Handle Edit Amount button
+  function handleEditAmount(): void {
+    // Show amount section, hide payment section
+    donationForm.classList.remove('amount-selection-collapsed');
+    if (paymentSection) paymentSection.style.display = 'none';
+    if (amountSectionActions) amountSectionActions.style.display = 'block';
+
+    // Reset continue button
+    if (continueBtn) {
+      continueBtn.disabled = false;
+      updateContinueButton();
+    }
+
+    // Remove summary
+    const summary = donationForm.querySelector('.donation-summary');
+    if (summary) summary.remove();
+
+    // Clear payment element
+    const paymentElementContainer = document.getElementById('payment-element');
+    if (paymentElementContainer) paymentElementContainer.innerHTML = '';
+
+    elements = null;
+    paymentElement = null;
+    clientSecret = null;
+  }
+
+  // Validate required donor fields
+  function validateDonorInfo(): {
+    valid: boolean;
+    message?: string;
+    field?: HTMLInputElement;
+    emailSuggestion?: string;
+  } {
+    const firstName = donorFirstNameInput?.value?.trim();
+    const lastName = donorLastNameInput?.value?.trim();
+    const email = donorEmailInput?.value?.trim();
+    const address = donorAddressInput?.value?.trim();
+    const city = donorCityInput?.value?.trim();
+    const state = donorStateInput?.value?.trim();
+    const zip = donorZipInput?.value?.trim();
+
+    if (!firstName)
+      return {
+        valid: false,
+        message: 'Please enter your first name.',
+        field: donorFirstNameInput!,
+      };
+    if (!lastName)
+      return { valid: false, message: 'Please enter your last name.', field: donorLastNameInput! };
+    if (!email)
+      return { valid: false, message: 'Please enter your email address.', field: donorEmailInput! };
+
+    // Use comprehensive email validation
+    const emailValidation = validateEmail(email);
+    if (!emailValidation.isValid) {
+      const errorMessage = emailValidation.errors[0] || 'Please enter a valid email address.';
+      return {
+        valid: false,
+        message: errorMessage,
+        field: donorEmailInput!,
+        emailSuggestion: emailValidation.suggestion,
+      };
+    }
+
+    // If there's a typo suggestion, warn but don't block
+    if (emailValidation.suggestion) {
+      return {
+        valid: false,
+        message: `Did you mean ${emailValidation.suggestion}?`,
+        field: donorEmailInput!,
+        emailSuggestion: emailValidation.suggestion,
+      };
+    }
+
+    if (!address)
+      return {
+        valid: false,
+        message: 'Please enter your street address.',
+        field: donorAddressInput!,
+      };
+    if (!city) return { valid: false, message: 'Please enter your city.', field: donorCityInput! };
+    if (!state)
+      return { valid: false, message: 'Please enter your state.', field: donorStateInput! };
+    if (!zip)
+      return { valid: false, message: 'Please enter your ZIP code.', field: donorZipInput! };
+
+    // Validate phone if provided (optional field, but should be valid if entered)
+    const phone = donorPhoneInput?.value?.trim();
+    if (phone) {
+      const phoneValidation = validatePhone(phone);
+      if (!phoneValidation.isValid) {
+        const errorMessage = phoneValidation.errors[0] || 'Please enter a valid phone number.';
+        return {
+          valid: false,
+          message: errorMessage,
+          field: donorPhoneInput!,
+        };
+      }
+    }
+
+    return { valid: true };
+  }
+
+  // Track if user has dismissed email suggestion
+  let emailSuggestionDismissed = false;
+
+  // Get donor info object
+  function getDonorInfo() {
+    return {
+      firstName: donorFirstNameInput?.value?.trim() || '',
+      lastName: donorLastNameInput?.value?.trim() || '',
+      email: donorEmailInput?.value?.trim() || '',
+      address: {
+        line1: donorAddressInput?.value?.trim() || '',
+        city: donorCityInput?.value?.trim() || '',
+        state: donorStateInput?.value?.trim() || '',
+        postal_code: donorZipInput?.value?.trim() || '',
+        country: 'US',
+      },
+      phone: donorPhoneInput?.value?.trim() || '',
+      organization: donorOrgInput?.value?.trim() || '',
+    };
+  }
+
+  // Handle payment submission
+  async function handlePaymentSubmit(): Promise<void> {
+    if (isSubmitting || !elements || !clientSecret) return;
+
+    // Validate donor info
+    const validation = validateDonorInfo();
+    if (!validation.valid) {
+      // Special handling for email suggestions - allow user to proceed if they've seen the suggestion
+      if (validation.emailSuggestion && !emailSuggestionDismissed) {
+        showPaymentError(
+          `${validation.message} <button type="button" class="email-suggestion-btn" id="use-suggested-email">Use this</button> or <button type="button" class="email-suggestion-dismiss" id="dismiss-suggestion">Keep my email</button>`
+        );
+        validation.field?.focus();
+
+        // Add event listeners for suggestion buttons
+        const useSuggestedBtn = document.getElementById('use-suggested-email');
+        const dismissBtn = document.getElementById('dismiss-suggestion');
+
+        useSuggestedBtn?.addEventListener('click', () => {
+          if (donorEmailInput && validation.emailSuggestion) {
+            donorEmailInput.value = validation.emailSuggestion;
+            clearPaymentError();
+            emailSuggestionDismissed = false;
+          }
+        });
+
+        dismissBtn?.addEventListener('click', () => {
+          emailSuggestionDismissed = true;
+          clearPaymentError();
+          // Re-trigger submission
+          handlePaymentSubmit();
+        });
+
+        return;
+      }
+
+      showPaymentError(validation.message || 'Please fill in all required fields.');
+      validation.field?.focus();
+      return;
+    }
+
+    const donorInfo = getDonorInfo();
+
+    isSubmitting = true;
+    if (submitPaymentBtn) {
+      submitPaymentBtn.disabled = true;
+      submitPaymentBtn.textContent = 'Processing...';
+    }
+    clearPaymentError();
+
+    try {
+      const { error, paymentIntent } = await stripe.confirmPayment({
+        elements: paymentElement!,
+        confirmParams: {
+          return_url: `${window.location.origin}/donate.html?success=true`,
+          receipt_email: donorInfo.email,
+          payment_method_data: {
+            billing_details: {
+              name: `${donorInfo.firstName} ${donorInfo.lastName}`,
+              email: donorInfo.email,
+              phone: donorInfo.phone || undefined,
+              address: donorInfo.address,
+            },
+          },
+        },
+        redirect: 'if_required',
+      });
+
+      if (error) {
+        showPaymentError(error.message || 'Payment failed. Please try again.');
+        isSubmitting = false;
+        if (submitPaymentBtn) {
+          submitPaymentBtn.disabled = false;
+          updateSubmitButton();
+        }
+      } else if (paymentIntent?.status === 'succeeded') {
+        // Payment succeeded without redirect
+        showStatus(
+          `Thank you, ${donorInfo.firstName}! Your donation has been received. You will receive a confirmation email shortly.`,
+          false
+        );
+
+        // Hide payment section, show success
+        if (paymentSection) paymentSection.style.display = 'none';
+        donationForm.classList.remove('amount-selection-collapsed');
+
+        // Reset form
+        resetForm();
+      }
+    } catch (err) {
+      showPaymentError('An unexpected error occurred. Please try again.');
+      isSubmitting = false;
+      if (submitPaymentBtn) {
+        submitPaymentBtn.disabled = false;
+        updateSubmitButton();
+      }
+    }
+  }
+
+  // Reset form to initial state
+  function resetForm(): void {
+    donationType = 'one-time';
+    selectedAmount = 100;
+    isCustomAmount = false;
+
+    // Reset buttons
+    typeButtons.forEach((b) => b.classList.remove('active'));
+    typeButtons[0]?.classList.add('active');
+
+    amountButtons.forEach((b) => {
+      b.classList.remove('active');
+      if (b.dataset.amount === '100') b.classList.add('active');
+    });
+
+    if (customAmountWrapper) customAmountWrapper.style.display = 'none';
+    if (customAmountInput) customAmountInput.value = '';
+    if (fundSelect) fundSelect.value = 'General Fund';
+    if (tributeTypeSelect) tributeTypeSelect.value = 'none';
+    if (tributeNameWrapper) tributeNameWrapper.style.display = 'none';
+    if (tributeNameInput) tributeNameInput.value = '';
+    if (anonymousCheckbox) anonymousCheckbox.checked = false;
+
+    // Clear all donor info fields
+    if (donorFirstNameInput) donorFirstNameInput.value = '';
+    if (donorLastNameInput) donorLastNameInput.value = '';
+    if (donorEmailInput) donorEmailInput.value = '';
+    if (donorAddressInput) donorAddressInput.value = '';
+    if (donorCityInput) donorCityInput.value = '';
+    if (donorStateInput) donorStateInput.value = '';
+    if (donorZipInput) donorZipInput.value = '';
+    if (donorPhoneInput) donorPhoneInput.value = '';
+    if (donorOrgInput) donorOrgInput.value = '';
+
+    if (amountSectionActions) amountSectionActions.style.display = 'block';
+    updateContinueButton();
+  }
+
+  // Event listeners
   typeButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       typeButtons.forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
       donationType = (btn.dataset.type as 'one-time' | 'monthly') || 'one-time';
-      updateDonateButton();
+      updateContinueButton();
     });
   });
 
-  // Handle amount button selection
   amountButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       amountButtons.forEach((b) => b.classList.remove('active'));
@@ -1145,36 +1545,30 @@ function initDonationForm(): void {
         selectedAmount = customAmountInput ? parseInt(customAmountInput.value) || 0 : 0;
       } else {
         isCustomAmount = false;
-        if (customAmountWrapper) {
-          customAmountWrapper.style.display = 'none';
-        }
+        if (customAmountWrapper) customAmountWrapper.style.display = 'none';
         selectedAmount = parseInt(amount || '0');
       }
-      updateDonateButton();
+      updateContinueButton();
     });
   });
 
-  // Handle custom amount input
   customAmountInput?.addEventListener('input', () => {
     selectedAmount = parseInt(customAmountInput.value) || 0;
-    updateDonateButton();
+    updateContinueButton();
   });
 
-  // Handle fund selection change
-  fundSelect?.addEventListener('change', updateDonateButton);
-
-  // Handle tribute type change - show/hide honoree name field
   tributeTypeSelect?.addEventListener('change', () => {
     if (tributeNameWrapper) {
       tributeNameWrapper.style.display = tributeTypeSelect.value !== 'none' ? 'block' : 'none';
     }
   });
 
-  // Handle donate button click
-  donateBtn?.addEventListener('click', handleDonateClick);
+  continueBtn?.addEventListener('click', handleContinue);
+  editAmountBtn?.addEventListener('click', handleEditAmount);
+  submitPaymentBtn?.addEventListener('click', handlePaymentSubmit);
 
-  // Initialize button text
-  updateDonateButton();
+  // Initialize
+  updateContinueButton();
 
   // Check for success/cancelled status from URL
   const params = new URLSearchParams(window.location.search);
@@ -1183,8 +1577,11 @@ function initDonationForm(): void {
       'Thank you for your generous donation! You will receive a confirmation email shortly.',
       false
     );
+    // Clean URL
+    window.history.replaceState({}, '', window.location.pathname);
   } else if (params.get('cancelled') === 'true') {
     showStatus('Donation was cancelled. Please try again when you are ready.', true);
+    window.history.replaceState({}, '', window.location.pathname);
   }
 }
 
