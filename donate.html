@@ -150,15 +150,44 @@
                   </select>
                 </div>
 
-                <a
-                  href="https://donate.stripe.com/5kQdR2f6pbC6eXu3GB6oo00"
+                <!-- Tribute Options -->
+                <div class="tribute-options">
+                  <label for="tribute-type">Make this gift a tribute:</label>
+                  <select id="tribute-type" name="tribute-type">
+                    <option value="none">No tribute</option>
+                    <option value="in_honor">In honor of someone</option>
+                    <option value="in_memory">In memory of someone</option>
+                  </select>
+                </div>
+
+                <div class="tribute-name-wrapper" id="tribute-name-wrapper" style="display: none">
+                  <label for="tribute-name">Honoree's name:</label>
+                  <input
+                    type="text"
+                    id="tribute-name"
+                    name="tribute-name"
+                    placeholder="Enter name"
+                  />
+                </div>
+
+                <!-- Anonymous Option -->
+                <div class="anonymous-option">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="anonymous-checkbox" name="anonymous" />
+                    <span>Make my donation anonymous</span>
+                  </label>
+                  <p class="anonymous-note">
+                    Your name will not appear publicly, but we'll still send a receipt.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
                   class="btn btn-primary btn-large donate-submit-btn"
                   id="donate-btn"
-                  target="_blank"
-                  rel="noopener"
                 >
                   Donate Now
-                </a>
+                </button>
 
                 <p class="secure-notice">
                   <svg
@@ -178,6 +207,9 @@
                   </svg>
                   Secure payment powered by Stripe
                 </p>
+
+                <!-- Success/Error Messages -->
+                <div id="donation-status" class="donation-status" style="display: none"></div>
               </div>
 
               <div class="manage-donations">

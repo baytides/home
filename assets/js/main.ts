@@ -768,27 +768,24 @@ function initDonationForm(): void {
   const customAmountWrapper = document.getElementById('custom-amount-wrapper');
   const customAmountInput = document.getElementById('custom-amount') as HTMLInputElement | null;
   const fundSelect = document.getElementById('fund-select') as HTMLSelectElement | null;
-  const donateBtn = document.getElementById('donate-btn') as HTMLAnchorElement | null;
+  const tributeTypeSelect = document.getElementById('tribute-type') as HTMLSelectElement | null;
+  const tributeNameWrapper = document.getElementById('tribute-name-wrapper');
+  const tributeNameInput = document.getElementById('tribute-name') as HTMLInputElement | null;
+  const anonymousCheckbox = document.getElementById(
+    'anonymous-checkbox'
+  ) as HTMLInputElement | null;
+  const donateBtn = document.getElementById('donate-btn') as HTMLButtonElement | null;
+  const statusDiv = document.getElementById('donation-status');
 
-  let donationType = 'one-time';
+  let donationType: 'one-time' | 'monthly' = 'one-time';
   let selectedAmount = 100;
+  let isSubmitting = false;
 
-  // Base Stripe payment link - this will be modified with parameters
-  const basePaymentLink = 'https://donate.stripe.com/5kQdR2f6pbC6eXu3GB6oo00';
+  // Cloudflare Worker API endpoint
+  const apiEndpoint = 'https://donate.baytides.org/create-checkout';
 
   function updateDonateButton(): void {
     if (!donateBtn) return;
-
-    // Build URL with prefilled parameters
-    // Note: Stripe Payment Links support some prefill parameters via URL
-    const params = new URLSearchParams();
-
-    // Add metadata for webhook to process
-    const fund = fundSelect?.value || 'General Fund';
-
-    // For now, link to the payment page - Stripe will handle the rest
-    // The webhook will receive the payment details and create records in Salesforce
-    donateBtn.href = basePaymentLink;
 
     // Update button text based on selection
     const amountText = selectedAmount > 0 ? `$${selectedAmount}` : '';
@@ -796,12 +793,71 @@ function initDonationForm(): void {
     donateBtn.textContent = `Donate${amountText ? ' ' + amountText : ''}${typeText}`;
   }
 
+  function showStatus(message: string, isError: boolean): void {
+    if (!statusDiv) return;
+    // Clear existing content
+    statusDiv.textContent = '';
+    // Create status element safely
+    const statusEl = document.createElement('div');
+    statusEl.className = `form-status ${isError ? 'error' : 'success'}`;
+    statusEl.setAttribute('role', 'alert');
+    statusEl.textContent = message;
+    statusDiv.appendChild(statusEl);
+    statusDiv.style.display = 'block';
+  }
+
+  async function handleDonateClick(): Promise<void> {
+    if (isSubmitting) return;
+
+    // Validate amount
+    if (selectedAmount < 1) {
+      showStatus('Please enter a valid donation amount.', true);
+      return;
+    }
+
+    isSubmitting = true;
+    donateBtn!.classList.add('loading');
+    donateBtn!.setAttribute('aria-busy', 'true');
+
+    try {
+      const response = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: selectedAmount,
+          frequency: donationType,
+          fund: fundSelect?.value || 'General Fund',
+          tributeType: tributeTypeSelect?.value || 'none',
+          tributeName: tributeNameInput?.value || '',
+          anonymous: anonymousCheckbox?.checked || false,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create checkout session');
+      }
+
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('No checkout URL returned');
+      }
+    } catch (error) {
+      console.error('Donation error:', error);
+      showStatus('There was an error processing your donation. Please try again.', true);
+      isSubmitting = false;
+      donateBtn!.classList.remove('loading');
+      donateBtn!.removeAttribute('aria-busy');
+    }
+  }
+
   // Handle donation type toggle (one-time vs monthly)
   typeButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       typeButtons.forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
-      donationType = btn.dataset.type || 'one-time';
+      donationType = (btn.dataset.type as 'one-time' | 'monthly') || 'one-time';
       updateDonateButton();
     });
   });
@@ -838,8 +894,29 @@ function initDonationForm(): void {
   // Handle fund selection change
   fundSelect?.addEventListener('change', updateDonateButton);
 
+  // Handle tribute type change - show/hide honoree name field
+  tributeTypeSelect?.addEventListener('change', () => {
+    if (tributeNameWrapper) {
+      tributeNameWrapper.style.display = tributeTypeSelect.value !== 'none' ? 'block' : 'none';
+    }
+  });
+
+  // Handle donate button click
+  donateBtn?.addEventListener('click', handleDonateClick);
+
   // Initialize button text
   updateDonateButton();
+
+  // Check for success/cancelled status from URL
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('success') === 'true') {
+    showStatus(
+      'Thank you for your generous donation! You will receive a confirmation email shortly.',
+      false
+    );
+  } else if (params.get('cancelled') === 'true') {
+    showStatus('Donation was cancelled. Please try again when you are ready.', true);
+  }
 }
 
 // ==========================================================================
