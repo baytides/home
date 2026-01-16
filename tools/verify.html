@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verification Tools | Bay Tides Admin</title>
+    <meta name="robots" content="noindex, nofollow" />
+
+    <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <style>
+      .admin-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .admin-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--border-color, #e0e0e0);
+      }
+
+      .admin-header h1 {
+        margin: 0;
+        font-size: 1.75rem;
+      }
+
+      .admin-badge {
+        background: var(--primary-color, #2c5282);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      .tool-tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color, #e0e0e0);
+      }
+
+      .tool-tab {
+        padding: 0.75rem 1.5rem;
+        background: none;
+        border: none;
+        border-bottom: 3px solid transparent;
+        cursor: pointer;
+        font-size: 1rem;
+        color: var(--text-secondary, #666);
+        transition: all 0.2s;
+      }
+
+      .tool-tab:hover {
+        color: var(--text-primary, #333);
+        background: var(--bg-hover, #f5f5f5);
+      }
+
+      .tool-tab.active {
+        color: var(--primary-color, #2c5282);
+        border-bottom-color: var(--primary-color, #2c5282);
+        font-weight: 500;
+      }
+
+      .tool-panel {
+        display: none;
+      }
+
+      .tool-panel.active {
+        display: block;
+      }
+
+      .input-section {
+        margin-bottom: 1.5rem;
+      }
+
+      .input-section label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      .input-section textarea {
+        width: 100%;
+        min-height: 200px;
+        padding: 1rem;
+        border: 1px solid var(--border-color, #e0e0e0);
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 0.9rem;
+        resize: vertical;
+      }
+
+      .input-section textarea:focus {
+        outline: none;
+        border-color: var(--primary-color, #2c5282);
+        box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.1);
+      }
+
+      .input-hint {
+        font-size: 0.875rem;
+        color: var(--text-secondary, #666);
+        margin-top: 0.5rem;
+      }
+
+      .action-bar {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+
+      .btn-primary {
+        background: var(--primary-color, #2c5282);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: var(--primary-dark, #1a365d);
+      }
+
+      .btn-secondary {
+        background: var(--bg-secondary, #f0f0f0);
+        color: var(--text-primary, #333);
+      }
+
+      .btn-secondary:hover {
+        background: var(--border-color, #e0e0e0);
+      }
+
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .results-section {
+        margin-top: 2rem;
+      }
+
+      .results-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .stat-card {
+        background: var(--bg-secondary, #f8f9fa);
+        padding: 1rem;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .stat-card .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-color, #2c5282);
+      }
+
+      .stat-card .stat-label {
+        font-size: 0.875rem;
+        color: var(--text-secondary, #666);
+        margin-top: 0.25rem;
+      }
+
+      .stat-card.valid .stat-value {
+        color: #38a169;
+      }
+
+      .stat-card.invalid .stat-value {
+        color: #e53e3e;
+      }
+
+      .stat-card.warning .stat-value {
+        color: #d69e2e;
+      }
+
+      .results-table-container {
+        overflow-x: auto;
+        border: 1px solid var(--border-color, #e0e0e0);
+        border-radius: 8px;
+      }
+
+      .results-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+
+      .results-table th,
+      .results-table td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color, #e0e0e0);
+      }
+
+      .results-table th {
+        background: var(--bg-secondary, #f8f9fa);
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+      }
+
+      .results-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .results-table tr:hover {
+        background: var(--bg-hover, #f5f5f5);
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+
+      .status-badge.valid {
+        background: #c6f6d5;
+        color: #22543d;
+      }
+
+      .status-badge.invalid {
+        background: #fed7d7;
+        color: #742a2a;
+      }
+
+      .status-badge.warning {
+        background: #fefcbf;
+        color: #744210;
+      }
+
+      .status-badge.disposable {
+        background: #e9d8fd;
+        color: #44337a;
+      }
+
+      .suggestion-link {
+        color: var(--primary-color, #2c5282);
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
+      .suggestion-link:hover {
+        color: var(--primary-dark, #1a365d);
+      }
+
+      .error-list,
+      .warning-list {
+        margin: 0;
+        padding-left: 1rem;
+        font-size: 0.8rem;
+      }
+
+      .error-list li {
+        color: #c53030;
+      }
+
+      .warning-list li {
+        color: #b7791f;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: var(--text-secondary, #666);
+      }
+
+      .empty-state svg {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      @media (max-width: 768px) {
+        .admin-container {
+          padding: 1rem;
+        }
+
+        .admin-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+
+        .tool-tabs {
+          overflow-x: auto;
+        }
+
+        .results-summary {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Minimal header for admin -->
+    <header role="banner" style="background: var(--bg-secondary, #f8f9fa); padding: 1rem 0">
+      <div class="admin-container" style="padding: 0 2rem">
+        <a
+          href="/"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: inherit;
+          "
+        >
+          <img src="/assets/images/logo.png" alt="Bay Tides" width="32" height="32" />
+          <span style="font-weight: 600">Bay Tides</span>
+        </a>
+      </div>
+    </header>
+
+    <main id="main-content" class="admin-container">
+      <div class="admin-header">
+        <h1>Verification Tools</h1>
+        <span class="admin-badge">Admin Only</span>
+      </div>
+
+      <div class="tool-tabs" role="tablist">
+        <button
+          class="tool-tab active"
+          role="tab"
+          aria-selected="true"
+          aria-controls="email-panel"
+          id="email-tab"
+        >
+          Email Verification
+        </button>
+        <button
+          class="tool-tab"
+          role="tab"
+          aria-selected="false"
+          aria-controls="phone-panel"
+          id="phone-tab"
+        >
+          Phone Verification
+        </button>
+      </div>
+
+      <!-- Email Verification Panel -->
+      <div class="tool-panel active" id="email-panel" role="tabpanel" aria-labelledby="email-tab">
+        <div class="input-section">
+          <label for="email-input">Email Addresses</label>
+          <textarea
+            id="email-input"
+            placeholder="Enter email addresses (one per line, or comma/semicolon separated)
+
+Example:
+john@gmail.com
+jane@yahoo.com
+test@gmial.com"
+          ></textarea>
+          <p class="input-hint">
+            Validates format, checks for typos, and detects disposable email providers.
+          </p>
+        </div>
+
+        <div class="action-bar">
+          <button class="btn btn-primary" id="validate-emails">Validate Emails</button>
+          <button class="btn btn-secondary" id="clear-emails">Clear</button>
+          <button class="btn btn-secondary" id="export-emails-csv" disabled>Export CSV</button>
+        </div>
+
+        <div class="results-section" id="email-results">
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              />
+            </svg>
+            <p>Enter email addresses above and click "Validate Emails" to check them.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone Verification Panel -->
+      <div class="tool-panel" id="phone-panel" role="tabpanel" aria-labelledby="phone-tab">
+        <div class="input-section">
+          <label for="phone-input">Phone Numbers</label>
+          <textarea
+            id="phone-input"
+            placeholder="Enter phone numbers (one per line, or comma/semicolon separated)
+
+Example:
+(415) 555-1234
++1 650-555-9876
+5105551234"
+          ></textarea>
+          <p class="input-hint">
+            Validates and normalizes phone numbers to E.164 format. Defaults to US numbers.
+          </p>
+        </div>
+
+        <div class="action-bar">
+          <button class="btn btn-primary" id="validate-phones">Validate Phones</button>
+          <button class="btn btn-secondary" id="clear-phones">Clear</button>
+          <button class="btn btn-secondary" id="export-phones-csv" disabled>Export CSV</button>
+        </div>
+
+        <div class="results-section" id="phone-results">
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              />
+            </svg>
+            <p>Enter phone numbers above and click "Validate Phones" to check them.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="/assets/js/admin-tools.ts"></script>
+  </body>
+</html>

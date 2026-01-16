@@ -21,6 +21,8 @@ export default defineConfig({
         accessibility: resolve(__dirname, 'accessibility.html'),
         sitemap: resolve(__dirname, 'sitemap-page.html'),
         '404': resolve(__dirname, '404.html'),
+        // Admin tools (protected by Cloudflare Access)
+        'tools/verify': resolve(__dirname, 'tools/verify.html'),
       },
     },
   },
