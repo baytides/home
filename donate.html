@@ -253,7 +253,21 @@
                       name="address"
                       placeholder="123 Main St"
                       required
-                      autocomplete="street-address"
+                      autocomplete="address-line1"
+                    />
+                  </div>
+
+                  <div class="donor-field">
+                    <label for="donor-address2">
+                      Address Line 2
+                      <span class="optional">(optional)</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="donor-address2"
+                      name="address2"
+                      placeholder="Apt, suite, unit, building, floor, etc."
+                      autocomplete="address-line2"
                     />
                   </div>
 

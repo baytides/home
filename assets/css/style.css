@@ -269,6 +269,107 @@
   line-height: 1.5;
 }
 
+/* Donor Information Form */
+.donor-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.donor-info-grid.donor-info-grid-3 {
+  grid-template-columns: 2fr 1fr 1fr;
+}
+.donor-info-grid .donor-field {
+  margin-bottom: 0;
+}
+
+.donor-field {
+  margin-bottom: 1rem;
+}
+.donor-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-dark);
+}
+.donor-field label .required {
+  color: #e53e3e;
+}
+.donor-field label .optional {
+  font-weight: 400;
+  color: var(--text-light);
+  font-size: 0.8125rem;
+}
+.donor-field input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: #fff;
+  color: var(--text-dark);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.donor-field input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.1);
+}
+.donor-field input::placeholder {
+  color: #a0aec0;
+}
+.donor-field input:invalid:not(:placeholder-shown) {
+  border-color: #e53e3e;
+}
+
+.payment-subheading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  margin: 1.5rem 0 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+#payment-element {
+  margin-bottom: 1.5rem;
+  min-height: 100px;
+}
+
+.payment-errors {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  min-height: 1.25rem;
+}
+
+/* Dark mode donor form */
+[data-theme=dark] .donor-field input {
+  background: var(--bg-secondary);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-dark);
+}
+[data-theme=dark] .donor-field input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+[data-theme=dark] .donor-field input::placeholder {
+  color: var(--text-light);
+}
+[data-theme=dark] .payment-subheading {
+  color: var(--text-dark);
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .donor-info-grid,
+  .donor-info-grid.donor-info-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
 .donate-submit-btn {
   width: 100%;
   padding: 1.25rem 2rem;
