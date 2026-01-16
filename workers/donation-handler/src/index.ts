@@ -1,6 +1,6 @@
 /**
  * Bay Tides Donation Handler Worker
- * Creates Stripe Checkout Sessions with full metadata for Salesforce integration
+ * Creates Stripe PaymentIntents and Checkout Sessions with full metadata for Salesforce integration
  * Handles one-time and recurring donations with tribute/anonymous options
  */
 
@@ -34,6 +34,20 @@ interface StripeCheckoutSession {
 
 interface StripePrice {
   id: string;
+}
+
+interface StripePaymentIntent {
+  id: string;
+  client_secret: string;
+}
+
+interface StripeSubscription {
+  id: string;
+  latest_invoice: {
+    payment_intent: {
+      client_secret: string;
+    };
+  };
 }
 
 // ==========================================================================
@@ -173,8 +187,202 @@ async function createCheckoutSession(env: Env, data: DonationData): Promise<Stri
 }
 
 // ==========================================================================
+// PaymentIntent Helpers (for embedded checkout)
+// ==========================================================================
+
+async function createPaymentIntent(env: Env, data: DonationData): Promise<StripePaymentIntent> {
+  // Build metadata for Salesforce webhook
+  const metadata: Record<string, string> = {
+    fund: data.fund,
+    anonymous: data.anonymous.toString(),
+    source: 'website_checkout',
+  };
+
+  if (data.tributeType && data.tributeType !== 'none') {
+    metadata.tribute_type = data.tributeType;
+    if (data.tributeName) {
+      metadata.tribute_name = data.tributeName;
+    }
+  }
+
+  if (data.donorName) {
+    metadata.donor_name = data.donorName;
+  }
+
+  const params = new URLSearchParams({
+    amount: (data.amount * 100).toString(), // Convert to cents
+    currency: 'usd',
+    'automatic_payment_methods[enabled]': 'true',
+    description: `Donation to Bay Tides - ${data.fund}`,
+  });
+
+  // Add metadata
+  Object.entries(metadata).forEach(([key, value]) => {
+    params.append(`metadata[${key}]`, value);
+  });
+
+  // Add receipt email if provided
+  if (data.donorEmail) {
+    params.append('receipt_email', data.donorEmail);
+  }
+
+  const response = await fetch('https://api.stripe.com/v1/payment_intents', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${env.STRIPE_SECRET_KEY}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: params.toString(),
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    console.error('Stripe PaymentIntent creation error:', error);
+    throw new Error('Failed to create payment intent');
+  }
+
+  return response.json<StripePaymentIntent>();
+}
+
+async function createSubscription(
+  env: Env,
+  data: DonationData
+): Promise<{ clientSecret: string; subscriptionId: string }> {
+  // First, create or get customer
+  const customerParams = new URLSearchParams();
+  if (data.donorEmail) {
+    customerParams.append('email', data.donorEmail);
+  }
+  if (data.donorName) {
+    customerParams.append('name', data.donorName);
+  }
+
+  const customerResponse = await fetch('https://api.stripe.com/v1/customers', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${env.STRIPE_SECRET_KEY}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: customerParams.toString(),
+  });
+
+  if (!customerResponse.ok) {
+    throw new Error('Failed to create customer');
+  }
+
+  const customer = await customerResponse.json<{ id: string }>();
+
+  // Create price for recurring donation
+  const priceId = await createStripePrice(env, data.amount, true);
+
+  // Build metadata
+  const metadata: Record<string, string> = {
+    fund: data.fund,
+    anonymous: data.anonymous.toString(),
+    source: 'website_checkout',
+  };
+
+  if (data.tributeType && data.tributeType !== 'none') {
+    metadata.tribute_type = data.tributeType;
+    if (data.tributeName) {
+      metadata.tribute_name = data.tributeName;
+    }
+  }
+
+  // Create subscription
+  const subParams = new URLSearchParams({
+    customer: customer.id,
+    'items[0][price]': priceId,
+    payment_behavior: 'default_incomplete',
+    'payment_settings[save_default_payment_method]': 'on_subscription',
+    'expand[]': 'latest_invoice.payment_intent',
+  });
+
+  Object.entries(metadata).forEach(([key, value]) => {
+    subParams.append(`metadata[${key}]`, value);
+  });
+
+  const subResponse = await fetch('https://api.stripe.com/v1/subscriptions', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${env.STRIPE_SECRET_KEY}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: subParams.toString(),
+  });
+
+  if (!subResponse.ok) {
+    const error = await subResponse.text();
+    console.error('Stripe subscription creation error:', error);
+    throw new Error('Failed to create subscription');
+  }
+
+  const subscription = await subResponse.json<StripeSubscription>();
+
+  return {
+    clientSecret: subscription.latest_invoice.payment_intent.client_secret,
+    subscriptionId: subscription.id,
+  };
+}
+
+// ==========================================================================
 // Request Handlers
 // ==========================================================================
+
+async function handleCreatePaymentIntent(
+  request: Request,
+  env: Env,
+  origin: string | null
+): Promise<Response> {
+  try {
+    const body = await request.json<DonationData>();
+
+    // Validate required fields
+    if (!body.amount || body.amount < 1) {
+      return new Response(JSON.stringify({ error: 'Invalid amount' }), {
+        status: 400,
+        headers: { ...corsHeaders(origin, env), 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (!body.fund) {
+      body.fund = 'General Fund';
+    }
+
+    if (!body.frequency) {
+      body.frequency = 'one-time';
+    }
+
+    // Handle one-time vs monthly differently
+    if (body.frequency === 'monthly') {
+      const { clientSecret, subscriptionId } = await createSubscription(env, body);
+      return new Response(JSON.stringify({ clientSecret, subscriptionId }), {
+        status: 200,
+        headers: { ...corsHeaders(origin, env), 'Content-Type': 'application/json' },
+      });
+    }
+
+    // One-time donation
+    const paymentIntent = await createPaymentIntent(env, body);
+
+    return new Response(
+      JSON.stringify({
+        clientSecret: paymentIntent.client_secret,
+        paymentIntentId: paymentIntent.id,
+      }),
+      {
+        status: 200,
+        headers: { ...corsHeaders(origin, env), 'Content-Type': 'application/json' },
+      }
+    );
+  } catch (error) {
+    console.error('Payment intent creation error:', error);
+    return new Response(JSON.stringify({ error: 'Failed to create payment intent' }), {
+      status: 500,
+      headers: { ...corsHeaders(origin, env), 'Content-Type': 'application/json' },
+    });
+  }
+}
 
 async function handleCreateCheckout(
   request: Request,
@@ -238,6 +446,10 @@ export default {
     // Route requests
     if (url.pathname === '/create-checkout' && request.method === 'POST') {
       return handleCreateCheckout(request, env, origin);
+    }
+
+    if (url.pathname === '/create-payment-intent' && request.method === 'POST') {
+      return handleCreatePaymentIntent(request, env, origin);
     }
 
     // Health check
