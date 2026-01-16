@@ -7,6 +7,126 @@ import { validateEmail, type EmailValidationResult } from './email-verifier';
 import { validatePhone, type PhoneValidationResult } from './phone-verifier';
 
 // ==========================================================================
+// API Constants
+// ==========================================================================
+
+const VERIFY_API_ENDPOINT = 'https://donate-tools.baytides.org';
+
+// ==========================================================================
+// MX Record Validation (async, server-side)
+// ==========================================================================
+
+interface MxValidationResult {
+  email: string;
+  isValid: boolean;
+  hasMxRecord: boolean;
+  errors: string[];
+}
+
+// Cache MX results to avoid repeated API calls
+const mxValidationCache = new Map<string, MxValidationResult>();
+
+async function validateEmailWithMx(email: string): Promise<MxValidationResult> {
+  // Check cache first
+  const cached = mxValidationCache.get(email.toLowerCase());
+  if (cached) return cached;
+
+  try {
+    const response = await fetch(`${VERIFY_API_ENDPOINT}/verify-contacts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ emails: [email] }),
+    });
+
+    if (!response.ok) {
+      throw new Error('API error');
+    }
+
+    const data = await response.json();
+    const result = data.emails?.[0];
+
+    if (result) {
+      const validationResult: MxValidationResult = {
+        email: result.email,
+        isValid: result.isValid,
+        hasMxRecord: result.hasMxRecord ?? true,
+        errors: result.errors || [],
+      };
+      mxValidationCache.set(email.toLowerCase(), validationResult);
+      return validationResult;
+    }
+  } catch {
+    // On error, assume valid to not block the user
+  }
+
+  return {
+    email,
+    isValid: true,
+    hasMxRecord: true,
+    errors: [],
+  };
+}
+
+// Helper to show MX validation warning on an input
+function showMxWarning(input: HTMLInputElement, message: string): void {
+  // Remove any existing warning
+  const existingWarning = input.parentElement?.querySelector('.mx-warning');
+  existingWarning?.remove();
+
+  // Create warning element
+  const warning = document.createElement('div');
+  warning.className = 'mx-warning';
+  warning.setAttribute('role', 'alert');
+  warning.textContent = message;
+  warning.style.cssText = 'color: #c53030; font-size: 0.875rem; margin-top: 0.25rem;';
+
+  input.parentElement?.appendChild(warning);
+  input.setAttribute('aria-invalid', 'true');
+}
+
+function clearMxWarning(input: HTMLInputElement): void {
+  const warning = input.parentElement?.querySelector('.mx-warning');
+  warning?.remove();
+  input.removeAttribute('aria-invalid');
+}
+
+// Attach MX validation to an email input (on blur)
+function attachMxValidation(input: HTMLInputElement): void {
+  input.addEventListener('blur', async () => {
+    const email = input.value.trim();
+    if (!email) {
+      clearMxWarning(input);
+      return;
+    }
+
+    // First do quick client-side validation
+    const quickValidation = validateEmail(email);
+    if (!quickValidation.isValid) {
+      // Client-side validation will handle the error display
+      return;
+    }
+
+    // Then do async MX validation
+    const mxResult = await validateEmailWithMx(email);
+    if (!mxResult.hasMxRecord) {
+      showMxWarning(
+        input,
+        'This email domain does not appear to accept emails. Please check the address.'
+      );
+    } else if (!mxResult.isValid && mxResult.errors.length > 0) {
+      showMxWarning(input, mxResult.errors[0]);
+    } else {
+      clearMxWarning(input);
+    }
+  });
+
+  // Clear warning on input
+  input.addEventListener('input', () => {
+    clearMxWarning(input);
+  });
+}
+
+// ==========================================================================
 // Types
 // ==========================================================================
 
@@ -684,6 +804,12 @@ function initFormValidation(): void {
     }
   });
 
+  // Attach MX validation to email input for async domain verification
+  const emailInput = contactForm.querySelector<HTMLInputElement>('[name="email"]');
+  if (emailInput) {
+    attachMxValidation(emailInput);
+  }
+
   let isSubmitting = false;
 
   contactForm.addEventListener('submit', (e) => {
@@ -730,6 +856,14 @@ function initFormLoading(): void {
       }
     });
   });
+
+  // Attach MX validation to newsletter form email input
+  const newsletterEmailInput = document.getElementById(
+    'newsletter-email'
+  ) as HTMLInputElement | null;
+  if (newsletterEmailInput) {
+    attachMxValidation(newsletterEmailInput);
+  }
 
   const params = new URLSearchParams(window.location.search);
   const statusDiv = document.getElementById('contact-form-status');
@@ -1039,6 +1173,11 @@ function initDonationForm(): void {
   let clientSecret: string | null = null;
 
   const apiEndpoint = 'https://donate-tools.baytides.org';
+
+  // Attach MX validation to donor email input
+  if (donorEmailInput) {
+    attachMxValidation(donorEmailInput);
+  }
 
   function updateContinueButton(): void {
     if (!continueBtn) return;
