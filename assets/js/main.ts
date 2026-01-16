@@ -756,6 +756,93 @@ function showUpdateNotification(registration: ServiceWorkerRegistration): void {
 }
 
 // ==========================================================================
+// Donation Form
+// ==========================================================================
+
+function initDonationForm(): void {
+  const donationForm = document.getElementById('donation-form');
+  if (!donationForm) return;
+
+  const typeButtons = donationForm.querySelectorAll<HTMLButtonElement>('.toggle-btn');
+  const amountButtons = donationForm.querySelectorAll<HTMLButtonElement>('.amount-btn');
+  const customAmountWrapper = document.getElementById('custom-amount-wrapper');
+  const customAmountInput = document.getElementById('custom-amount') as HTMLInputElement | null;
+  const fundSelect = document.getElementById('fund-select') as HTMLSelectElement | null;
+  const donateBtn = document.getElementById('donate-btn') as HTMLAnchorElement | null;
+
+  let donationType = 'one-time';
+  let selectedAmount = 100;
+
+  // Base Stripe payment link - this will be modified with parameters
+  const basePaymentLink = 'https://donate.stripe.com/5kQdR2f6pbC6eXu3GB6oo00';
+
+  function updateDonateButton(): void {
+    if (!donateBtn) return;
+
+    // Build URL with prefilled parameters
+    // Note: Stripe Payment Links support some prefill parameters via URL
+    const params = new URLSearchParams();
+
+    // Add metadata for webhook to process
+    const fund = fundSelect?.value || 'General Fund';
+
+    // For now, link to the payment page - Stripe will handle the rest
+    // The webhook will receive the payment details and create records in Salesforce
+    donateBtn.href = basePaymentLink;
+
+    // Update button text based on selection
+    const amountText = selectedAmount > 0 ? `$${selectedAmount}` : '';
+    const typeText = donationType === 'monthly' ? '/month' : '';
+    donateBtn.textContent = `Donate${amountText ? ' ' + amountText : ''}${typeText}`;
+  }
+
+  // Handle donation type toggle (one-time vs monthly)
+  typeButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      typeButtons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      donationType = btn.dataset.type || 'one-time';
+      updateDonateButton();
+    });
+  });
+
+  // Handle amount button selection
+  amountButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      amountButtons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const amount = btn.dataset.amount;
+      if (amount === 'other') {
+        if (customAmountWrapper) {
+          customAmountWrapper.style.display = 'block';
+          customAmountInput?.focus();
+        }
+        selectedAmount = customAmountInput ? parseInt(customAmountInput.value) || 0 : 0;
+      } else {
+        if (customAmountWrapper) {
+          customAmountWrapper.style.display = 'none';
+        }
+        selectedAmount = parseInt(amount || '0');
+      }
+      updateDonateButton();
+    });
+  });
+
+  // Handle custom amount input
+  customAmountInput?.addEventListener('input', () => {
+    selectedAmount = parseInt(customAmountInput.value) || 0;
+    updateDonateButton();
+  });
+
+  // Handle fund selection change
+  fundSelect?.addEventListener('change', updateDonateButton);
+
+  // Initialize button text
+  updateDonateButton();
+}
+
+// ==========================================================================
 // Initialize
 // ==========================================================================
 
@@ -763,6 +850,7 @@ function init(): void {
   initPage();
   initKeyboardDetection();
   initServiceWorker();
+  initDonationForm();
 }
 
 if (document.readyState === 'loading') {

@@ -91,7 +91,7 @@
         </div>
       </section>
 
-      <!-- Donate Intro -->
+      <!-- Donate Form Section -->
       <section class="content-section">
         <div class="container">
           <div class="donate-content">
@@ -107,17 +107,90 @@
                 tax-deductible to the fullest extent allowed by law.
               </p>
 
-              <div class="donate-button-wrapper">
-                <!-- Replace with your actual Donorbox link -->
+              <!-- Donation Form -->
+              <div class="donation-form-container" id="donation-form">
+                <div class="donation-type-toggle">
+                  <button type="button" class="toggle-btn active" data-type="one-time">
+                    One-Time
+                  </button>
+                  <button type="button" class="toggle-btn" data-type="monthly">Monthly</button>
+                </div>
+
+                <div class="donation-amounts">
+                  <button type="button" class="amount-btn" data-amount="25">$25</button>
+                  <button type="button" class="amount-btn" data-amount="50">$50</button>
+                  <button type="button" class="amount-btn active" data-amount="100">$100</button>
+                  <button type="button" class="amount-btn" data-amount="250">$250</button>
+                  <button type="button" class="amount-btn" data-amount="500">$500</button>
+                  <button type="button" class="amount-btn" data-amount="other">Other</button>
+                </div>
+
+                <div class="custom-amount-wrapper" id="custom-amount-wrapper" style="display: none">
+                  <label for="custom-amount" class="sr-only">Custom amount</label>
+                  <div class="custom-amount-input">
+                    <span class="currency-symbol">$</span>
+                    <input
+                      type="number"
+                      id="custom-amount"
+                      name="custom-amount"
+                      min="1"
+                      placeholder="Enter amount"
+                    />
+                  </div>
+                </div>
+
+                <div class="fund-designation">
+                  <label for="fund-select">Designate my gift to:</label>
+                  <select id="fund-select" name="fund">
+                    <option value="General Fund">Where needed most (General Fund)</option>
+                    <option value="Programs">Programs</option>
+                    <option value="Events">Events</option>
+                    <option value="Capital Campaign">Capital Campaign</option>
+                    <option value="Grants">Grants</option>
+                  </select>
+                </div>
+
                 <a
-                  href="https://donorbox.org/baytides"
-                  class="btn btn-primary btn-large"
+                  href="https://donate.stripe.com/5kQdR2f6pbC6eXu3GB6oo00"
+                  class="btn btn-primary btn-large donate-submit-btn"
+                  id="donate-btn"
                   target="_blank"
                   rel="noopener"
                 >
                   Donate Now
-                  <span class="sr-only">(opens in new tab)</span>
                 </a>
+
+                <p class="secure-notice">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                  Secure payment powered by Stripe
+                </p>
+              </div>
+
+              <div class="manage-donations">
+                <p>
+                  Already a recurring donor?
+                  <a
+                    href="https://billing.stripe.com/p/login/5kQdR2f6pbC6eXu3GB6oo00"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    Manage your donations
+                  </a>
+                </p>
               </div>
             </div>
 
@@ -311,15 +384,7 @@
               Your generosity makes our work possible. Together, we can ensure a thriving, resilient
               Bay Area for generations to come.
             </p>
-            <a
-              href="https://donorbox.org/baytides"
-              class="btn btn-primary"
-              target="_blank"
-              rel="noopener"
-            >
-              Donate Now
-              <span class="sr-only">(opens in new tab)</span>
-            </a>
+            <a href="#donation-form" class="btn btn-primary">Donate Now</a>
           </div>
         </div>
       </section>
