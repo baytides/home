@@ -1010,30 +1010,56 @@ function initDonationForm(): void {
     statusDiv.style.display = 'block';
   }
 
-  function buildOneTimePaymentLinkUrl(): string {
-    // One-time "Customer chooses what to pay" Payment Link
-    const oneTimeLink = 'https://donate.stripe.com/5kQdR2f6pbC6eXu3GB6oo00';
-    const params = new URLSearchParams();
+  // One-time Payment Links (fixed amounts from Stripe Dashboard)
+  const oneTimePaymentLinks: Record<number, string> = {
+    25: 'https://donate.stripe.com/5kA4gs9M5aySgZC7sC',
+    50: 'https://donate.stripe.com/14k4gsf6p5dIgZC8wH',
+    100: 'https://donate.stripe.com/dR6eV6aSdaySbLi6ou',
+    250: 'https://donate.stripe.com/dR6bIU8I12bw9Da5ks',
+    500: 'https://donate.stripe.com/14keV61fz9uO6r28wF',
+  };
 
-    // Build metadata for client_reference_id (parsed by webhook later)
-    const metadata = {
-      amount: selectedAmount,
-      fund: fundSelect?.value || 'General Fund',
-      tributeType: tributeTypeSelect?.value || 'none',
-      tributeName: tributeNameInput?.value || '',
-      anonymous: anonymousCheckbox?.checked || false,
-    };
-
-    // client_reference_id allows passing metadata through Payment Links (max 200 chars)
-    const metadataStr = JSON.stringify(metadata);
-    if (metadataStr.length <= 200) {
-      params.set('client_reference_id', metadataStr);
+  async function handleOneTimePayment(): Promise<void> {
+    // Check if we have a fixed Payment Link for this amount
+    if (!isCustomAmount && oneTimePaymentLinks[selectedAmount]) {
+      window.location.href = oneTimePaymentLinks[selectedAmount];
+      return;
     }
 
-    // prefilled_amount sets the default amount in cents for variable-price links
-    params.set('prefilled_amount', String(selectedAmount * 100));
+    // Custom amount - use Cloudflare Worker to create Checkout Session
+    try {
+      const response = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: selectedAmount,
+          frequency: 'one-time',
+          fund: fundSelect?.value || 'General Fund',
+          tributeType: tributeTypeSelect?.value || 'none',
+          tributeName: tributeNameInput?.value || '',
+          anonymous: anonymousCheckbox?.checked || false,
+        }),
+      });
 
-    return `${oneTimeLink}?${params.toString()}`;
+      if (!response.ok) {
+        throw new Error('Failed to create checkout session');
+      }
+
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('No checkout URL returned');
+      }
+    } catch (error) {
+      isSubmitting = false;
+      donateBtn!.classList.remove('loading');
+      donateBtn!.removeAttribute('aria-busy');
+      showStatus(
+        'Unable to process donation. Please try again or contact info@baytides.org.',
+        true
+      );
+    }
   }
 
   async function handleDonateClick(): Promise<void> {
@@ -1088,8 +1114,8 @@ function initDonationForm(): void {
         }
       }
     } else {
-      // One-time donations use Payment Link with prefilled amount
-      window.location.href = buildOneTimePaymentLinkUrl();
+      // One-time donations - use Payment Links for fixed amounts or API for custom
+      await handleOneTimePayment();
     }
   }
 

@@ -70,10 +70,21 @@
 }
 
 .hero-page {
-  min-height: 280px;
+  min-height: 320px;
   display: flex;
   align-items: center;
   padding: 8rem 0 4rem;
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 1.25rem;
+    max-width: 500px;
+  }
 }
 
 @keyframes floatParticles {
@@ -140,5 +151,17 @@
 
   .hero-home {
     padding: 9rem 0 5rem;
+  }
+
+  .hero-page {
+    min-height: 250px;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1.0625rem;
+    }
   }
 }

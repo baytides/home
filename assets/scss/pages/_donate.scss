@@ -179,9 +179,10 @@
       box-shadow: 0 4px 12px rgba(43, 108, 176, 0.15);
     }
 
-    &.active {
-      border-color: #2b6cb0;
-      background: linear-gradient(135deg, #2b6cb0, #4299e1);
+    &.active,
+    &.active:hover {
+      border-color: #2b6cb0 !important;
+      background: linear-gradient(135deg, #2b6cb0, #4299e1) !important;
       color: #ffffff !important;
       transform: translateY(-2px);
       box-shadow: 0 4px 16px rgba(43, 108, 176, 0.3);
