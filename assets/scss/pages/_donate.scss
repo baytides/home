@@ -109,18 +109,11 @@
     0 10px 30px -5px rgba(0, 0, 0, 0.08),
     0 0 0 1px rgba(0, 0, 0, 0.03);
   position: relative;
-  overflow: hidden;
+  // Note: No overflow:hidden to allow content reflow at 400% zoom (WCAG 2.2 AAA)
 
-  // Subtle gradient accent at top
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue), #48bb78);
-  }
+  // Subtle gradient accent at top - uses border-top instead of positioned pseudo-element
+  border-top: 4px solid transparent;
+  border-image: linear-gradient(90deg, var(--primary-blue), var(--accent-blue), #48bb78) 1;
 }
 
 // One-time / Monthly toggle
@@ -219,7 +212,7 @@
   background: #fff;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
-  overflow: hidden;
+  // Note: Removed overflow:hidden to allow content reflow at 400% zoom (WCAG 2.2 AAA)
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;

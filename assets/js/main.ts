@@ -59,6 +59,9 @@ if (prefersReducedMotion.matches) {
 const savedHighContrast = localStorage.getItem('highContrast');
 const savedFontSize = localStorage.getItem('fontSize');
 const savedReducedMotion = localStorage.getItem('reducedMotion');
+const savedColorblind = localStorage.getItem('colorblind');
+const savedFocusMode = localStorage.getItem('focusMode');
+const savedTextSpacing = localStorage.getItem('textSpacing');
 
 if (savedHighContrast === 'true') {
   document.documentElement.setAttribute('data-high-contrast', 'true');
@@ -68,6 +71,15 @@ if (savedFontSize) {
 }
 if (savedReducedMotion === 'true') {
   document.documentElement.setAttribute('data-reduced-motion', 'true');
+}
+if (savedColorblind === 'true') {
+  document.documentElement.setAttribute('data-colorblind', 'true');
+}
+if (savedFocusMode === 'true') {
+  document.documentElement.setAttribute('data-focus-mode', 'true');
+}
+if (savedTextSpacing) {
+  document.documentElement.setAttribute('data-text-spacing', savedTextSpacing);
 }
 
 // ==========================================================================
@@ -350,35 +362,80 @@ function initAccessibilityPanel(): void {
   panel.setAttribute('role', 'dialog');
   panel.setAttribute('aria-label', 'Accessibility settings');
   panel.innerHTML = `
-    <h3>Accessibility</h3>
-    <label>
-      <input type="checkbox" id="high-contrast-toggle">
-      High Contrast
-    </label>
-    <label>
-      <input type="checkbox" id="reduced-motion-toggle">
-      Reduce Motion
-    </label>
-    <label>
-      Font Size
-      <select id="font-size-select">
-        <option value="default">Default</option>
-        <option value="large">Large</option>
-        <option value="xlarge">Extra Large</option>
-      </select>
-    </label>
+    <h3>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18">
+        <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9H15V22H13V16H11V22H9V9H3V7H21V9Z"/>
+      </svg>
+      Accessibility
+    </h3>
+
+    <div class="panel-section">
+      <div class="panel-section-title">Vision</div>
+      <label>
+        <input type="checkbox" id="high-contrast-toggle">
+        High Contrast
+      </label>
+      <label>
+        <input type="checkbox" id="colorblind-toggle">
+        Colorblind Mode
+      </label>
+      <label>
+        Font Size
+        <select id="font-size-select">
+          <option value="default">Default</option>
+          <option value="large">Large</option>
+          <option value="xlarge">Extra Large</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-title">Reading</div>
+      <label>
+        Text Spacing
+        <select id="text-spacing-select">
+          <option value="default">Default</option>
+          <option value="comfortable">Comfortable</option>
+          <option value="spacious">Spacious</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-title">Motion & Focus</div>
+      <label>
+        <input type="checkbox" id="reduced-motion-toggle">
+        Reduce Motion
+      </label>
+      <label>
+        <input type="checkbox" id="focus-mode-toggle">
+        Focus Mode
+      </label>
+    </div>
+
+    <button type="button" class="reset-btn" id="accessibility-reset">
+      Reset to Defaults
+    </button>
   `;
   document.body.appendChild(panel);
 
   const highContrastToggle = document.getElementById('high-contrast-toggle') as HTMLInputElement;
+  const colorblindToggle = document.getElementById('colorblind-toggle') as HTMLInputElement;
   const reducedMotionToggle = document.getElementById('reduced-motion-toggle') as HTMLInputElement;
+  const focusModeToggle = document.getElementById('focus-mode-toggle') as HTMLInputElement;
   const fontSizeSelect = document.getElementById('font-size-select') as HTMLSelectElement;
+  const textSpacingSelect = document.getElementById('text-spacing-select') as HTMLSelectElement;
+  const resetBtn = document.getElementById('accessibility-reset') as HTMLButtonElement;
 
+  // Initialize from saved preferences
   highContrastToggle.checked =
     document.documentElement.getAttribute('data-high-contrast') === 'true';
+  colorblindToggle.checked = document.documentElement.getAttribute('data-colorblind') === 'true';
   reducedMotionToggle.checked =
     document.documentElement.getAttribute('data-reduced-motion') === 'true';
+  focusModeToggle.checked = document.documentElement.getAttribute('data-focus-mode') === 'true';
   fontSizeSelect.value = document.documentElement.getAttribute('data-font-size') || 'default';
+  textSpacingSelect.value = document.documentElement.getAttribute('data-text-spacing') || 'default';
 
   toggle.addEventListener('click', () => {
     const isVisible = panel.classList.toggle('visible');
@@ -393,6 +450,15 @@ function initAccessibilityPanel(): void {
     }
   });
 
+  // Escape key closes panel
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('visible')) {
+      panel.classList.remove('visible');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.focus();
+    }
+  });
+
   highContrastToggle.addEventListener('change', (e) => {
     const enabled = (e.target as HTMLInputElement).checked;
     if (enabled) {
@@ -402,7 +468,21 @@ function initAccessibilityPanel(): void {
       document.documentElement.removeAttribute('data-high-contrast');
       localStorage.removeItem('highContrast');
     }
+    showToast(`High contrast ${enabled ? 'enabled' : 'disabled'}`, 'info');
     announce(`High contrast ${enabled ? 'enabled' : 'disabled'}`);
+  });
+
+  colorblindToggle.addEventListener('change', (e) => {
+    const enabled = (e.target as HTMLInputElement).checked;
+    if (enabled) {
+      document.documentElement.setAttribute('data-colorblind', 'true');
+      localStorage.setItem('colorblind', 'true');
+    } else {
+      document.documentElement.removeAttribute('data-colorblind');
+      localStorage.removeItem('colorblind');
+    }
+    showToast(`Colorblind mode ${enabled ? 'enabled' : 'disabled'}`, 'info');
+    announce(`Colorblind mode ${enabled ? 'enabled' : 'disabled'}`);
   });
 
   reducedMotionToggle.addEventListener('change', (e) => {
@@ -414,7 +494,21 @@ function initAccessibilityPanel(): void {
       document.documentElement.removeAttribute('data-reduced-motion');
       localStorage.removeItem('reducedMotion');
     }
+    showToast(`Reduced motion ${enabled ? 'enabled' : 'disabled'}`, 'info');
     announce(`Reduced motion ${enabled ? 'enabled' : 'disabled'}`);
+  });
+
+  focusModeToggle.addEventListener('change', (e) => {
+    const enabled = (e.target as HTMLInputElement).checked;
+    if (enabled) {
+      document.documentElement.setAttribute('data-focus-mode', 'true');
+      localStorage.setItem('focusMode', 'true');
+    } else {
+      document.documentElement.removeAttribute('data-focus-mode');
+      localStorage.removeItem('focusMode');
+    }
+    showToast(`Focus mode ${enabled ? 'enabled' : 'disabled'}`, 'info');
+    announce(`Focus mode ${enabled ? 'enabled' : 'disabled'}`);
   });
 
   fontSizeSelect.addEventListener('change', (e) => {
@@ -426,8 +520,108 @@ function initAccessibilityPanel(): void {
       document.documentElement.setAttribute('data-font-size', size);
       localStorage.setItem('fontSize', size);
     }
+    showToast(`Font size set to ${size}`, 'info');
     announce(`Font size set to ${size}`);
   });
+
+  textSpacingSelect.addEventListener('change', (e) => {
+    const spacing = (e.target as HTMLSelectElement).value;
+    if (spacing === 'default') {
+      document.documentElement.removeAttribute('data-text-spacing');
+      localStorage.removeItem('textSpacing');
+    } else {
+      document.documentElement.setAttribute('data-text-spacing', spacing);
+      localStorage.setItem('textSpacing', spacing);
+    }
+    showToast(`Text spacing set to ${spacing}`, 'info');
+    announce(`Text spacing set to ${spacing}`);
+  });
+
+  resetBtn.addEventListener('click', () => {
+    // Reset all accessibility preferences
+    document.documentElement.removeAttribute('data-high-contrast');
+    document.documentElement.removeAttribute('data-colorblind');
+    document.documentElement.removeAttribute('data-reduced-motion');
+    document.documentElement.removeAttribute('data-focus-mode');
+    document.documentElement.removeAttribute('data-font-size');
+    document.documentElement.removeAttribute('data-text-spacing');
+
+    localStorage.removeItem('highContrast');
+    localStorage.removeItem('colorblind');
+    localStorage.removeItem('reducedMotion');
+    localStorage.removeItem('focusMode');
+    localStorage.removeItem('fontSize');
+    localStorage.removeItem('textSpacing');
+
+    // Reset UI controls
+    highContrastToggle.checked = false;
+    colorblindToggle.checked = false;
+    reducedMotionToggle.checked = false;
+    focusModeToggle.checked = false;
+    fontSizeSelect.value = 'default';
+    textSpacingSelect.value = 'default';
+
+    showToast('Accessibility settings reset to defaults', 'success');
+    announce('Accessibility settings reset to defaults');
+  });
+}
+
+// ==========================================================================
+// Toast Notification System
+// ==========================================================================
+
+type ToastType = 'success' | 'error' | 'info';
+
+function showToast(message: string, type: ToastType = 'info'): void {
+  let container = document.querySelector('.toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.className = 'toast-container';
+    container.setAttribute('aria-live', 'polite');
+    container.setAttribute('aria-atomic', 'true');
+    document.body.appendChild(container);
+  }
+
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.setAttribute('role', 'alert');
+
+  const iconMap: Record<ToastType, string> = {
+    success: `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M20 6L9 17l-5-5"/>
+    </svg>`,
+    error: `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M15 9l-6 6M9 9l6 6"/>
+    </svg>`,
+    info: `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M12 16v-4M12 8h.01"/>
+    </svg>`,
+  };
+
+  toast.innerHTML = `
+    ${iconMap[type]}
+    <span class="toast-message">${message}</span>
+    <button type="button" class="toast-close" aria-label="Dismiss">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+  `;
+
+  container.appendChild(toast);
+
+  const closeBtn = toast.querySelector('.toast-close');
+  closeBtn?.addEventListener('click', () => dismissToast(toast));
+
+  // Auto-dismiss after 5 seconds
+  setTimeout(() => dismissToast(toast), 5000);
+}
+
+function dismissToast(toast: Element): void {
+  toast.classList.add('toast-exit');
+  setTimeout(() => toast.remove(), 300);
 }
 
 // ==========================================================================
