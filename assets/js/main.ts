@@ -1038,7 +1038,8 @@ function initDonationForm(): void {
   let paymentElement: ReturnType<ReturnType<typeof stripe.elements>['create']> | null = null;
   let clientSecret: string | null = null;
 
-  const apiEndpoint = 'https://donate.baytides.org';
+  // TODO: Update to donate.baytides.org once custom domain is configured
+  const apiEndpoint = 'https://baytides-donate.autumn-disk-6090.workers.dev';
 
   function updateContinueButton(): void {
     if (!continueBtn) return;
