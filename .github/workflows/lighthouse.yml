@@ -26,8 +26,8 @@ jobs:
         with:
           urls: |
             https://baytides.org/
-            https://baytides.org/about.html
-            https://baytides.org/contact.html
+            https://baytides.org/about/
+            https://baytides.org/contact/
           budgetPath: ./lighthouse-budget.json
           uploadArtifacts: true
           temporaryPublicStorage: true
