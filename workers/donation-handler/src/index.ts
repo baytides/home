@@ -10,7 +10,6 @@
 
 interface Env {
   STRIPE_SECRET_KEY: string;
-  STRIPE_WEBHOOK_SECRET?: string;
   ALLOWED_ORIGIN: string;
   SUCCESS_URL: string;
   CANCEL_URL: string;

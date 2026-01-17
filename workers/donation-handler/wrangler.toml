@@ -10,7 +10,6 @@ CANCEL_URL = "https://baytides.org/donate.html?cancelled=true"
 
 # Secrets to add via wrangler:
 # wrangler secret put STRIPE_SECRET_KEY
-# wrangler secret put STRIPE_WEBHOOK_SECRET
 
 # Custom domain
 [[routes]]
