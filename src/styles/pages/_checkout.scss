@@ -1,0 +1,737 @@
+// ==========================================================================
+// Checkout Page - 4-Step Donation Wizard
+// ==========================================================================
+
+// Checkout Header
+.checkout-header {
+  background: var(--primary-navy);
+  padding: 1rem 0;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.checkout-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.25rem;
+
+  img {
+    border-radius: 8px;
+  }
+}
+
+.checkout-back {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+// Checkout Main
+.checkout-main {
+  min-height: calc(100vh - 140px);
+  background: linear-gradient(180deg, #f0f7fa 0%, #e8f4f8 100%);
+  padding: 2rem 0 4rem;
+}
+
+// Checkout Footer
+.checkout-footer {
+  background: var(--primary-navy);
+  padding: 1.5rem 0;
+  text-align: center;
+
+  p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    margin: 0;
+  }
+
+  a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Checkout Container
+.checkout-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+// ==========================================================================
+// Progress Stepper
+// ==========================================================================
+
+.checkout-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+  padding: 0 1rem;
+}
+
+.stepper-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+
+  &.active .stepper-number {
+    background: var(--primary-blue);
+    color: #fff;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 4px rgba(59, 143, 194, 0.2);
+  }
+
+  &.active .stepper-label {
+    color: var(--primary-navy);
+    font-weight: 600;
+  }
+
+  &.completed .stepper-number {
+    background: #48bb78;
+    color: #fff;
+    border-color: #48bb78;
+  }
+
+  &.completed .stepper-label {
+    color: #48bb78;
+  }
+}
+
+.stepper-number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+  background: #fff;
+  color: var(--text-light);
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.stepper-label {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.stepper-line {
+  flex: 1;
+  height: 2px;
+  background: #e2e8f0;
+  margin: 0 0.75rem;
+  margin-bottom: 1.5rem;
+  max-width: 60px;
+}
+
+// ==========================================================================
+// Checkout Steps
+// ==========================================================================
+
+.checkout-step {
+  display: none;
+  animation: fadeIn 0.3s ease;
+
+  &.active {
+    display: block;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.checkout-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+// ==========================================================================
+// Checkout Card
+// ==========================================================================
+
+.checkout-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 10px 30px -5px rgba(0, 0, 0, 0.08);
+}
+
+// Mini Summary in Steps 2 & 3
+.checkout-summary-mini {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, #f0f7fa 0%, #e8f4f8 100%);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.summary-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+}
+
+.summary-type {
+  font-size: 0.875rem;
+  color: var(--text-light);
+  flex: 1;
+}
+
+.edit-link {
+  background: none;
+  border: none;
+  color: var(--primary-blue);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(59, 143, 194, 0.1);
+  }
+}
+
+// ==========================================================================
+// Checkout Form Fields
+// ==========================================================================
+
+.checkout-field {
+  margin-bottom: 1.25rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--text-dark);
+  }
+
+  .required {
+    color: #e53e3e;
+  }
+
+  .optional {
+    font-weight: 400;
+    color: var(--text-light);
+    font-size: 0.8125rem;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: #fff;
+    color: var(--text-dark);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(59, 143, 194, 0.1);
+    }
+
+    &::placeholder {
+      color: #a0aec0;
+    }
+  }
+
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px;
+    padding-right: 2.5rem;
+    cursor: pointer;
+  }
+}
+
+// Checkbox styling
+.checkout-checkbox {
+  margin-bottom: 1.5rem;
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-dark);
+
+    input[type='checkbox'] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary-blue);
+      cursor: pointer;
+    }
+
+    span {
+      font-size: 0.9375rem;
+    }
+  }
+
+  .checkbox-note {
+    margin: 0.5rem 0 0 2rem;
+    font-size: 0.8125rem;
+    color: var(--text-light);
+  }
+}
+
+// Donor info grid
+.donor-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  &.donor-info-grid-3 {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
+  .checkout-field {
+    margin-bottom: 0;
+  }
+}
+
+// ==========================================================================
+// Payment Summary
+// ==========================================================================
+
+.payment-summary {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.625rem 0;
+    font-size: 0.9375rem;
+    color: var(--text-dark);
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    &.summary-total {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      padding-top: 0.875rem;
+    }
+  }
+}
+
+// Payment Element Container
+.payment-element-container {
+  margin-top: 1.5rem;
+
+  #payment-element {
+    min-height: 100px;
+  }
+}
+
+.payment-errors {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+  min-height: 1.25rem;
+
+  &:empty {
+    display: none;
+  }
+}
+
+// ==========================================================================
+// Checkout Actions
+// ==========================================================================
+
+.checkout-actions {
+  margin-top: 2rem;
+
+  &.checkout-actions-split {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
+// Button styles
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  border: none;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, #3182ce 100%);
+  color: #fff;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 143, 194, 0.35);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.btn-secondary {
+  background: #fff;
+  color: var(--text-dark);
+  border: 2px solid #e2e8f0;
+
+  &:hover {
+    border-color: #cbd5e0;
+    background: #f8fafc;
+  }
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary-blue);
+  border: 2px solid var(--primary-blue);
+
+  &:hover {
+    background: var(--primary-blue);
+    color: #fff;
+  }
+}
+
+.btn-large {
+  padding: 1rem 2rem;
+  font-size: 1.0625rem;
+}
+
+// Button spinner
+.btn-spinner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .spinner {
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Secure notice
+.secure-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--text-light);
+
+  svg {
+    color: #48bb78;
+  }
+}
+
+// ==========================================================================
+// Step 4: Success Page
+// ==========================================================================
+
+.checkout-success {
+  text-align: center;
+}
+
+.success-icon {
+  margin-bottom: 1.5rem;
+
+  svg {
+    color: #48bb78;
+  }
+}
+
+.success-message {
+  font-size: 1.125rem;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+
+  strong {
+    color: var(--primary-navy);
+  }
+}
+
+.success-submessage {
+  font-size: 0.9375rem;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+
+// Receipt Card
+.receipt-card {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: left;
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--primary-navy);
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+}
+
+.receipt-details {
+  margin-bottom: 1.25rem;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.625rem 0;
+  font-size: 0.9375rem;
+  border-bottom: 1px solid #e2e8f0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  span:first-child {
+    color: var(--text-light);
+  }
+
+  span:last-child {
+    color: var(--text-dark);
+    font-weight: 500;
+  }
+}
+
+.receipt-tax-note {
+  font-size: 0.8125rem;
+  color: var(--text-light);
+  line-height: 1.6;
+  text-align: center;
+  margin: 0;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+// Receipt Actions
+.receipt-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+// Success CTA
+.success-cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+// ==========================================================================
+// Dark Theme
+// ==========================================================================
+
+[data-theme='dark'] {
+  .checkout-main {
+    background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
+  }
+
+  .checkout-card {
+    background: var(--card-bg);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.2),
+      0 10px 30px -5px rgba(0, 0, 0, 0.3);
+  }
+
+  .checkout-summary-mini {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.2) 100%);
+  }
+
+  .checkout-field {
+    input,
+    select {
+      background: var(--bg-primary);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: var(--text-dark);
+
+      &:focus {
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.2);
+      }
+    }
+  }
+
+  .payment-summary {
+    background: rgba(0, 0, 0, 0.2);
+
+    .summary-row:not(:last-child) {
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .btn-secondary {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: var(--bg-secondary);
+    }
+  }
+
+  .receipt-card {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .receipt-row {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .success-cta {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+// ==========================================================================
+// Responsive
+// ==========================================================================
+
+@media (max-width: 600px) {
+  .checkout-container {
+    padding: 0 1rem;
+  }
+
+  .checkout-stepper {
+    margin-bottom: 2rem;
+  }
+
+  .stepper-label {
+    display: none;
+  }
+
+  .stepper-line {
+    margin-bottom: 0;
+  }
+
+  .checkout-title {
+    font-size: 1.5rem;
+  }
+
+  .checkout-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .donor-info-grid {
+    grid-template-columns: 1fr;
+
+    &.donor-info-grid-3 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .checkout-actions-split {
+    flex-direction: column-reverse;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  .receipt-actions {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  .success-cta {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
+}
