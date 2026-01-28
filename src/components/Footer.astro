@@ -45,6 +45,27 @@ const currentYear = new Date().getFullYear();
         </p>
       </div>
     </div>
+    <div class="footer-snowflake" id="snowflake-stats">
+      <p>
+        <svg
+          class="snowflake-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          width="16"
+          height="16"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            d="M280 24c0-13.3-10.7-24-24-24s-24 10.7-24 24v80.4l-44.7-44.7c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l78.6 78.6v66.3l-57.4-33.2-23.8-88.8c-3.4-12.8-16.6-20.4-29.4-17s-20.4 16.6-17 29.4l13 48.5-69.8-40.3c-11.5-6.6-26.2-2.7-32.8 8.8s-2.7 26.2 8.8 32.8l69.8 40.3-48.5 13c-12.8 3.4-20.4 16.6-17 29.4 3.4 12.8 16.6 20.4 29.4 17l88.8-23.8 57.4 33.2-57.4 33.2-88.8-23.8c-12.8-3.4-26 4.2-29.4 17s4.2 26 17 29.4l48.5 13-69.8 40.3c-11.5 6.6-15.4 21.3-8.8 32.8s21.3 15.4 32.8 8.8l69.8-40.3-13 48.5c-3.4 12.8 4.2 26 17 29.4s26-4.2 29.4-17l23.8-88.8 57.4-33.2v66.3l-78.6 78.6c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l44.7-44.7V488c0 13.3 10.7 24 24 24s24-10.7 24-24v-80.4l44.7 44.7c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-78.6-78.6v-66.3l57.4 33.2 23.8 88.8c3.4 12.8 16.6 20.4 29.4 17s20.4-16.6 17-29.4l-13-48.5 69.8 40.3c11.5 6.6 26.2 2.7 32.8-8.8s2.7-26.2-8.8-32.8l-69.8-40.3 48.5-13c12.8-3.4 20.4-16.6 17-29.4s-16.6-20.4-29.4-17l-88.8 23.8-57.4-33.2 57.4-33.2 88.8 23.8c12.8 3.4 26-4.2 29.4-17s-4.2-26-17-29.4l-48.5-13 69.8-40.3c11.5-6.6 15.4-21.3 8.8-32.8s-21.3-15.4-32.8-8.8l-69.8 40.3 13-48.5c3.4-12.8-4.2-26-17-29.4s-26 4.2-29.4 17l-23.8 88.8-57.4 33.2v-66.3l78.6-78.6c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L280 104.4V24z"
+          >
+          </path>
+        </svg>
+        This site supports internet freedom through a
+        <a href="https://snowflake.torproject.org/" target="_blank" rel="noopener">Tor Snowflake</a> proxy.
+        <span class="snowflake-count" id="snowflake-count"></span>
+      </p>
+    </div>
     <div class="footer-bottom">
       <p>
         &copy; {currentYear} Bay Tides. All rights reserved. | A 501(c)(3) nonprofit organization. |
@@ -57,3 +78,22 @@ const currentYear = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<script>
+  async function loadSnowflakeStats() {
+    try {
+      const res = await fetch(
+        'https://baytidesstorage.blob.core.windows.net/snowflake-stats/stats.json'
+      );
+      if (!res.ok) return;
+      const data = await res.json();
+      const el = document.getElementById('snowflake-count');
+      if (el && data.totalConnections > 0) {
+        el.textContent = `Users helped: ${data.totalConnections.toLocaleString()}`;
+      }
+    } catch {
+      // Stats are non-critical; fail silently
+    }
+  }
+  loadSnowflakeStats();
+</script>
