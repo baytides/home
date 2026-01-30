@@ -149,10 +149,11 @@ footer {
     color: rgba(255, 255, 255, 0.9);
   }
 
-  .footer-logo {
-    background: rgba(255, 255, 255, 0.9);
+  .footer-logo img {
+    // Use cream color matching logo's internal background for natural look
+    background: #f5f0e6;
     border-radius: 50%;
-    padding: 5px;
+    padding: 2px;
   }
 }
 

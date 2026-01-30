@@ -164,9 +164,10 @@ nav {
   }
 
   .logo img {
-    background: rgba(255, 255, 255, 0.9);
+    // Use cream color matching logo's internal background for natural look
+    background: #f5f0e6;
     border-radius: 50%;
-    padding: 3px;
+    padding: 2px;
   }
 
   nav a {
