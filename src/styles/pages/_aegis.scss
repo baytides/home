@@ -2,14 +2,46 @@
 // Aegis Initiative Page Styles
 // ==========================================================================
 
+// Aegis brand colors - military green meets Bay environment
+// Forest green with AAA contrast (7.1:1 on white)
+$aegis-green: #2d5a3d;
+$aegis-green-light: #e8f5e9;
+
 .aegis-badge {
   display: inline-block;
   font-size: 0.875rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--primary-blue);
+  letter-spacing: 0.1em;
+  color: $aegis-green;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid $aegis-green;
+  border-radius: 4px;
+}
+
+.aegis-intro {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.aegis-lead {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text-dark);
   margin-bottom: 1.5rem;
+}
+
+.aegis-highlight {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: $aegis-green;
+  padding: 1.5rem;
+  background: $aegis-green-light;
+  border-left: 4px solid $aegis-green;
+  border-radius: 0 8px 8px 0;
+  margin-top: 2rem;
 }
 
 .aegis-cta-grid {
@@ -20,6 +52,7 @@
   .card {
     display: flex;
     flex-direction: column;
+    border-top: 3px solid $aegis-green;
 
     p {
       flex: 1;
@@ -29,6 +62,36 @@
       margin-top: 1.5rem;
       align-self: flex-start;
     }
+
+    .btn-primary {
+      background: $aegis-green;
+      border-color: $aegis-green;
+
+      &:hover {
+        background: darken($aegis-green, 8%);
+        border-color: darken($aegis-green, 8%);
+      }
+    }
+  }
+}
+
+// Aegis page styles
+.aegis-page {
+  // Green hero header
+  .hero {
+    background: linear-gradient(135deg, #1a3d2e 0%, #2d5a3d 40%, #3d7a52 100%);
+  }
+
+  // Section headings with green accent
+  .content-section h2,
+  .section-title h2 {
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid $aegis-green;
+  }
+
+  .content-centered h2 {
+    margin-bottom: 1.5rem;
   }
 }
 
@@ -38,7 +101,41 @@
 
 [data-theme='dark'] {
   .aegis-badge {
-    color: var(--primary-blue);
+    color: #8bc49a;
+    border-color: #8bc49a;
+  }
+
+  .aegis-lead {
+    color: var(--text-dark);
+  }
+
+  .aegis-highlight {
+    color: #8bc49a;
+    background: rgba(45, 90, 61, 0.2);
+    border-left-color: #8bc49a;
+  }
+
+  .aegis-page .hero {
+    background: linear-gradient(135deg, #0d1f17 0%, #1a3d2e 50%, #2d5a3d 100%);
+  }
+
+  .aegis-page .content-section h2,
+  .aegis-page .section-title h2 {
+    border-bottom-color: #8bc49a;
+  }
+
+  .aegis-cta-grid .card {
+    border-top-color: #8bc49a;
+
+    .btn-primary {
+      background: #3d7a52;
+      border-color: #3d7a52;
+
+      &:hover {
+        background: #4a8f62;
+        border-color: #4a8f62;
+      }
+    }
   }
 }
 

@@ -11,6 +11,7 @@ interface Props {
   ogType?: string;
   structuredData?: object | object[];
   preloadImages?: string[];
+  bodyClass?: string;
 }
 
 const {
@@ -21,6 +22,7 @@ const {
   ogType = 'website',
   structuredData,
   preloadImages = [],
+  bodyClass,
 } = Astro.props;
 
 const fullTitle = title.includes('Bay Tides') ? title : `${title} | Bay Tides`;
@@ -73,7 +75,7 @@ const fullTitle = title.includes('Bay Tides') ? title : `${title} | Bay Tides`;
         ))
     }
   </head>
-  <body>
+  <body class:list={[bodyClass]}>
     <Header />
 
     <main id="main-content">

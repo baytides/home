@@ -38,6 +38,7 @@ const structuredData = [
   canonicalUrl="https://baytides.org/aegis"
   structuredData={structuredData}
   preloadImages={['/assets/images/hero-bg.webp']}
+  bodyClass="aegis-page"
 >
   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Aegis Initiative' }]} />
 
@@ -47,17 +48,19 @@ const structuredData = [
   />
 
   <!-- Initiative Overview -->
-  <section class="content-section">
+  <section class="content-section aegis-intro">
     <div class="container">
       <div class="content-centered">
         <p class="aegis-badge">A Bay Tides Initiative</p>
-        <p>
-          The Aegis Initiative connects veterans and service members with meaningful opportunities
-          to protect the San Francisco Bay. Named for the shield of ancient protectors, Aegis
-          recognizes that those who served our nation bring valuable skills, leadership, and purpose
-          to defending our local environment.
+        <p class="aegis-lead">
+          Connecting veterans and service members with meaningful opportunities to protect the San
+          Francisco Bay.
         </p>
         <p>
+          Named for the shield of ancient protectors, Aegis recognizes that those who served our
+          nation bring valuable skills, leadership, and purpose to defending our local environment.
+        </p>
+        <p class="aegis-highlight">
           Veterans lead here, not just participate. We welcome service members of all backgrounds
           and skill levels. If you want to be part of something purposeful, there's a place for you.
         </p>
