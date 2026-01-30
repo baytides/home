@@ -1,0 +1,53 @@
+// ==========================================================================
+// Aegis Initiative Page Styles
+// ==========================================================================
+
+.aegis-badge {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary-blue);
+  margin-bottom: 1.5rem;
+}
+
+.aegis-cta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+
+  .card {
+    display: flex;
+    flex-direction: column;
+
+    p {
+      flex: 1;
+    }
+
+    .btn {
+      margin-top: 1.5rem;
+      align-self: flex-start;
+    }
+  }
+}
+
+// ==========================================================================
+// Dark Theme Adjustments
+// ==========================================================================
+
+[data-theme='dark'] {
+  .aegis-badge {
+    color: var(--primary-blue);
+  }
+}
+
+// ==========================================================================
+// Mobile Styles
+// ==========================================================================
+
+@media (max-width: 768px) {
+  .aegis-cta-grid {
+    grid-template-columns: 1fr;
+  }
+}

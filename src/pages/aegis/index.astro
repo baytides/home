@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PageHero from '../../components/PageHero.astro';
+import Card from '../../components/Card.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Aegis Initiative',
+    description:
+      'The Aegis Initiative connects veterans and service members with meaningful opportunities to protect the San Francisco Bay.',
+    mainEntity: {
+      '@type': 'Organization',
+      name: 'Aegis Initiative',
+      parentOrganization: {
+        '@type': 'NonprofitOrganization',
+        name: 'Bay Tides',
+        url: 'https://baytides.org',
+      },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Aegis Initiative' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Aegis Initiative"
+  description="The Aegis Initiative connects veterans and service members with meaningful opportunities to protect the San Francisco Bay through technology, education, and environmental stewardship."
+  canonicalUrl="https://baytides.org/aegis"
+  structuredData={structuredData}
+  preloadImages={['/assets/images/hero-bg.webp']}
+>
+  <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Aegis Initiative' }]} />
+
+  <PageHero
+    title="Aegis Initiative"
+    subtitle="Honoring service through environmental stewardship"
+  />
+
+  <!-- Initiative Overview -->
+  <section class="content-section">
+    <div class="container">
+      <div class="content-centered">
+        <p class="aegis-badge">A Bay Tides Initiative</p>
+        <p>
+          The Aegis Initiative connects veterans and service members with meaningful opportunities
+          to protect the San Francisco Bay. Named for the shield of ancient protectors, Aegis
+          recognizes that those who served our nation bring valuable skills, leadership, and purpose
+          to defending our local environment.
+        </p>
+        <p>
+          Veterans lead here, not just participate. We welcome service members of all backgrounds
+          and skill levels. If you want to be part of something purposeful, there's a place for you.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Alignment -->
+  <section class="content-section alt-bg">
+    <div class="container">
+      <div class="content-centered">
+        <h2>Join the Mission</h2>
+        <p>
+          Bay Tides uses technology to educate communities, mobilize residents, and innovate
+          solutions for environmental challenges. Aegis participants join that mission, bringing
+          military experience in project management, logistics, communications, data analysis,
+          engineering, and leadership to conservation work that matters.
+        </p>
+        <p>
+          In return, you gain hands-on environmental sector experience, opportunities to lead
+          outdoor programs for fellow veterans, a peer community working toward shared purpose, and
+          connections to Bay Area environmental organizations. Your contributions here build real
+          credentials for civilian careers.
+        </p>
+        <p>
+          Participants shape Aegis itself, from leading Bay hikes and restoration events to
+          contributing technical skills on monitoring projects. As a small nonprofit, every
+          contribution has outsized impact.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Get Involved -->
+  <section class="content-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Get Involved</h2>
+      </div>
+      <div class="aegis-cta-grid">
+        <Card title="Share your skills" icon="🛡️">
+          <p>
+            Tell us about your background and how you'd like to contribute. Whether you have
+            experience in GIS mapping, project coordination, communications, engineering, or you're
+            exploring what environmental work looks like, we want to hear from you.
+          </p>
+          <a href="/contact" class="btn btn-primary">Get in Touch</a>
+        </Card>
+
+        <Card title="Connect with us" icon="🤝">
+          <p>
+            Questions about getting involved? Want to discuss specific opportunities? We also
+            welcome partnerships with veteran service organizations, VA programs, and community
+            groups. Let's talk.
+          </p>
+          <a href="/contact" class="btn btn-outline">Contact Us</a>
+        </Card>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

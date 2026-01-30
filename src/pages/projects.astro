@@ -20,6 +20,13 @@ const structuredData = [
           applicationCategory: 'WebApplication',
           description: 'A resource helping Bay Area residents discover savings programs.',
         },
+        {
+          '@type': 'Project',
+          name: 'Aegis Initiative',
+          url: 'https://baytides.org/aegis',
+          description:
+            'A program connecting veterans and service members with environmental stewardship opportunities.',
+        },
       ],
     },
   },
@@ -119,12 +126,15 @@ const structuredData = [
         </div>
         <div class="content-image">
           <div class="project-logo-card">
-            <img
-              src="/assets/images/baynavigator-logo.svg"
-              alt="Bay Navigator logo"
-              width="200"
-              height="200"
-            />
+            <picture>
+              <source srcset="/assets/images/baynavigator-logo-new.webp" type="image/webp" />
+              <img
+                src="/assets/images/baynavigator-logo-new.svg"
+                alt="Bay Navigator logo"
+                width="200"
+                height="200"
+              />
+            </picture>
             <p>baynavigator.org</p>
           </div>
         </div>
@@ -132,35 +142,37 @@ const structuredData = [
     </div>
   </section>
 
-  <!-- Environmental Impact -->
+  <!-- Aegis Initiative -->
   <section class="content-section alt-bg">
     <div class="container">
-      <div class="section-title">
-        <h2>How Discounts Help the Environment</h2>
-        <p>The connection between affordability and sustainability</p>
-      </div>
-
-      <div class="cards-grid">
-        <Card title="Reduced Emissions" icon="🚌">
+      <div class="content-grid">
+        <div class="content-image">
+          <div class="project-logo-card">
+            <span class="aegis-shield">🛡️</span>
+            <p>Aegis Initiative</p>
+          </div>
+        </div>
+        <div class="content-text">
+          <span class="badge">Veterans Program</span>
+          <h2>Aegis Initiative</h2>
           <p>
-            Transit discounts make public transportation affordable, reducing car trips and lowering
-            carbon emissions across the Bay Area.
+            <strong>Connecting veterans and service members with environmental stewardship.</strong>
           </p>
-        </Card>
-
-        <Card title="Energy Conservation" icon="⚡">
           <p>
-            Utility assistance programs like CARE and FERA help residents afford energy-efficient
-            upgrades and reduce overall energy consumption.
+            The Aegis Initiative recognizes that those who served our nation bring valuable skills,
+            leadership, and purpose to defending our local environment. Veterans lead here, not just
+            participate.
           </p>
-        </Card>
-
-        <Card title="Nature Connection" icon="🌳">
           <p>
-            Free park passes and outdoor recreation discounts help residents connect with nature,
-            fostering the environmental stewardship we need.
+            Participants bring military experience in project management, logistics, communications,
+            data analysis, and engineering to conservation work that matters. In return, they gain
+            hands-on environmental sector experience, leadership opportunities, and connections to
+            Bay Area environmental organizations.
           </p>
-        </Card>
+          <div style="margin-top: 1.5rem">
+            <a href="/aegis" class="btn btn-primary">Learn More</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -262,5 +274,11 @@ const structuredData = [
   .project-logo-card p {
     color: var(--text-light);
     margin-bottom: 0;
+  }
+
+  .aegis-shield {
+    display: block;
+    font-size: 6rem;
+    margin-bottom: 1rem;
   }
 </style>
