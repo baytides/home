@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v3';
+const CACHE_VERSION = 'v4';
 const STATIC_CACHE = `baytides-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `baytides-dynamic-${CACHE_VERSION}`;
 const IMAGE_CACHE = `baytides-images-${CACHE_VERSION}`;
@@ -6,22 +6,18 @@ const IMAGE_CACHE = `baytides-images-${CACHE_VERSION}`;
 // Static assets to precache
 const STATIC_ASSETS = [
   '/',
-  '/index.html',
-  '/about.html',
-  '/projects.html',
-  '/volunteer.html',
-  '/events.html',
-  '/donate.html',
-  '/contact.html',
-  '/privacy.html',
-  '/terms.html',
-  '/accessibility.html',
-  '/404.html',
-  '/assets/css/style.css',
+  '/about',
+  '/projects',
+  '/volunteer',
+  '/events',
+  '/donate',
+  '/contact',
+  '/privacy',
+  '/terms',
+  '/accessibility',
+  '/aegis',
   '/assets/images/logo.webp',
   '/assets/images/favicon.png',
-  '/partials/header.html',
-  '/partials/footer.html',
 ];
 
 // Images to precache
@@ -166,7 +162,7 @@ self.addEventListener('fetch', (event) => {
 
       // Fallback for navigation requests
       if (request.mode === 'navigate') {
-        return caches.match('/404.html') || caches.match('/');
+        return caches.match('/404') || caches.match('/');
       }
 
       return new Response('Offline', { status: 503 });

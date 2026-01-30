@@ -1,0 +1,218 @@
+---
+// Accessibility Panel Component
+// Provides controls for high contrast, reduced motion, and font size
+---
+
+<!-- Accessibility Toggle Button -->
+<button
+  class="accessibility-toggle"
+  id="accessibility-toggle"
+  type="button"
+  aria-label="Open accessibility settings"
+  aria-expanded="false"
+  aria-controls="accessibility-panel"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="4.5" r="2.5"></circle>
+    <path
+      d="m12 7-3.964 2.313A1 1 0 0 0 8 11.39V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-1.61a1 1 0 0 0-.036-2.077L12 7Z"
+    >
+    </path>
+    <path d="M10 14v4.5a.5.5 0 0 1-.5.5h-.5a.5.5 0 0 1-.5-.5V14"></path>
+    <path d="M14 14v4.5a.5.5 0 0 0 .5.5h.5a.5.5 0 0 0 .5-.5V14"></path>
+  </svg>
+</button>
+
+<!-- Accessibility Panel -->
+<div
+  class="accessibility-panel"
+  id="accessibility-panel"
+  role="dialog"
+  aria-label="Accessibility settings"
+  aria-hidden="true"
+>
+  <h3>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="4.5" r="2.5"></circle>
+      <path
+        d="m12 7-3.964 2.313A1 1 0 0 0 8 11.39V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-1.61a1 1 0 0 0-.036-2.077L12 7Z"
+      >
+      </path>
+      <path d="M10 14v4.5a.5.5 0 0 1-.5.5h-.5a.5.5 0 0 1-.5-.5V14"></path>
+      <path d="M14 14v4.5a.5.5 0 0 0 .5.5h.5a.5.5 0 0 0 .5-.5V14"></path>
+    </svg>
+    Accessibility
+  </h3>
+
+  <div class="panel-section">
+    <div class="panel-section-title">Display</div>
+    <label>
+      <input type="checkbox" id="high-contrast-toggle" />
+      High Contrast
+    </label>
+    <label>
+      <input type="checkbox" id="reduced-motion-toggle" />
+      Reduced Motion
+    </label>
+  </div>
+
+  <div class="panel-section">
+    <div class="panel-section-title">Text Size</div>
+    <select id="font-size-select" aria-label="Font size">
+      <option value="default">Default</option>
+      <option value="large">Large (120%)</option>
+      <option value="x-large">Extra Large (140%)</option>
+    </select>
+  </div>
+
+  <button type="button" class="reset-btn" id="reset-accessibility">Reset to Defaults</button>
+</div>
+
+<script>
+  function initAccessibilityPanel() {
+    const toggle = document.getElementById('accessibility-toggle');
+    const panel = document.getElementById('accessibility-panel');
+    const highContrastToggle = document.getElementById('high-contrast-toggle') as HTMLInputElement;
+    const reducedMotionToggle = document.getElementById(
+      'reduced-motion-toggle'
+    ) as HTMLInputElement;
+    const fontSizeSelect = document.getElementById('font-size-select') as HTMLSelectElement;
+    const resetBtn = document.getElementById('reset-accessibility');
+
+    if (!toggle || !panel) return;
+
+    // Load saved preferences
+    const savedHighContrast = localStorage.getItem('a11y-high-contrast') === 'true';
+    const savedReducedMotion = localStorage.getItem('a11y-reduced-motion') === 'true';
+    const savedFontSize = localStorage.getItem('a11y-font-size') || 'default';
+
+    // Apply saved preferences
+    if (savedHighContrast) {
+      document.documentElement.setAttribute('data-high-contrast', 'true');
+      if (highContrastToggle) highContrastToggle.checked = true;
+    }
+
+    if (savedReducedMotion) {
+      document.documentElement.setAttribute('data-reduced-motion', 'true');
+      if (reducedMotionToggle) reducedMotionToggle.checked = true;
+    }
+
+    if (savedFontSize !== 'default') {
+      document.documentElement.setAttribute('data-font-size', savedFontSize);
+      if (fontSizeSelect) fontSizeSelect.value = savedFontSize;
+    }
+
+    // Toggle panel visibility
+    toggle.addEventListener('click', () => {
+      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isExpanded));
+      panel.classList.toggle('visible', !isExpanded);
+      panel.setAttribute('aria-hidden', String(isExpanded));
+
+      if (!isExpanded) {
+        // Focus first interactive element when opening
+        highContrastToggle?.focus();
+      }
+    });
+
+    // Close panel on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && panel.classList.contains('visible')) {
+        toggle.setAttribute('aria-expanded', 'false');
+        panel.classList.remove('visible');
+        panel.setAttribute('aria-hidden', 'true');
+        toggle.focus();
+      }
+    });
+
+    // Close panel when clicking outside
+    document.addEventListener('click', (e) => {
+      const target = e.target as Node;
+      if (
+        panel.classList.contains('visible') &&
+        !panel.contains(target) &&
+        !toggle.contains(target)
+      ) {
+        toggle.setAttribute('aria-expanded', 'false');
+        panel.classList.remove('visible');
+        panel.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    // High contrast toggle
+    highContrastToggle?.addEventListener('change', () => {
+      const enabled = highContrastToggle.checked;
+      if (enabled) {
+        document.documentElement.setAttribute('data-high-contrast', 'true');
+      } else {
+        document.documentElement.removeAttribute('data-high-contrast');
+      }
+      localStorage.setItem('a11y-high-contrast', String(enabled));
+    });
+
+    // Reduced motion toggle
+    reducedMotionToggle?.addEventListener('change', () => {
+      const enabled = reducedMotionToggle.checked;
+      if (enabled) {
+        document.documentElement.setAttribute('data-reduced-motion', 'true');
+      } else {
+        document.documentElement.removeAttribute('data-reduced-motion');
+      }
+      localStorage.setItem('a11y-reduced-motion', String(enabled));
+    });
+
+    // Font size select
+    fontSizeSelect?.addEventListener('change', () => {
+      const size = fontSizeSelect.value;
+      if (size === 'default') {
+        document.documentElement.removeAttribute('data-font-size');
+      } else {
+        document.documentElement.setAttribute('data-font-size', size);
+      }
+      localStorage.setItem('a11y-font-size', size);
+    });
+
+    // Reset button
+    resetBtn?.addEventListener('click', () => {
+      // Reset all settings
+      document.documentElement.removeAttribute('data-high-contrast');
+      document.documentElement.removeAttribute('data-reduced-motion');
+      document.documentElement.removeAttribute('data-font-size');
+
+      // Reset form controls
+      if (highContrastToggle) highContrastToggle.checked = false;
+      if (reducedMotionToggle) reducedMotionToggle.checked = false;
+      if (fontSizeSelect) fontSizeSelect.value = 'default';
+
+      // Clear localStorage
+      localStorage.removeItem('a11y-high-contrast');
+      localStorage.removeItem('a11y-reduced-motion');
+      localStorage.removeItem('a11y-font-size');
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAccessibilityPanel);
+  } else {
+    initAccessibilityPanel();
+  }
+</script>

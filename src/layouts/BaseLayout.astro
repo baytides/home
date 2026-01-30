@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import AccessibilityPanel from '../components/AccessibilityPanel.astro';
 import '../styles/global.scss';
 
 interface Props {
@@ -83,6 +84,8 @@ const fullTitle = title.includes('Bay Tides') ? title : `${title} | Bay Tides`;
     </main>
 
     <Footer />
+
+    <AccessibilityPanel />
 
     <script>
       // Service worker registration

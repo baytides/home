@@ -6,6 +6,8 @@
 .checkout-header {
   background: var(--primary-navy);
   padding: 1rem 0;
+  position: relative; // Override fixed position from global header style
+  box-shadow: none; // Remove default header shadow
 
   .container {
     display: flex;

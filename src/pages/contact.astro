@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import PageHero from '../components/PageHero.astro';
 
+const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
+
 const structuredData = [
   {
     '@context': 'https://schema.org',
@@ -148,6 +150,7 @@ const structuredData = [
             id="bay-area-map"
             role="img"
             aria-label="Map showing Bay Area service region"
+            data-mapbox-token={mapboxToken}
             style="border-radius: 8px; overflow: hidden; margin: 1.5rem 0; width: 100%; height: 300px;"
           >
           </div>
@@ -246,70 +249,90 @@ const structuredData = [
         'error'
       );
     }
+  }
 
-    // Initialize Mapbox map
-    if (typeof mapboxgl !== 'undefined') {
-      mapboxgl.accessToken =
-        'pk.eyJ1IjoiYmF5dGlkZXMiLCJhIjoiY21qdGt1NjVmNHQ2djNlcHlpa3p0MnViaSJ9.FHuSFIzE8EXe_9Vp5QpM2Q';
-
-      const map = new mapboxgl.Map({
-        container: 'bay-area-map',
-        style: 'mapbox://styles/mapbox/light-v11',
-        center: [-122.1, 37.75],
-        zoom: 7.2,
-        interactive: false,
-      });
-
-      const bayAreaCounties = [
-        '06001',
-        '06013',
-        '06041',
-        '06055',
-        '06075',
-        '06081',
-        '06085',
-        '06087',
-        '06095',
-        '06097',
-      ];
-      map.on('load', () => {
-        map.addSource('counties', {
-          type: 'vector',
-          url: 'mapbox://mapbox.82pkq93d',
-        });
-
-        map.addLayer(
-          {
-            id: 'bay-area-fill',
-            type: 'fill',
-            source: 'counties',
-            'source-layer': 'original',
-            paint: { 'fill-color': '#2d6a4f', 'fill-opacity': 0.3 },
-            filter: ['in', 'FIPS', ...bayAreaCounties],
-          },
-          'waterway-label'
-        );
-
-        map.addLayer(
-          {
-            id: 'bay-area-borders',
-            type: 'line',
-            source: 'counties',
-            'source-layer': 'original',
-            paint: { 'line-color': '#1b4332', 'line-width': 1.5 },
-            filter: ['in', 'FIPS', ...bayAreaCounties],
-          },
-          'waterway-label'
-        );
-      });
+  function initMap() {
+    const mapContainer = document.getElementById('bay-area-map');
+    const token = mapContainer?.dataset.mapboxToken;
+    if (!token) {
+      console.error('Mapbox token not configured');
+      return;
     }
+    mapboxgl.accessToken = token;
+
+    const map = new mapboxgl.Map({
+      container: 'bay-area-map',
+      style: 'mapbox://styles/mapbox/light-v11',
+      center: [-122.1, 37.75],
+      zoom: 7.2,
+      interactive: false,
+    });
+
+    const bayAreaCounties = [
+      '06001',
+      '06013',
+      '06041',
+      '06055',
+      '06075',
+      '06081',
+      '06085',
+      '06087',
+      '06095',
+      '06097',
+    ];
+
+    map.on('load', () => {
+      map.addSource('counties', {
+        type: 'vector',
+        url: 'mapbox://mapbox.82pkq93d',
+      });
+
+      map.addLayer(
+        {
+          id: 'bay-area-fill',
+          type: 'fill',
+          source: 'counties',
+          'source-layer': 'original',
+          paint: { 'fill-color': '#2d6a4f', 'fill-opacity': 0.3 },
+          filter: ['in', 'FIPS', ...bayAreaCounties],
+        },
+        'waterway-label'
+      );
+
+      map.addLayer(
+        {
+          id: 'bay-area-borders',
+          type: 'line',
+          source: 'counties',
+          'source-layer': 'original',
+          paint: { 'line-color': '#1b4332', 'line-width': 1.5 },
+          filter: ['in', 'FIPS', ...bayAreaCounties],
+        },
+        'waterway-label'
+      );
+    });
+  }
+
+  function waitForMapbox(callback: () => void, maxAttempts = 50) {
+    let attempts = 0;
+    const check = () => {
+      if (typeof mapboxgl !== 'undefined') {
+        callback();
+      } else if (attempts < maxAttempts) {
+        attempts++;
+        setTimeout(check, 100);
+      }
+    };
+    check();
   }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(initContactPage, 100);
+      initContactPage();
+      waitForMapbox(initMap);
     });
   } else {
-    setTimeout(initContactPage, 100);
+    initContactPage();
+    waitForMapbox(initMap);
   }
 </script>
