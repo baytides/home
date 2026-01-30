@@ -168,7 +168,27 @@ const structuredData = [
           </div>
         </div>
         <div class="content-image">
-          <div class="project-logo-card aegis-logo-placeholder"></div>
+          <div class="project-logo-card">
+            <picture class="logo-light-mode">
+              <source srcset="/assets/images/aegis/aegis-logo-dark.webp" type="image/webp" />
+              <img
+                src="/assets/images/aegis/aegis-logo-dark.svg"
+                alt="Aegis Initiative logo"
+                width="200"
+                height="200"
+              />
+            </picture>
+            <picture class="logo-dark-mode">
+              <source srcset="/assets/images/aegis/aegis-logo-light.webp" type="image/webp" />
+              <img
+                src="/assets/images/aegis/aegis-logo-light.svg"
+                alt="Aegis Initiative logo"
+                width="200"
+                height="200"
+              />
+            </picture>
+            <p>Aegis Initiative</p>
+          </div>
         </div>
       </div>
     </div>
@@ -271,6 +291,23 @@ const structuredData = [
   .project-logo-card p {
     color: var(--text-light);
     margin-bottom: 0;
+  }
+
+  /* Theme-aware logo switching */
+  .logo-dark-mode {
+    display: none;
+  }
+
+  :global([data-theme='dark']) .logo-light-mode {
+    display: none;
+  }
+
+  :global([data-theme='dark']) .logo-dark-mode {
+    display: block;
+  }
+
+  :global([data-theme='dark']) .project-logo-card {
+    background: var(--card-bg);
   }
 
   .aegis-grid {
