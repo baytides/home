@@ -74,6 +74,17 @@ const structuredData = [
               <li>Flexible involvement based on your schedule</li>
             </ul>
           </div>
+
+          <div class="aegis-appreciation">
+            <p>
+              We appreciate your service to our nation and your consideration in working with us to
+              build a stronger Bay Area.
+            </p>
+            <p>
+              For active duty and reserve members: we understand you may be called to duty or
+              deployed at any time, and we strive to accommodate your responsibilities.
+            </p>
+          </div>
         </div>
 
         <div class="contact-form aegis-interest-form">
@@ -134,6 +145,7 @@ const structuredData = [
                 <option value="veteran">Veteran</option>
                 <option value="active-duty">Active Duty</option>
                 <option value="reserve-guard">Reserve / National Guard</option>
+                <option value="civilian-auxiliary">Civilian Auxiliary</option>
                 <option value="military-family">Military Family Member</option>
                 <option value="other">Other</option>
               </select>
@@ -143,32 +155,6 @@ const structuredData = [
               <label for="branch">Branch of Service</label>
               <select id="branch" name="branch">
                 <option value="">Select your branch...</option>
-                <optgroup label="Active Duty / Veteran">
-                  <option value="army">Army</option>
-                  <option value="usmc">Marine Corps (USMC)</option>
-                  <option value="usn">Navy (USN)</option>
-                  <option value="usaf">Air Force (USAF)</option>
-                  <option value="ussf">Space Force (USSF)</option>
-                  <option value="uscg">Coast Guard (USCG)</option>
-                </optgroup>
-                <optgroup label="Reserves">
-                  <option value="usar">Army Reserve (USAR)</option>
-                  <option value="usnr">Navy Reserve (USNR)</option>
-                  <option value="usmcr">Marine Corps Reserve (USMCR)</option>
-                  <option value="usafr">Air Force Reserve (USAFR)</option>
-                  <option value="uscgr">Coast Guard Reserve</option>
-                </optgroup>
-                <optgroup label="National Guard">
-                  <option value="arng">Army National Guard (ARNG)</option>
-                  <option value="ang">Air National Guard (ANG)</option>
-                </optgroup>
-                <optgroup label="Civilian Auxiliaries">
-                  <option value="cap">Civil Air Patrol (CAP)</option>
-                  <option value="cgaux">Coast Guard Auxiliary</option>
-                  <option value="usmm">Merchant Marine</option>
-                  <option value="mars">Military Auxiliary Radio System (MARS)</option>
-                  <option value="mcca">Marine Corps Cyber Auxiliary (MCCA)</option>
-                </optgroup>
               </select>
             </div>
 
@@ -247,16 +233,79 @@ const structuredData = [
   function initBranchDropdown() {
     const serviceStatus = document.getElementById('service-status') as HTMLSelectElement;
     const branchGroup = document.getElementById('branch-group');
+    const branchSelect = document.getElementById('branch') as HTMLSelectElement;
 
-    if (!serviceStatus || !branchGroup) return;
+    if (!serviceStatus || !branchGroup || !branchSelect) return;
 
-    const showBranchStatuses = ['veteran', 'active-duty', 'reserve-guard'];
+    // Branch options by service status
+    const branchOptions: Record<string, { value: string; label: string }[]> = {
+      veteran: [
+        { value: 'army', label: 'Army' },
+        { value: 'usmc', label: 'Marine Corps (USMC)' },
+        { value: 'usn', label: 'Navy (USN)' },
+        { value: 'usaf', label: 'Air Force (USAF)' },
+        { value: 'ussf', label: 'Space Force (USSF)' },
+        { value: 'uscg', label: 'Coast Guard (USCG)' },
+      ],
+      'active-duty': [
+        { value: 'army', label: 'Army' },
+        { value: 'usmc', label: 'Marine Corps (USMC)' },
+        { value: 'usn', label: 'Navy (USN)' },
+        { value: 'usaf', label: 'Air Force (USAF)' },
+        { value: 'ussf', label: 'Space Force (USSF)' },
+        { value: 'uscg', label: 'Coast Guard (USCG)' },
+      ],
+      'reserve-guard': [
+        { value: 'usar', label: 'Army Reserve (USAR)' },
+        { value: 'usnr', label: 'Navy Reserve (USNR)' },
+        { value: 'usmcr', label: 'Marine Corps Reserve (USMCR)' },
+        { value: 'usafr', label: 'Air Force Reserve (USAFR)' },
+        { value: 'uscgr', label: 'Coast Guard Reserve' },
+        { value: 'arng', label: 'Army National Guard (ARNG)' },
+        { value: 'ang', label: 'Air National Guard (ANG)' },
+      ],
+      'civilian-auxiliary': [
+        { value: 'cap', label: 'Civil Air Patrol (CAP)' },
+        { value: 'cgaux', label: 'Coast Guard Auxiliary' },
+        { value: 'usmm', label: 'Merchant Marine' },
+        { value: 'mars', label: 'Military Auxiliary Radio System (MARS)' },
+        { value: 'mcca', label: 'Marine Corps Cyber Auxiliary (MCCA)' },
+      ],
+    };
+
+    function populateBranchSelect(options: { value: string; label: string }[] | undefined) {
+      // Clear existing options
+      while (branchSelect.options.length > 0) {
+        branchSelect.remove(0);
+      }
+
+      // Add default option
+      const defaultOpt = document.createElement('option');
+      defaultOpt.value = '';
+      defaultOpt.textContent = 'Select your branch...';
+      branchSelect.appendChild(defaultOpt);
+
+      // Add branch options if available
+      if (options) {
+        options.forEach((opt) => {
+          const option = document.createElement('option');
+          option.value = opt.value;
+          option.textContent = opt.label;
+          branchSelect.appendChild(option);
+        });
+      }
+    }
 
     serviceStatus.addEventListener('change', () => {
-      if (showBranchStatuses.includes(serviceStatus.value)) {
+      const status = serviceStatus.value;
+      const options = branchOptions[status];
+
+      if (options) {
+        populateBranchSelect(options);
         branchGroup.style.display = 'block';
       } else {
         branchGroup.style.display = 'none';
+        populateBranchSelect(undefined);
       }
     });
   }

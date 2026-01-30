@@ -322,6 +322,24 @@ $aegis-green-light: #e8f5e9;
   }
 }
 
+.aegis-appreciation {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-left: 3px solid $aegis-green;
+  font-size: 0.9375rem;
+
+  p {
+    color: var(--text-dark);
+    margin-bottom: 0.75rem;
+
+    &:last-child {
+      margin-bottom: 0;
+      font-size: 0.875rem;
+      color: var(--text-light);
+    }
+  }
+}
+
 .aegis-interest-form {
   background: var(--bg-secondary);
   padding: 2rem;
@@ -355,6 +373,10 @@ $aegis-green-light: #e8f5e9;
     li::before {
       color: #8bc49a;
     }
+  }
+
+  .aegis-appreciation {
+    border-left-color: #8bc49a;
   }
 
   .aegis-interest-form {
