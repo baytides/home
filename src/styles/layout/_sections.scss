@@ -318,6 +318,10 @@
 [data-theme='dark'] {
   .content-section {
     background: var(--bg-primary);
+
+    &.alt-bg {
+      background: var(--bg-alt);
+    }
   }
 
   .mission-preview {

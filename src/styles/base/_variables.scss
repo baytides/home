@@ -83,14 +83,14 @@
   --primary-navy: #a3d5ff; // 9.4:1 AAA
   --primary-blue: #7ec8e8; // 8.5:1 AAA
   --accent-blue: #93c5fd; // 8.2:1 AAA (upgraded for AAA compliance)
-  --light-blue: #1a365d;
+  --light-blue: #1e3a5f; // Deeper blue for dark mode
   --cream: #1a202c;
   --text-dark: #f0f4f8; // 13.5:1 AAA
   --text-light: #b8c5d3; // 8.2:1 AAA
   --white: #1a202c;
   --bg-primary: #1a202c;
-  --bg-secondary: #2d3748;
-  --bg-alt: #2d3748;
+  --bg-secondary: #252d3a; // Slightly lighter, more distinct from primary
+  --bg-alt: #1e2d3d; // Blue-tinted dark for variety
   --header-bg: rgba(26, 32, 44, 0.95);
   --card-bg: #2d3748;
   --footer-bg: #0d1117;

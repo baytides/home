@@ -145,7 +145,7 @@ const structuredData = [
   <!-- Aegis Initiative -->
   <section class="content-section alt-bg">
     <div class="container">
-      <div class="content-grid project-grid">
+      <div class="content-grid project-grid-alt">
         <div class="content-text">
           <span class="badge">Veterans Program</span>
           <h2>Aegis Initiative</h2>
@@ -322,9 +322,23 @@ const structuredData = [
     grid-template-columns: 2fr 1fr;
   }
 
+  /* Alternate: logo on left, text on right */
+  .project-grid-alt {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .project-grid-alt .content-image {
+    order: -1;
+  }
+
   @media (max-width: 768px) {
-    .project-grid {
+    .project-grid,
+    .project-grid-alt {
       grid-template-columns: 1fr;
+    }
+
+    .project-grid-alt .content-image {
+      order: 0;
     }
   }
 </style>
