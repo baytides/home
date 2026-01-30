@@ -55,7 +55,7 @@ const structuredData = [
   <!-- Featured Project: Bay Navigator -->
   <section class="content-section">
     <div class="container">
-      <div class="content-grid">
+      <div class="content-grid project-grid">
         <div class="content-text">
           <span class="badge">Community Resource</span>
           <h2>Bay Navigator</h2>
@@ -145,7 +145,7 @@ const structuredData = [
   <!-- Aegis Initiative -->
   <section class="content-section alt-bg">
     <div class="container">
-      <div class="content-grid aegis-grid">
+      <div class="content-grid project-grid">
         <div class="content-text">
           <span class="badge">Veterans Program</span>
           <h2>Aegis Initiative</h2>
@@ -164,7 +164,15 @@ const structuredData = [
             Bay Area environmental organizations.
           </p>
           <div style="margin-top: 1.5rem">
-            <a href="/aegis" class="btn btn-primary">Learn More</a>
+            <a
+              href="https://aegisinitiative.com"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener"
+            >
+              Learn More
+              <span class="sr-only">(opens in new tab)</span>
+            </a>
           </div>
         </div>
         <div class="content-image">
@@ -187,7 +195,7 @@ const structuredData = [
                 height="200"
               />
             </picture>
-            <p>Aegis Initiative</p>
+            <p>aegisinitiative.com</p>
           </div>
         </div>
       </div>
@@ -310,21 +318,13 @@ const structuredData = [
     background: var(--card-bg);
   }
 
-  .aegis-grid {
+  .project-grid {
     grid-template-columns: 2fr 1fr;
   }
 
-  .aegis-logo-placeholder {
-    min-height: 200px;
-  }
-
   @media (max-width: 768px) {
-    .aegis-grid {
+    .project-grid {
       grid-template-columns: 1fr;
-    }
-
-    .aegis-logo-placeholder {
-      display: none;
     }
   }
 </style>
