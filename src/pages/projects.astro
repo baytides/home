@@ -145,13 +145,7 @@ const structuredData = [
   <!-- Aegis Initiative -->
   <section class="content-section alt-bg">
     <div class="container">
-      <div class="content-grid">
-        <div class="content-image">
-          <div class="project-logo-card">
-            <span class="aegis-shield">🛡️</span>
-            <p>Aegis Initiative</p>
-          </div>
-        </div>
+      <div class="content-grid aegis-grid">
         <div class="content-text">
           <span class="badge">Veterans Program</span>
           <h2>Aegis Initiative</h2>
@@ -172,6 +166,9 @@ const structuredData = [
           <div style="margin-top: 1.5rem">
             <a href="/aegis" class="btn btn-primary">Learn More</a>
           </div>
+        </div>
+        <div class="content-image">
+          <div class="project-logo-card aegis-logo-placeholder"></div>
         </div>
       </div>
     </div>
@@ -276,9 +273,21 @@ const structuredData = [
     margin-bottom: 0;
   }
 
-  .aegis-shield {
-    display: block;
-    font-size: 6rem;
-    margin-bottom: 1rem;
+  .aegis-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .aegis-logo-placeholder {
+    min-height: 200px;
+  }
+
+  @media (max-width: 768px) {
+    .aegis-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .aegis-logo-placeholder {
+      display: none;
+    }
   }
 </style>
