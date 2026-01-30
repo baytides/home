@@ -42,10 +42,17 @@ const structuredData = [
 >
   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Aegis Initiative' }]} />
 
-  <PageHero
-    title="Aegis Initiative"
-    subtitle="Honoring service through environmental stewardship"
-  />
+  <!-- Custom Video Hero for Aegis -->
+  <section class="hero hero-page aegis-video-hero">
+    <video class="aegis-hero-video" autoplay muted loop playsinline>
+      <source src="/assets/video/aegis-hero.webm" type="video/webm" />
+    </video>
+    <div class="aegis-hero-overlay"></div>
+    <div class="container">
+      <h1>Aegis Initiative</h1>
+      <p>Honoring service through environmental stewardship</p>
+    </div>
+  </section>
 
   <!-- Initiative Overview -->
   <section class="content-section aegis-intro">
