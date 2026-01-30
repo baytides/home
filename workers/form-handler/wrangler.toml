@@ -5,7 +5,7 @@ workers_dev = true
 
 [vars]
 ALLOWED_ORIGIN = "https://baytides.org"
-TO_EMAIL = "admin@baytides.org"
+TO_EMAIL = "info@baytides.org"
 
 # KV namespace for rate limiting
 [[kv_namespaces]]

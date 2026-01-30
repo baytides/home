@@ -331,6 +331,45 @@ Email: ${email}
 Date: ${new Date().toISOString()}
         `.trim();
         await sendEmail(env, subject, emailContent, email);
+      } else if (formType === 'aegis_interest') {
+        // Aegis Initiative interest form
+        const name = formData.get('name') as string;
+        const serviceStatus = (formData.get('service_status') as string | null) || 'Not specified';
+        const branch = (formData.get('branch') as string | null) || 'Not specified';
+        const skills = (formData.get('skills') as string | null) || 'Not provided';
+        const interests = formData.get('interests') as string;
+        const availability = (formData.get('availability') as string | null) || 'Not specified';
+        const referral = (formData.get('referral') as string | null) || 'Not specified';
+
+        const subject = `New Aegis Initiative Interest - ${name}`;
+        const emailContent = `
+New Aegis Initiative interest form submission:
+
+=== CONTACT INFO ===
+Name: ${name}
+Email: ${email}
+
+=== SERVICE BACKGROUND ===
+Service Status: ${serviceStatus}
+Branch: ${branch}
+
+=== INTERESTS & AVAILABILITY ===
+Skills & Experience:
+${skills}
+
+What interests them:
+${interests}
+
+Availability: ${availability}
+
+=== REFERRAL ===
+How they heard about Aegis: ${referral}
+
+---
+Submitted: ${new Date().toISOString()}
+        `.trim();
+
+        await sendEmail(env, subject, emailContent, email);
       } else {
         // Contact form
         const name = formData.get('name') as string;
