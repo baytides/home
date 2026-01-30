@@ -140,11 +140,138 @@ $aegis-green-light: #e8f5e9;
 }
 
 // ==========================================================================
+// Aegis Interest Form
+// ==========================================================================
+
+.aegis-form-section {
+  padding-top: 3rem;
+  padding-bottom: 4rem;
+}
+
+.aegis-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.aegis-form-intro {
+  h2 {
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid $aegis-green;
+    margin-bottom: 1.5rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+    color: var(--text-light);
+  }
+}
+
+.aegis-form-benefits {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: $aegis-green-light;
+  border-radius: 8px;
+
+  h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: $aegis-green;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-dark);
+
+    &::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: $aegis-green;
+      font-weight: 600;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.aegis-interest-form {
+  background: var(--bg-secondary);
+  padding: 2rem;
+  border-radius: 12px;
+  border-top: 4px solid $aegis-green;
+}
+
+.aegis-submit-btn {
+  width: 100%;
+  background: $aegis-green;
+  border-color: $aegis-green;
+
+  &:hover {
+    background: darken($aegis-green, 8%);
+    border-color: darken($aegis-green, 8%);
+  }
+}
+
+// ==========================================================================
+// Dark Theme Adjustments for Form
+// ==========================================================================
+
+[data-theme='dark'] {
+  .aegis-form-benefits {
+    background: rgba(45, 90, 61, 0.2);
+
+    h3 {
+      color: #8bc49a;
+    }
+
+    li::before {
+      color: #8bc49a;
+    }
+  }
+
+  .aegis-interest-form {
+    border-top-color: #8bc49a;
+  }
+
+  .aegis-submit-btn {
+    background: #3d7a52;
+    border-color: #3d7a52;
+
+    &:hover {
+      background: #4a8f62;
+      border-color: #4a8f62;
+    }
+  }
+}
+
+// ==========================================================================
 // Mobile Styles
 // ==========================================================================
 
 @media (max-width: 768px) {
   .aegis-cta-grid {
     grid-template-columns: 1fr;
+  }
+
+  .aegis-form-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .aegis-interest-form {
+    padding: 1.5rem;
   }
 }

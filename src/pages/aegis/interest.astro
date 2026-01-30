@@ -1,0 +1,248 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PageHero from '../../components/PageHero.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Aegis Initiative Interest Form',
+    description:
+      'Express your interest in joining the Aegis Initiative veteran environmental stewardship program.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Aegis Initiative',
+        item: 'https://baytides.org/aegis',
+      },
+      { '@type': 'ListItem', position: 3, name: 'Interest Form' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Join Aegis Initiative"
+  description="Express your interest in joining the Aegis Initiative. Connect your military experience with meaningful environmental stewardship."
+  canonicalUrl="https://baytides.org/aegis/interest"
+  structuredData={structuredData}
+  preloadImages={['/assets/images/hero-bg.webp']}
+  bodyClass="aegis-page"
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  </Fragment>
+
+  <Breadcrumb
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Aegis Initiative', href: '/aegis' },
+      { label: 'Interest Form' },
+    ]}
+  />
+
+  <PageHero title="Join Aegis Initiative" subtitle="Share your background and interests" />
+
+  <section class="content-section aegis-form-section">
+    <div class="container">
+      <div class="aegis-form-grid">
+        <div class="aegis-form-intro">
+          <h2>Get Involved</h2>
+          <p>
+            Tell us about yourself and how you'd like to contribute. Whether you have specific
+            technical skills or you're exploring what environmental work looks like, we want to hear
+            from you.
+          </p>
+          <p>
+            We'll reach out to discuss opportunities that match your interests and availability.
+          </p>
+
+          <div class="aegis-form-benefits">
+            <h3>What to expect</h3>
+            <ul>
+              <li>A conversation about your background and goals</li>
+              <li>Information about current projects and opportunities</li>
+              <li>Connections with other veterans in the program</li>
+              <li>Flexible involvement based on your schedule</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="contact-form aegis-interest-form">
+          <div id="interest-form-status" aria-live="polite" aria-atomic="true"></div>
+
+          <form action="https://forms.baytides.org" method="POST" id="aegis-interest-form">
+            <input type="hidden" name="form_type" value="aegis_interest" />
+            <input
+              type="hidden"
+              name="redirect"
+              value="https://baytides.org/aegis/interest?submitted=true"
+            />
+            <input
+              type="checkbox"
+              name="botcheck"
+              class="hidden"
+              style="display: none"
+              aria-hidden="true"
+              tabindex="-1"
+            />
+
+            <div class="form-group">
+              <label for="name">
+                Name
+                <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Your name"
+                required
+                autocomplete="name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">
+                Email
+                <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="your@email.com"
+                required
+                autocomplete="email"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="service-status">Service Status</label>
+              <select id="service-status" name="service_status">
+                <option value="">Select your status...</option>
+                <option value="veteran">Veteran</option>
+                <option value="active-duty">Active Duty</option>
+                <option value="reserve-guard">Reserve / National Guard</option>
+                <option value="military-family">Military Family Member</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="skills">Skills & Experience</label>
+              <textarea
+                id="skills"
+                name="skills"
+                placeholder="Tell us about relevant skills or experience (GIS, project management, communications, engineering, outdoor leadership, etc.)"
+                rows="3"
+              >
+              </textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="interests">
+                What interests you?
+                <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </label>
+              <textarea
+                id="interests"
+                name="interests"
+                placeholder="What draws you to environmental work? What kind of involvement are you looking for?"
+                rows="3"
+                required
+              >
+              </textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="availability">Availability</label>
+              <select id="availability" name="availability">
+                <option value="">Select your availability...</option>
+                <option value="few-hours-month">A few hours per month</option>
+                <option value="weekly">Weekly commitment</option>
+                <option value="project-based">Project-based / as needed</option>
+                <option value="exploring">Just exploring options</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="referral">How did you hear about Aegis?</label>
+              <input
+                type="text"
+                id="referral"
+                name="referral"
+                placeholder="Friend, organization, website, etc."
+              />
+            </div>
+
+            <fieldset class="turnstile-fieldset" style="border: none; padding: 0; margin: 0 0 1rem">
+              <legend class="sr-only">Security verification</legend>
+              <div class="cf-turnstile" data-sitekey="0x4AAAAAACJ4PUuzOaD_Xf63" data-theme="auto">
+              </div>
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary aegis-submit-btn">Submit Interest</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  function showFormStatus(container: HTMLElement, message: string, type: 'success' | 'error') {
+    const div = document.createElement('div');
+    div.className = `form-status ${type}`;
+    div.setAttribute('role', 'alert');
+    div.textContent = message;
+    container.textContent = '';
+    container.appendChild(div);
+  }
+
+  function initInterestPage() {
+    const params = new URLSearchParams(window.location.search);
+    const statusDiv = document.getElementById('interest-form-status');
+
+    if (params.get('submitted') === 'true' && statusDiv) {
+      showFormStatus(
+        statusDiv,
+        "Thank you for your interest! We'll be in touch soon to discuss opportunities.",
+        'success'
+      );
+      // Hide the form after successful submission
+      const form = document.getElementById('aegis-interest-form');
+      if (form) {
+        form.style.display = 'none';
+      }
+    } else if (params.get('error') && statusDiv) {
+      const errorMessages: Record<string, string> = {
+        spam: 'Your submission was flagged as spam.',
+        captcha: 'CAPTCHA verification failed. Please try again.',
+      };
+      const errorType = params.get('error') || '';
+      showFormStatus(
+        statusDiv,
+        errorMessages[errorType] || 'An error occurred. Please try again.',
+        'error'
+      );
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initInterestPage);
+  } else {
+    initInterestPage();
+  }
+</script>
