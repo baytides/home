@@ -139,6 +139,39 @@ const structuredData = [
               </select>
             </div>
 
+            <div class="form-group" id="branch-group" style="display: none">
+              <label for="branch">Branch of Service</label>
+              <select id="branch" name="branch">
+                <option value="">Select your branch...</option>
+                <optgroup label="Active Duty / Veteran">
+                  <option value="army">Army</option>
+                  <option value="usmc">Marine Corps (USMC)</option>
+                  <option value="usn">Navy (USN)</option>
+                  <option value="usaf">Air Force (USAF)</option>
+                  <option value="ussf">Space Force (USSF)</option>
+                  <option value="uscg">Coast Guard (USCG)</option>
+                </optgroup>
+                <optgroup label="Reserves">
+                  <option value="usar">Army Reserve (USAR)</option>
+                  <option value="usnr">Navy Reserve (USNR)</option>
+                  <option value="usmcr">Marine Corps Reserve (USMCR)</option>
+                  <option value="usafr">Air Force Reserve (USAFR)</option>
+                  <option value="uscgr">Coast Guard Reserve</option>
+                </optgroup>
+                <optgroup label="National Guard">
+                  <option value="arng">Army National Guard (ARNG)</option>
+                  <option value="ang">Air National Guard (ANG)</option>
+                </optgroup>
+                <optgroup label="Civilian Auxiliaries">
+                  <option value="cap">Civil Air Patrol (CAP)</option>
+                  <option value="cgaux">Coast Guard Auxiliary</option>
+                  <option value="usmm">Merchant Marine</option>
+                  <option value="mars">Military Auxiliary Radio System (MARS)</option>
+                  <option value="mcca">Marine Corps Cyber Auxiliary (MCCA)</option>
+                </optgroup>
+              </select>
+            </div>
+
             <div class="form-group">
               <label for="skills">Skills & Experience</label>
               <textarea
@@ -211,9 +244,29 @@ const structuredData = [
     container.appendChild(div);
   }
 
+  function initBranchDropdown() {
+    const serviceStatus = document.getElementById('service-status') as HTMLSelectElement;
+    const branchGroup = document.getElementById('branch-group');
+
+    if (!serviceStatus || !branchGroup) return;
+
+    const showBranchStatuses = ['veteran', 'active-duty', 'reserve-guard'];
+
+    serviceStatus.addEventListener('change', () => {
+      if (showBranchStatuses.includes(serviceStatus.value)) {
+        branchGroup.style.display = 'block';
+      } else {
+        branchGroup.style.display = 'none';
+      }
+    });
+  }
+
   function initInterestPage() {
     const params = new URLSearchParams(window.location.search);
     const statusDiv = document.getElementById('interest-form-status');
+
+    // Initialize branch dropdown toggle
+    initBranchDropdown();
 
     if (params.get('submitted') === 'true' && statusDiv) {
       showFormStatus(

@@ -75,6 +75,87 @@ $aegis-green-light: #e8f5e9;
   }
 }
 
+// ==========================================================================
+// Join the Mission - Exchange Section
+// ==========================================================================
+
+.aegis-exchange {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 2.5rem 0;
+}
+
+.aegis-exchange-col {
+  background: var(--bg-primary);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+  h3 {
+    font-size: 1.25rem;
+    color: $aegis-green;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid $aegis-green-light;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    position: relative;
+    padding-left: 1.75rem;
+    margin-bottom: 0.875rem;
+    color: var(--text-dark);
+    line-height: 1.5;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 8px;
+      height: 8px;
+      background: $aegis-green;
+      border-radius: 50%;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // First column - "What You Bring" styling
+  &:first-child {
+    border-top: 4px solid $aegis-green;
+  }
+
+  // Second column - "What You Gain" styling with different accent
+  &:last-child {
+    border-top: 4px solid #4a90a4;
+
+    h3 {
+      color: #2d6a7a;
+    }
+
+    li::before {
+      background: #4a90a4;
+    }
+  }
+}
+
+.aegis-mission-note {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  font-style: italic;
+  color: var(--text-light);
+}
+
 // Aegis page styles
 .aegis-page {
   // Green hero header
@@ -136,6 +217,40 @@ $aegis-green-light: #e8f5e9;
         border-color: #4a8f62;
       }
     }
+  }
+
+  .aegis-exchange-col {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+    h3 {
+      color: #8bc49a;
+      border-bottom-color: rgba(139, 196, 154, 0.3);
+    }
+
+    li::before {
+      background: #8bc49a;
+    }
+
+    &:first-child {
+      border-top-color: #8bc49a;
+    }
+
+    &:last-child {
+      border-top-color: #7ec8e8;
+
+      h3 {
+        color: #7ec8e8;
+      }
+
+      li::before {
+        background: #7ec8e8;
+      }
+    }
+  }
+
+  .aegis-mission-note {
+    color: var(--text-light);
   }
 }
 
@@ -264,6 +379,14 @@ $aegis-green-light: #e8f5e9;
 @media (max-width: 768px) {
   .aegis-cta-grid {
     grid-template-columns: 1fr;
+  }
+
+  .aegis-exchange {
+    grid-template-columns: 1fr;
+  }
+
+  .aegis-exchange-col {
+    padding: 1.5rem;
   }
 
   .aegis-form-grid {
