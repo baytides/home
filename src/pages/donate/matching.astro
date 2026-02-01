@@ -87,6 +87,7 @@ const structuredData = [
             <!-- Double the Donation 360MatchPro Plugin -->
             <link href="https://doublethedonation.com/api/css/ddplugin.css" rel="stylesheet" />
             <div id="dd-company-name-input" class="dtd-widget-container"></div>
+            <div id="dd-container" class="dtd-company-info-container"></div>
             <script is:inline>
               var DDCONF = { API_KEY: '13qDoFLXlus5V13X' };
             </script>
@@ -284,6 +285,70 @@ const structuredData = [
 
   #dd-company-name-input a:hover {
     color: #1e3a8a !important;
+  }
+
+  /* Company info container - displays after selection */
+  .dtd-company-info-container {
+    margin-top: 1.5rem;
+  }
+
+  #dd-container {
+    font-family: inherit;
+  }
+
+  /* Style the company info panel */
+  #dd-container .dd-company-info,
+  #dd-container > div {
+    padding: 1.5rem !important;
+    background: #f0f7ff !important;
+    border-radius: 12px !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  /* Ensure text contrast in company info */
+  #dd-container,
+  #dd-container * {
+    color: #1a202c;
+  }
+
+  #dd-container h3,
+  #dd-container h4 {
+    color: var(--primary-navy) !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  #dd-container p {
+    color: #1a202c !important;
+    line-height: 1.6 !important;
+  }
+
+  #dd-container a {
+    color: #1e40af !important;
+    text-decoration: underline !important;
+  }
+
+  #dd-container a:hover {
+    color: #1e3a8a !important;
+  }
+
+  /* Style buttons in company info */
+  #dd-container .btn,
+  #dd-container button,
+  #dd-container a.button {
+    display: inline-block !important;
+    padding: 0.75rem 1.5rem !important;
+    background: var(--primary-blue) !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    margin-top: 1rem !important;
+  }
+
+  #dd-container .btn:hover,
+  #dd-container button:hover,
+  #dd-container a.button:hover {
+    background: var(--primary-navy) !important;
   }
 
   /* Mobile Responsive */
