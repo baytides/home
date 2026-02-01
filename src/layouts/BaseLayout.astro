@@ -75,6 +75,9 @@ const fullTitle = title.includes('Bay Tides') ? title : `${title} | Bay Tides`;
           <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
         ))
     }
+
+    <!-- Page-specific head content -->
+    <slot name="head" />
   </head>
   <body class:list={[bodyClass]}>
     <Header />

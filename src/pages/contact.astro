@@ -280,64 +280,52 @@ const structuredData = [
     const map = new mapboxgl.Map({
       container: 'bay-area-map',
       style: 'mapbox://styles/mapbox/light-v11',
-      center: [-122.1, 37.75],
-      zoom: 7.2,
+      center: [-122.2, 37.75],
+      zoom: 7.5,
       interactive: false,
     });
 
-    // Bay Area counties approximate bounding box coordinates
-    const bayAreaBounds: [number, number, number, number] = [-123.5, 36.9, -121.0, 38.9];
+    map.on('load', async () => {
+      // Load Bay Area counties GeoJSON
+      try {
+        const response = await fetch('/data/bay-area-counties.json');
+        const countiesData = await response.json();
 
-    map.on('load', () => {
-      // Add a simple highlight rectangle for the Bay Area region
-      map.addSource('bay-area-region', {
-        type: 'geojson',
-        data: {
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'Polygon',
-            coordinates: [
-              [
-                [-123.1, 37.0],
-                [-121.5, 37.0],
-                [-121.2, 37.4],
-                [-121.3, 38.0],
-                [-121.6, 38.3],
-                [-122.0, 38.5],
-                [-122.5, 38.5],
-                [-122.9, 38.3],
-                [-123.1, 38.0],
-                [-123.3, 37.6],
-                [-123.1, 37.0],
-              ],
-            ],
+        map.addSource('bay-area-counties', {
+          type: 'geojson',
+          data: countiesData,
+        });
+
+        // Fill layer for counties
+        map.addLayer(
+          {
+            id: 'bay-area-fill',
+            type: 'fill',
+            source: 'bay-area-counties',
+            paint: {
+              'fill-color': '#2d6a4f',
+              'fill-opacity': 0.25,
+            },
           },
-        },
-      });
+          'waterway-label'
+        );
 
-      map.addLayer(
-        {
-          id: 'bay-area-fill',
-          type: 'fill',
-          source: 'bay-area-region',
-          paint: { 'fill-color': '#2d6a4f', 'fill-opacity': 0.2 },
-        },
-        'waterway-label'
-      );
-
-      map.addLayer(
-        {
-          id: 'bay-area-borders',
-          type: 'line',
-          source: 'bay-area-region',
-          paint: { 'line-color': '#1b4332', 'line-width': 2 },
-        },
-        'waterway-label'
-      );
-
-      // Add a marker at the approximate center
-      new mapboxgl.Marker({ color: '#1b4332' }).setLngLat([-122.1, 37.75]).addTo(map);
+        // Border layer for counties
+        map.addLayer(
+          {
+            id: 'bay-area-borders',
+            type: 'line',
+            source: 'bay-area-counties',
+            paint: {
+              'line-color': '#1b4332',
+              'line-width': 1.5,
+            },
+          },
+          'waterway-label'
+        );
+      } catch (error) {
+        console.error('Failed to load county boundaries:', error);
+      }
     });
   }
 

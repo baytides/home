@@ -1,0 +1,184 @@
+---
+interface Props {
+  src: string;
+  poster: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+}
+
+const { src, poster, alt, width = 600, height = 400, class: className = '' } = Astro.props;
+---
+
+<div class:list={['hover-video-container', className]} data-hover-video>
+  <video
+    class="hover-video"
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster={poster}
+    width={width}
+    height={height}
+    aria-label={alt}
+  >
+    <source src={src} type="video/webm" />
+  </video>
+  <div class="hover-video-overlay">
+    <span class="play-indicator" aria-hidden="true">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        width="48"
+        height="48"
+      >
+        <path d="M8 5v14l11-7z"></path>
+      </svg>
+    </span>
+  </div>
+</div>
+
+<style>
+  .hover-video-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg, 0.75rem);
+    cursor: pointer;
+  }
+
+  .hover-video {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .hover-video-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease;
+  }
+
+  .play-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    color: var(--color-primary, #0d6efd);
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .hover-video-container:hover .play-indicator,
+  .hover-video-container:focus-within .play-indicator {
+    transform: scale(1.1);
+    background: white;
+  }
+
+  /* Hide overlay when playing */
+  .hover-video-container.is-playing .hover-video-overlay {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .hover-video-container.is-playing .hover-video {
+    transform: scale(1.02);
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .hover-video,
+    .play-indicator {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  function initHoverVideos() {
+    const containers = document.querySelectorAll('[data-hover-video]');
+
+    containers.forEach((container) => {
+      const video = container.querySelector('video') as HTMLVideoElement;
+      if (!video) return;
+
+      let isTouch = false;
+      let isPlaying = false;
+
+      // Detect touch devices
+      container.addEventListener(
+        'touchstart',
+        () => {
+          isTouch = true;
+        },
+        { once: true, passive: true }
+      );
+
+      // Play on hover (desktop)
+      container.addEventListener('mouseenter', () => {
+        if (!isTouch) {
+          video.play();
+          container.classList.add('is-playing');
+          isPlaying = true;
+        }
+      });
+
+      // Pause on mouse leave (desktop)
+      container.addEventListener('mouseleave', () => {
+        if (!isTouch) {
+          video.pause();
+          container.classList.remove('is-playing');
+          isPlaying = false;
+        }
+      });
+
+      // Toggle on click/tap (mobile and desktop fallback)
+      container.addEventListener('click', () => {
+        if (isPlaying) {
+          video.pause();
+          container.classList.remove('is-playing');
+          isPlaying = false;
+        } else {
+          video.play();
+          container.classList.add('is-playing');
+          isPlaying = true;
+        }
+      });
+
+      // Keyboard accessibility
+      container.setAttribute('tabindex', '0');
+      container.setAttribute('role', 'button');
+      container.setAttribute('aria-label', `Play video: ${video.getAttribute('aria-label')}`);
+
+      container.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          container.dispatchEvent(new Event('click'));
+        }
+      });
+
+      // Reset when video ends (though it loops, this handles edge cases)
+      video.addEventListener('ended', () => {
+        container.classList.remove('is-playing');
+        isPlaying = false;
+      });
+    });
+  }
+
+  // Initialize on page load
+  initHoverVideos();
+
+  // Re-initialize after Astro page transitions
+  document.addEventListener('astro:page-load', initHoverVideos);
+</script>

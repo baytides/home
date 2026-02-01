@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import Card from '../components/Card.astro';
+import HoverVideo from '../components/HoverVideo.astro';
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -72,16 +73,13 @@ const structuredData = {
           <a href="/about" class="btn btn-secondary">Learn More About Us</a>
         </div>
         <div class="mission-image">
-          <picture>
-            <source srcset="/assets/images/egret.webp" type="image/webp" />
-            <img
-              src="/assets/images/egret.jpg"
-              alt="Snowy Egret at San Francisco Bay"
-              width="600"
-              height="400"
-              loading="lazy"
-            />
-          </picture>
+          <HoverVideo
+            src="/assets/video/bird-home.webm"
+            poster="/assets/video/bird-home-poster.jpg"
+            alt="Snowy Egret at San Francisco Bay"
+            width={600}
+            height={400}
+          />
         </div>
       </div>
     </div>
