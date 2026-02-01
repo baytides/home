@@ -30,18 +30,33 @@ const structuredData = {
   description="Bay Tides uses technology to protect and preserve the San Francisco Bay's environment through education, community mobilization, and innovation."
   canonicalUrl="https://baytides.org/"
   structuredData={structuredData}
-  preloadImages={['/assets/images/hero-bg.webp']}
+  preloadImages={['/assets/video/home-hero-poster.webp']}
 >
   <!-- Hero Section -->
-  <PageHero
-    title="Protecting the San Francisco Bay"
-    subtitle="Using technology to protect and preserve the San Francisco Bay's environment through education, community mobilization, and innovation."
-    variant="home"
-    buttons={[
-      { href: '/volunteer', label: 'Get Involved', variant: 'primary' },
-      { href: '/donate', label: 'Support Our Mission', variant: 'outline' },
-    ]}
-  />
+  <section class="hero hero-home home-video-hero">
+    <video
+      class="home-hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="/assets/video/home-hero-poster.webp"
+    >
+      <source src="/assets/video/home-hero.webm" type="video/webm" />
+    </video>
+    <div class="home-hero-overlay"></div>
+    <div class="container">
+      <h1>Protecting the San Francisco Bay</h1>
+      <p>
+        Using technology to protect and preserve the San Francisco Bay's environment through
+        education, community mobilization, and innovation.
+      </p>
+      <div class="hero-buttons">
+        <a href="/volunteer" class="btn btn-primary">Get Involved</a>
+        <a href="/donate" class="btn btn-outline">Support Our Mission</a>
+      </div>
+    </div>
+  </section>
 
   <!-- Mission Preview -->
   <section class="mission-preview">
