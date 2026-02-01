@@ -85,13 +85,12 @@ const structuredData = [
               Search for your employer
             </label>
             <!-- Double the Donation 360MatchPro Plugin -->
-            <div id="dd-container" class="dtd-widget-container"></div>
-            <script
-              src="https://doublethedonation.com/api/js/ddplugin.js"
-              id="double-the-donation-script"
-              data-ddkey="13qDoFLXlus5V13X"
-            >
+            <link href="https://doublethedonation.com/api/css/ddplugin.css" rel="stylesheet" />
+            <div id="dd-company-name-input" class="dtd-widget-container"></div>
+            <script is:inline>
+              var DDCONF = { API_KEY: '13qDoFLXlus5V13X' };
             </script>
+            <script src="https://doublethedonation.com/api/js/ddplugin.js"></script>
           </div>
         </div>
 
@@ -199,15 +198,15 @@ const structuredData = [
 
   /*
    * Override DTD plugin default styles
-   * The plugin injects its own elements, so we use #dd-container to scope overrides
+   * The plugin uses #dd-company-name-input as the container
    */
-  #dd-container {
+  #dd-company-name-input {
     font-family: inherit;
   }
 
-  /* Search input styling */
-  #dd-container input[type='text'],
-  #dd-input {
+  /* Search input styling - override DTD defaults */
+  #dd-company-name-input input,
+  #dd-company-name-input input[type='text'] {
     width: 100% !important;
     padding: 1rem 1.25rem !important;
     font-size: 1rem !important;
@@ -219,24 +218,24 @@ const structuredData = [
     box-sizing: border-box !important;
     -webkit-appearance: none !important;
     appearance: none !important;
+    height: auto !important;
+    line-height: 1.5 !important;
   }
 
-  #dd-container input[type='text']:focus,
-  #dd-input:focus {
+  #dd-company-name-input input:focus,
+  #dd-company-name-input input[type='text']:focus {
     outline: none !important;
     border-color: var(--primary-blue) !important;
     box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15) !important;
   }
 
-  #dd-container input[type='text']::placeholder,
-  #dd-input::placeholder {
+  #dd-company-name-input input::placeholder,
+  #dd-company-name-input input[type='text']::placeholder {
     color: #718096 !important;
   }
 
-  /* Dropdown results styling */
-  #dd-container ul,
-  #dd-container .dd-company-list,
-  .dd-company-list {
+  /* Dropdown results styling - DTD uses ul for company list */
+  #dd-company-name-input ul {
     list-style: none !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -253,9 +252,7 @@ const structuredData = [
     left: 0 !important;
   }
 
-  #dd-container li,
-  #dd-container .dd-company-list li,
-  .dd-company-list li {
+  #dd-company-name-input li {
     padding: 0.875rem 1.25rem !important;
     cursor: pointer !important;
     color: #1a202c !important;
@@ -265,53 +262,28 @@ const structuredData = [
     margin: 0 !important;
   }
 
-  #dd-container li:last-child,
-  .dd-company-list li:last-child {
+  #dd-company-name-input li:last-child {
     border-bottom: none !important;
     border-radius: 0 0 10px 10px !important;
   }
 
-  #dd-container li:hover,
-  .dd-company-list li:hover {
+  #dd-company-name-input li:hover {
     background: #f0f7ff !important;
   }
 
-  /* Company info panel styling */
-  #dd-container .dd-company-info,
-  .dd-company-info {
-    margin-top: 1.5rem !important;
-    padding: 1.5rem !important;
-    background: #f0f7ff !important;
-    border-radius: 12px !important;
-    border: 1px solid #e2e8f0 !important;
-  }
-
-  /* Ensure good text contrast on widget elements */
-  #dd-container,
-  #dd-container * {
+  /* Ensure good text contrast on all widget elements */
+  #dd-company-name-input,
+  #dd-company-name-input * {
     color: #1a202c;
   }
 
-  #dd-container a {
+  #dd-company-name-input a {
     color: #1e40af !important;
     text-decoration: underline !important;
   }
 
-  #dd-container a:hover {
+  #dd-company-name-input a:hover {
     color: #1e3a8a !important;
-  }
-
-  /* Success/info messages */
-  #dd-container .dd-success,
-  #dd-container .matching-yes {
-    color: #166534 !important;
-    background: #dcfce7 !important;
-  }
-
-  #dd-container .dd-warning,
-  #dd-container .matching-no {
-    color: #92400e !important;
-    background: #fef3c7 !important;
   }
 
   /* Mobile Responsive */
