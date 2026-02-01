@@ -431,4 +431,31 @@ const structuredData = [
       grid-template-columns: 1fr;
     }
   }
+
+  /* Dark mode overrides for light-background elements */
+  :global([data-theme='dark']) .ira-note {
+    background: rgba(246, 173, 85, 0.15);
+    border-left-color: #f6ad55;
+  }
+
+  :global([data-theme='dark']) .ira-note h3,
+  :global([data-theme='dark']) .ira-note p {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .benefit-item {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .benefit-icon {
+    background: var(--bg-primary);
+  }
+
+  :global([data-theme='dark']) .ira-requirements {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .ira-requirements li {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
 </style>

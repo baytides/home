@@ -352,4 +352,35 @@ const structuredData = [
     color: var(--text-light);
     font-size: 0.9375rem;
   }
+
+  /* Dark mode overrides for light-background elements */
+  :global([data-theme='dark']) .sample-language {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .sample-language p {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .sample-language blockquote {
+    background: var(--bg-primary);
+    color: var(--text-dark);
+    border-left-color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .giving-type {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .planned-benefits {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .planned-info {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .info-row {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
 </style>

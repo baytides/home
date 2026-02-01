@@ -292,4 +292,17 @@ const structuredData = [
     margin-bottom: 1.5rem;
     color: var(--text-light);
   }
+
+  /* Dark mode overrides for light-background elements */
+  :global([data-theme='dark']) .daf-info-box {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .daf-detail-row {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .daf-benefits {
+    background: var(--bg-secondary);
+  }
 </style>
