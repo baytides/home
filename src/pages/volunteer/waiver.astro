@@ -1,0 +1,1824 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Volunteer Liability Waiver',
+    description: 'Liability waiver and release of claims for Bay Tides volunteers.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Volunteer',
+        item: 'https://baytides.org/volunteer',
+      },
+      { '@type': 'ListItem', position: 3, name: 'Liability Waiver' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Volunteer Liability Waiver"
+  description="Complete the liability waiver and release of claims required for participation in Bay Tides volunteer activities."
+  canonicalUrl="https://baytides.org/volunteer/waiver"
+  structuredData={structuredData}
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer>
+    </script>
+  </Fragment>
+
+  <Breadcrumb
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Volunteer', href: '/volunteer' },
+      { label: 'Liability Waiver' },
+    ]}
+  />
+
+  <section class="hero hero-page">
+    <div class="container">
+      <h1>Liability Waiver</h1>
+      <p>Required before participating in volunteer activities</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="waiver-container volunteer-form-container">
+        <div class="waiver-intro">
+          <p>
+            <strong>Please read this waiver carefully before signing.</strong> This is a legal document
+            that affects your rights. By signing below, you acknowledge that you have read, understand,
+            and agree to be bound by the terms of this waiver.
+          </p>
+        </div>
+
+        <div id="waiver-form-status" aria-live="polite" aria-atomic="true"></div>
+
+        <form action="https://forms.baytides.org" method="POST" id="waiver-form" novalidate>
+          <input type="hidden" name="form_type" value="waiver" />
+          <input
+            type="hidden"
+            name="redirect"
+            value="https://baytides.org/volunteer/waiver?submitted=true"
+          />
+          <input
+            type="checkbox"
+            name="botcheck"
+            class="hidden"
+            style="display: none"
+            aria-hidden="true"
+            tabindex="-1"
+          />
+
+          <!-- Participant Information -->
+          <fieldset class="form-fieldset">
+            <legend>Participant Information</legend>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="waiver-first-name">
+                  First Name
+                  <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input
+                  type="text"
+                  id="waiver-first-name"
+                  name="first_name"
+                  required
+                  autocomplete="given-name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="waiver-last-name">
+                  Last Name
+                  <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input
+                  type="text"
+                  id="waiver-last-name"
+                  name="last_name"
+                  required
+                  autocomplete="family-name"
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="waiver-email">
+                  Email
+                  <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input type="email" id="waiver-email" name="email" required autocomplete="email" />
+              </div>
+
+              <div class="form-group">
+                <label for="waiver-phone">
+                  Phone
+                  <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input type="tel" id="waiver-phone" name="phone" required autocomplete="tel" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="waiver-dob">
+                  Date of Birth
+                  <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input type="date" id="waiver-dob" name="date_of_birth" required />
+              </div>
+
+              <div class="form-group">
+                <label for="waiver-address">Address</label>
+                <input
+                  type="text"
+                  id="waiver-address"
+                  name="address"
+                  autocomplete="street-address"
+                />
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Emergency Contact -->
+          <fieldset class="form-fieldset">
+            <legend>Emergency Contact</legend>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="waiver-emergency-name">
+                  Contact Name
+                  <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input type="text" id="waiver-emergency-name" name="emergency_name" required />
+              </div>
+
+              <div class="form-group">
+                <label for="waiver-emergency-phone">
+                  Contact Phone
+                  <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input type="tel" id="waiver-emergency-phone" name="emergency_phone" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="waiver-emergency-relationship">
+                Relationship
+                <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </label>
+              <input
+                type="text"
+                id="waiver-emergency-relationship"
+                name="emergency_relationship"
+                placeholder="e.g., Spouse, Parent, Friend"
+                required
+              />
+            </div>
+          </fieldset>
+
+          <!-- Waiver Text -->
+          <div class="waiver-text">
+            <h2>Waiver and Release of Liability</h2>
+            <p class="scroll-instruction" id="scroll-instruction">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path>
+              </svg>
+              Please scroll through and read the entire waiver below to continue
+            </p>
+
+            <div
+              class="waiver-scroll-box"
+              id="waiver-scroll-box"
+              tabindex="0"
+              aria-label="Waiver text, scroll to read"
+            >
+              <h3>1. Assumption of Risk</h3>
+              <p>
+                I understand that participation in Bay Tides volunteer activities may involve
+                physical activity and exposure to various conditions including, but not limited to:
+                uneven terrain, water hazards, wildlife, weather conditions, use of tools and
+                equipment, and other inherent risks associated with outdoor environmental work.
+              </p>
+              <p>
+                I voluntarily assume all risks associated with my participation, including but not
+                limited to personal injury, illness, death, and property damage, whether caused by
+                my own actions, the actions of others, or conditions at the activity location.
+              </p>
+
+              <h3>2. Release of Liability</h3>
+              <p>
+                In consideration of being permitted to participate in Bay Tides volunteer
+                activities, I hereby release, waive, discharge, and covenant not to sue Bay Tides,
+                its officers, directors, employees, volunteers, agents, representatives, successors,
+                and assigns (collectively, "Released Parties") from any and all liability, claims,
+                demands, actions, or causes of action arising out of or related to any loss, damage,
+                or injury, including death, that may be sustained by me while participating in
+                volunteer activities, whether caused by the negligence of the Released Parties or
+                otherwise.
+              </p>
+
+              <h3>3. Indemnification</h3>
+              <p>
+                I agree to indemnify, defend, and hold harmless the Released Parties from any loss,
+                liability, damage, or costs, including attorney's fees, that may be incurred due to
+                my participation in volunteer activities, whether caused by my negligence or
+                otherwise.
+              </p>
+
+              <h3>4. Medical Authorization and Financial Responsibility</h3>
+              <p>
+                I authorize Bay Tides and its representatives to obtain or provide emergency medical
+                treatment for me in the event of injury or illness during volunteer activities,
+                including but not limited to calling 911, emergency medical services, ambulance
+                transport, or any other medical assistance deemed necessary.
+              </p>
+              <p>
+                I understand and agree that I am solely responsible for all costs, fees, and
+                expenses associated with any medical treatment, emergency services, ambulance
+                transport, hospitalization, or other medical care that may be required as a result
+                of my participation in volunteer activities. I hereby waive any right to seek
+                compensation, reimbursement, or indemnification from Bay Tides or the Released
+                Parties for any such medical costs or related fees.
+              </p>
+              <p>
+                I certify that I am in good physical health and have no medical conditions that
+                would prevent my safe participation in volunteer activities, or I have disclosed
+                such conditions to Bay Tides staff.
+              </p>
+
+              <h3>5. Personal Property</h3>
+              <p>
+                I understand that Bay Tides is not responsible for any loss, theft, or damage to my
+                personal property during volunteer activities. I agree to leave valuable items at
+                home or secure them properly.
+              </p>
+
+              <h3>6. Photography and Media Release</h3>
+              <p>
+                I grant Bay Tides permission to photograph, video record, and/or audio record me
+                during volunteer activities and to use such materials for any lawful purpose,
+                including marketing, social media, website, publications, and other promotional
+                purposes. I waive any right to compensation for such use.
+              </p>
+
+              <h3>7. Compliance with Rules</h3>
+              <p>
+                I agree to follow all rules, instructions, and safety guidelines provided by Bay
+                Tides staff and event leaders. I understand that failure to comply may result in
+                immediate removal from the activity and termination of my volunteer status.
+              </p>
+
+              <h3>8. Governing Law</h3>
+              <p>
+                This waiver shall be governed by and construed in accordance with the laws of the
+                State of California. Any disputes arising under this waiver shall be resolved in the
+                courts of California.
+              </p>
+
+              <h3>9. Severability</h3>
+              <p>
+                If any provision of this waiver is found to be invalid or unenforceable, the
+                remaining provisions shall continue in full force and effect.
+              </p>
+
+              <h3>10. Entire Agreement</h3>
+              <p>
+                This waiver constitutes the entire agreement between me and Bay Tides regarding the
+                subject matter hereof and supersedes all prior agreements, understandings, and
+                representations.
+              </p>
+            </div>
+          </div>
+
+          <!-- Medical Conditions (Optional) -->
+          <fieldset class="form-fieldset">
+            <legend>Medical Information (Optional)</legend>
+            <p class="fieldset-description">
+              Please disclose any medical conditions, allergies, or physical limitations that may
+              affect your participation or that emergency responders should be aware of.
+            </p>
+
+            <div class="form-group">
+              <label for="waiver-medical">Medical Conditions, Allergies, or Medications</label>
+              <textarea
+                id="waiver-medical"
+                name="medical_info"
+                rows="3"
+                placeholder="List any relevant medical information..."
+              >
+              </textarea>
+            </div>
+          </fieldset>
+
+          <!-- Agreement and Signature -->
+          <fieldset class="form-fieldset signature-fieldset">
+            <legend>Agreement and Electronic Signature</legend>
+
+            <label class="checkbox-label agreement-checkbox" id="agree-waiver-label">
+              <input type="checkbox" name="agree_waiver" id="agree-waiver" required disabled />
+              <span>
+                <strong>
+                  I have read, understand, and agree to be bound by this Waiver and Release of
+                  Liability.
+                </strong> I acknowledge that I am voluntarily giving up substantial legal rights, including
+                the right to sue.
+                <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </span>
+            </label>
+
+            <label class="checkbox-label agreement-checkbox">
+              <input type="checkbox" name="agree_age" id="agree-age" required />
+              <span>
+                I am 18 years of age or older. <strong>
+                  If I am signing on behalf of a minor,
+                </strong>
+                I am the parent or legal guardian of the minor participant and have the authority to bind
+                the minor to this waiver.
+                <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </span>
+            </label>
+
+            <div class="form-group signature-group">
+              <label id="signature-label">
+                Electronic Signature
+                <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </label>
+
+              <!-- Signature Mode Toggle -->
+              <div class="signature-mode-toggle" role="tablist" aria-label="Signature method">
+                <button
+                  type="button"
+                  role="tab"
+                  id="tab-type"
+                  class="signature-tab active"
+                  aria-selected="true"
+                  aria-controls="signature-type-panel"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="4 7 4 4 20 4 20 7"></polyline><line
+                      x1="9"
+                      y1="20"
+                      x2="15"
+                      y2="20"
+                    >
+                    </line><line x1="12" y1="4" x2="12" y2="20"></line>
+                  </svg>
+                  Type
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  id="tab-draw"
+                  class="signature-tab"
+                  aria-selected="false"
+                  aria-controls="signature-draw-panel"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 19l7-7 3 3-7 7-3-3z"></path><path
+                      d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"
+                    >
+                    </path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle>
+                  </svg>
+                  Draw
+                </button>
+              </div>
+
+              <!-- Type Signature Panel -->
+              <div
+                id="signature-type-panel"
+                class="signature-panel active"
+                role="tabpanel"
+                aria-labelledby="tab-type"
+              >
+                <input
+                  type="text"
+                  id="waiver-signature"
+                  name="signature"
+                  class="signature-input"
+                  placeholder="Type your full legal name"
+                  autocomplete="off"
+                  aria-describedby="signature-note"
+                />
+              </div>
+
+              <!-- Draw Signature Panel -->
+              <div
+                id="signature-draw-panel"
+                class="signature-panel"
+                role="tabpanel"
+                aria-labelledby="tab-draw"
+                hidden
+              >
+                <div class="signature-canvas-container">
+                  <canvas
+                    id="signature-canvas"
+                    class="signature-canvas"
+                    aria-label="Draw your signature here"
+                  >
+                  </canvas>
+                  <button
+                    type="button"
+                    id="clear-signature"
+                    class="btn-clear-signature"
+                    aria-label="Clear signature"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6">
+                      </path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                    </svg>
+                    Clear
+                  </button>
+                </div>
+                <input type="hidden" id="signature-data" name="signature_image" />
+              </div>
+
+              <p id="signature-note" class="signature-note">
+                By signing above, you are signing this waiver electronically and agree that your
+                electronic signature has the same legal effect as a handwritten signature.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label for="waiver-date">
+                Date
+                <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </label>
+              <input type="date" id="waiver-date" name="signature_date" required />
+            </div>
+
+            <!-- Minor Information (if applicable) -->
+            <div class="minor-section">
+              <p class="minor-note">
+                <strong>If signing for a minor:</strong> Please also provide the minor's information.
+              </p>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="minor-name">Minor's Full Name</label>
+                  <input type="text" id="minor-name" name="minor_name" />
+                </div>
+
+                <div class="form-group">
+                  <label for="minor-dob">Minor's Date of Birth</label>
+                  <input type="date" id="minor-dob" name="minor_dob" />
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Turnstile CAPTCHA -->
+          <fieldset class="turnstile-fieldset" style="border: none; padding: 0; margin: 0 0 1rem">
+            <legend class="sr-only">Security verification</legend>
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAACJ4PUuzOaD_Xf63" data-theme="auto">
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn btn-primary btn-large">Submit Waiver</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  function showWaiverFormStatus(
+    container: HTMLElement,
+    message: string,
+    type: 'success' | 'error',
+    showPdfButton: boolean = false
+  ) {
+    const div = document.createElement('div');
+    div.className = `form-status ${type}`;
+    div.setAttribute('role', 'alert');
+    div.textContent = message;
+
+    if (showPdfButton && type === 'success') {
+      const buttonContainer = document.createElement('div');
+      buttonContainer.style.marginTop = '1.5rem';
+
+      const pdfButton = document.createElement('button');
+      pdfButton.type = 'button';
+      pdfButton.className = 'btn btn-primary';
+
+      // Create icon using DOM methods
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(svgNS, 'svg');
+      svg.setAttribute('width', '18');
+      svg.setAttribute('height', '18');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('fill', 'none');
+      svg.setAttribute('stroke', 'currentColor');
+      svg.setAttribute('stroke-width', '2');
+      svg.setAttribute('stroke-linecap', 'round');
+      svg.setAttribute('stroke-linejoin', 'round');
+      svg.style.marginRight = '0.5rem';
+      svg.style.verticalAlign = 'middle';
+
+      const path1 = document.createElementNS(svgNS, 'path');
+      path1.setAttribute('d', 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4');
+      const polyline = document.createElementNS(svgNS, 'polyline');
+      polyline.setAttribute('points', '7 10 12 15 17 10');
+      const line = document.createElementNS(svgNS, 'line');
+      line.setAttribute('x1', '12');
+      line.setAttribute('y1', '15');
+      line.setAttribute('x2', '12');
+      line.setAttribute('y2', '3');
+
+      svg.appendChild(path1);
+      svg.appendChild(polyline);
+      svg.appendChild(line);
+
+      pdfButton.appendChild(svg);
+      pdfButton.appendChild(document.createTextNode('Download Signed Waiver (PDF)'));
+      pdfButton.addEventListener('click', generateWaiverPDF);
+      buttonContainer.appendChild(pdfButton);
+      div.appendChild(buttonContainer);
+    }
+
+    container.textContent = '';
+    container.appendChild(div);
+  }
+
+  // PDF Generation
+  async function generateWaiverPDF() {
+    const waiverData = sessionStorage.getItem('waiverData');
+    if (!waiverData) {
+      alert('Waiver data not found. Please contact us if you need a copy of your signed waiver.');
+      return;
+    }
+
+    const data = JSON.parse(waiverData);
+    const { jsPDF } = (window as any).jspdf;
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'letter',
+    });
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 20;
+    const contentWidth = pageWidth - margin * 2;
+    let y = margin;
+
+    // Add MINOR/ADULT indicator badge in top right corner for easy identification
+    const isMinorWaiver = !!data.minorName;
+    const badgeText = isMinorWaiver ? 'MINOR' : 'ADULT';
+    const badgeWidth = 25;
+    const badgeHeight = 8;
+    const badgeX = pageWidth - margin - badgeWidth;
+    const badgeY = 10;
+
+    // Draw badge background (black box)
+    doc.setFillColor(0, 0, 0);
+    doc.rect(badgeX, badgeY, badgeWidth, badgeHeight, 'F');
+
+    // Badge text (white on black)
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(255, 255, 255);
+    doc.text(badgeText, badgeX + badgeWidth / 2, badgeY + 5.5, { align: 'center' });
+
+    // Reset text color to black
+    doc.setTextColor(0, 0, 0);
+
+    // Bay Tides logo (base64 encoded, grayscale for B&W printing)
+    const logoBase64 =
+      'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAwADAAAD/4QDqRXhpZgAATU0AKgAAAAgABwESAAMAAAABAAEAAAEaAAUAAAABAAAAYgEbAAUAAAABAAAAagEoAAMAAAABAAIAAAExAAIAAAAGAAAAcgE7AAIAAAAQAAAAeIdpAAQAAAABAAAAiAAAAAAAAADAAAAAAQAAAMAAAAABQ2FudmEAU2F2ZSB0aGUgU2hvcmVzAAAHkAAABwAAAAQwMjIxkQEABwAAAAQBAgMAoAAABwAAAAQwMTAwoAEAAwAAAAEAAQAAoAIABAAAAAEAAABkoAMABAAAAAEAAABkpAYAAwAAAAEAAAAAAAAAAP/hChdodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDYuMC4wIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIj4gPGRjOmNyZWF0b3I+IDxyZGY6U2VxPiA8cmRmOmxpPlNhdmUgdGhlIFNob3JlczwvcmRmOmxpPiA8L3JkZjpTZXE+IDwvZGM6Y3JlYXRvcj4gPGRjOnRpdGxlPiA8cmRmOkFsdD4gPHJkZjpsaSB4bWw6bGFuZz0ieC1kZWZhdWx0Ij5CYXkgVGlkZXMgLSBMb2dvIC0gMTwvcmRmOmxpPiA8L3JkZjpBbHQ+IDwvZGM6dGl0bGU+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg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';
+
+    // Add logo centered at top
+    const logoWidth = 15;
+    const logoHeight = 15;
+    const logoX = (pageWidth - logoWidth) / 2;
+    doc.addImage(logoBase64, 'JPEG', logoX, y, logoWidth, logoHeight);
+    y += logoHeight + 3;
+
+    // Header with organization info (black and white)
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0, 0, 0);
+    doc.text('Bay Tides', pageWidth / 2, y, { align: 'center' });
+    y += 5;
+
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.text('274 Redwood Shores Parkway #619, Redwood City, CA 94065', pageWidth / 2, y, {
+      align: 'center',
+    });
+    y += 4;
+    doc.text('www.baytides.org', pageWidth / 2, y, { align: 'center' });
+    y += 6;
+
+    // Horizontal line
+    doc.setDrawColor(0, 0, 0);
+    doc.setLineWidth(0.5);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 8;
+
+    // Title
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('VOLUNTEER LIABILITY WAIVER AND RELEASE', pageWidth / 2, y, { align: 'center' });
+    y += 6;
+
+    // If signed for a minor, add indicator below title
+    if (data.minorName) {
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text('[ SIGNED BY PARENT/GUARDIAN FOR MINOR PARTICIPANT ]', pageWidth / 2, y, {
+        align: 'center',
+      });
+      y += 8;
+    } else {
+      y += 4;
+    }
+
+    // Participant Information
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.text(data.minorName ? 'Parent/Guardian Information' : 'Participant Information', margin, y);
+    y += 6;
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Name: ${data.firstName} ${data.lastName}`, margin, y);
+    doc.text(`Date of Birth: ${formatDate(data.dob)}`, margin + 90, y);
+    y += 5;
+    doc.text(`Email: ${data.email}`, margin, y);
+    doc.text(`Phone: ${data.phone}`, margin + 90, y);
+    y += 5;
+    if (data.address && data.address !== 'Not provided') {
+      doc.text(`Address: ${data.address}`, margin, y);
+      y += 5;
+    }
+    y += 3;
+
+    // Emergency Contact
+    doc.setFont('helvetica', 'bold');
+    doc.text('Emergency Contact', margin, y);
+    y += 5;
+    doc.setFont('helvetica', 'normal');
+    doc.text(
+      `${data.emergencyName} (${data.emergencyRelationship}): ${data.emergencyPhone}`,
+      margin,
+      y
+    );
+    y += 8;
+
+    // Waiver Text (condensed)
+    doc.setFont('helvetica', 'bold');
+    doc.text('Waiver and Release of Liability', margin, y);
+    y += 6;
+
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
+    const waiverText = `In consideration of being permitted to participate in Bay Tides volunteer activities, I hereby acknowledge and agree to the following:
+
+1. ASSUMPTION OF RISK: I understand that participation involves physical activity and exposure to various conditions including uneven terrain, water hazards, wildlife, weather conditions, and use of tools. I voluntarily assume all risks associated with my participation, including personal injury, illness, death, and property damage.
+
+2. RELEASE OF LIABILITY: I hereby release, waive, and discharge Bay Tides, its officers, directors, employees, volunteers, agents, and representatives from any and all liability, claims, demands, or causes of action arising from my participation, whether caused by negligence or otherwise.
+
+3. INDEMNIFICATION: I agree to indemnify and hold harmless Bay Tides from any loss, liability, damage, or costs that may be incurred due to my participation.
+
+4. MEDICAL AUTHORIZATION & FINANCIAL RESPONSIBILITY: I authorize Bay Tides to obtain emergency medical treatment, including calling 911 or ambulance services, in the event of injury or illness. I am solely responsible for all costs, fees, and expenses associated with any medical treatment or emergency services and waive any right to seek compensation from Bay Tides for such costs.
+
+5. PHOTOGRAPHY RELEASE: I grant Bay Tides permission to photograph, video record, and use such materials for any lawful purpose including marketing and promotional purposes. I waive any right to compensation.
+
+6. COMPLIANCE: I agree to follow all rules, instructions, and safety guidelines provided by Bay Tides staff.`;
+
+    const splitText = doc.splitTextToSize(waiverText, contentWidth);
+    doc.text(splitText, margin, y);
+    y += splitText.length * 3.5 + 5;
+
+    // Minor section if applicable - more prominent box with expiration date
+    if (data.minorName) {
+      const expirationDate = calculate18thBirthday(data.minorDob);
+
+      // Draw a box around minor info
+      doc.setDrawColor(0, 0, 0);
+      doc.setLineWidth(0.3);
+      doc.rect(margin, y - 2, contentWidth, 24);
+
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text('MINOR PARTICIPANT', margin + 3, y + 4);
+      y += 10;
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Name: ${data.minorName}`, margin + 3, y);
+      doc.text(`Date of Birth: ${formatDate(data.minorDob)}`, margin + 80, y);
+      y += 5;
+      doc.setFont('helvetica', 'bold');
+      doc.text(`WAIVER EXPIRES: ${expirationDate}`, margin + 3, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.text("(Minor's 18th birthday - new waiver required)", margin + 75, y);
+      y += 11;
+    }
+
+    // Signature section
+    doc.setDrawColor(0, 0, 0);
+    doc.setLineWidth(0.3);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 8;
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    const signatureTitle = data.minorName
+      ? 'Parent/Guardian Electronic Signature'
+      : 'Electronic Signature';
+    doc.text(signatureTitle, margin, y);
+    y += 6;
+
+    doc.setFont('helvetica', 'normal');
+    if (data.minorName) {
+      doc.text(
+        'By signing below, I certify that I am the parent or legal guardian of the minor named above,',
+        margin,
+        y
+      );
+      y += 4;
+      doc.text(
+        'have read and understand this waiver, and agree to be bound by its terms on behalf of the minor.',
+        margin,
+        y
+      );
+    } else {
+      doc.text(
+        'By signing below, I certify that I am 18 years of age or older, have read and understand this',
+        margin,
+        y
+      );
+      y += 4;
+      doc.text('waiver, and agree to be bound by its terms.', margin, y);
+    }
+    y += 10;
+
+    // Signature
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'italic');
+    doc.text(data.signature, margin, y);
+    y += 2;
+    doc.setLineWidth(0.3);
+    doc.line(margin, y, margin + 80, y);
+    y += 4;
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
+    doc.text(data.minorName ? 'Parent/Guardian Signature' : 'Signature', margin, y);
+
+    // Date
+    doc.setFontSize(10);
+    doc.text(formatDate(data.signatureDate), margin + 100, y - 6);
+    doc.line(margin + 100, y - 4, margin + 140, y - 4);
+    doc.setFontSize(8);
+    doc.text('Date', margin + 100, y);
+
+    // Footer
+    y = doc.internal.pageSize.getHeight() - 18;
+    doc.setFontSize(7);
+    doc.setTextColor(100, 100, 100);
+    doc.text(
+      `Signed electronically on ${formatDate(data.signatureDate)} | Document ID: ${data.documentId}`,
+      pageWidth / 2,
+      y,
+      { align: 'center' }
+    );
+    y += 3;
+    if (data.minorName && data.minorDob) {
+      const expirationDate = calculate18thBirthday(data.minorDob);
+      doc.setTextColor(0, 0, 0);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`MINOR WAIVER - EXPIRES: ${expirationDate}`, pageWidth / 2, y, { align: 'center' });
+      y += 3;
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(100, 100, 100);
+    }
+    doc.text('This document is a legal record of the signed waiver.', pageWidth / 2, y, {
+      align: 'center',
+    });
+
+    // Download the PDF
+    doc.save(`BayTides_Waiver_${data.lastName}_${data.signatureDate}.pdf`);
+  }
+
+  function formatDate(dateStr: string): string {
+    if (!dateStr) return '';
+    const date = new Date(dateStr + 'T00:00:00');
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function calculate18thBirthday(dobStr: string): string {
+    if (!dobStr) return '';
+    const dob = new Date(dobStr + 'T00:00:00');
+    const eighteenthBirthday = new Date(dob);
+    eighteenthBirthday.setFullYear(dob.getFullYear() + 18);
+    return eighteenthBirthday.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  }
+
+  function generateDocumentId(): string {
+    return (
+      'BT-' +
+      Date.now().toString(36).toUpperCase() +
+      '-' +
+      Math.random().toString(36).substring(2, 6).toUpperCase()
+    );
+  }
+
+  // Signature Canvas Class
+  class SignatureCanvas {
+    private canvas: HTMLCanvasElement;
+    private ctx: CanvasRenderingContext2D;
+    private isDrawing = false;
+    private lastX = 0;
+    private lastY = 0;
+    private hasSignature = false;
+
+    constructor(canvas: HTMLCanvasElement) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext('2d')!;
+      this.setupCanvas();
+      this.bindEvents();
+    }
+
+    private setupCanvas() {
+      // Set canvas size to match container
+      const container = this.canvas.parentElement;
+      if (container) {
+        const rect = container.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        this.canvas.width = rect.width * dpr;
+        this.canvas.height = 150 * dpr;
+        this.canvas.style.width = `${rect.width}px`;
+        this.canvas.style.height = '150px';
+        this.ctx.scale(dpr, dpr);
+      }
+
+      // Set drawing styles
+      this.ctx.strokeStyle = '#1a365d';
+      this.ctx.lineWidth = 2.5;
+      this.ctx.lineCap = 'round';
+      this.ctx.lineJoin = 'round';
+    }
+
+    private bindEvents() {
+      // Mouse events
+      this.canvas.addEventListener('mousedown', this.startDrawing.bind(this));
+      this.canvas.addEventListener('mousemove', this.draw.bind(this));
+      this.canvas.addEventListener('mouseup', this.stopDrawing.bind(this));
+      this.canvas.addEventListener('mouseout', this.stopDrawing.bind(this));
+
+      // Touch events
+      this.canvas.addEventListener('touchstart', this.handleTouchStart.bind(this), {
+        passive: false,
+      });
+      this.canvas.addEventListener('touchmove', this.handleTouchMove.bind(this), {
+        passive: false,
+      });
+      this.canvas.addEventListener('touchend', this.stopDrawing.bind(this));
+
+      // Resize handler
+      window.addEventListener('resize', () => {
+        const imageData = this.canvas.toDataURL();
+        this.setupCanvas();
+        if (this.hasSignature) {
+          const img = new Image();
+          img.onload = () => {
+            this.ctx.drawImage(
+              img,
+              0,
+              0,
+              this.canvas.width / (window.devicePixelRatio || 1),
+              this.canvas.height / (window.devicePixelRatio || 1)
+            );
+          };
+          img.src = imageData;
+        }
+      });
+    }
+
+    private getPosition(e: MouseEvent | Touch): { x: number; y: number } {
+      const rect = this.canvas.getBoundingClientRect();
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
+    }
+
+    private startDrawing(e: MouseEvent) {
+      this.isDrawing = true;
+      const pos = this.getPosition(e);
+      this.lastX = pos.x;
+      this.lastY = pos.y;
+    }
+
+    private draw(e: MouseEvent) {
+      if (!this.isDrawing) return;
+
+      const pos = this.getPosition(e);
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.lastX, this.lastY);
+      this.ctx.lineTo(pos.x, pos.y);
+      this.ctx.stroke();
+
+      this.lastX = pos.x;
+      this.lastY = pos.y;
+      this.hasSignature = true;
+    }
+
+    private handleTouchStart(e: TouchEvent) {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const pos = this.getPosition(touch);
+      this.isDrawing = true;
+      this.lastX = pos.x;
+      this.lastY = pos.y;
+    }
+
+    private handleTouchMove(e: TouchEvent) {
+      e.preventDefault();
+      if (!this.isDrawing) return;
+
+      const touch = e.touches[0];
+      const pos = this.getPosition(touch);
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.lastX, this.lastY);
+      this.ctx.lineTo(pos.x, pos.y);
+      this.ctx.stroke();
+
+      this.lastX = pos.x;
+      this.lastY = pos.y;
+      this.hasSignature = true;
+    }
+
+    private stopDrawing() {
+      this.isDrawing = false;
+      this.updateHiddenInput();
+    }
+
+    private updateHiddenInput() {
+      const hiddenInput = document.getElementById('signature-data') as HTMLInputElement;
+      if (hiddenInput && this.hasSignature) {
+        hiddenInput.value = this.canvas.toDataURL('image/png');
+      }
+    }
+
+    clear() {
+      const dpr = window.devicePixelRatio || 1;
+      this.ctx.clearRect(0, 0, this.canvas.width / dpr, this.canvas.height / dpr);
+      this.hasSignature = false;
+      const hiddenInput = document.getElementById('signature-data') as HTMLInputElement;
+      if (hiddenInput) {
+        hiddenInput.value = '';
+      }
+    }
+
+    isEmpty(): boolean {
+      return !this.hasSignature;
+    }
+  }
+
+  let signatureCanvas: SignatureCanvas | null = null;
+
+  function initWaiverForm() {
+    const form = document.getElementById('waiver-form') as HTMLFormElement;
+    const statusDiv = document.getElementById('waiver-form-status');
+    const dateInput = document.getElementById('waiver-date') as HTMLInputElement;
+
+    if (!form) return;
+
+    // Set default date to today
+    if (dateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.value = today;
+    }
+
+    // Initialize signature mode toggle
+    initSignatureToggle();
+
+    // Initialize waiver scroll tracking
+    initWaiverScrollTracking();
+
+    // Check URL params for success/error messages
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.get('submitted') === 'true' && statusDiv) {
+      showWaiverFormStatus(
+        statusDiv,
+        'Thank you! Your liability waiver has been submitted successfully. You will receive a confirmation email with a copy of your signed waiver.',
+        'success',
+        true
+      );
+
+      // Hide the form after successful submission
+      if (form) {
+        form.style.display = 'none';
+      }
+
+      // Scroll to status
+      statusDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else if (params.get('error') && statusDiv) {
+      const errorMessages: Record<string, string> = {
+        spam: 'Your submission was flagged as spam.',
+        captcha: 'CAPTCHA verification failed. Please try again.',
+        validation: 'Please check your form entries and try again.',
+      };
+      const errorType = params.get('error') || '';
+      showWaiverFormStatus(
+        statusDiv,
+        errorMessages[errorType] || 'An error occurred. Please try again.',
+        'error'
+      );
+    }
+
+    // Form validation
+    form.addEventListener('submit', (e) => {
+      const requiredFields = form.querySelectorAll('[required]');
+      let isValid = true;
+
+      requiredFields.forEach((field) => {
+        const input = field as HTMLInputElement;
+        const formGroup = input.closest('.form-group') || input.closest('.agreement-checkbox');
+
+        // Remove previous error
+        formGroup?.querySelector('.field-error')?.remove();
+        input.classList.remove('error');
+
+        if (!input.checkValidity()) {
+          isValid = false;
+          input.classList.add('error');
+
+          const errorSpan = document.createElement('span');
+          errorSpan.className = 'field-error';
+          errorSpan.textContent = input.validationMessage || 'This field is required';
+          formGroup?.appendChild(errorSpan);
+        }
+      });
+
+      // Validate signature based on active mode
+      const typePanel = document.getElementById('signature-type-panel');
+      const drawPanel = document.getElementById('signature-draw-panel');
+      const signatureInput = document.getElementById('waiver-signature') as HTMLInputElement;
+      const signatureGroup = document.querySelector('.signature-group');
+
+      // Remove previous signature error
+      signatureGroup?.querySelector('.field-error')?.remove();
+
+      if (typePanel && !typePanel.hidden) {
+        // Type mode - check if signature input is filled
+        if (!signatureInput.value.trim()) {
+          isValid = false;
+          signatureInput.classList.add('error');
+          const errorSpan = document.createElement('span');
+          errorSpan.className = 'field-error';
+          errorSpan.textContent = 'Please type your full legal name';
+          signatureGroup?.appendChild(errorSpan);
+        }
+      } else if (drawPanel && !drawPanel.hidden) {
+        // Draw mode - check if canvas has signature
+        if (signatureCanvas && signatureCanvas.isEmpty()) {
+          isValid = false;
+          const canvas = document.getElementById('signature-canvas');
+          canvas?.classList.add('error');
+          const errorSpan = document.createElement('span');
+          errorSpan.className = 'field-error';
+          errorSpan.textContent = 'Please draw your signature';
+          signatureGroup?.appendChild(errorSpan);
+        }
+      }
+
+      if (!isValid) {
+        e.preventDefault();
+        const firstError = form.querySelector('.error') as HTMLElement;
+        firstError?.focus();
+      } else {
+        // Save waiver data to sessionStorage for PDF generation after redirect
+        const formData = new FormData(form);
+
+        // Get the signature (either typed or from canvas)
+        const typedSignature = formData.get('signature') as string;
+        const signatureImage = formData.get('signature_image') as string;
+        const signature = typedSignature || 'Drawn Signature';
+
+        const waiverData = {
+          firstName: formData.get('first_name') as string,
+          lastName: formData.get('last_name') as string,
+          email: formData.get('email') as string,
+          phone: formData.get('phone') as string,
+          dob: formData.get('date_of_birth') as string,
+          address: formData.get('address') as string,
+          emergencyName: formData.get('emergency_name') as string,
+          emergencyPhone: formData.get('emergency_phone') as string,
+          emergencyRelationship: formData.get('emergency_relationship') as string,
+          signature: signature,
+          signatureImage: signatureImage,
+          signatureDate: formData.get('signature_date') as string,
+          // Minor participant info
+          minorName: formData.get('minor_name') as string,
+          minorDob: formData.get('minor_dob') as string,
+          documentId: generateDocumentId(),
+        };
+        sessionStorage.setItem('waiverData', JSON.stringify(waiverData));
+      }
+    });
+  }
+
+  function initWaiverScrollTracking() {
+    const scrollBox = document.getElementById('waiver-scroll-box');
+    const agreeCheckbox = document.getElementById('agree-waiver') as HTMLInputElement;
+    const agreeLabel = document.getElementById('agree-waiver-label');
+    const scrollInstruction = document.getElementById('scroll-instruction');
+
+    if (!scrollBox || !agreeCheckbox) return;
+
+    let hasScrolledToBottom = false;
+
+    function checkScrollPosition() {
+      if (hasScrolledToBottom) return;
+
+      // Check if user has scrolled to near the bottom (within 20px)
+      const scrolledToBottom =
+        scrollBox.scrollHeight - scrollBox.scrollTop - scrollBox.clientHeight < 20;
+
+      if (scrolledToBottom) {
+        hasScrolledToBottom = true;
+        agreeCheckbox.disabled = false;
+        agreeLabel?.classList.add('enabled');
+        scrollInstruction?.classList.add('complete');
+
+        // Update instruction text
+        if (scrollInstruction) {
+          scrollInstruction.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            You have read the waiver. Please check the box below to agree.
+          `;
+        }
+      }
+    }
+
+    scrollBox.addEventListener('scroll', checkScrollPosition);
+
+    // Also check on initial load in case content is shorter than container
+    checkScrollPosition();
+  }
+
+  function initSignatureToggle() {
+    const typeTab = document.getElementById('tab-type');
+    const drawTab = document.getElementById('tab-draw');
+    const typePanel = document.getElementById('signature-type-panel');
+    const drawPanel = document.getElementById('signature-draw-panel');
+    const canvas = document.getElementById('signature-canvas') as HTMLCanvasElement;
+    const clearBtn = document.getElementById('clear-signature');
+    const signatureInput = document.getElementById('waiver-signature') as HTMLInputElement;
+
+    if (!typeTab || !drawTab || !typePanel || !drawPanel || !canvas) return;
+
+    // Initialize canvas
+    signatureCanvas = new SignatureCanvas(canvas);
+
+    // Tab switching
+    typeTab.addEventListener('click', () => {
+      typeTab.classList.add('active');
+      typeTab.setAttribute('aria-selected', 'true');
+      drawTab.classList.remove('active');
+      drawTab.setAttribute('aria-selected', 'false');
+
+      typePanel.hidden = false;
+      typePanel.classList.add('active');
+      drawPanel.hidden = true;
+      drawPanel.classList.remove('active');
+
+      // Clear draw signature when switching to type
+      signatureCanvas?.clear();
+    });
+
+    drawTab.addEventListener('click', () => {
+      drawTab.classList.add('active');
+      drawTab.setAttribute('aria-selected', 'true');
+      typeTab.classList.remove('active');
+      typeTab.setAttribute('aria-selected', 'false');
+
+      drawPanel.hidden = false;
+      drawPanel.classList.add('active');
+      typePanel.hidden = true;
+      typePanel.classList.remove('active');
+
+      // Clear typed signature when switching to draw
+      if (signatureInput) {
+        signatureInput.value = '';
+      }
+    });
+
+    // Clear button
+    clearBtn?.addEventListener('click', () => {
+      signatureCanvas?.clear();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWaiverForm);
+  } else {
+    initWaiverForm();
+  }
+
+  document.addEventListener('astro:page-load', initWaiverForm);
+</script>
+
+<style>
+  .waiver-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .waiver-container.volunteer-form-container {
+    background: var(--white);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .waiver-intro {
+    background: var(--light-blue);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--primary-blue);
+  }
+
+  .waiver-intro p {
+    margin: 0;
+    line-height: 1.6;
+    color: var(--text-dark);
+  }
+
+  .waiver-text {
+    margin: 2rem 0;
+  }
+
+  .waiver-text h2 {
+    margin-bottom: 0.75rem;
+    color: var(--primary-navy);
+    font-size: 1.5rem;
+  }
+
+  .scroll-instruction {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-size: 0.9375rem;
+    color: #92400e;
+    transition: all 0.3s ease;
+  }
+
+  .scroll-instruction svg {
+    flex-shrink: 0;
+    animation: bounce 1.5s infinite;
+  }
+
+  .scroll-instruction.complete {
+    background: #d1fae5;
+    border-color: #10b981;
+    color: #065f46;
+  }
+
+  .scroll-instruction.complete svg {
+    animation: none;
+  }
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(3px);
+    }
+  }
+
+  .waiver-scroll-box {
+    background: var(--bg-secondary);
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .waiver-scroll-box h3 {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    margin: 1.75rem 0 0.75rem;
+    color: var(--primary-navy);
+  }
+
+  .waiver-scroll-box h3:first-child {
+    margin-top: 0;
+  }
+
+  .waiver-scroll-box p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+    color: var(--text-dark);
+  }
+
+  .waiver-scroll-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Signature Section */
+  .signature-fieldset {
+    background: var(--light-blue);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+  }
+
+  .signature-fieldset legend {
+    color: var(--primary-navy);
+  }
+
+  .signature-group {
+    margin-top: 1.5rem;
+  }
+
+  /* Signature Mode Toggle */
+  .signature-mode-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1rem;
+    background: var(--white);
+    border-radius: 8px;
+    padding: 4px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .signature-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    color: var(--text-light);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+  }
+
+  .signature-tab:hover {
+    color: var(--primary-blue);
+    background: rgba(43, 108, 176, 0.05);
+  }
+
+  .signature-tab.active {
+    background: var(--primary-blue);
+    color: var(--white);
+  }
+
+  .signature-tab svg {
+    flex-shrink: 0;
+  }
+
+  /* Signature Panels */
+  .signature-panel {
+    display: none;
+  }
+
+  .signature-panel.active {
+    display: block;
+  }
+
+  .signature-input {
+    font-family: 'Dancing Script', 'Brush Script MT', 'Segoe Script', cursive, sans-serif;
+    font-size: 1.75rem;
+    font-weight: 500;
+    padding: 1.25rem;
+    text-align: center;
+    background: var(--white) !important;
+    border: 2px solid var(--primary-blue) !important;
+  }
+
+  .signature-input::placeholder {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-light);
+  }
+
+  /* Signature Canvas */
+  .signature-canvas-container {
+    position: relative;
+    background: var(--white);
+    border: 2px solid var(--primary-blue);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .signature-canvas {
+    display: block;
+    width: 100%;
+    height: 150px;
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  .signature-canvas.error {
+    border-color: #dc2626;
+  }
+
+  .btn-clear-signature {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    color: var(--text-light);
+    font-size: 0.8125rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-clear-signature:hover {
+    background: var(--white);
+    color: #dc2626;
+    border-color: #dc2626;
+  }
+
+  .signature-note {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-top: 0.75rem;
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* Minor Section */
+  .minor-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+  }
+
+  .minor-note {
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    font-size: 0.9375rem;
+  }
+
+  /* Agreement checkboxes in waiver */
+  .waiver-container .agreement-checkbox {
+    background: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  /* Disabled state for waiver agreement checkbox */
+  #agree-waiver-label {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transition: opacity 0.3s ease;
+  }
+
+  #agree-waiver-label.enabled {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  #agree-waiver-label input:disabled {
+    cursor: not-allowed;
+  }
+
+  /* Dark Theme */
+  :global([data-theme='dark']) .waiver-container.volunteer-form-container {
+    background: var(--bg-secondary);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .waiver-intro {
+    background: rgba(43, 108, 176, 0.2);
+    border-left-color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .waiver-intro p {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .waiver-text h2 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .scroll-instruction {
+    background: rgba(245, 158, 11, 0.2);
+    border-color: #f59e0b;
+    color: #fbbf24;
+  }
+
+  :global([data-theme='dark']) .scroll-instruction.complete {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: #10b981;
+    color: #34d399;
+  }
+
+  :global([data-theme='dark']) .waiver-scroll-box {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  :global([data-theme='dark']) .waiver-scroll-box h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .waiver-scroll-box p {
+    color: var(--text-light);
+  }
+
+  :global([data-theme='dark']) .signature-fieldset {
+    background: rgba(43, 108, 176, 0.2);
+  }
+
+  :global([data-theme='dark']) .signature-fieldset legend {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .signature-mode-toggle {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  :global([data-theme='dark']) .signature-tab {
+    color: var(--text-light);
+  }
+
+  :global([data-theme='dark']) .signature-tab:hover {
+    color: var(--accent-blue);
+    background: rgba(99, 179, 237, 0.1);
+  }
+
+  :global([data-theme='dark']) .signature-tab.active {
+    background: var(--accent-blue);
+    color: var(--primary-navy);
+  }
+
+  :global([data-theme='dark']) .signature-input {
+    background: var(--bg-primary) !important;
+    border-color: var(--accent-blue) !important;
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .signature-canvas-container {
+    background: var(--bg-primary);
+    border-color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .signature-canvas {
+    background: var(--bg-primary);
+  }
+
+  :global([data-theme='dark']) .btn-clear-signature {
+    background: rgba(26, 32, 44, 0.9);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: var(--text-light);
+  }
+
+  :global([data-theme='dark']) .btn-clear-signature:hover {
+    background: var(--bg-primary);
+    color: #fc8181;
+    border-color: #fc8181;
+  }
+
+  :global([data-theme='dark']) .minor-section {
+    border-top-color: rgba(255, 255, 255, 0.15);
+  }
+
+  :global([data-theme='dark']) .waiver-container .agreement-checkbox {
+    background: var(--bg-primary);
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    .waiver-container {
+      padding: 2rem;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .waiver-container {
+      padding: 1.5rem;
+      border-radius: 8px;
+    }
+
+    .waiver-intro {
+      padding: 1rem;
+    }
+
+    .waiver-text h2 {
+      font-size: 1.25rem;
+    }
+
+    .waiver-scroll-box {
+      padding: 1rem 1.25rem;
+      max-height: 300px;
+    }
+
+    .waiver-scroll-box h3 {
+      font-size: 1rem;
+    }
+
+    .waiver-scroll-box p {
+      font-size: 0.875rem;
+    }
+
+    .signature-fieldset {
+      padding: 1.5rem;
+    }
+
+    .signature-mode-toggle {
+      padding: 3px;
+    }
+
+    .signature-tab {
+      padding: 0.625rem 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    .signature-tab svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .signature-input {
+      font-size: 1.5rem;
+      padding: 1rem;
+    }
+
+    .signature-canvas {
+      height: 120px;
+    }
+
+    /* Form inputs - prevent iOS zoom */
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+
+    /* Larger touch targets */
+    input[type='checkbox'] {
+      width: 22px;
+      height: 22px;
+    }
+
+    .agreement-checkbox {
+      padding: 0.875rem;
+    }
+
+    .btn-large {
+      width: 100%;
+      padding: 1rem;
+    }
+  }
+
+  /* Small mobile */
+  @media (max-width: 480px) {
+    .waiver-container {
+      padding: 1.25rem;
+      margin: 0 -0.5rem;
+      border-radius: 0;
+    }
+
+    .waiver-intro {
+      margin-bottom: 1.5rem;
+    }
+
+    .waiver-scroll-box {
+      padding: 0.875rem 1rem;
+      max-height: 250px;
+    }
+
+    .signature-fieldset {
+      padding: 1rem;
+    }
+
+    .signature-mode-toggle {
+      flex-direction: row;
+    }
+
+    .signature-tab {
+      padding: 0.5rem 0.625rem;
+      font-size: 0.8125rem;
+    }
+
+    .signature-input {
+      font-size: 1.25rem;
+      padding: 0.875rem;
+    }
+
+    .signature-canvas {
+      height: 100px;
+    }
+
+    .signature-note {
+      font-size: 0.8125rem;
+    }
+
+    .minor-section {
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+
+    .btn-clear-signature {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+    }
+  }
+</style>

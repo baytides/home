@@ -1,0 +1,422 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Volunteer Privacy Policy',
+    description: 'Privacy policy for Bay Tides volunteers, including media consent.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Volunteer',
+        item: 'https://baytides.org/volunteer',
+      },
+      { '@type': 'ListItem', position: 3, name: 'Privacy Policy' },
+    ],
+  },
+];
+
+const lastUpdated = 'January 31, 2026';
+---
+
+<BaseLayout
+  title="Volunteer Privacy Policy"
+  description="Privacy policy for Bay Tides volunteers, including information about data collection, media consent, and your rights."
+  canonicalUrl="https://baytides.org/volunteer/privacy"
+  structuredData={structuredData}
+>
+  <Breadcrumb
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Volunteer', href: '/volunteer' },
+      { label: 'Privacy Policy' },
+    ]}
+  />
+
+  <section class="hero hero-page">
+    <div class="container">
+      <h1>Volunteer Privacy Policy</h1>
+      <p>How we collect, use, and protect your information</p>
+    </div>
+  </section>
+
+  <section class="content-section legal-content">
+    <div class="container">
+      <div class="legal-document">
+        <p class="last-updated">Last Updated: {lastUpdated}</p>
+
+        <div class="legal-section">
+          <h2>1. Introduction</h2>
+          <p>
+            Bay Tides ("Organization," "we," "us," or "our") is committed to protecting the privacy
+            of our volunteers. This Volunteer Privacy Policy explains how we collect, use, disclose,
+            and safeguard your personal information when you register as a volunteer or participate
+            in our volunteer activities.
+          </p>
+          <p>
+            By registering as a volunteer, you consent to the practices described in this policy.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>2. Information We Collect</h2>
+          <p>We collect the following types of information from volunteers:</p>
+
+          <h3>2.1 Personal Information</h3>
+          <ul>
+            <li>Name (first and last)</li>
+            <li>Email address</li>
+            <li>Phone number</li>
+            <li>Mailing address</li>
+            <li>Emergency contact information</li>
+          </ul>
+
+          <h3>2.2 Volunteer Profile Information</h3>
+          <ul>
+            <li>Areas of interest and skills</li>
+            <li>Availability and scheduling preferences</li>
+            <li>Prior volunteer experience</li>
+            <li>How you heard about Bay Tides</li>
+          </ul>
+
+          <h3>2.3 Activity Records</h3>
+          <ul>
+            <li>Volunteer hours and attendance</li>
+            <li>Events and activities participated in</li>
+            <li>Training completed</li>
+          </ul>
+
+          <h3>2.4 Media Content</h3>
+          <ul>
+            <li>Photographs taken at volunteer events</li>
+            <li>Video recordings of volunteer activities</li>
+            <li>Audio recordings (if applicable)</li>
+            <li>Testimonials and quotes (with additional consent)</li>
+          </ul>
+        </div>
+
+        <div class="legal-section">
+          <h2>3. How We Use Your Information</h2>
+          <p>We use volunteer information for the following purposes:</p>
+          <ul>
+            <li>
+              <strong>Volunteer Coordination:</strong> To contact you about volunteer opportunities, schedule
+              events, and coordinate activities.
+            </li>
+            <li>
+              <strong>Emergency Contact:</strong> To reach your emergency contact if necessary during
+              volunteer activities.
+            </li>
+            <li>
+              <strong>Communications:</strong> To send you updates about Bay Tides programs, events, and
+              opportunities that may interest you.
+            </li>
+            <li>
+              <strong>Record Keeping:</strong> To track volunteer hours and maintain accurate records
+              for organizational and grant reporting purposes.
+            </li>
+            <li>
+              <strong>Improvement:</strong> To evaluate and improve our volunteer program and activities.
+            </li>
+            <li>
+              <strong>Legal Compliance:</strong> To comply with applicable laws, regulations, and legal
+              processes.
+            </li>
+          </ul>
+        </div>
+
+        <div class="legal-section highlight-section">
+          <h2>4. Photography and Video Consent</h2>
+          <p>
+            <strong>
+              By agreeing to this Privacy Policy, you grant Bay Tides permission to photograph,
+              video record, and/or audio record you during volunteer activities and events.
+            </strong>
+          </p>
+
+          <h3>4.1 Grant of Rights</h3>
+          <p>You hereby grant Bay Tides the irrevocable right and permission to:</p>
+          <ul>
+            <li>
+              Capture your image, likeness, voice, and/or statements in photographs, videos, and
+              audio recordings during volunteer activities.
+            </li>
+            <li>
+              Use, reproduce, modify, distribute, and publicly display such materials for any lawful
+              purpose.
+            </li>
+            <li>
+              Use your name and general location (city/county) in connection with such materials.
+            </li>
+          </ul>
+
+          <h3>4.2 Permitted Uses</h3>
+          <p>
+            Bay Tides may use photographs, videos, and recordings featuring you for purposes
+            including, but not limited to:
+          </p>
+          <ul>
+            <li>Marketing and promotional materials</li>
+            <li>Social media posts and campaigns</li>
+            <li>Website content</li>
+            <li>Email newsletters and e-communications</li>
+            <li>Print materials (brochures, flyers, annual reports)</li>
+            <li>Presentations and displays</li>
+            <li>Grant applications and donor communications</li>
+            <li>Media and press releases</li>
+            <li>Educational and training materials</li>
+            <li>Any other commercial or non-commercial purposes</li>
+          </ul>
+
+          <h3>4.3 Waiver of Compensation</h3>
+          <p>
+            <strong>
+              You waive any right to inspect or approve the finished materials or any use thereof.
+              You waive any right to royalties, compensation, or other payment for the use of your
+              image, likeness, or voice.
+            </strong>
+          </p>
+
+          <h3>4.4 Release of Claims</h3>
+          <p>
+            You release and discharge Bay Tides, its officers, directors, employees, volunteers,
+            agents, and assigns from any and all claims, demands, or causes of action arising out of
+            or related to the use of photographs, videos, or recordings, including but not limited
+            to claims for defamation, invasion of privacy, right of publicity, or copyright
+            infringement.
+          </p>
+
+          <h3>4.5 Opting Out</h3>
+          <p>
+            If you do not wish to be photographed or recorded at a specific event, you must notify
+            Bay Tides staff at the beginning of the event. We will make reasonable efforts to
+            accommodate your request, but we cannot guarantee exclusion from all photographs or
+            videos taken at public events.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>5. Information Sharing</h2>
+          <p>
+            We do not sell, trade, or rent your personal information to third parties. We may share
+            your information in the following circumstances:
+          </p>
+          <ul>
+            <li>
+              <strong>Service Providers:</strong> With trusted third-party service providers who assist
+              us in operating our website, conducting our activities, or servicing you, provided they
+              agree to keep your information confidential.
+            </li>
+            <li>
+              <strong>Partner Organizations:</strong> With partner organizations for joint volunteer events,
+              with your consent.
+            </li>
+            <li>
+              <strong>Legal Requirements:</strong> When required by law, subpoena, or other legal process.
+            </li>
+            <li>
+              <strong>Safety:</strong> To protect the rights, property, or safety of Bay Tides, our volunteers,
+              or others.
+            </li>
+          </ul>
+        </div>
+
+        <div class="legal-section">
+          <h2>6. Data Security</h2>
+          <p>
+            We implement appropriate technical and organizational security measures to protect your
+            personal information against unauthorized access, alteration, disclosure, or
+            destruction. However, no method of transmission over the internet or electronic storage
+            is 100% secure, and we cannot guarantee absolute security.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>7. Data Retention</h2>
+          <p>
+            We retain volunteer information for as long as necessary to fulfill the purposes
+            outlined in this policy, unless a longer retention period is required or permitted by
+            law. Emergency contact information and liability waivers may be retained for legal
+            compliance purposes.
+          </p>
+          <p>
+            Photographs and videos may be retained indefinitely for historical, archival, and
+            promotional purposes.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>8. Your Rights</h2>
+          <p>You have the right to:</p>
+          <ul>
+            <li>
+              <strong>Access:</strong> Request a copy of the personal information we hold about you.
+            </li>
+            <li>
+              <strong>Correction:</strong> Request correction of inaccurate or incomplete information.
+            </li>
+            <li>
+              <strong>Deletion:</strong> Request deletion of your personal information, subject to legal
+              and operational requirements.
+            </li>
+            <li>
+              <strong>Opt-Out:</strong> Opt out of receiving promotional communications from us.
+            </li>
+          </ul>
+          <p>
+            To exercise these rights, please contact us at
+            <a href="mailto:privacy@baytides.org">privacy@baytides.org</a>.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>9. California Privacy Rights</h2>
+          <p>
+            California residents may have additional rights under the California Consumer Privacy
+            Act (CCPA) and other California privacy laws. To learn more about your California
+            privacy rights, please contact us.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>10. Children's Privacy</h2>
+          <p>
+            For volunteers under 18, we require parental or guardian consent for the collection and
+            use of personal information, including photography consent. Parents or guardians must
+            sign all required forms on behalf of minor volunteers.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>11. Changes to This Policy</h2>
+          <p>
+            We may update this Privacy Policy from time to time. We will notify active volunteers of
+            significant changes via email. The "Last Updated" date at the top of this policy
+            indicates when it was last revised.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>12. Contact Us</h2>
+          <p>
+            If you have questions about this Privacy Policy or our data practices, please contact
+            us:
+          </p>
+          <p>
+            <strong>Bay Tides</strong><br />
+            Email: <a href="mailto:privacy@baytides.org">privacy@baytides.org</a><br />
+            Website: <a href="https://baytides.org">baytides.org</a>
+          </p>
+        </div>
+
+        <div class="legal-actions">
+          <a href="/volunteer#volunteer-form-section" class="btn btn-primary">
+            Return to Registration
+          </a>
+          <a href="/volunteer/terms" class="btn btn-outline">View Terms & Conditions</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-content {
+    padding: 3rem 0 4rem;
+  }
+
+  .legal-document {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .last-updated {
+    color: var(--text-light);
+    font-size: 0.9375rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .legal-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .legal-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-navy);
+  }
+
+  .legal-section h3 {
+    font-size: 1.125rem;
+    margin: 1.5rem 0 0.75rem;
+    color: var(--text-dark);
+  }
+
+  .legal-section p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .legal-section ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .legal-section li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .legal-section a {
+    color: var(--primary-blue);
+    text-decoration: underline;
+  }
+
+  .highlight-section {
+    background: var(--light-blue);
+    padding: 2rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-blue);
+  }
+
+  .legal-actions {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  :global([data-theme='dark']) .legal-document {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .last-updated {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .legal-section h2 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .highlight-section {
+    background: rgba(43, 108, 176, 0.15);
+    border-left-color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .legal-actions {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+</style>

@@ -18,11 +18,62 @@
 }
 
 // ==========================================================================
+// Wave Dividers
+// ==========================================================================
+
+.wave-divider-container {
+  background: linear-gradient(135deg, var(--primary-navy) 0%, #234e7a 40%, #2b6cb0 100%);
+  margin-top: -1px;
+  line-height: 0;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 60px;
+  }
+}
+
+.wave-divider {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+
+  svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 60px;
+  }
+
+  &.wave-top {
+    top: 0;
+    transform: rotate(180deg);
+  }
+
+  &.wave-bottom {
+    bottom: 0;
+  }
+}
+
+// ==========================================================================
 // Mission Preview (Homepage)
 // ==========================================================================
 
 .mission-preview {
   background: var(--white);
+  position: relative;
+
+  // Subtle dot pattern
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(26, 54, 93, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+  }
 }
 
 .mission-content {
@@ -33,12 +84,44 @@
 }
 
 .mission-text {
+  position: relative;
+  z-index: 1;
+
   h2 {
     margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+
+    // Decorative wave underline
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+      border-radius: 2px;
+    }
   }
 
-  .btn {
-    margin-top: 1rem;
+  p {
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  .learn-more-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    color: var(--primary-blue);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--primary-navy);
+      text-decoration: underline;
+    }
   }
 }
 
@@ -97,7 +180,25 @@
 // ==========================================================================
 
 .pillars {
-  background: var(--white);
+  background: var(--light-blue);
+  position: relative;
+
+  // Subtle wave pattern
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%231a365d' fill-opacity='0.03' d='M0,160L48,170.7C96,181,192,203,288,192C384,181,480,139,576,138.7C672,139,768,181,864,197.3C960,213,1056,203,1152,176C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: bottom;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
 
   &.alt-bg {
     background: var(--light-blue);
@@ -109,26 +210,57 @@
 // ==========================================================================
 
 .impact {
-  background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+  background: linear-gradient(135deg, #1a365d 0%, #234e7a 50%, #2b6cb0 100%);
   color: #fff;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  // Wave texture overlay
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.03' d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,133.3C672,139,768,181,864,181.3C960,181,1056,139,1152,128C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: bottom;
+    pointer-events: none;
+  }
+
+  // Second wave layer for depth
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.02' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,208C672,213,768,171,864,149.3C960,128,1056,128,1152,149.3C1248,171,1344,213,1392,234.7L1440,256L1440,0L1392,0C1344,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z'%3E%3C/path%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: top;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
 
   h2 {
     color: #fff;
     margin-bottom: 1.5rem;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
   }
 
   p {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.9);
     font-size: 1.125rem;
     font-weight: 400;
   }
 
   .highlight {
     font-weight: 600;
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     margin: 2rem 0;
     color: #fff;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
   }
 
   .btn {
@@ -142,12 +274,177 @@
 }
 
 // ==========================================================================
+// What We Do (Homepage Quick Pillars)
+// ==========================================================================
+
+.what-we-do {
+  background: var(--light-blue);
+  padding: 4rem 0;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%231a365d' fill-opacity='0.02' d='M0,160L48,170.7C96,181,192,203,288,192C384,181,480,139,576,138.7C672,139,768,181,864,197.3C960,213,1056,203,1152,176C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: bottom;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.pillars-quick {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+
+.pillar-item {
+  padding: 1.5rem;
+
+  .pillar-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    color: var(--primary-navy);
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+  }
+
+  p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+}
+
+.learn-more-link {
+  text-align: center;
+  margin-top: 2rem;
+
+  a {
+    color: var(--primary-blue);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--primary-navy);
+      text-decoration: underline;
+    }
+  }
+}
+
+// ==========================================================================
+// Featured Project (Homepage)
+// ==========================================================================
+
+.featured-project {
+  background: var(--light-blue);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%231a365d' fill-opacity='0.02' d='M0,160L48,170.7C96,181,192,203,288,192C384,181,480,139,576,138.7C672,139,768,181,864,197.3C960,213,1056,203,1152,176C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: bottom;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .project-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      max-width: 280px;
+      height: auto;
+    }
+  }
+}
+
+// ==========================================================================
+// Support CTA (Homepage)
+// ==========================================================================
+
+.support-cta {
+  background: linear-gradient(135deg, #1a365d 0%, #234e7a 50%, #2b6cb0 100%);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.03' d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,133.3C672,139,768,181,864,181.3C960,181,1056,139,1152,128C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: bottom;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.support-content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.support-statement {
+  color: #fff;
+  font-size: 1.25rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+}
+
+// ==========================================================================
 // CTA Section
 // ==========================================================================
 
 .cta {
-  background: var(--light-blue);
+  background: linear-gradient(180deg, var(--light-blue) 0%, #d4e9f7 100%);
   text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  // Subtle wave texture
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%231a365d' fill-opacity='0.02' d='M0,224L60,213.3C120,203,240,181,360,181.3C480,181,600,203,720,208C840,213,960,203,1080,176C1200,149,1320,107,1380,85.3L1440,64L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z'%3E%3C/path%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: top;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
 
   h2 {
     margin-bottom: 1rem;
@@ -316,23 +613,37 @@
 // ==========================================================================
 
 [data-theme='dark'] {
+  // Content sections - alternate between neutral and warm tones
   .content-section {
-    background: var(--bg-primary);
+    // Neutral charcoal - no blue tint
+    background: #1f1f23;
 
     &.alt-bg {
-      background: var(--bg-alt);
+      // Warm earthy tone for variety
+      background: #232320;
     }
   }
 
   .mission-preview {
-    background: var(--bg-primary);
+    // Neutral dark gray - no blue tint for contrast
+    background: #1f1f23;
+
+    &::before {
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
   }
 
   .pillars {
-    background: var(--bg-secondary);
+    // Subtle blue-gray for card sections
+    background: #1e2530;
 
     &.alt-bg {
-      background: var(--bg-alt);
+      // Warm olive-tinted dark
+      background: #24261e;
+    }
+
+    &::before {
+      opacity: 0.3;
     }
   }
 
@@ -341,7 +652,8 @@
   }
 
   .impact {
-    background: linear-gradient(135deg, #2d3748 0%, #1a365d 100%);
+    // Teal-to-blue gradient - vibrant accent section
+    background: linear-gradient(135deg, #134e5e 0%, #1a365d 50%, #2b5876 100%);
 
     h2 {
       color: #fff;
@@ -353,19 +665,82 @@
   }
 
   .cta {
-    background: var(--bg-secondary);
+    // Teal gradient to match impact sections
+    background: linear-gradient(135deg, #1a4a4a 0%, #1e3a5f 100%);
+
+    &::before {
+      opacity: 0.5;
+    }
 
     h2 {
-      color: var(--text-dark);
+      color: #fff;
     }
 
     p {
-      color: var(--text-light);
+      color: rgba(255, 255, 255, 0.85);
     }
 
     .highlight {
-      color: var(--primary-blue);
+      color: #5eead4;
     }
+
+    .btn-primary {
+      background: #fff;
+      color: #1a365d;
+
+      &:hover {
+        background: #f0f4f8;
+      }
+    }
+  }
+
+  .wave-divider-container {
+    // Transition from neutral dark to hero
+    background: linear-gradient(135deg, #1f1f23 0%, #1a202c 100%);
+  }
+
+  .what-we-do {
+    background: #1e2530;
+
+    &::before {
+      opacity: 0.3;
+    }
+  }
+
+  .pillar-item h3 {
+    color: var(--primary-blue);
+  }
+
+  .learn-more-link a {
+    color: var(--primary-blue);
+
+    &:hover {
+      color: var(--accent-blue);
+    }
+  }
+
+  .featured-project {
+    // Warm/earthy dark tone - distinct from mission section
+    background: #232320;
+
+    &::before {
+      background-image: radial-gradient(circle, rgba(245, 240, 230, 0.015) 1px, transparent 1px);
+      opacity: 1;
+    }
+
+    // Teal accent for Bay Navigator link to tie into CTA below
+    .learn-more-link {
+      color: #5eead4;
+
+      &:hover {
+        color: #99f6e4;
+      }
+    }
+  }
+
+  .support-cta {
+    // Richer teal-blue gradient instead of gray-navy
+    background: linear-gradient(135deg, #134e5e 0%, #1a365d 50%, #2b5876 100%);
   }
 
   .benefit {
@@ -441,5 +816,18 @@
 
   section {
     padding: 3.5rem 0;
+  }
+
+  .pillars-quick {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .featured-project .project-image img {
+    max-width: 180px;
+  }
+
+  .support-statement {
+    font-size: 1.1rem;
   }
 }

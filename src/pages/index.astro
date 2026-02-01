@@ -1,7 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
-import Card from '../components/Card.astro';
 import HoverVideo from '../components/HoverVideo.astro';
 
 const structuredData = {
@@ -54,10 +52,17 @@ const structuredData = {
       </p>
       <div class="hero-buttons">
         <a href="/volunteer" class="btn btn-primary">Get Involved</a>
-        <a href="/donate" class="btn btn-outline">Support Our Mission</a>
       </div>
     </div>
   </section>
+
+  <!-- Wave Divider -->
+  <div class="wave-divider-container">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
+      <path fill="var(--white, #ffffff)" d="M0,40 C360,100 1080,0 1440,60 L1440,100 L0,100 Z">
+      </path>
+    </svg>
+  </div>
 
   <!-- Mission Preview -->
   <section class="mission-preview">
@@ -70,7 +75,7 @@ const structuredData = {
             Francisco Bay. Through digital tools, educational programs, and community mobilization,
             we empower residents to make a meaningful impact in their backyard.
           </p>
-          <a href="/about" class="btn btn-secondary">Learn More About Us</a>
+          <a href="/about" class="learn-more-link">Learn more about us &rarr;</a>
         </div>
         <div class="mission-image">
           <HoverVideo
@@ -85,67 +90,46 @@ const structuredData = {
     </div>
   </section>
 
-  <!-- Three Pillars Section -->
-  <section class="pillars">
+  <!-- Bay Navigator Feature -->
+  <section class="featured-project">
     <div class="container">
-      <div class="section-title">
-        <h2>What We Do</h2>
-        <p>Our approach to protecting the San Francisco Bay</p>
-      </div>
-
-      <div class="cards-grid">
-        <Card title="Educate" icon="📚">
+      <div class="mission-content">
+        <div class="project-image">
+          <picture>
+            <source srcset="/assets/images/baynavigator-logo-new.webp" type="image/webp" />
+            <img
+              src="/assets/images/baynavigator-logo-new.svg"
+              alt="Bay Navigator"
+              width="400"
+              height="400"
+              loading="lazy"
+            />
+          </picture>
+        </div>
+        <div class="mission-text">
+          <h2>Bay Navigator</h2>
           <p>
-            Through workshops, community partnerships, and public programs, we provide accessible
-            education on environmental issues and conservation practices.
+            Our flagship open-source project connects Bay Area residents with sustainable resources,
+            local conservation efforts, and tools to reduce their environmental footprint.
           </p>
-        </Card>
-
-        <Card title="Mobilize" icon="🌱">
-          <p>
-            From habitat restoration to policy advocacy, we empower residents to take action and
-            champion initiatives that protect the bay's future.
-          </p>
-        </Card>
-
-        <Card title="Innovate" icon="💻">
-          <p>
-            We build open-source digital tools like Bay Navigator that make sustainability
-            accessible and connect residents with resources for a greener future.
-          </p>
-        </Card>
+          <a href="https://baynavigator.org" target="_blank" rel="noopener" class="learn-more-link">
+            Explore Bay Navigator &rarr;
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Impact Statement -->
-  <section class="impact">
+  <!-- Support Section -->
+  <section class="support-cta">
     <div class="container">
-      <div class="impact-content">
-        <h2>Why Our Work Matters</h2>
-        <p>
-          The San Francisco Bay is more than just a natural landmark&mdash;it's a vital ecosystem
-          that protects critical and endangered wildlife and enriches our community.
-        </p>
-        <p class="highlight">
-          With your support, we can ensure a thriving, resilient Bay Area for generations to come.
+      <div class="support-content">
+        <p class="support-statement">
+          The San Francisco Bay is a vital ecosystem that protects endangered wildlife and enriches
+          our community. With your support, we can ensure a thriving Bay Area for generations to
+          come.
         </p>
         <a href="/donate" class="btn btn-primary">Support Our Mission</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Call to Action -->
-  <section class="cta">
-    <div class="container">
-      <h2>Ready to Make a Difference?</h2>
-      <p>
-        Join our community of dedicated environmental stewards and help protect the San Francisco
-        Bay.
-      </p>
-      <div class="cta-buttons">
-        <a href="/volunteer" class="btn btn-primary">Volunteer With Us</a>
-        <a href="/contact" class="btn btn-outline">Get in Touch</a>
       </div>
     </div>
   </section>

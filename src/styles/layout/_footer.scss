@@ -74,14 +74,12 @@ footer {
 }
 
 .footer-snowflake {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding-top: 1rem;
   text-align: center;
 
   p {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8125rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,9 +88,9 @@ footer {
   }
 
   a {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.6);
     text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-decoration-color: rgba(255, 255, 255, 0.3);
     text-underline-offset: 2px;
 
     &:hover {
@@ -102,7 +100,7 @@ footer {
   }
 
   .snowflake-icon {
-    opacity: 0.6;
+    opacity: 0.5;
     flex-shrink: 0;
   }
 
@@ -149,7 +147,7 @@ footer {
     color: rgba(255, 255, 255, 0.9);
   }
 
-  .footer-logo img {
+  .footer-logo {
     // Use cream color matching logo's internal background for natural look
     background: #f5f0e6;
     border-radius: 50%;

@@ -50,7 +50,10 @@
     font-size: clamp(2.25rem, 5vw, 3rem);
     margin-bottom: 1.5rem;
     animation: fadeInUp 0.8s ease;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    text-shadow:
+      0 2px 10px rgba(0, 0, 0, 0.3),
+      0 4px 30px rgba(43, 108, 176, 0.4),
+      0 0 60px rgba(255, 255, 255, 0.15);
   }
 
   p {
@@ -116,12 +119,15 @@
   z-index: 1;
 }
 
-// Respect reduced motion preference
+// Respect reduced motion preference (both OS-level and manual toggle)
 @media (prefers-reduced-motion: reduce) {
-  .home-hero-video,
-  .home-hero-overlay {
+  .home-hero-video {
     display: none;
   }
+}
+
+[data-reduced-motion='true'] .home-hero-video {
+  display: none;
 }
 
 // ==========================================================================
@@ -171,10 +177,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .volunteer-hero-video,
-  .volunteer-hero-overlay {
+  .volunteer-hero-video {
     display: none;
   }
+}
+
+[data-reduced-motion='true'] .volunteer-hero-video {
+  display: none;
 }
 
 // ==========================================================================

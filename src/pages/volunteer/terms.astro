@@ -1,0 +1,373 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Volunteer Terms & Conditions',
+    description: 'Terms and conditions for volunteering with Bay Tides.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Volunteer',
+        item: 'https://baytides.org/volunteer',
+      },
+      { '@type': 'ListItem', position: 3, name: 'Terms & Conditions' },
+    ],
+  },
+];
+
+const lastUpdated = 'January 31, 2026';
+---
+
+<BaseLayout
+  title="Volunteer Terms & Conditions"
+  description="Terms and conditions for volunteering with Bay Tides, including conduct expectations and organizational policies."
+  canonicalUrl="https://baytides.org/volunteer/terms"
+  structuredData={structuredData}
+>
+  <Breadcrumb
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Volunteer', href: '/volunteer' },
+      { label: 'Terms & Conditions' },
+    ]}
+  />
+
+  <section class="hero hero-page">
+    <div class="container">
+      <h1>Volunteer Terms & Conditions</h1>
+      <p>Please review before registering</p>
+    </div>
+  </section>
+
+  <section class="content-section legal-content">
+    <div class="container">
+      <div class="legal-document">
+        <p class="last-updated">Last Updated: {lastUpdated}</p>
+
+        <div class="legal-section">
+          <h2>1. Introduction</h2>
+          <p>
+            These Volunteer Terms and Conditions ("Terms") govern your participation as a volunteer
+            with Bay Tides ("Organization," "we," "us," or "our"). By registering as a volunteer,
+            you agree to be bound by these Terms.
+          </p>
+          <p>
+            Bay Tides is a 501(c)(3) nonprofit organization dedicated to protecting and restoring
+            the San Francisco Bay through education, community mobilization, and innovative
+            technology.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>2. Volunteer Status</h2>
+          <p>As a volunteer, you understand and agree that:</p>
+          <ul>
+            <li>
+              You are providing services voluntarily and without expectation of compensation,
+              employment, or any form of remuneration.
+            </li>
+            <li>You are not an employee, contractor, or agent of Bay Tides for any purpose.</li>
+            <li>
+              You are not entitled to any employee benefits, including but not limited to health
+              insurance, workers' compensation, unemployment insurance, or retirement benefits.
+            </li>
+            <li>
+              Your volunteer status may be terminated at any time by either party without notice or
+              cause.
+            </li>
+          </ul>
+        </div>
+
+        <div class="legal-section highlight-section">
+          <h2>3. Liability Waiver Requirement</h2>
+          <p>
+            <strong>
+              All volunteers must complete a signed Liability Waiver and Release of Claims form
+              before participating in any Bay Tides volunteer activities.
+            </strong>
+          </p>
+          <p>
+            The waiver covers assumption of risk, release of liability, and emergency medical
+            authorization. You may complete the waiver:
+          </p>
+          <ul>
+            <li>Online through our <a href="/volunteer/waiver">Volunteer Waiver page</a></li>
+            <li>At your first volunteer event</li>
+            <li>In person at a Bay Tides event or meeting</li>
+          </ul>
+          <p>
+            <strong>
+              You will not be permitted to participate in volunteer activities until the waiver has
+              been completed and signed.
+            </strong>
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>4. Code of Conduct</h2>
+          <p>
+            As a representative of Bay Tides, you agree to conduct yourself in a professional and
+            respectful manner at all times. This includes:
+          </p>
+
+          <h3>4.1 Respect for Others</h3>
+          <ul>
+            <li>
+              Treat all staff, board members, fellow volunteers, partners, and members of the public
+              with courtesy, dignity, and respect.
+            </li>
+            <li>
+              Refrain from harassment, discrimination, or intimidation of any kind based on race,
+              color, religion, sex, sexual orientation, gender identity, national origin, age,
+              disability, veteran status, or any other protected characteristic.
+            </li>
+            <li>Maintain a welcoming and inclusive environment for all participants.</li>
+          </ul>
+
+          <h3>4.2 Professional Conduct</h3>
+          <ul>
+            <li>
+              Follow all instructions and guidance provided by Bay Tides staff and event leaders.
+            </li>
+            <li>
+              Arrive on time for scheduled volunteer activities and notify us promptly if you cannot
+              attend.
+            </li>
+            <li>
+              Perform assigned tasks to the best of your ability and ask for help when needed.
+            </li>
+            <li>
+              Report any accidents, injuries, unsafe conditions, or concerns to Bay Tides staff
+              immediately.
+            </li>
+          </ul>
+
+          <h3>4.3 Representing the Organization</h3>
+          <ul>
+            <li>Remember that as a volunteer, you represent Bay Tides to the public.</li>
+            <li>
+              Do not make statements or commitments on behalf of Bay Tides unless specifically
+              authorized to do so.
+            </li>
+            <li>Direct media inquiries and interview requests to Bay Tides staff.</li>
+          </ul>
+        </div>
+
+        <div class="legal-section">
+          <h2>5. Safety Requirements</h2>
+          <p>Your safety is our priority. You agree to:</p>
+          <ul>
+            <li>
+              Follow all safety instructions and use required protective equipment provided for
+              volunteer activities.
+            </li>
+            <li>
+              Notify Bay Tides staff of any medical conditions, allergies, or physical limitations
+              that may affect your ability to safely participate in activities.
+            </li>
+            <li>
+              Not participate in activities while under the influence of alcohol or illegal drugs.
+            </li>
+            <li>
+              Report any hazardous conditions or safety concerns immediately to Bay Tides staff.
+            </li>
+            <li>Follow all applicable laws and regulations while volunteering.</li>
+          </ul>
+        </div>
+
+        <div class="legal-section">
+          <h2>6. Confidentiality</h2>
+          <p>
+            During your volunteer service, you may have access to confidential information about Bay
+            Tides, its donors, members, or partners. You agree to:
+          </p>
+          <ul>
+            <li>Keep all confidential information private and not disclose it to third parties.</li>
+            <li>Use confidential information only for legitimate Bay Tides purposes.</li>
+            <li>
+              Return or destroy any confidential materials upon request or when your volunteer
+              service ends.
+            </li>
+          </ul>
+        </div>
+
+        <div class="legal-section">
+          <h2>7. Use of Organization Resources</h2>
+          <p>
+            Any equipment, supplies, or resources provided by Bay Tides are for organizational use
+            only. You agree to:
+          </p>
+          <ul>
+            <li>Use Bay Tides resources responsibly and only for approved purposes.</li>
+            <li>
+              Return all equipment and materials in good condition at the end of each volunteer
+              session or upon request.
+            </li>
+            <li>Report any damage, loss, or malfunction of equipment immediately.</li>
+          </ul>
+        </div>
+
+        <div class="legal-section">
+          <h2>8. Termination of Volunteer Status</h2>
+          <p>
+            Bay Tides reserves the right to terminate your volunteer status at any time, with or
+            without cause, and with or without notice. Reasons for termination may include, but are
+            not limited to:
+          </p>
+          <ul>
+            <li>Violation of these Terms or the Code of Conduct</li>
+            <li>Failure to follow safety requirements or instructions</li>
+            <li>Conduct that is detrimental to the organization, its mission, or its reputation</li>
+            <li>Harassment or discrimination against others</li>
+            <li>Unauthorized disclosure of confidential information</li>
+          </ul>
+        </div>
+
+        <div class="legal-section">
+          <h2>9. Minors</h2>
+          <p>
+            Volunteers under the age of 18 must have a parent or legal guardian sign the volunteer
+            registration form and liability waiver on their behalf. Minors under 16 must be
+            accompanied by a parent or guardian during all volunteer activities.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>10. Changes to Terms</h2>
+          <p>
+            Bay Tides reserves the right to modify these Terms at any time. We will notify active
+            volunteers of significant changes via email. Continued participation in volunteer
+            activities after changes are posted constitutes acceptance of the modified Terms.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>11. Governing Law</h2>
+          <p>
+            These Terms shall be governed by and construed in accordance with the laws of the State
+            of California, without regard to conflict of law principles.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>12. Contact Information</h2>
+          <p>If you have questions about these Terms, please contact us:</p>
+          <p>
+            <strong>Bay Tides</strong><br />
+            Email: <a href="mailto:volunteer@baytides.org">volunteer@baytides.org</a><br />
+            Website: <a href="https://baytides.org">baytides.org</a>
+          </p>
+        </div>
+
+        <div class="legal-actions">
+          <a href="/volunteer#volunteer-form-section" class="btn btn-primary">
+            Return to Registration
+          </a>
+          <a href="/volunteer/privacy" class="btn btn-outline">View Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-content {
+    padding: 3rem 0 4rem;
+  }
+
+  .legal-document {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .last-updated {
+    color: var(--text-light);
+    font-size: 0.9375rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .legal-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .legal-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-navy);
+  }
+
+  .legal-section h3 {
+    font-size: 1.125rem;
+    margin: 1.5rem 0 0.75rem;
+    color: var(--text-dark);
+  }
+
+  .legal-section p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .legal-section ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .legal-section li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .legal-section a {
+    color: var(--primary-blue);
+    text-decoration: underline;
+  }
+
+  .highlight-section {
+    background: var(--light-blue);
+    padding: 2rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-blue);
+  }
+
+  .legal-actions {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  :global([data-theme='dark']) .legal-document {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .last-updated {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .legal-section h2 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .highlight-section {
+    background: rgba(43, 108, 176, 0.15);
+    border-left-color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .legal-actions {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+</style>

@@ -422,3 +422,637 @@ textarea[aria-invalid='true'] {
     padding: 1.5rem;
   }
 }
+
+// ==========================================================================
+// Volunteer Form
+// ==========================================================================
+
+.volunteer-form-container {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 2.5rem;
+
+  > h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  > p {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: var(--white);
+
+    &:focus {
+      outline: 0;
+      border-color: var(--primary-blue);
+    }
+
+    &::placeholder {
+      color: var(--text-light);
+    }
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+}
+
+.form-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 2rem;
+
+  legend {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    padding: 0;
+  }
+
+  .fieldset-description {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-size: 0.9375rem;
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  &.form-row-3 {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+
+    &.form-row-3 {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// Checkbox grid for interests
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  input[type='checkbox'] {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+    accent-color: var(--primary-blue);
+  }
+
+  span {
+    line-height: 1.4;
+  }
+}
+
+// Agreement checkboxes
+.agreements-fieldset {
+  background: var(--light-blue);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-top: 2rem;
+}
+
+.agreement-checkbox {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: var(--white);
+  border-radius: 8px;
+  transition: opacity 0.3s ease;
+
+  a {
+    color: var(--primary-blue);
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--primary-navy);
+    }
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+// Disabled state for agreement checkboxes (until links are clicked)
+#agree-terms-label,
+#agree-privacy-label {
+  opacity: 0.6;
+  cursor: not-allowed;
+
+  &.enabled {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  input:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// Instruction text for agreements
+.agreements-instruction {
+  font-size: 0.9375rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+// Agreement links with external icon
+.agreement-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  svg {
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  &.visited {
+    color: #6b21a8;
+
+    &:hover {
+      color: #581c87;
+    }
+  }
+}
+
+.waiver-option {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.waiver-note {
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.waiver-alt {
+  margin-top: 0.5rem;
+  color: var(--text-light);
+
+  small {
+    font-size: 0.875rem;
+  }
+}
+
+// Large button variant
+.btn-large {
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+}
+
+// Accommodations section
+.accommodations-fieldset {
+  background: var(--light-blue);
+  padding: 1.5rem;
+  border-radius: 12px;
+
+  > .checkbox-label {
+    background: var(--white);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0;
+  }
+}
+
+.accommodations-details {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+}
+
+.accommodations-notice {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  border-radius: 8px;
+  padding: 1rem;
+
+  svg {
+    flex-shrink: 0;
+    color: #b45309;
+    margin-top: 0.125rem;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--text-dark);
+
+    strong {
+      color: #92400e;
+    }
+  }
+}
+
+// Other interest field
+.other-interest-group {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+// Availability grid (days across top, times down left)
+.availability-grid {
+  background: var(--white);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.availability-header {
+  display: grid;
+  grid-template-columns: 90px repeat(7, 1fr);
+  background: var(--light-blue);
+  border-bottom: 1px solid #e2e8f0;
+  min-width: 500px;
+
+  .availability-time-label,
+  .availability-day-label {
+    padding: 0.75rem 0.25rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--text-dark);
+  }
+
+  .availability-time-label {
+    text-align: left;
+    padding-left: 1rem;
+  }
+}
+
+.availability-row {
+  display: grid;
+  grid-template-columns: 90px repeat(7, 1fr);
+  border-bottom: 1px solid #e2e8f0;
+  min-width: 500px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:nth-child(even) {
+    background: rgba(0, 0, 0, 0.02);
+  }
+}
+
+.availability-time {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.availability-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: rgba(43, 108, 176, 0.1);
+  }
+
+  input[type='checkbox'] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary-blue);
+  }
+}
+
+// Dark theme for volunteer form
+[data-theme='dark'] {
+  .volunteer-form-container {
+    background: var(--bg-secondary);
+
+    input,
+    select,
+    textarea {
+      background: var(--bg-primary);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: var(--text-dark);
+
+      &::placeholder {
+        color: var(--text-light);
+      }
+    }
+  }
+
+  .checkbox-label:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .agreements-fieldset {
+    background: rgba(43, 108, 176, 0.15);
+  }
+
+  .agreement-checkbox {
+    background: var(--bg-primary);
+
+    a {
+      color: var(--accent-blue);
+    }
+  }
+
+  .agreement-link.visited {
+    color: #a78bfa;
+
+    &:hover {
+      color: #c4b5fd;
+    }
+  }
+
+  .waiver-option {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .accommodations-fieldset {
+    background: rgba(43, 108, 176, 0.15);
+
+    > .checkbox-label {
+      background: var(--bg-primary);
+    }
+  }
+
+  .accommodations-details {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .accommodations-notice {
+    background: rgba(251, 191, 36, 0.1);
+    border-color: rgba(251, 191, 36, 0.3);
+
+    svg {
+      color: #fbbf24;
+    }
+
+    p strong {
+      color: #fbbf24;
+    }
+  }
+
+  .other-interest-group {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .availability-grid {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .availability-header {
+    background: rgba(43, 108, 176, 0.2);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+
+    .availability-time-label {
+      color: var(--text-dark);
+    }
+  }
+
+  .availability-row {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+
+    &:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+  }
+
+  .availability-cell:hover {
+    background: rgba(99, 179, 237, 0.15);
+  }
+}
+
+// Tablet adjustments (768px - 1024px)
+@media (max-width: 1024px) {
+  .volunteer-form-container {
+    padding: 2rem;
+  }
+
+  .form-row {
+    gap: 0.875rem;
+  }
+
+  .availability-header,
+  .availability-row {
+    grid-template-columns: 80px repeat(7, 1fr);
+  }
+}
+
+// Mobile adjustments (up to 768px)
+@media (max-width: 768px) {
+  .volunteer-form-container {
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+
+  .form-fieldset {
+    margin-bottom: 1.5rem;
+
+    legend {
+      font-size: 1.125rem;
+    }
+  }
+
+  .checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .checkbox-label {
+    padding: 0.625rem;
+
+    input[type='checkbox'] {
+      width: 22px;
+      height: 22px;
+      // Larger touch target
+    }
+  }
+
+  .agreements-fieldset {
+    padding: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .agreement-checkbox {
+    padding: 0.875rem;
+
+    input[type='checkbox'] {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .availability-grid {
+    margin: 0 -0.5rem;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .availability-header,
+  .availability-row {
+    grid-template-columns: 70px repeat(7, 1fr);
+  }
+
+  .availability-header .availability-day-label {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.125rem;
+  }
+
+  .availability-time {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.5rem;
+  }
+
+  .availability-cell {
+    padding: 0.5rem 0.125rem;
+
+    input[type='checkbox'] {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .accommodations-fieldset {
+    padding: 1rem;
+
+    > .checkbox-label {
+      padding: 0.875rem;
+    }
+  }
+
+  .accommodations-notice {
+    padding: 0.875rem;
+
+    p {
+      font-size: 0.875rem;
+    }
+  }
+
+  .other-interest-group {
+    padding-top: 0.875rem;
+    margin-top: 0.875rem;
+  }
+
+  .btn-large {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  // Improve touch targets for inputs
+  input,
+  select,
+  textarea {
+    font-size: 16px !important; // Prevents iOS zoom on focus
+    padding: 0.875rem;
+  }
+
+  select {
+    // Ensure select is styled well on mobile
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+}
+
+// Small mobile adjustments (up to 480px)
+@media (max-width: 480px) {
+  .volunteer-form-container {
+    padding: 1.25rem;
+    margin: 0 -0.5rem;
+    border-radius: 0;
+  }
+
+  .form-fieldset legend {
+    font-size: 1rem;
+  }
+
+  .fieldset-description {
+    font-size: 0.875rem;
+  }
+
+  .availability-header,
+  .availability-row {
+    grid-template-columns: 60px repeat(7, 1fr);
+    min-width: 360px;
+  }
+
+  .availability-time {
+    font-size: 0.6875rem;
+    padding: 0.5rem 0.375rem;
+  }
+
+  .availability-header .availability-day-label {
+    font-size: 0.6875rem;
+  }
+
+  .availability-cell input[type='checkbox'] {
+    width: 18px;
+    height: 18px;
+  }
+
+  .agreement-checkbox span {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .waiver-option {
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
+}

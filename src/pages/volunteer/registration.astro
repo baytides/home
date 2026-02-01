@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import VolunteerForm from '../../components/VolunteerForm.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Volunteer Registration',
+    description: 'Register as a volunteer with Bay Tides and help protect the San Francisco Bay.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Volunteer',
+        item: 'https://baytides.org/volunteer',
+      },
+      { '@type': 'ListItem', position: 3, name: 'Registration' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Volunteer Registration"
+  description="Register as a Bay Tides volunteer. Join our community of environmental stewards dedicated to protecting the San Francisco Bay."
+  canonicalUrl="https://baytides.org/volunteer/registration"
+  structuredData={structuredData}
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  </Fragment>
+
+  <Breadcrumb
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Volunteer', href: '/volunteer' },
+      { label: 'Registration' },
+    ]}
+  />
+
+  <section class="hero hero-page">
+    <div class="container">
+      <h1>Volunteer Registration</h1>
+      <p>Join our team of environmental stewards</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="registration-intro">
+        <p>
+          Thank you for your interest in volunteering with Bay Tides! Please complete the form below
+          to register. We'll be in touch about upcoming opportunities that match your interests and
+          availability.
+        </p>
+        <div class="registration-requirements">
+          <h3>Before You Register</h3>
+          <p>Please review the following documents:</p>
+          <ul>
+            <li>
+              <a href="/volunteer/terms" target="_blank">Volunteer Terms & Conditions</a>
+              - Code of conduct and organizational policies
+            </li>
+            <li>
+              <a href="/volunteer/privacy" target="_blank">Volunteer Privacy Policy</a>
+              - How we collect and use your information, including media consent
+            </li>
+          </ul>
+          <p>
+            <strong>Note:</strong> A signed
+            <a href="/volunteer/waiver">liability waiver</a>
+            is required before participating in any volunteer activities. You can complete it online after
+            registration or at your first event.
+          </p>
+        </div>
+      </div>
+
+      <VolunteerForm />
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <h2>Questions?</h2>
+      <p>Need help with registration or have questions about volunteering? We're here to help.</p>
+      <a href="/contact" class="btn btn-primary">Contact Us</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .registration-intro {
+    max-width: 800px;
+    margin: 0 auto 2rem;
+  }
+
+  .registration-intro > p {
+    font-size: 1.125rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+
+  .registration-requirements {
+    background: var(--light-blue);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-blue);
+  }
+
+  .registration-requirements h3 {
+    margin-bottom: 0.75rem;
+    font-size: 1.125rem;
+  }
+
+  .registration-requirements p {
+    margin-bottom: 0.75rem;
+  }
+
+  .registration-requirements ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .registration-requirements li {
+    margin-bottom: 0.5rem;
+  }
+
+  .registration-requirements a {
+    color: var(--primary-blue);
+    font-weight: 500;
+  }
+
+  :global([data-theme='dark']) .registration-requirements {
+    background: rgba(43, 108, 176, 0.15);
+    border-left-color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .registration-requirements a {
+    color: var(--accent-blue);
+  }
+</style>

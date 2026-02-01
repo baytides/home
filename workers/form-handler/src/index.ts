@@ -15,6 +15,7 @@ interface Env {
   RATE_LIMIT_KV: KVNamespace;
   ALLOWED_ORIGIN: string;
   TO_EMAIL: string;
+  LEGAL_EMAIL?: string;
   TURNSTILE_SECRET_KEY?: string;
   MAILERLITE_API_KEY?: string;
   MAILERLITE_GROUP_ID?: string;
@@ -198,6 +199,16 @@ async function addToMailerLite(
 // Email Sending
 // ==========================================================================
 
+interface EmailOptions {
+  to: string;
+  toName?: string;
+  bcc?: string;
+  replyTo?: string;
+  subject: string;
+  body: string;
+  htmlBody?: string;
+}
+
 async function sendEmail(
   env: Env,
   subject: string,
@@ -241,6 +252,94 @@ async function sendEmail(
   }
 
   return response;
+}
+
+async function sendEmailAdvanced(options: EmailOptions): Promise<Response> {
+  interface Personalization {
+    to: Array<{ email: string; name?: string }>;
+    bcc?: Array<{ email: string }>;
+  }
+
+  const personalization: Personalization = {
+    to: [{ email: options.to, name: options.toName }],
+  };
+
+  if (options.bcc) {
+    personalization.bcc = [{ email: options.bcc }];
+  }
+
+  const content: Array<{ type: string; value: string }> = [
+    { type: 'text/plain', value: options.body },
+  ];
+
+  if (options.htmlBody) {
+    content.push({ type: 'text/html', value: options.htmlBody });
+  }
+
+  const emailRequest = new Request('https://api.mailchannels.net/tx/v1/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      personalizations: [personalization],
+      from: {
+        email: 'noreply@baytides.org',
+        name: 'Bay Tides',
+      },
+      reply_to: options.replyTo ? { email: options.replyTo } : undefined,
+      subject: options.subject,
+      content: content,
+    }),
+  });
+
+  const response = await fetch(emailRequest);
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('MailChannels error:', errorText);
+    throw new Error(`Failed to send email: ${response.status}`);
+  }
+
+  return response;
+}
+
+// ==========================================================================
+// Availability Formatter
+// ==========================================================================
+
+function formatAvailability(slots: string[]): string {
+  if (slots.length === 0) return 'Not specified';
+
+  const dayMap: Record<string, string> = {
+    mon: 'Monday',
+    tue: 'Tuesday',
+    wed: 'Wednesday',
+    thu: 'Thursday',
+    fri: 'Friday',
+    sat: 'Saturday',
+    sun: 'Sunday',
+  };
+
+  const timeMap: Record<string, string> = {
+    morning: 'Morning',
+    afternoon: 'Afternoon',
+    evening: 'Evening',
+  };
+
+  // Group by day
+  const byDay: Record<string, string[]> = {};
+  for (const slot of slots) {
+    const [day, time] = slot.split('_');
+    if (!byDay[day]) byDay[day] = [];
+    byDay[day].push(timeMap[time] || time);
+  }
+
+  // Format output
+  const lines: string[] = [];
+  for (const [day, times] of Object.entries(byDay)) {
+    lines.push(`${dayMap[day] || day}: ${times.join(', ')}`);
+  }
+
+  return lines.join('\n');
 }
 
 // ==========================================================================
@@ -370,6 +469,293 @@ Submitted: ${new Date().toISOString()}
         `.trim();
 
         await sendEmail(env, subject, emailContent, email);
+      } else if (formType === 'volunteer') {
+        // Volunteer registration form
+        const firstName = formData.get('first_name') as string;
+        const lastName = formData.get('last_name') as string;
+        const phone = formData.get('phone') as string;
+        const address = (formData.get('address') as string | null) || 'Not provided';
+        const city = (formData.get('city') as string | null) || '';
+        const state = (formData.get('state') as string | null) || '';
+        const zip = (formData.get('zip') as string | null) || '';
+        const emergencyName = formData.get('emergency_name') as string;
+        const emergencyPhone = formData.get('emergency_phone') as string;
+        const emergencyRelationship =
+          (formData.get('emergency_relationship') as string | null) || 'Not specified';
+        const interestsRaw = formData.getAll('interests[]');
+        const otherInterest = (formData.get('other_interest') as string | null) || '';
+        const interests =
+          interestsRaw.length > 0
+            ? interestsRaw
+                .map((i) => (i === 'other' && otherInterest ? `Other: ${otherInterest}` : i))
+                .join(', ')
+            : 'None selected';
+        const availabilityRaw = formData.getAll('availability[]');
+        const availability = formatAvailability(availabilityRaw as string[]);
+        const frequency = (formData.get('frequency') as string | null) || 'Not specified';
+        const experience = (formData.get('experience') as string | null) || 'Not provided';
+        const referral = (formData.get('referral') as string | null) || 'Not specified';
+        const message = (formData.get('message') as string | null) || '';
+        const completeWaiverNow = formData.get('complete_waiver_now') === 'on';
+        const needsAccommodations = formData.get('needs_accommodations') === 'on';
+        const accommodations = (formData.get('accommodations') as string | null) || '';
+
+        const fullAddress = [address, city, state, zip].filter(Boolean).join(', ');
+        const submittedDate = new Date().toISOString();
+
+        // Email to Bay Tides staff with BCC to legal
+        const staffSubject = `New Volunteer Registration - ${firstName} ${lastName}`;
+        const staffEmailContent = `
+New volunteer registration received:
+
+=== PERSONAL INFORMATION ===
+Name: ${firstName} ${lastName}
+Email: ${email}
+Phone: ${phone}
+Address: ${fullAddress}
+
+=== EMERGENCY CONTACT ===
+Name: ${emergencyName}
+Phone: ${emergencyPhone}
+Relationship: ${emergencyRelationship}
+
+=== VOLUNTEER INTERESTS ===
+Areas of Interest: ${interests}
+Availability: ${availability}
+Frequency: ${frequency}
+
+=== EXPERIENCE & BACKGROUND ===
+${experience}
+
+Referral Source: ${referral}
+
+Additional Comments:
+${message || 'None'}
+${
+  needsAccommodations
+    ? `
+=== ACCOMMODATIONS REQUESTED ===
+⚠️ This volunteer has requested accommodations (5 business days notice required):
+
+${accommodations}
+
+Please contact them to discuss and confirm arrangements.
+`
+    : ''
+}
+=== AGREEMENTS ===
+Terms & Conditions: Accepted
+Privacy Policy: Accepted
+Waiver: ${completeWaiverNow ? 'Will complete online' : 'Will complete at event'}
+
+---
+Submitted: ${submittedDate}
+        `.trim();
+
+        await sendEmailAdvanced({
+          to: env.TO_EMAIL || 'volunteer@baytides.org',
+          toName: 'Bay Tides Volunteer Coordinator',
+          bcc: env.LEGAL_EMAIL || 'legal@baytides.org',
+          replyTo: email,
+          subject: staffSubject,
+          body: staffEmailContent,
+        });
+
+        // Confirmation email to volunteer
+        const volunteerSubject = 'Welcome to Bay Tides Volunteer Program!';
+        const volunteerEmailContent = `
+Dear ${firstName},
+
+Thank you for registering as a volunteer with Bay Tides! We're excited to have you join our community of environmental stewards dedicated to protecting the San Francisco Bay.
+
+=== YOUR REGISTRATION DETAILS ===
+
+Name: ${firstName} ${lastName}
+Email: ${email}
+Phone: ${phone}
+
+Areas of Interest: ${interests}
+Availability: ${availability}
+Preferred Frequency: ${frequency}
+
+Emergency Contact: ${emergencyName} (${emergencyPhone})
+${
+  needsAccommodations
+    ? `
+=== ACCOMMODATIONS ===
+
+We have received your accommodation request. A member of our team will contact you within 5 business days to discuss your needs and confirm arrangements.
+
+Your request:
+${accommodations}
+`
+    : ''
+}
+${
+  completeWaiverNow
+    ? `
+=== NEXT STEP: COMPLETE YOUR WAIVER ===
+
+Please complete the liability waiver before your first volunteer event:
+https://baytides.org/volunteer/waiver
+
+`
+    : `
+=== REMINDER: LIABILITY WAIVER ===
+
+A signed liability waiver is required before participating in any volunteer activities.
+You can complete it online at: https://baytides.org/volunteer/waiver
+Or complete it in person at your first event.
+
+`
+}
+=== WHAT'S NEXT? ===
+
+1. Watch your inbox for upcoming volunteer opportunities
+2. Follow us on social media for event announcements
+3. Check our website for the latest news: https://baytides.org
+
+If you have any questions, feel free to reply to this email or contact us at volunteer@baytides.org.
+
+Thank you for your commitment to protecting our bay!
+
+Warm regards,
+The Bay Tides Team
+
+---
+Bay Tides
+https://baytides.org
+        `.trim();
+
+        await sendEmailAdvanced({
+          to: email,
+          toName: `${firstName} ${lastName}`,
+          subject: volunteerSubject,
+          body: volunteerEmailContent,
+        });
+      } else if (formType === 'waiver') {
+        // Liability waiver form
+        const firstName = formData.get('first_name') as string;
+        const lastName = formData.get('last_name') as string;
+        const phone = formData.get('phone') as string;
+        const dob = formData.get('date_of_birth') as string;
+        const address = (formData.get('address') as string | null) || 'Not provided';
+        const emergencyName = formData.get('emergency_name') as string;
+        const emergencyPhone = formData.get('emergency_phone') as string;
+        const emergencyRelationship = formData.get('emergency_relationship') as string;
+        const medicalInfo = (formData.get('medical_info') as string | null) || 'None disclosed';
+        const signature = formData.get('signature') as string;
+        const signatureDate = formData.get('signature_date') as string;
+        const minorName = (formData.get('minor_name') as string | null) || '';
+        const minorDob = (formData.get('minor_dob') as string | null) || '';
+
+        const submittedDate = new Date().toISOString();
+        const isMinorWaiver = minorName && minorDob;
+
+        // Email to Bay Tides staff with BCC to legal
+        const staffSubject = `Liability Waiver Signed - ${firstName} ${lastName}${isMinorWaiver ? ` (for minor: ${minorName})` : ''}`;
+        const staffEmailContent = `
+Liability waiver received:
+
+=== PARTICIPANT INFORMATION ===
+Name: ${firstName} ${lastName}
+Email: ${email}
+Phone: ${phone}
+Date of Birth: ${dob}
+Address: ${address}
+
+=== EMERGENCY CONTACT ===
+Name: ${emergencyName}
+Phone: ${emergencyPhone}
+Relationship: ${emergencyRelationship}
+
+=== MEDICAL INFORMATION ===
+${medicalInfo}
+
+${
+  isMinorWaiver
+    ? `
+=== MINOR PARTICIPANT ===
+Minor's Name: ${minorName}
+Minor's Date of Birth: ${minorDob}
+Parent/Guardian: ${firstName} ${lastName}
+`
+    : ''
+}
+=== SIGNATURE ===
+Electronic Signature: ${signature}
+Date Signed: ${signatureDate}
+IP Address: ${request.headers.get('CF-Connecting-IP') || 'Unknown'}
+
+---
+Submitted: ${submittedDate}
+        `.trim();
+
+        await sendEmailAdvanced({
+          to: env.TO_EMAIL || 'volunteer@baytides.org',
+          toName: 'Bay Tides Volunteer Coordinator',
+          bcc: env.LEGAL_EMAIL || 'legal@baytides.org',
+          replyTo: email,
+          subject: staffSubject,
+          body: staffEmailContent,
+        });
+
+        // Confirmation email to signer with copy of waiver
+        const waiverConfirmSubject = 'Bay Tides Liability Waiver - Confirmation';
+        const waiverConfirmContent = `
+Dear ${firstName},
+
+Thank you for completing the Bay Tides Liability Waiver. This email confirms your submission and serves as your record.
+
+=== WAIVER CONFIRMATION ===
+
+Participant: ${firstName} ${lastName}
+Date of Birth: ${dob}
+${isMinorWaiver ? `Minor Participant: ${minorName} (DOB: ${minorDob})` : ''}
+
+Electronic Signature: ${signature}
+Date Signed: ${signatureDate}
+
+Emergency Contact: ${emergencyName} (${emergencyPhone})
+
+=== SUMMARY OF AGREEMENTS ===
+
+By signing this waiver, you acknowledged:
+
+1. ASSUMPTION OF RISK: You voluntarily assume all risks associated with participation in Bay Tides volunteer activities, including but not limited to personal injury, illness, death, and property damage.
+
+2. RELEASE OF LIABILITY: You released Bay Tides, its officers, directors, employees, volunteers, and agents from any claims arising from your participation.
+
+3. INDEMNIFICATION: You agreed to indemnify and hold harmless Bay Tides from any claims arising from your participation.
+
+4. MEDICAL AUTHORIZATION: You authorized Bay Tides to obtain emergency medical treatment if needed during volunteer activities.
+
+5. PHOTOGRAPHY RELEASE: You granted Bay Tides permission to use photos and videos taken during volunteer activities.
+
+=== WHAT'S NEXT? ===
+
+You're all set to participate in Bay Tides volunteer activities! Watch your inbox for upcoming opportunities.
+
+If you have any questions about the waiver or your participation, please contact us at volunteer@baytides.org.
+
+Thank you for your commitment to protecting the San Francisco Bay!
+
+Warm regards,
+The Bay Tides Team
+
+---
+Bay Tides
+https://baytides.org
+
+This email serves as your official confirmation. Please save it for your records.
+        `.trim();
+
+        await sendEmailAdvanced({
+          to: email,
+          toName: `${firstName} ${lastName}`,
+          subject: waiverConfirmSubject,
+          body: waiverConfirmContent,
+        });
       } else {
         // Contact form
         const name = formData.get('name') as string;

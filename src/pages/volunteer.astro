@@ -98,7 +98,10 @@ const structuredData = [
       </div>
 
       <div class="cards-grid">
-        <Card title="Shoreline Cleanups" icon="🌊">
+        <Card
+          title="Shoreline Cleanups"
+          icon="<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 12c.6.5 1.2 1 2.5 1C7 13 7 11 9.5 11c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1'/><path d='M2 19c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1'/><path d='M9.5 4h5l1 7h-7l1-7z'/><path d='M12 4V2'/></svg>"
+        >
           <p>
             Join us for regular cleanup events along the Bay shoreline. Help remove pollution and
             debris while connecting with fellow community members who care about our bay.
@@ -111,7 +114,10 @@ const structuredData = [
           </ul>
         </Card>
 
-        <Card title="Habitat Restoration" icon="🌿">
+        <Card
+          title="Habitat Restoration"
+          icon="<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M7 20h10'/><path d='M10 20c5.5-2.5.8-6.4 3-10'/><path d='M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z'/><path d='M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z'/></svg>"
+        >
           <p>
             Get your hands dirty planting native species and restoring critical habitats. Our
             restoration projects make a direct, visible impact on the health of our local ecosystem.
@@ -124,7 +130,10 @@ const structuredData = [
           </ul>
         </Card>
 
-        <Card title="Tech Volunteers" icon="💻">
+        <Card
+          title="Tech Volunteers"
+          icon="<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='16 18 22 12 16 6'/><polyline points='8 6 2 12 8 18'/></svg>"
+        >
           <p>
             Help us build digital tools that make sustainable living accessible. Our flagship
             project, Bay Navigator, is entirely open source and welcomes contributors.
@@ -141,33 +150,42 @@ const structuredData = [
   </section>
 
   <!-- Benefits -->
-  <section class="content-section">
+  <section class="pillars">
     <div class="container">
       <div class="section-title">
         <h2>Why Volunteer?</h2>
+        <p>More than just giving back</p>
       </div>
-      <div class="benefits-grid">
-        <div class="benefit">
-          <h3>Connect with Nature</h3>
+      <div class="cards-grid cards-grid-4">
+        <Card
+          title="Connect with Nature"
+          icon="<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/><path d='M22 10a3 3 0 0 0-3-3h-2.207a5.502 5.502 0 0 0-10.702.5'/></svg>"
+        >
           <p>Spend time outdoors in beautiful Bay Area locations while making a positive impact.</p>
-        </div>
-        <div class="benefit">
-          <h3>Build Community</h3>
+        </Card>
+        <Card
+          title="Build Community"
+          icon="<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 21a8 8 0 0 0-16 0'/><circle cx='10' cy='8' r='5'/><path d='M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3'/></svg>"
+        >
           <p>Meet like-minded people who share your passion for environmental conservation.</p>
-        </div>
-        <div class="benefit">
-          <h3>Learn New Skills</h3>
+        </Card>
+        <Card
+          title="Learn New Skills"
+          icon="<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M22 10v6M2 10l10-5 10 5-10 5z'/><path d='M6 12v5c3 3 9 3 12 0v-5'/></svg>"
+        >
           <p>
             Gain hands-on experience in habitat restoration, conservation, and environmental
             science.
           </p>
-        </div>
-        <div class="benefit">
-          <h3>Make an Impact</h3>
+        </Card>
+        <Card
+          title="Make an Impact"
+          icon="<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z'/></svg>"
+        >
           <p>
             See the direct results of your work as you help restore and protect local ecosystems.
           </p>
-        </div>
+        </Card>
       </div>
     </div>
   </section>
@@ -177,9 +195,11 @@ const structuredData = [
     <div class="container">
       <h2>Ready to Get Started?</h2>
       <p>
-        Fill out our volunteer interest form and we'll be in touch about upcoming opportunities.
+        Fill out our volunteer registration form and we'll be in touch about upcoming opportunities
+        that match your interests.
       </p>
-      <a href="/contact" class="btn btn-primary">Sign Up to Volunteer</a>
+      <a href="/volunteer/registration" class="btn btn-primary">Register Now</a>
+      <a href="/contact" class="btn btn-outline" style="margin-left: 0.5rem">Contact Us</a>
     </div>
   </section>
 </BaseLayout>

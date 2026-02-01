@@ -1,6 +1,6 @@
 ---
 // Accessibility Panel Component
-// Provides controls for high contrast, reduced motion, and font size
+// WCAG 2.2 AAA compliant controls for display preferences
 ---
 
 <!-- Accessibility Toggle Button -->
@@ -23,12 +23,10 @@
     aria-hidden="true"
   >
     <circle cx="12" cy="4.5" r="2.5"></circle>
-    <path
-      d="m12 7-3.964 2.313A1 1 0 0 0 8 11.39V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-1.61a1 1 0 0 0-.036-2.077L12 7Z"
-    >
-    </path>
-    <path d="M10 14v4.5a.5.5 0 0 1-.5.5h-.5a.5.5 0 0 1-.5-.5V14"></path>
-    <path d="M14 14v4.5a.5.5 0 0 0 .5.5h.5a.5.5 0 0 0 .5-.5V14"></path>
+    <path d="M12 7v6"></path>
+    <path d="M8 11h8"></path>
+    <path d="M10 21l2-4 2 4"></path>
+    <path d="M10 17h4"></path>
   </svg>
 </button>
 
@@ -40,69 +38,201 @@
   aria-label="Accessibility settings"
   aria-hidden="true"
 >
-  <h3>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="4.5" r="2.5"></circle>
-      <path
-        d="m12 7-3.964 2.313A1 1 0 0 0 8 11.39V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-1.61a1 1 0 0 0-.036-2.077L12 7Z"
+  <div class="panel-header">
+    <h3>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
       >
-      </path>
-      <path d="M10 14v4.5a.5.5 0 0 1-.5.5h-.5a.5.5 0 0 1-.5-.5V14"></path>
-      <path d="M14 14v4.5a.5.5 0 0 0 .5.5h.5a.5.5 0 0 0 .5-.5V14"></path>
-    </svg>
-    Accessibility
-  </h3>
+        <circle cx="12" cy="4.5" r="2.5"></circle>
+        <path d="M12 7v6"></path>
+        <path d="M8 11h8"></path>
+        <path d="M10 21l2-4 2 4"></path>
+        <path d="M10 17h4"></path>
+      </svg>
+      Accessibility
+    </h3>
+    <button type="button" class="panel-close" id="panel-close" aria-label="Close panel">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M18 6L6 18"></path>
+        <path d="M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
 
   <div class="panel-section">
-    <div class="panel-section-title">Display</div>
+    <div class="panel-section-title">Vision</div>
     <label>
       <input type="checkbox" id="high-contrast-toggle" />
       High Contrast
     </label>
     <label>
-      <input type="checkbox" id="reduced-motion-toggle" />
-      Reduced Motion
+      <input type="checkbox" id="large-text-toggle" />
+      Large Text
     </label>
   </div>
 
   <div class="panel-section">
-    <div class="panel-section-title">Text Size</div>
-    <select id="font-size-select" aria-label="Font size">
-      <option value="default">Default</option>
-      <option value="large">Large (120%)</option>
-      <option value="x-large">Extra Large (140%)</option>
-    </select>
+    <div class="panel-section-title">Motion</div>
+    <label>
+      <input type="checkbox" id="reduced-motion-toggle" />
+      Reduce Motion
+    </label>
   </div>
 
-  <button type="button" class="reset-btn" id="reset-accessibility">Reset to Defaults</button>
+  <div class="panel-section">
+    <div class="panel-section-title">Reading</div>
+    <label>
+      <input type="checkbox" id="text-spacing-toggle" />
+      Increase Text Spacing
+    </label>
+    <label>
+      <input type="checkbox" id="underline-links-toggle" />
+      Underline All Links
+    </label>
+  </div>
+
+  <div class="panel-section">
+    <div class="panel-section-title">Button Position</div>
+    <div class="position-buttons">
+      <button
+        type="button"
+        class="position-btn"
+        data-position="bottom-left"
+        aria-label="Bottom left"
+        title="Bottom left"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+          <circle cx="7" cy="17" r="2" fill="currentColor"></circle>
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="position-btn"
+        data-position="bottom-right"
+        aria-label="Bottom right"
+        title="Bottom right"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+          <circle cx="17" cy="17" r="2" fill="currentColor"></circle>
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="position-btn"
+        data-position="top-left"
+        aria-label="Top left"
+        title="Top left"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+          <circle cx="7" cy="7" r="2" fill="currentColor"></circle>
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="position-btn"
+        data-position="top-right"
+        aria-label="Top right"
+        title="Top right"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+          <circle cx="17" cy="7" r="2" fill="currentColor"></circle>
+        </svg>
+      </button>
+    </div>
+    <label class="hide-button-label">
+      <input type="checkbox" id="hide-button-toggle" />
+      Hide button (use <kbd>Alt</kbd>+<kbd>A</kbd> to reopen)
+    </label>
+  </div>
+
+  <div class="panel-actions">
+    <button type="button" class="reset-btn" id="reset-accessibility">Reset All</button>
+  </div>
+
+  <p class="panel-note">Settings are saved locally and persist across visits.</p>
 </div>
 
 <script>
   function initAccessibilityPanel() {
     const toggle = document.getElementById('accessibility-toggle');
     const panel = document.getElementById('accessibility-panel');
+    const closeBtn = document.getElementById('panel-close');
     const highContrastToggle = document.getElementById('high-contrast-toggle') as HTMLInputElement;
+    const largeTextToggle = document.getElementById('large-text-toggle') as HTMLInputElement;
     const reducedMotionToggle = document.getElementById(
       'reduced-motion-toggle'
     ) as HTMLInputElement;
-    const fontSizeSelect = document.getElementById('font-size-select') as HTMLSelectElement;
+    const textSpacingToggle = document.getElementById('text-spacing-toggle') as HTMLInputElement;
+    const underlineLinksToggle = document.getElementById(
+      'underline-links-toggle'
+    ) as HTMLInputElement;
+    const hideButtonToggle = document.getElementById('hide-button-toggle') as HTMLInputElement;
+    const positionBtns = document.querySelectorAll('.position-btn');
     const resetBtn = document.getElementById('reset-accessibility');
 
     if (!toggle || !panel) return;
 
     // Load saved preferences
     const savedHighContrast = localStorage.getItem('a11y-high-contrast') === 'true';
+    const savedLargeText = localStorage.getItem('a11y-large-text') === 'true';
     const savedReducedMotion = localStorage.getItem('a11y-reduced-motion') === 'true';
-    const savedFontSize = localStorage.getItem('a11y-font-size') || 'default';
+    const savedTextSpacing = localStorage.getItem('a11y-text-spacing') === 'true';
+    const savedUnderlineLinks = localStorage.getItem('a11y-underline-links') === 'true';
+    const savedPosition = localStorage.getItem('a11y-button-position') || 'bottom-left';
+    const savedHidden = localStorage.getItem('a11y-button-hidden') === 'true';
 
     // Apply saved preferences
     if (savedHighContrast) {
@@ -110,36 +240,93 @@
       if (highContrastToggle) highContrastToggle.checked = true;
     }
 
+    if (savedLargeText) {
+      document.documentElement.setAttribute('data-font-size', 'large');
+      if (largeTextToggle) largeTextToggle.checked = true;
+    }
+
     if (savedReducedMotion) {
       document.documentElement.setAttribute('data-reduced-motion', 'true');
       if (reducedMotionToggle) reducedMotionToggle.checked = true;
     }
 
-    if (savedFontSize !== 'default') {
-      document.documentElement.setAttribute('data-font-size', savedFontSize);
-      if (fontSizeSelect) fontSizeSelect.value = savedFontSize;
+    if (savedTextSpacing) {
+      document.documentElement.setAttribute('data-text-spacing', 'comfortable');
+      if (textSpacingToggle) textSpacingToggle.checked = true;
+    }
+
+    if (savedUnderlineLinks) {
+      document.documentElement.setAttribute('data-underline-links', 'true');
+      if (underlineLinksToggle) underlineLinksToggle.checked = true;
+    }
+
+    // Apply button position
+    applyPosition(savedPosition);
+    updatePositionButtons(savedPosition);
+
+    // Apply hidden state
+    if (savedHidden) {
+      toggle.classList.add('hidden');
+      if (hideButtonToggle) hideButtonToggle.checked = true;
+    }
+
+    function applyPosition(position: string) {
+      toggle.classList.remove('bottom-left', 'bottom-right', 'top-left', 'top-right');
+      toggle.classList.add(position);
+      panel.classList.remove('bottom-left', 'bottom-right', 'top-left', 'top-right');
+      panel.classList.add(position);
+    }
+
+    function updatePositionButtons(activePosition: string) {
+      positionBtns.forEach((btn) => {
+        const pos = (btn as HTMLElement).dataset.position;
+        btn.classList.toggle('active', pos === activePosition);
+        (btn as HTMLButtonElement).setAttribute('aria-pressed', String(pos === activePosition));
+      });
+    }
+
+    function closePanel() {
+      toggle.setAttribute('aria-expanded', 'false');
+      panel.classList.remove('visible');
+      panel.setAttribute('aria-hidden', 'true');
+      toggle.focus();
+    }
+
+    function openPanel() {
+      toggle.setAttribute('aria-expanded', 'true');
+      panel.classList.add('visible');
+      panel.setAttribute('aria-hidden', 'false');
+      highContrastToggle?.focus();
     }
 
     // Toggle panel visibility
     toggle.addEventListener('click', () => {
       const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!isExpanded));
-      panel.classList.toggle('visible', !isExpanded);
-      panel.setAttribute('aria-hidden', String(isExpanded));
+      if (isExpanded) {
+        closePanel();
+      } else {
+        openPanel();
+      }
+    });
 
-      if (!isExpanded) {
-        // Focus first interactive element when opening
-        highContrastToggle?.focus();
+    // Close button
+    closeBtn?.addEventListener('click', closePanel);
+
+    // Keyboard shortcut: Alt+A to show panel (even when hidden)
+    document.addEventListener('keydown', (e) => {
+      if (e.altKey && e.key.toLowerCase() === 'a') {
+        e.preventDefault();
+        toggle.classList.remove('hidden');
+        localStorage.setItem('a11y-button-hidden', 'false');
+        if (hideButtonToggle) hideButtonToggle.checked = false;
+        openPanel();
       }
     });
 
     // Close panel on Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && panel.classList.contains('visible')) {
-        toggle.setAttribute('aria-expanded', 'false');
-        panel.classList.remove('visible');
-        panel.setAttribute('aria-hidden', 'true');
-        toggle.focus();
+        closePanel();
       }
     });
 
@@ -151,9 +338,7 @@
         !panel.contains(target) &&
         !toggle.contains(target)
       ) {
-        toggle.setAttribute('aria-expanded', 'false');
-        panel.classList.remove('visible');
-        panel.setAttribute('aria-hidden', 'true');
+        closePanel();
       }
     });
 
@@ -168,6 +353,17 @@
       localStorage.setItem('a11y-high-contrast', String(enabled));
     });
 
+    // Large text toggle
+    largeTextToggle?.addEventListener('change', () => {
+      const enabled = largeTextToggle.checked;
+      if (enabled) {
+        document.documentElement.setAttribute('data-font-size', 'large');
+      } else {
+        document.documentElement.removeAttribute('data-font-size');
+      }
+      localStorage.setItem('a11y-large-text', String(enabled));
+    });
+
     // Reduced motion toggle
     reducedMotionToggle?.addEventListener('change', () => {
       const enabled = reducedMotionToggle.checked;
@@ -179,33 +375,80 @@
       localStorage.setItem('a11y-reduced-motion', String(enabled));
     });
 
-    // Font size select
-    fontSizeSelect?.addEventListener('change', () => {
-      const size = fontSizeSelect.value;
-      if (size === 'default') {
-        document.documentElement.removeAttribute('data-font-size');
+    // Text spacing toggle
+    textSpacingToggle?.addEventListener('change', () => {
+      const enabled = textSpacingToggle.checked;
+      if (enabled) {
+        document.documentElement.setAttribute('data-text-spacing', 'comfortable');
       } else {
-        document.documentElement.setAttribute('data-font-size', size);
+        document.documentElement.removeAttribute('data-text-spacing');
       }
-      localStorage.setItem('a11y-font-size', size);
+      localStorage.setItem('a11y-text-spacing', String(enabled));
+    });
+
+    // Underline links toggle
+    underlineLinksToggle?.addEventListener('change', () => {
+      const enabled = underlineLinksToggle.checked;
+      if (enabled) {
+        document.documentElement.setAttribute('data-underline-links', 'true');
+      } else {
+        document.documentElement.removeAttribute('data-underline-links');
+      }
+      localStorage.setItem('a11y-underline-links', String(enabled));
+    });
+
+    // Position buttons
+    positionBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const position = (btn as HTMLElement).dataset.position || 'bottom-left';
+        applyPosition(position);
+        updatePositionButtons(position);
+        localStorage.setItem('a11y-button-position', position);
+      });
+    });
+
+    // Hide button toggle
+    hideButtonToggle?.addEventListener('change', () => {
+      const hidden = hideButtonToggle.checked;
+      if (hidden) {
+        toggle.classList.add('hidden');
+        closePanel();
+      } else {
+        toggle.classList.remove('hidden');
+      }
+      localStorage.setItem('a11y-button-hidden', String(hidden));
     });
 
     // Reset button
     resetBtn?.addEventListener('click', () => {
       // Reset all settings
       document.documentElement.removeAttribute('data-high-contrast');
-      document.documentElement.removeAttribute('data-reduced-motion');
       document.documentElement.removeAttribute('data-font-size');
+      document.documentElement.removeAttribute('data-reduced-motion');
+      document.documentElement.removeAttribute('data-text-spacing');
+      document.documentElement.removeAttribute('data-underline-links');
 
       // Reset form controls
       if (highContrastToggle) highContrastToggle.checked = false;
+      if (largeTextToggle) largeTextToggle.checked = false;
       if (reducedMotionToggle) reducedMotionToggle.checked = false;
-      if (fontSizeSelect) fontSizeSelect.value = 'default';
+      if (textSpacingToggle) textSpacingToggle.checked = false;
+      if (underlineLinksToggle) underlineLinksToggle.checked = false;
+      if (hideButtonToggle) hideButtonToggle.checked = false;
+
+      // Reset position to default
+      applyPosition('bottom-left');
+      updatePositionButtons('bottom-left');
+      toggle.classList.remove('hidden');
 
       // Clear localStorage
       localStorage.removeItem('a11y-high-contrast');
+      localStorage.removeItem('a11y-large-text');
       localStorage.removeItem('a11y-reduced-motion');
-      localStorage.removeItem('a11y-font-size');
+      localStorage.removeItem('a11y-text-spacing');
+      localStorage.removeItem('a11y-underline-links');
+      localStorage.removeItem('a11y-button-position');
+      localStorage.removeItem('a11y-button-hidden');
     });
   }
 
@@ -215,4 +458,7 @@
   } else {
     initAccessibilityPanel();
   }
+
+  // Re-initialize after Astro page transitions
+  document.addEventListener('astro:page-load', initAccessibilityPanel);
 </script>

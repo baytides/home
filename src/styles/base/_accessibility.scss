@@ -104,8 +104,6 @@ input[type='radio'] {
 
 .accessibility-panel {
   position: fixed;
-  bottom: 5rem;
-  left: 2rem; // Aligned with accessibility toggle (now on left side)
   background: var(--bg-primary);
   border: 1px solid var(--text-light);
   border-radius: 12px;
@@ -113,18 +111,46 @@ input[type='radio'] {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   z-index: 998;
   display: none;
-  min-width: 240px;
-  max-width: 280px;
-  font-size: 0.875rem; // Smaller base font for panel
+  min-width: 260px;
+  max-width: 300px;
+  font-size: 0.875rem;
+
+  // Position variants
+  &.bottom-left {
+    bottom: 5rem;
+    left: 2rem;
+  }
+
+  &.bottom-right {
+    bottom: 5rem;
+    right: 2rem;
+  }
+
+  &.top-left {
+    top: 5rem;
+    left: 2rem;
+  }
+
+  &.top-right {
+    top: 5rem;
+    right: 2rem;
+  }
 
   &.visible {
     display: block;
     animation: panelSlideIn 0.2s ease;
   }
 
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
   h3 {
     font-size: 1rem;
-    margin-bottom: 1rem;
+    margin: 0;
     color: var(--text-dark);
     display: flex;
     align-items: center;
@@ -136,12 +162,36 @@ input[type='radio'] {
     }
   }
 
+  .panel-close {
+    background: transparent;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    color: var(--text-light);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 32px;
+
+    &:hover {
+      color: var(--text-dark);
+      background: var(--bg-secondary);
+    }
+
+    &:focus {
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-ring-offset);
+    }
+  }
+
   .panel-section {
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
-    &:last-child {
+    &:last-of-type {
       margin-bottom: 0;
       padding-bottom: 0;
       border-bottom: none;
@@ -149,7 +199,7 @@ input[type='radio'] {
   }
 
   .panel-section-title {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -161,9 +211,9 @@ input[type='radio'] {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     color: var(--text-dark);
     padding: 0.25rem 0;
 
@@ -176,23 +226,58 @@ input[type='radio'] {
     }
   }
 
+  .hide-button-label {
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+
+    kbd {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 3px;
+      padding: 0.1rem 0.35rem;
+      font-size: 0.75rem;
+      font-family: inherit;
+    }
+  }
+
   input[type='checkbox'] {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     accent-color: var(--primary-blue);
     flex-shrink: 0;
   }
 
-  select {
-    width: 100%;
-    padding: 0.625rem 0.75rem;
-    border: 1px solid var(--text-light);
+  .position-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .position-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: var(--bg-secondary);
+    border: 2px solid transparent;
     border-radius: 6px;
-    margin-top: 0.25rem;
-    background: var(--bg-primary);
-    color: var(--text-dark);
-    font-size: 0.9rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    transition: all 0.15s ease;
+
+    &:hover {
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+    }
+
+    &.active {
+      border-color: var(--primary-blue);
+      background: var(--primary-blue);
+      color: #fff;
+    }
 
     &:focus {
       outline: var(--focus-ring);
@@ -200,16 +285,21 @@ input[type='radio'] {
     }
   }
 
+  .panel-actions {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
   .reset-btn {
     width: 100%;
-    padding: 0.625rem 1rem;
+    padding: 0.5rem 1rem;
     background: transparent;
     border: 1px solid var(--text-light);
     border-radius: 6px;
     color: var(--text-dark);
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     cursor: pointer;
-    margin-top: 0.5rem;
     transition: all 0.2s ease;
 
     &:hover {
@@ -217,6 +307,18 @@ input[type='radio'] {
       border-color: var(--primary-blue);
       color: var(--primary-blue);
     }
+
+    &:focus {
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-ring-offset);
+    }
+  }
+
+  .panel-note {
+    margin-top: 0.75rem;
+    font-size: 0.7rem;
+    color: var(--text-light);
+    text-align: center;
   }
 }
 
@@ -233,14 +335,12 @@ input[type='radio'] {
 
 .accessibility-toggle {
   position: fixed;
-  bottom: 2rem;
-  left: 2rem; // Moved to left side to avoid collision with back-to-top button
   width: 48px;
   height: 48px;
   background: var(--primary-blue);
   color: #fff;
   border: 2px solid var(--bg-primary);
-  border-radius: 12px; // Rounded square to differentiate from circular back-to-top
+  border-radius: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -248,6 +348,32 @@ input[type='radio'] {
   z-index: 999;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
+
+  // Position variants
+  &.bottom-left {
+    bottom: 2rem;
+    left: 2rem;
+  }
+
+  &.bottom-right {
+    bottom: 2rem;
+    right: 2rem;
+  }
+
+  &.top-left {
+    top: 5rem; // Account for header
+    left: 2rem;
+  }
+
+  &.top-right {
+    top: 5rem;
+    right: 2rem;
+  }
+
+  // Hidden state
+  &.hidden {
+    display: none;
+  }
 
   &:hover {
     background: var(--primary-navy);
@@ -266,6 +392,276 @@ input[type='radio'] {
   svg {
     width: 24px;
     height: 24px;
+  }
+}
+
+// ==========================================================================
+// Underline Links Mode
+// ==========================================================================
+
+[data-underline-links='true'] {
+  a:not(.btn):not(.logo):not(.card) {
+    text-decoration: underline !important;
+    text-underline-offset: 2px;
+  }
+}
+
+// ==========================================================================
+// High Contrast Mode
+// WCAG 2.2 AAA: 7:1 contrast ratio for normal text
+// ==========================================================================
+
+[data-high-contrast='true'] {
+  // Force high contrast colors
+  --text-dark: #000 !important;
+  --text-light: #1a1a1a !important;
+  --bg-primary: #fff !important;
+  --bg-secondary: #f5f5f5 !important;
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  // Headers
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #000 !important;
+  }
+
+  // Paragraphs and text
+  p,
+  li,
+  span,
+  td,
+  th {
+    color: #000 !important;
+  }
+
+  // Links - high contrast blue
+  a {
+    color: #0000cc !important;
+    text-decoration: underline !important;
+
+    &:visited {
+      color: #551a8b !important;
+    }
+
+    &:hover,
+    &:focus {
+      color: #000 !important;
+      background: #ff0 !important;
+    }
+  }
+
+  // Buttons - strong contrast
+  .btn,
+  button:not(.accessibility-toggle):not(.panel-close):not(.position-btn):not(.reset-btn) {
+    background: #000 !important;
+    color: #fff !important;
+    border: 2px solid #000 !important;
+
+    &:hover,
+    &:focus {
+      background: #333 !important;
+      outline: 3px solid #ff0 !important;
+    }
+
+    &.btn-outline {
+      background: #fff !important;
+      color: #000 !important;
+      border: 2px solid #000 !important;
+
+      &:hover,
+      &:focus {
+        background: #ff0 !important;
+      }
+    }
+  }
+
+  // Cards
+  .card {
+    background: #fff !important;
+    border: 2px solid #000 !important;
+    box-shadow: none !important;
+  }
+
+  // Form elements
+  input,
+  textarea,
+  select {
+    background: #fff !important;
+    color: #000 !important;
+    border: 2px solid #000 !important;
+
+    &:focus {
+      outline: 3px solid #ff0 !important;
+      outline-offset: 2px;
+    }
+  }
+
+  // Header/Nav
+  .header {
+    background: #fff !important;
+    border-bottom: 2px solid #000 !important;
+  }
+
+  .nav-link {
+    color: #000 !important;
+
+    &:hover,
+    &:focus {
+      background: #ff0 !important;
+    }
+  }
+
+  // Footer
+  .footer {
+    background: #000 !important;
+    color: #fff !important;
+
+    a {
+      color: #fff !important;
+
+      &:hover,
+      &:focus {
+        background: #ff0 !important;
+        color: #000 !important;
+      }
+    }
+
+    h4 {
+      color: #fff !important;
+    }
+  }
+
+  // Sections with backgrounds
+  .hero,
+  .cta,
+  .impact,
+  .support-cta {
+    background: #1a365d !important;
+
+    h1,
+    h2,
+    p {
+      color: #fff !important;
+    }
+
+    a {
+      color: #ff0 !important;
+    }
+  }
+
+  .alt-bg {
+    background: #f0f0f0 !important;
+  }
+
+  // Focus indicators - very visible
+  *:focus {
+    outline: 3px solid #ff0 !important;
+    outline-offset: 2px !important;
+  }
+
+  // Images - add borders for clarity
+  img {
+    border: 1px solid #000;
+  }
+}
+
+// ==========================================================================
+// Large Text Mode
+// WCAG 2.2 AAA: 200% text scaling support
+// ==========================================================================
+
+[data-font-size='large'] {
+  html {
+    font-size: 125% !important; // 20px base instead of 16px
+  }
+
+  body {
+    font-size: 1.125rem !important;
+    line-height: 1.6 !important;
+  }
+
+  h1 {
+    font-size: 2.5rem !important;
+  }
+
+  h2 {
+    font-size: 2rem !important;
+  }
+
+  h3 {
+    font-size: 1.5rem !important;
+  }
+
+  p,
+  li {
+    font-size: 1.125rem !important;
+    line-height: 1.7 !important;
+  }
+
+  .btn {
+    font-size: 1.1rem !important;
+    padding: 0.875rem 1.75rem !important;
+  }
+
+  // Navigation
+  .nav-link {
+    font-size: 1.1rem !important;
+  }
+
+  // Cards
+  .card h3 {
+    font-size: 1.35rem !important;
+  }
+
+  .card p {
+    font-size: 1.05rem !important;
+  }
+
+  // Form elements
+  input,
+  textarea,
+  select,
+  label {
+    font-size: 1.1rem !important;
+  }
+}
+
+// ==========================================================================
+// Increased Text Spacing Mode
+// WCAG 2.2 AAA: 1.5x line height, 2x paragraph spacing, 0.12em letter spacing
+// ==========================================================================
+
+[data-text-spacing='comfortable'] {
+  body {
+    line-height: 1.8 !important;
+    letter-spacing: 0.12em !important;
+    word-spacing: 0.16em !important;
+  }
+
+  p {
+    margin-bottom: 2em !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: 0.05em !important;
+    margin-bottom: 1em !important;
+  }
+
+  li {
+    margin-bottom: 0.5em !important;
   }
 }
 
