@@ -36,14 +36,28 @@ const structuredData = [
   description="Support Bay Tides with a donation. Your contribution helps fund habitat restoration, educational programs, and advocacy efforts to protect the San Francisco Bay."
   canonicalUrl="https://baytides.org/donate"
   structuredData={structuredData}
-  preloadImages={['/assets/images/hero-bg.webp']}
+  preloadImages={['/assets/video/donate-hero-poster.webp']}
 >
   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Donate' }]} />
 
-  <PageHero
-    title="Support Our Mission"
-    subtitle="Your generosity helps protect and restore the San Francisco Bay for future generations"
-  />
+  <!-- Video Hero -->
+  <section class="hero hero-page donate-video-hero">
+    <video
+      class="donate-hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="/assets/video/donate-hero-poster.webp"
+    >
+      <source src="/assets/video/donate-hero.webm" type="video/webm" />
+    </video>
+    <div class="donate-hero-overlay"></div>
+    <div class="container">
+      <h1>Support Our Mission</h1>
+      <p>Your generosity helps protect and restore the San Francisco Bay for future generations</p>
+    </div>
+  </section>
 
   <!-- Donate Section -->
   <section class="content-section">

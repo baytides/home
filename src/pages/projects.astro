@@ -46,11 +46,28 @@ const structuredData = [
   description="Explore Bay Tides' initiatives to protect the San Francisco Bay. From community resources to conservation programs, see how we're making an impact."
   canonicalUrl="https://baytides.org/projects"
   structuredData={structuredData}
-  preloadImages={['/assets/images/hero-bg.webp']}
+  preloadImages={['/assets/video/projects-hero-poster.webp']}
 >
   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Projects' }]} />
 
-  <PageHero title="Our Initiatives" subtitle="Programs and tools serving the Bay Area community" />
+  <!-- Video Hero -->
+  <section class="hero hero-page projects-video-hero">
+    <video
+      class="projects-hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="/assets/video/projects-hero-poster.webp"
+    >
+      <source src="/assets/video/projects-hero.webm" type="video/webm" />
+    </video>
+    <div class="projects-hero-overlay"></div>
+    <div class="container">
+      <h1>Our Initiatives</h1>
+      <p>Programs and tools serving the Bay Area community</p>
+    </div>
+  </section>
 
   <!-- Featured Project: Bay Navigator -->
   <section class="content-section">

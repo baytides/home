@@ -35,7 +35,7 @@ const structuredData = [
   description="Get in touch with Bay Tides. Questions about volunteering, partnerships, or donations? We'd love to hear from you."
   canonicalUrl="https://baytides.org/contact"
   structuredData={structuredData}
-  preloadImages={['/assets/images/hero-bg.webp']}
+  preloadImages={['/assets/video/contact-hero-poster.webp']}
 >
   <Fragment slot="head">
     <link rel="preconnect" href="https://api.mapbox.com" crossorigin />
@@ -47,7 +47,24 @@ const structuredData = [
 
   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
 
-  <PageHero title="Get in Touch" subtitle="We'd love to hear from you" />
+  <!-- Video Hero -->
+  <section class="hero hero-page contact-video-hero">
+    <video
+      class="contact-hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="/assets/video/contact-hero-poster.webp"
+    >
+      <source src="/assets/video/contact-hero.webm" type="video/webm" />
+    </video>
+    <div class="contact-hero-overlay"></div>
+    <div class="container">
+      <h1>Get in Touch</h1>
+      <p>We'd love to hear from you</p>
+    </div>
+  </section>
 
   <!-- Contact Section -->
   <section class="contact-section">
