@@ -432,7 +432,18 @@ const structuredData = [
   }
 
   :global([data-theme='dark']) .example-column.highlight {
-    background: var(--primary-navy);
+    background: #e6f4ea;
+    border: 2px solid #48bb78;
+  }
+
+  :global([data-theme='dark']) .example-column.highlight h4,
+  :global([data-theme='dark']) .example-column.highlight li,
+  :global([data-theme='dark']) .example-column.highlight strong {
+    color: #1a202c !important;
+  }
+
+  :global([data-theme='dark']) .example-column.highlight li {
+    border-bottom-color: rgba(0, 0, 0, 0.1) !important;
   }
 
   :global([data-theme='dark']) .transfer-info {
