@@ -379,4 +379,21 @@ const structuredData = [
       grid-template-columns: 1fr;
     }
   }
+
+  /* Dark mode overrides for light-background elements */
+  :global([data-theme='dark']) .needs-card {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .needs-icon {
+    background: var(--bg-primary);
+  }
+
+  :global([data-theme='dark']) .inkind-process {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .inkind-process li {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
 </style>
