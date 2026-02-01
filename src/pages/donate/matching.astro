@@ -1,0 +1,230 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Double Your Donation - Corporate Matching Gifts',
+    description:
+      'Find out if your employer will match your donation to Bay Tides and double your impact.',
+    url: 'https://baytides.org/donate/matching',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'Bay Tides',
+      url: 'https://baytides.org',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Donate', item: 'https://baytides.org/donate' },
+      { '@type': 'ListItem', position: 3, name: 'Matching Gifts' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Double Your Donation"
+  description="Many employers match charitable donations. Use our matching gift tool to find out if your company will double your gift to Bay Tides."
+  canonicalUrl="https://baytides.org/donate/matching"
+  structuredData={structuredData}
+>
+  <Breadcrumb
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Donate', href: '/donate' },
+      { label: 'Matching Gifts' },
+    ]}
+  />
+
+  <section class="hero hero-page">
+    <div class="container">
+      <h1>Double Your Donation</h1>
+      <p>Many employers match charitable contributions, doubling or even tripling your impact</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="matching-content">
+        <div class="matching-intro">
+          <h2>Does Your Employer Match Gifts?</h2>
+          <p>
+            Thousands of companies offer matching gift programs that can multiply your donation to
+            Bay Tides. Use the search tool below to find out if your employer participates.
+          </p>
+          <p>
+            Corporate matching gifts are one of the easiest ways to increase your charitable impact.
+            Some companies match donations dollar-for-dollar, while others may double or even triple
+            your contribution.
+          </p>
+        </div>
+
+        <div class="matching-widget">
+          <div id="dd-container"></div>
+        </div>
+
+        <div class="matching-info">
+          <h3>How It Works</h3>
+          <ol role="list">
+            <li>
+              <strong>Search for your employer</strong> using the tool above to see if they offer a matching
+              gift program.
+            </li>
+            <li>
+              <strong>Make your donation</strong> to Bay Tides through our{' '}
+              <a href="/donate">donation page</a>.
+            </li>
+            <li>
+              <strong>Submit a matching request</strong> through your employer's giving portal or HR department.
+            </li>
+            <li>
+              <strong>Your employer matches</strong> your gift, doubling your impact for the Bay.
+            </li>
+          </ol>
+        </div>
+
+        <div class="matching-help">
+          <h3>Need Help?</h3>
+          <p>
+            If you have questions about matching gifts or need documentation for your employer's
+            program, please <a href="/contact">contact us</a>. We're happy to provide any
+            information needed to complete your matching gift request.
+          </p>
+          <p>
+            <strong>Bay Tides EIN:</strong> 93-3889081
+          </p>
+        </div>
+
+        <div class="matching-cta">
+          <a href="/checkout" class="btn btn-primary btn-large">Donate Now</a>
+          <p>Then check if your employer will match your gift</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+  var DDCONF = { API_KEY: '13qDoFLXlus5V13X' };
+</script>
+<script is:inline src="https://doublethedonation.com/api/js/ddplugin.js"></script>
+
+<style>
+  .matching-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .matching-intro {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .matching-intro h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .matching-intro p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+  }
+
+  .matching-widget {
+    background: var(--light-blue);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    min-height: 200px;
+  }
+
+  #dd-container {
+    min-height: 150px;
+  }
+
+  .matching-info {
+    margin-bottom: 3rem;
+  }
+
+  .matching-info h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-navy);
+  }
+
+  .matching-info ol {
+    list-style: none;
+    padding: 0;
+    counter-reset: steps;
+  }
+
+  .matching-info li {
+    counter-increment: steps;
+    padding: 1rem 0 1rem 3.5rem;
+    position: relative;
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+  }
+
+  .matching-info li:last-child {
+    border-bottom: none;
+  }
+
+  .matching-info li::before {
+    content: counter(steps);
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    width: 2rem;
+    height: 2rem;
+    background: var(--primary-navy);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  /* Ensure screen readers announce the list properly */
+  .matching-info ol[role='list'] {
+    list-style: none;
+  }
+
+  .matching-help {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .matching-help h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-navy);
+  }
+
+  .matching-help p {
+    margin-bottom: 0.75rem;
+  }
+
+  .matching-help p:last-child {
+    margin-bottom: 0;
+  }
+
+  .matching-cta {
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .matching-cta p {
+    margin-top: 1rem;
+    color: var(--text-light);
+    font-size: 0.9375rem;
+  }
+</style>

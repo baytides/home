@@ -1,0 +1,382 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'In-Kind Donations',
+    description:
+      "Donate supplies, equipment, or professional services to support Bay Tides' conservation mission.",
+    url: 'https://baytides.org/donate/in-kind',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Donate', item: 'https://baytides.org/donate' },
+      { '@type': 'ListItem', position: 3, name: 'In-Kind Donations' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="In-Kind Donations"
+  description="Support Bay Tides with donations of supplies, equipment, or professional services. Learn about our current needs."
+  canonicalUrl="https://baytides.org/donate/in-kind"
+  structuredData={structuredData}
+>
+  <Breadcrumb
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Donate', href: '/donate' },
+      { label: 'In-Kind Donations' },
+    ]}
+  />
+
+  <section class="hero hero-page">
+    <div class="container">
+      <h1>In-Kind Donations</h1>
+      <p>Support our mission with goods and services</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="inkind-content">
+        <div class="inkind-intro">
+          <h2>Non-Monetary Support</h2>
+          <p>
+            In-kind donations of goods, equipment, and professional services are valuable
+            contributions that directly support our conservation programs and operations. Your
+            donation allows us to direct more of our financial resources toward protecting the San
+            Francisco Bay.
+          </p>
+        </div>
+
+        <div class="inkind-needs">
+          <h3>Current Needs</h3>
+          <div class="needs-grid">
+            <div class="need-category">
+              <h4>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+                Technology & Equipment
+              </h4>
+              <ul>
+                <li>Laptops and tablets for field work</li>
+                <li>Cameras and video equipment</li>
+                <li>Software licenses</li>
+                <li>Cloud computing credits</li>
+              </ul>
+            </div>
+            <div class="need-category">
+              <h4>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                Office Supplies
+              </h4>
+              <ul>
+                <li>Printer paper and ink</li>
+                <li>Office furniture</li>
+                <li>Educational materials</li>
+                <li>Event supplies</li>
+              </ul>
+            </div>
+            <div class="need-category">
+              <h4>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                Field Equipment
+              </h4>
+              <ul>
+                <li>Water quality testing kits</li>
+                <li>Binoculars and spotting scopes</li>
+                <li>Safety equipment</li>
+                <li>Cleanup supplies (gloves, bags, grabbers)</li>
+              </ul>
+            </div>
+            <div class="need-category">
+              <h4>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                Professional Services
+              </h4>
+              <ul>
+                <li>Legal services</li>
+                <li>Accounting and bookkeeping</li>
+                <li>Graphic design</li>
+                <li>Photography and videography</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="inkind-process">
+          <h3>Donation Process</h3>
+          <ol role="list">
+            <li>
+              <strong>Contact us</strong> to discuss your potential donation and confirm it meets our
+              current needs.
+            </li>
+            <li>
+              <strong>We'll coordinate</strong> pickup or delivery arrangements for physical items.
+            </li>
+            <li>
+              <strong>Receive acknowledgment</strong> including a description of the donated items for
+              your tax records.
+            </li>
+          </ol>
+        </div>
+
+        <div class="inkind-tax">
+          <h3>Tax Deductibility</h3>
+          <p>
+            In-kind donations to Bay Tides may be tax-deductible. The IRS allows donors to deduct
+            the fair market value of donated goods. For donations valued over $250, we will provide
+            a written acknowledgment. For donations over $5,000, an independent appraisal may be
+            required.
+          </p>
+          <p>
+            We recommend consulting with your tax advisor regarding the deductibility of your
+            specific donation.
+          </p>
+        </div>
+
+        <div class="inkind-cta">
+          <h3>Have Something to Donate?</h3>
+          <p>Contact us to discuss how your in-kind donation can support Bay conservation.</p>
+          <a href="/contact" class="btn btn-primary btn-large">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .inkind-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .inkind-intro {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .inkind-intro h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .inkind-intro p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .inkind-needs {
+    margin-bottom: 3rem;
+  }
+
+  .inkind-needs h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-navy);
+    text-align: center;
+  }
+
+  .needs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .need-category {
+    background: var(--light-blue);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .need-category h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--primary-navy);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  .need-category h4 svg {
+    color: var(--primary-blue);
+    flex-shrink: 0;
+  }
+
+  .need-category ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .need-category li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.9375rem;
+    color: var(--text-light);
+  }
+
+  .need-category li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.9rem;
+    width: 6px;
+    height: 6px;
+    background: var(--primary-blue);
+    border-radius: 50%;
+  }
+
+  .inkind-process {
+    margin-bottom: 3rem;
+  }
+
+  .inkind-process h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-navy);
+  }
+
+  .inkind-process ol {
+    list-style: none;
+    counter-reset: steps;
+    padding: 0;
+  }
+
+  .inkind-process li {
+    counter-increment: steps;
+    padding: 1rem 0 1rem 3.5rem;
+    position: relative;
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+  }
+
+  .inkind-process li:last-child {
+    border-bottom: none;
+  }
+
+  .inkind-process li::before {
+    content: counter(steps);
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    width: 2rem;
+    height: 2rem;
+    background: var(--primary-navy);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .inkind-tax {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .inkind-tax h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-navy);
+  }
+
+  .inkind-tax p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .inkind-tax p:last-child {
+    margin-bottom: 0;
+  }
+
+  .inkind-cta {
+    text-align: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-color, #e2e8f0);
+  }
+
+  .inkind-cta h3 {
+    margin-bottom: 0.75rem;
+    color: var(--primary-navy);
+  }
+
+  .inkind-cta p {
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+  }
+
+  @media (max-width: 768px) {
+    .needs-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

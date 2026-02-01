@@ -1,0 +1,407 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Stock and Securities Donations',
+    description:
+      'Donate appreciated stocks and securities to Bay Tides for potential tax advantages while supporting Bay conservation.',
+    url: 'https://baytides.org/donate/stocks',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Donate', item: 'https://baytides.org/donate' },
+      { '@type': 'ListItem', position: 3, name: 'Stock Donations' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Stock and Securities Donations"
+  description="Donate appreciated stocks to Bay Tides. Learn about the tax benefits of giving securities and how to transfer your gift."
+  canonicalUrl="https://baytides.org/donate/stocks"
+  structuredData={structuredData}
+>
+  <Breadcrumb
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Donate', href: '/donate' },
+      { label: 'Stock Donations' },
+    ]}
+  />
+
+  <section class="hero hero-page">
+    <div class="container">
+      <h1>Stock Donations</h1>
+      <p>Maximize your impact with appreciated securities</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="stocks-content">
+        <div class="stocks-intro">
+          <h2>Give Appreciated Securities</h2>
+          <p>
+            Donating appreciated stocks, bonds, or mutual fund shares that you've held for more than
+            one year can provide significant tax benefits while supporting Bay Tides' mission to
+            protect the San Francisco Bay.
+          </p>
+        </div>
+
+        <div class="stocks-benefits">
+          <h3>Tax Advantages</h3>
+          <div class="benefits-grid">
+            <div class="benefit-card">
+              <div class="benefit-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="12" y1="1" x2="12" y2="23"></line>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+              <h4>Avoid Capital Gains Tax</h4>
+              <p>
+                When you donate appreciated securities directly, you avoid paying capital gains tax
+                on the increase in value.
+              </p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+              <h4>Full Fair Market Value Deduction</h4>
+              <p>
+                Receive a charitable deduction for the full fair market value of the securities on
+                the date of transfer.
+              </p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                  <polyline points="17 6 23 6 23 12"></polyline>
+                </svg>
+              </div>
+              <h4>Greater Impact</h4>
+              <p>
+                By avoiding capital gains, more of your gift goes directly to supporting Bay
+                conservation efforts.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="stocks-example">
+          <h3>Example: The Power of Stock Giving</h3>
+          <div class="example-comparison">
+            <div class="example-column">
+              <h4>Sell Stock, Then Donate Cash</h4>
+              <ul>
+                <li>Stock value: $10,000</li>
+                <li>Original cost: $4,000</li>
+                <li>Capital gain: $6,000</li>
+                <li>Capital gains tax (20%): -$1,200</li>
+                <li><strong>Net donation: $8,800</strong></li>
+              </ul>
+            </div>
+            <div class="example-column highlight">
+              <h4>Donate Stock Directly</h4>
+              <ul>
+                <li>Stock value: $10,000</li>
+                <li>Capital gains tax: $0</li>
+                <li><strong>Net donation: $10,000</strong></li>
+                <li class="savings">You give 14% more!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="stocks-transfer">
+          <h3>How to Transfer Securities</h3>
+          <p>
+            To donate stocks or other securities, please <a href="/contact">contact us</a> and we will
+            provide you with our brokerage account details and transfer instructions. We accept transfers
+            from most major brokerages.
+          </p>
+          <div class="transfer-info">
+            <p><strong>What we need from you:</strong></p>
+            <ul>
+              <li>Your name and contact information</li>
+              <li>The name and ticker symbol of the security</li>
+              <li>The number of shares you wish to donate</li>
+              <li>Your broker's name and contact information</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="stocks-help">
+          <h3>Important Considerations</h3>
+          <ul>
+            <li>
+              Securities must be held for more than one year to qualify for the full fair market
+              value deduction.
+            </li>
+            <li>
+              The deduction is based on the fair market value on the date the securities are
+              transferred to Bay Tides.
+            </li>
+            <li>Consult with your tax advisor to understand the benefits for your situation.</li>
+            <li>Bay Tides is a 501(c)(3) organization (EIN: 93-3889081).</li>
+          </ul>
+        </div>
+
+        <div class="stocks-cta">
+          <h3>Ready to Give?</h3>
+          <p>Contact us to receive transfer instructions and maximize your charitable impact.</p>
+          <a href="/contact" class="btn btn-primary btn-large">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .stocks-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .stocks-intro {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .stocks-intro h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .stocks-intro p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .stocks-benefits {
+    margin-bottom: 3rem;
+  }
+
+  .stocks-benefits h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-navy);
+    text-align: center;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .benefit-card {
+    background: var(--light-blue);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .benefit-icon {
+    width: 64px;
+    height: 64px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: var(--primary-blue);
+  }
+
+  .benefit-card h4 {
+    color: var(--primary-navy);
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .benefit-card p {
+    font-size: 0.9375rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .stocks-example {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .stocks-example h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-navy);
+    text-align: center;
+  }
+
+  .example-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .example-column {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .example-column.highlight {
+    background: var(--primary-navy);
+    color: white;
+  }
+
+  .example-column h4 {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  .example-column.highlight h4 {
+    color: white;
+  }
+
+  .example-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .example-column li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .example-column.highlight li {
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .example-column li:last-child {
+    border-bottom: none;
+  }
+
+  .example-column .savings {
+    color: #48bb78;
+    font-weight: 700;
+    margin-top: 0.5rem;
+  }
+
+  .stocks-transfer {
+    margin-bottom: 3rem;
+  }
+
+  .stocks-transfer h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-navy);
+  }
+
+  .transfer-info {
+    background: var(--light-blue);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .transfer-info ul {
+    margin: 0.75rem 0 0 1.5rem;
+  }
+
+  .transfer-info li {
+    padding: 0.25rem 0;
+  }
+
+  .stocks-help {
+    background: #fff8e6;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    border-left: 4px solid #f6ad55;
+  }
+
+  .stocks-help h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-navy);
+  }
+
+  .stocks-help ul {
+    margin: 0 0 0 1.5rem;
+  }
+
+  .stocks-help li {
+    padding: 0.5rem 0;
+  }
+
+  .stocks-cta {
+    text-align: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-color, #e2e8f0);
+  }
+
+  .stocks-cta h3 {
+    margin-bottom: 0.75rem;
+    color: var(--primary-navy);
+  }
+
+  .stocks-cta p {
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+  }
+
+  @media (max-width: 768px) {
+    .benefits-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .example-comparison {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -793,6 +793,36 @@
   }
 }
 
+// Clickable giving option links
+.giving-option-link {
+  display: block;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    .giving-option-arrow {
+      transform: translateX(4px);
+      opacity: 1;
+    }
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--focus-ring-color, #005fcc);
+    outline-offset: 2px;
+  }
+}
+
+.giving-option-arrow {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary-blue);
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+
 // ==========================================================================
 // Dark Theme
 // ==========================================================================
