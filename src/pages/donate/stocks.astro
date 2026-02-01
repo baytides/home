@@ -404,4 +404,51 @@ const structuredData = [
       grid-template-columns: 1fr;
     }
   }
+
+  /* Dark mode overrides for light-background elements */
+  :global([data-theme='dark']) .benefit-card {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .benefit-icon {
+    background: var(--bg-primary);
+  }
+
+  :global([data-theme='dark']) .stocks-example {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .example-column {
+    background: var(--bg-primary);
+  }
+
+  :global([data-theme='dark']) .example-column h4 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .example-column li {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .example-column.highlight {
+    background: var(--primary-navy);
+  }
+
+  :global([data-theme='dark']) .transfer-info {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .stocks-help {
+    background: rgba(246, 173, 85, 0.15);
+    border-left-color: #f6ad55;
+  }
+
+  :global([data-theme='dark']) .stocks-help h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .stocks-help li {
+    color: var(--text-dark);
+  }
 </style>
