@@ -1,0 +1,355 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Planned Giving & Bequests',
+    description:
+      'Leave a lasting legacy for the San Francisco Bay through planned giving, bequests, and estate gifts to Bay Tides.',
+    url: 'https://baytides.org/donate/planned-giving',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Donate', item: 'https://baytides.org/donate' },
+      { '@type': 'ListItem', position: 3, name: 'Planned Giving' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Planned Giving & Bequests"
+  description="Create a lasting legacy for the San Francisco Bay through planned giving. Learn about bequests, beneficiary designations, and other ways to include Bay Tides in your estate plans."
+  canonicalUrl="https://baytides.org/donate/planned-giving"
+  structuredData={structuredData}
+>
+  <Breadcrumb
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Donate', href: '/donate' },
+      { label: 'Planned Giving' },
+    ]}
+  />
+
+  <section class="hero hero-page">
+    <div class="container">
+      <h1>Planned Giving</h1>
+      <p>Create a lasting legacy for the San Francisco Bay</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="planned-content">
+        <div class="planned-intro">
+          <h2>Leave a Legacy</h2>
+          <p>
+            A planned gift to Bay Tides ensures that your commitment to protecting the San Francisco
+            Bay continues for generations to come. These gifts allow you to make a significant
+            impact while also providing potential tax benefits for you and your heirs.
+          </p>
+        </div>
+
+        <div class="giving-types">
+          <h3>Ways to Give</h3>
+
+          <div class="giving-type">
+            <h4>Bequest in Your Will or Trust</h4>
+            <p>
+              The simplest way to make a planned gift is to include Bay Tides in your will or living
+              trust. You can designate a specific dollar amount, a percentage of your estate, or the
+              remainder after other bequests are fulfilled.
+            </p>
+            <div class="sample-language">
+              <p><strong>Sample Bequest Language:</strong></p>
+              <blockquote>
+                "I give, devise, and bequeath [specific dollar amount, percentage, or description of
+                property] to Bay Tides, a California nonprofit corporation (EIN: 93-3889081),
+                located at 470 Olema Road, Fairfax, CA 94930, to be used for its general charitable
+                purposes."
+              </blockquote>
+            </div>
+          </div>
+
+          <div class="giving-type">
+            <h4>Beneficiary Designations</h4>
+            <p>
+              Name Bay Tides as a beneficiary of your retirement account, life insurance policy, or
+              bank account. This simple designation can be made without changing your will and can
+              be updated at any time.
+            </p>
+            <ul>
+              <li>IRA, 401(k), or other retirement accounts</li>
+              <li>Life insurance policies</li>
+              <li>Bank or brokerage accounts (TOD/POD)</li>
+              <li>Commercial annuities</li>
+            </ul>
+          </div>
+
+          <div class="giving-type">
+            <h4>Charitable Remainder Trust</h4>
+            <p>
+              A charitable remainder trust provides you or your beneficiaries with income for life
+              or a term of years, with the remainder going to Bay Tides. This can provide an
+              immediate tax deduction and reduce estate taxes.
+            </p>
+          </div>
+
+          <div class="giving-type">
+            <h4>Charitable Lead Trust</h4>
+            <p>
+              A charitable lead trust provides payments to Bay Tides for a period of years, after
+              which the remaining assets pass to your heirs with reduced gift or estate taxes.
+            </p>
+          </div>
+        </div>
+
+        <div class="planned-benefits">
+          <h3>Benefits of Planned Giving</h3>
+          <ul>
+            <li>
+              <strong>Make a larger gift</strong> than you might be able to during your lifetime
+            </li>
+            <li>
+              <strong>Reduce estate taxes</strong> by removing assets from your taxable estate
+            </li>
+            <li>
+              <strong>Maintain flexibility</strong> - you can change your plans if circumstances change
+            </li>
+            <li>
+              <strong>Create a lasting legacy</strong> that reflects your values and priorities
+            </li>
+            <li>
+              <strong>Support the Bay</strong> for generations to come
+            </li>
+          </ul>
+        </div>
+
+        <div class="planned-info">
+          <h3>Organization Information</h3>
+          <dl class="info-list">
+            <div class="info-row">
+              <dt>Legal Name</dt>
+              <dd>Bay Tides</dd>
+            </div>
+            <div class="info-row">
+              <dt>EIN / Tax ID</dt>
+              <dd>93-3889081</dd>
+            </div>
+            <div class="info-row">
+              <dt>Address</dt>
+              <dd>470 Olema Road, Fairfax, CA 94930</dd>
+            </div>
+            <div class="info-row">
+              <dt>Tax Status</dt>
+              <dd>501(c)(3) Public Charity</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="planned-help">
+          <h3>We're Here to Help</h3>
+          <p>
+            If you're considering including Bay Tides in your estate plans, we'd love to hear from
+            you. We can provide additional information and work with you and your advisors to ensure
+            your gift is structured to meet your goals.
+          </p>
+          <p>
+            We recommend consulting with your attorney, financial advisor, or tax professional when
+            making planned giving decisions.
+          </p>
+        </div>
+
+        <div class="planned-cta">
+          <a href="/contact" class="btn btn-primary btn-large">Contact Us</a>
+          <p>Let us know about your planned gift or ask questions</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .planned-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .planned-intro {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .planned-intro h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .planned-intro p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-light);
+  }
+
+  .giving-types {
+    margin-bottom: 3rem;
+  }
+
+  .giving-types > h3 {
+    margin-bottom: 2rem;
+    color: var(--primary-navy);
+    text-align: center;
+  }
+
+  .giving-type {
+    background: var(--light-blue);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .giving-type h4 {
+    color: var(--primary-navy);
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+  }
+
+  .giving-type p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .giving-type ul {
+    margin: 1rem 0 0 1.5rem;
+  }
+
+  .giving-type li {
+    padding: 0.25rem 0;
+  }
+
+  .sample-language {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .sample-language p {
+    margin-bottom: 0.75rem;
+  }
+
+  .sample-language blockquote {
+    margin: 0;
+    padding: 1rem;
+    background: var(--cream);
+    border-left: 4px solid var(--primary-navy);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--text-dark);
+    line-height: 1.7;
+  }
+
+  .planned-benefits {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .planned-benefits h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-navy);
+  }
+
+  .planned-benefits ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .planned-benefits li {
+    padding: 0.75rem 0;
+    padding-left: 2rem;
+    position: relative;
+  }
+
+  .planned-benefits li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1.1rem;
+    width: 8px;
+    height: 8px;
+    background: var(--primary-navy);
+    border-radius: 50%;
+  }
+
+  .planned-info {
+    background: var(--light-blue);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .planned-info h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-navy);
+  }
+
+  .info-list {
+    margin: 0;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .info-row:last-child {
+    border-bottom: none;
+  }
+
+  .info-row dt {
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  .info-row dd {
+    margin: 0;
+    color: var(--text-light);
+    text-align: right;
+  }
+
+  .planned-help {
+    margin-bottom: 3rem;
+  }
+
+  .planned-help h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-navy);
+  }
+
+  .planned-help p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .planned-cta {
+    text-align: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-color, #e2e8f0);
+  }
+
+  .planned-cta p {
+    margin-top: 1rem;
+    color: var(--text-light);
+    font-size: 0.9375rem;
+  }
+</style>

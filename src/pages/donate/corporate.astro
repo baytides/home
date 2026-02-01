@@ -1,0 +1,466 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Corporate Partnerships & Sponsorships',
+    description:
+      "Partner with Bay Tides to demonstrate your company's commitment to environmental stewardship and community impact.",
+    url: 'https://baytides.org/donate/corporate',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Donate', item: 'https://baytides.org/donate' },
+      { '@type': 'ListItem', position: 3, name: 'Corporate Partnerships' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Corporate Partnerships & Sponsorships"
+  description="Partner with Bay Tides to support Bay Area environmental conservation. Explore sponsorship opportunities, employee engagement programs, and corporate giving options."
+  canonicalUrl="https://baytides.org/donate/corporate"
+  structuredData={structuredData}
+>
+  <Breadcrumb
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Donate', href: '/donate' },
+      { label: 'Corporate Partnerships' },
+    ]}
+  />
+
+  <section class="hero hero-page">
+    <div class="container">
+      <h1>Corporate Partnerships</h1>
+      <p>Align your brand with environmental stewardship</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="corporate-content">
+        <div class="corporate-intro">
+          <h2>Partner With Us</h2>
+          <p>
+            Bay Tides partners with businesses of all sizes to protect and restore the San Francisco
+            Bay. A corporate partnership demonstrates your commitment to environmental
+            sustainability, engages employees, and strengthens your connection to the Bay Area
+            community.
+          </p>
+        </div>
+
+        <div class="partnership-options">
+          <h3>Partnership Opportunities</h3>
+
+          <div class="partnership-card">
+            <div class="partnership-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+              </svg>
+            </div>
+            <div class="partnership-details">
+              <h4>Program Sponsorship</h4>
+              <p>
+                Sponsor specific Bay Tides programs such as shoreline cleanups, educational
+                workshops, or digital tool development. Your company receives recognition and the
+                opportunity to engage directly with program activities.
+              </p>
+            </div>
+          </div>
+
+          <div class="partnership-card">
+            <div class="partnership-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <div class="partnership-details">
+              <h4>Employee Volunteer Events</h4>
+              <p>
+                Organize team volunteer days for shoreline restoration, habitat cleanup, or
+                community education events. We handle logistics and provide all necessary materials
+                and training.
+              </p>
+            </div>
+          </div>
+
+          <div class="partnership-card">
+            <div class="partnership-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                <line x1="1" y1="10" x2="23" y2="10"></line>
+              </svg>
+            </div>
+            <div class="partnership-details">
+              <h4>Matching Gift Programs</h4>
+              <p>
+                Amplify your employees' charitable giving by matching their donations to Bay Tides.
+                We can help you promote the program and track employee participation.
+              </p>
+            </div>
+          </div>
+
+          <div class="partnership-card">
+            <div class="partnership-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path
+                  d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                >
+                </path>
+              </svg>
+            </div>
+            <div class="partnership-details">
+              <h4>Cause Marketing</h4>
+              <p>
+                Tie product sales or services to Bay Tides donations. A portion of proceeds supports
+                our mission while showcasing your company's values to customers.
+              </p>
+            </div>
+          </div>
+
+          <div class="partnership-card">
+            <div class="partnership-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                >
+                </polygon>
+              </svg>
+            </div>
+            <div class="partnership-details">
+              <h4>Annual Corporate Giving</h4>
+              <p>
+                Make an annual gift to support Bay Tides' general operations. Corporate donors
+                receive recognition on our website and in communications.
+              </p>
+            </div>
+          </div>
+
+          <div class="partnership-card">
+            <div class="partnership-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            </div>
+            <div class="partnership-details">
+              <h4>Technology Partnerships</h4>
+              <p>
+                Support our open-source digital tools like Bay Navigator with software licenses,
+                cloud credits, or technical expertise. Ideal for tech companies.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="corporate-benefits">
+          <h3>Benefits of Partnership</h3>
+          <ul>
+            <li>
+              <strong>Brand visibility</strong> - Recognition on our website, social media, and printed
+              materials
+            </li>
+            <li>
+              <strong>Employee engagement</strong> - Meaningful volunteer opportunities that boost morale
+              and teamwork
+            </li>
+            <li>
+              <strong>Community impact</strong> - Direct connection to tangible environmental outcomes
+              in the Bay Area
+            </li>
+            <li>
+              <strong>ESG reporting</strong> - Documented environmental and social contributions for sustainability
+              reports
+            </li>
+            <li>
+              <strong>Tax benefits</strong> - Corporate charitable contributions are tax-deductible
+            </li>
+            <li>
+              <strong>Networking</strong> - Connect with other community-minded businesses and leaders
+            </li>
+          </ul>
+        </div>
+
+        <div class="corporate-process">
+          <h3>Getting Started</h3>
+          <ol role="list">
+            <li>
+              <strong>Reach out</strong> to discuss your company's interests and goals.
+            </li>
+            <li>
+              <strong>We'll customize</strong> a partnership package that aligns with your objectives
+              and budget.
+            </li>
+            <li>
+              <strong>Formalize the partnership</strong> with a simple agreement outlining benefits and
+              commitments.
+            </li>
+            <li>
+              <strong>Launch and promote</strong> the partnership to maximize impact and visibility.
+            </li>
+          </ol>
+        </div>
+
+        <div class="corporate-cta">
+          <h3>Let's Talk</h3>
+          <p>We'd love to explore how a partnership with Bay Tides can benefit your company.</p>
+          <a href="/contact" class="btn btn-primary btn-large">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .corporate-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .corporate-intro {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .corporate-intro h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .corporate-intro p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .partnership-options {
+    margin-bottom: 3rem;
+  }
+
+  .partnership-options > h3 {
+    margin-bottom: 2rem;
+    color: var(--primary-navy);
+    text-align: center;
+  }
+
+  .partnership-card {
+    display: flex;
+    gap: 1.5rem;
+    background: var(--light-blue);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .partnership-icon {
+    width: 64px;
+    height: 64px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--primary-navy);
+  }
+
+  .partnership-details h4 {
+    color: var(--primary-navy);
+    margin-bottom: 0.5rem;
+    font-size: 1.0625rem;
+  }
+
+  .partnership-details p {
+    font-size: 0.9375rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .corporate-benefits {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .corporate-benefits h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-navy);
+  }
+
+  .corporate-benefits ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .corporate-benefits li {
+    padding: 0.75rem 0;
+    padding-left: 2rem;
+    position: relative;
+  }
+
+  .corporate-benefits li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1.1rem;
+    width: 8px;
+    height: 8px;
+    background: var(--primary-navy);
+    border-radius: 50%;
+  }
+
+  .corporate-process {
+    margin-bottom: 3rem;
+  }
+
+  .corporate-process h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-navy);
+  }
+
+  .corporate-process ol {
+    list-style: none;
+    padding: 0;
+    counter-reset: steps;
+  }
+
+  .corporate-process li {
+    counter-increment: steps;
+    padding: 1rem 0 1rem 3.5rem;
+    position: relative;
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+  }
+
+  .corporate-process li:last-child {
+    border-bottom: none;
+  }
+
+  .corporate-process li::before {
+    content: counter(steps);
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    width: 2rem;
+    height: 2rem;
+    background: var(--primary-navy);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .corporate-cta {
+    text-align: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-color, #e2e8f0);
+  }
+
+  .corporate-cta h3 {
+    margin-bottom: 0.75rem;
+    color: var(--primary-navy);
+  }
+
+  .corporate-cta p {
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+  }
+
+  @media (max-width: 600px) {
+    .partnership-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .partnership-icon {
+      width: 48px;
+      height: 48px;
+    }
+
+    .partnership-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+</style>
