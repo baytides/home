@@ -30,8 +30,13 @@
     <!-- Stripe.js -->
     <script src="https://js.stripe.com/v3/"></script>
 
-    <!-- jsPDF for receipt generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- jsPDF for receipt generation (with SRI hash for security) -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+      integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </head>
   <body>
     <!-- Minimal Header -->

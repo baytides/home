@@ -216,14 +216,25 @@ export interface BulkValidationResult {
 }
 
 /**
- * Validates email format using RFC 5322 compliant regex
+ * Validates email format using a simplified, efficient regex
+ * Avoids ReDoS vulnerabilities while catching most invalid emails
  */
 function isValidEmailFormat(email: string): boolean {
-  // RFC 5322 compliant regex for email validation
-  const emailRegex =
-    /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/i;
+  // Simplified email regex that avoids catastrophic backtracking
+  // Validates: local-part@domain.tld format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  return emailRegex.test(email);
+  if (!emailRegex.test(email)) {
+    return false;
+  }
+
+  // Additional validation: check reasonable lengths
+  const [localPart, domain] = email.split('@');
+  if (localPart.length > 64 || domain.length > 255) {
+    return false;
+  }
+
+  return true;
 }
 
 /**

@@ -284,6 +284,59 @@
 }
 
 // ==========================================================================
+// About Video Hero
+// ==========================================================================
+
+.about-video-hero {
+  position: relative;
+
+  &::before,
+  &::after {
+    display: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.about-hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: 0;
+}
+
+.about-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 54, 93, 0.75) 0%,
+    rgba(43, 108, 176, 0.7) 50%,
+    rgba(35, 78, 122, 0.65) 100%
+  );
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-hero-video,
+  .about-hero-overlay {
+    display: none;
+  }
+}
+
+// ==========================================================================
 // Donate Video Hero
 // ==========================================================================
 
@@ -402,6 +455,7 @@
   .volunteer-hero-overlay,
   .contact-hero-overlay,
   .projects-hero-overlay,
+  .about-hero-overlay,
   .donate-hero-overlay {
     background: linear-gradient(
       135deg,

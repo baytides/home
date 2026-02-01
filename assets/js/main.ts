@@ -709,29 +709,68 @@ function showToast(message: string, type: ToastType = 'info'): void {
   toast.className = `toast ${type}`;
   toast.setAttribute('role', 'alert');
 
-  const iconMap: Record<ToastType, string> = {
-    success: `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-      <path d="M20 6L9 17l-5-5"/>
-    </svg>`,
-    error: `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-      <circle cx="12" cy="12" r="10"/>
-      <path d="M15 9l-6 6M9 9l6 6"/>
-    </svg>`,
-    info: `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-      <circle cx="12" cy="12" r="10"/>
-      <path d="M12 16v-4M12 8h.01"/>
-    </svg>`,
-  };
+  // Create icon using DOM methods (static SVG content is safe)
+  const iconWrapper = document.createElement('span');
+  iconWrapper.className = 'toast-icon-wrapper';
+  const iconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  iconSvg.setAttribute('class', 'toast-icon');
+  iconSvg.setAttribute('viewBox', '0 0 24 24');
+  iconSvg.setAttribute('fill', 'none');
+  iconSvg.setAttribute('stroke', 'currentColor');
+  iconSvg.setAttribute('stroke-width', '2');
+  iconSvg.setAttribute('aria-hidden', 'true');
 
-  toast.innerHTML = `
-    ${iconMap[type]}
-    <span class="toast-message">${message}</span>
-    <button type="button" class="toast-close" aria-label="Dismiss">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true">
-        <path d="M18 6L6 18M6 6l12 12"/>
-      </svg>
-    </button>
-  `;
+  if (type === 'success') {
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M20 6L9 17l-5-5');
+    iconSvg.appendChild(path);
+  } else if (type === 'error') {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', '12');
+    circle.setAttribute('cy', '12');
+    circle.setAttribute('r', '10');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M15 9l-6 6M9 9l6 6');
+    iconSvg.appendChild(circle);
+    iconSvg.appendChild(path);
+  } else {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', '12');
+    circle.setAttribute('cy', '12');
+    circle.setAttribute('r', '10');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M12 16v-4M12 8h.01');
+    iconSvg.appendChild(circle);
+    iconSvg.appendChild(path);
+  }
+  iconWrapper.appendChild(iconSvg);
+
+  // Create message element with safe textContent (prevents XSS)
+  const messageSpan = document.createElement('span');
+  messageSpan.className = 'toast-message';
+  messageSpan.textContent = message;
+
+  // Create close button using DOM methods
+  const closeBtn = document.createElement('button');
+  closeBtn.type = 'button';
+  closeBtn.className = 'toast-close';
+  closeBtn.setAttribute('aria-label', 'Dismiss');
+  const closeSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  closeSvg.setAttribute('viewBox', '0 0 24 24');
+  closeSvg.setAttribute('fill', 'none');
+  closeSvg.setAttribute('stroke', 'currentColor');
+  closeSvg.setAttribute('stroke-width', '2');
+  closeSvg.setAttribute('width', '16');
+  closeSvg.setAttribute('height', '16');
+  closeSvg.setAttribute('aria-hidden', 'true');
+  const closePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  closePath.setAttribute('d', 'M18 6L6 18M6 6l12 12');
+  closeSvg.appendChild(closePath);
+  closeBtn.appendChild(closeSvg);
+
+  toast.appendChild(iconWrapper);
+  toast.appendChild(messageSpan);
+  toast.appendChild(closeBtn);
 
   container.appendChild(toast);
 
@@ -1346,6 +1385,24 @@ function initDonationForm(): void {
     }
   }
 
+  // Helper to create a summary row safely
+  function createSummaryRow(label: string, value: string, extraClass?: string): HTMLDivElement {
+    const row = document.createElement('div');
+    row.className = 'summary-row';
+
+    const labelSpan = document.createElement('span');
+    labelSpan.className = 'summary-label';
+    labelSpan.textContent = label;
+
+    const valueSpan = document.createElement('span');
+    valueSpan.className = extraClass ? `summary-value ${extraClass}` : 'summary-value';
+    valueSpan.textContent = value;
+
+    row.appendChild(labelSpan);
+    row.appendChild(valueSpan);
+    return row;
+  }
+
   // Create donation summary
   function createDonationSummary(): void {
     // Remove existing summary if any
@@ -1358,38 +1415,20 @@ function initDonationForm(): void {
     const typeLabel = donationType === 'monthly' ? 'Monthly donation' : 'One-time donation';
     const fund = fundSelect?.value || 'General Fund';
 
-    let html = `
-      <div class="summary-row">
-        <span class="summary-label">Type</span>
-        <span class="summary-value">${typeLabel}</span>
-      </div>
-      <div class="summary-row">
-        <span class="summary-label">Fund</span>
-        <span class="summary-value">${fund}</span>
-      </div>
-    `;
+    // Add rows using safe DOM methods (textContent prevents XSS)
+    summary.appendChild(createSummaryRow('Type', typeLabel));
+    summary.appendChild(createSummaryRow('Fund', fund));
 
     if (tributeTypeSelect?.value && tributeTypeSelect.value !== 'none') {
       const tributeLabel = tributeTypeSelect.value === 'in_honor' ? 'In honor of' : 'In memory of';
       const tributeName = tributeNameInput?.value || '';
       if (tributeName) {
-        html += `
-          <div class="summary-row">
-            <span class="summary-label">${tributeLabel}</span>
-            <span class="summary-value">${tributeName}</span>
-          </div>
-        `;
+        summary.appendChild(createSummaryRow(tributeLabel, tributeName));
       }
     }
 
-    html += `
-      <div class="summary-row">
-        <span class="summary-label">Amount</span>
-        <span class="summary-value summary-total">$${selectedAmount}${donationType === 'monthly' ? '/month' : ''}</span>
-      </div>
-    `;
-
-    summary.innerHTML = html;
+    const amountText = `$${selectedAmount}${donationType === 'monthly' ? '/month' : ''}`;
+    summary.appendChild(createSummaryRow('Amount', amountText, 'summary-total'));
 
     // Insert after payment section header
     const header = paymentSection?.querySelector('.payment-section-header');

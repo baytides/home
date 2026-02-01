@@ -38,14 +38,28 @@ const structuredData = [
   description="Learn about Bay Tides, a community-driven nonprofit using technology to protect the San Francisco Bay's environment through education, community mobilization, and innovation."
   canonicalUrl="https://baytides.org/about"
   structuredData={structuredData}
-  preloadImages={['/assets/images/hero-bg.webp']}
+  preloadImages={['/assets/video/about-hero-poster.webp']}
 >
   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'About' }]} />
 
-  <PageHero
-    title="About Bay Tides"
-    subtitle="Building a grassroots movement rooted in respect for our environment"
-  />
+  <!-- Video Hero -->
+  <section class="hero hero-page about-video-hero">
+    <video
+      class="about-hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="/assets/video/about-hero-poster.webp"
+    >
+      <source src="/assets/video/about-hero.webm" type="video/webm" />
+    </video>
+    <div class="about-hero-overlay"></div>
+    <div class="container">
+      <h1>About Bay Tides</h1>
+      <p>Building a grassroots movement rooted in respect for our environment</p>
+    </div>
+  </section>
 
   <!-- Mission Section -->
   <section class="content-section">
