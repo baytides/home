@@ -371,4 +371,24 @@ const structuredData = [
     color: var(--text-light);
     font-size: 0.9375rem;
   }
+
+  /* Dark mode overrides for light-background elements */
+  :global([data-theme='dark']) .matching-search {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .search-input-wrapper input {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .popular-companies li {
+    background: var(--bg-primary);
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .matching-help {
+    background: var(--bg-secondary);
+  }
 </style>

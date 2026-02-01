@@ -463,4 +463,17 @@ const structuredData = [
       height: 24px;
     }
   }
+
+  /* Dark mode overrides for light-background elements */
+  :global([data-theme='dark']) .partnership-card {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .partnership-icon {
+    background: var(--bg-primary);
+  }
+
+  :global([data-theme='dark']) .corporate-benefits {
+    background: var(--bg-secondary);
+  }
 </style>
