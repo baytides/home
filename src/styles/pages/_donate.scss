@@ -757,25 +757,41 @@
   }
 }
 
-// Giving options grid
-.giving-options {
+// ==========================================================================
+// Ways to Give Section - Card Grid with Icons and Buttons
+// ==========================================================================
+
+.ways-to-give-section {
+  background: var(--light-blue, #f0f7ff);
+}
+
+.ways-to-give-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   margin-top: 2.5rem;
 }
 
-.giving-option {
-  padding: 1.75rem;
+.way-to-give-card {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
   background: #fff;
   border-radius: 16px;
   border: 1px solid #e2e8f0;
   transition: all 0.3s ease;
+  text-align: center;
 
   &:hover {
     border-color: var(--accent-blue);
     box-shadow: 0 10px 30px -10px rgba(43, 108, 176, 0.15);
     transform: translateY(-4px);
+
+    .way-to-give-icon {
+      transform: scale(1.1);
+      background: var(--primary-blue);
+      color: #fff;
+    }
   }
 
   h3 {
@@ -789,22 +805,90 @@
     font-size: 0.9375rem;
     color: var(--text-light);
     line-height: 1.6;
-    margin: 0;
+    margin: 0 0 1.5rem;
+    flex-grow: 1;
+  }
+
+  .btn {
+    align-self: center;
+    min-width: 140px;
   }
 }
 
-// Clickable giving option links
-.giving-option-link {
-  display: block;
-  text-decoration: none;
-  position: relative;
-  cursor: pointer;
+.way-to-give-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--light-blue, #f0f7ff);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  color: var(--primary-navy);
+  transition: all 0.3s ease;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+// Featured card variant (Corporate Partnerships)
+.way-to-give-card-featured {
+  background: linear-gradient(145deg, var(--primary-navy) 0%, #234e7a 100%);
+  border-color: transparent;
+
+  h3 {
+    color: #fff;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .way-to-give-icon {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
 
   &:hover {
-    .giving-option-arrow {
-      transform: translateX(4px);
-      opacity: 1;
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px -10px rgba(26, 54, 93, 0.4);
+
+    .way-to-give-icon {
+      background: rgba(255, 255, 255, 0.25);
+      color: #fff;
     }
+  }
+
+  .btn-primary {
+    background: #fff;
+    color: var(--primary-navy);
+
+    &:hover {
+      background: var(--cream, #f5f0e8);
+    }
+  }
+}
+
+// Outline button style for cards
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--primary-navy);
+  background: transparent;
+  border: 2px solid var(--primary-navy);
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--primary-navy);
+    color: #fff;
   }
 
   &:focus-visible {
@@ -813,14 +897,23 @@
   }
 }
 
-.giving-option-arrow {
-  position: absolute;
-  right: 1.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--primary-blue);
-  opacity: 0.5;
-  transition: all 0.2s ease;
+// Help text at bottom
+.ways-to-give-help {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+  p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 1.0625rem;
+    color: var(--text-dark);
+    margin: 0;
+  }
 }
 
 // ==========================================================================
@@ -942,21 +1035,72 @@
     border-top-color: rgba(255, 255, 255, 0.1);
   }
 
-  .giving-option {
+  .impact-stats {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  // Ways to Give section dark theme
+  .ways-to-give-section {
+    background: var(--bg-secondary, #1a202c);
+  }
+
+  .way-to-give-card {
     background: var(--card-bg);
     border-color: rgba(255, 255, 255, 0.05);
 
     &:hover {
       border-color: var(--accent-blue);
+
+      .way-to-give-icon {
+        background: var(--accent-blue);
+      }
     }
 
     h3 {
-      color: var(--primary-blue);
+      color: var(--accent-blue);
     }
   }
 
-  .impact-stats {
+  .way-to-give-icon {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--accent-blue);
+  }
+
+  .way-to-give-card-featured {
+    background: linear-gradient(145deg, #1a365d 0%, #2d4a6f 100%);
     border-color: rgba(255, 255, 255, 0.1);
+
+    .way-to-give-icon {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--accent-blue);
+    }
+
+    &:hover .way-to-give-icon {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: #1a202c;
+    }
+  }
+
+  .btn-outline {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+
+    &:hover {
+      background: var(--accent-blue);
+      color: #1a202c;
+    }
+  }
+
+  .ways-to-give-help {
+    border-top-color: rgba(255, 255, 255, 0.1);
+
+    p {
+      color: var(--text-light);
+    }
   }
 }
 
@@ -981,8 +1125,44 @@
     }
   }
 
-  .giving-options {
+  .ways-to-give-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // Make featured card span full width on tablet
+  .way-to-give-card-featured {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .ways-to-give-grid {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .way-to-give-card {
+    padding: 1.5rem;
+  }
+
+  .way-to-give-card-featured {
+    grid-column: span 1;
+  }
+
+  .way-to-give-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 1rem;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .ways-to-give-help p {
+    flex-direction: column;
+    gap: 0.75rem;
   }
 }
 
