@@ -34,14 +34,28 @@ const structuredData = [
   description="Join Bay Tides as a volunteer and help protect the San Francisco Bay through shoreline cleanups, habitat restoration, and community events."
   canonicalUrl="https://baytides.org/volunteer"
   structuredData={structuredData}
-  preloadImages={['/assets/images/hero-bg.webp']}
+  preloadImages={['/assets/video/volunteer-hero-poster.webp']}
 >
   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Volunteer' }]} />
 
-  <PageHero
-    title="Volunteer With Us"
-    subtitle="Join our community of dedicated environmental stewards"
-  />
+  <!-- Video Hero -->
+  <section class="hero hero-page volunteer-video-hero">
+    <video
+      class="volunteer-hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="/assets/video/volunteer-hero-poster.webp"
+    >
+      <source src="/assets/video/volunteer-hero.webm" type="video/webm" />
+    </video>
+    <div class="volunteer-hero-overlay"></div>
+    <div class="container">
+      <h1>Volunteer With Us</h1>
+      <p>Join our community of dedicated environmental stewards</p>
+    </div>
+  </section>
 
   <!-- Intro -->
   <section class="content-section">
