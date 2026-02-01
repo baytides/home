@@ -67,27 +67,9 @@ const structuredData = [
 
         <div class="matching-widget">
           <div class="matching-search-container">
-            <label class="search-label" for="dd-input">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-              </svg>
-              Search for your employer
-            </label>
             <!-- Double the Donation 360MatchPro Plugin -->
             <link href="https://doublethedonation.com/api/css/ddplugin.css" rel="stylesheet" />
-            <div id="dd-company-name-input" class="dtd-widget-container"></div>
-            <div id="dd-container" class="dtd-company-info-container"></div>
+            <div id="dd-container" class="dtd-widget-container"></div>
             <script is:inline>
               var DDCONF = { API_KEY: '13qDoFLXlus5V13X' };
             </script>
@@ -176,21 +158,6 @@ const structuredData = [
     margin: 0 auto;
   }
 
-  .search-label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--primary-navy);
-    margin-bottom: 1rem;
-  }
-
-  .search-label svg {
-    flex-shrink: 0;
-    color: var(--primary-blue);
-  }
-
   /* Double the Donation Widget Container */
   .dtd-widget-container {
     position: relative;
@@ -199,15 +166,42 @@ const structuredData = [
 
   /*
    * Override DTD plugin default styles
-   * The plugin uses #dd-company-name-input as the container
+   * The plugin renders everything inside #dd-container
    */
-  #dd-company-name-input {
+  #dd-container {
     font-family: inherit;
   }
 
-  /* Search input styling - override DTD defaults */
-  #dd-company-name-input input,
-  #dd-company-name-input input[type='text'] {
+  /* Ensure all text has good contrast (dark text on white backgrounds) */
+  #dd-container,
+  #dd-container * {
+    color: #1a202c;
+  }
+
+  /* Style headings */
+  #dd-container h3,
+  #dd-container h4 {
+    color: #1a365d !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  #dd-container p {
+    color: #1a202c !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Style links */
+  #dd-container a {
+    color: #1e40af !important;
+  }
+
+  #dd-container a:hover {
+    color: #1e3a8a !important;
+  }
+
+  /* Style the search input */
+  #dd-container input,
+  #dd-container input[type='text'] {
     width: 100% !important;
     padding: 1rem 1.25rem !important;
     font-size: 1rem !important;
@@ -217,43 +211,35 @@ const structuredData = [
     background: #fff !important;
     color: #1a202c !important;
     box-sizing: border-box !important;
-    -webkit-appearance: none !important;
-    appearance: none !important;
-    height: auto !important;
-    line-height: 1.5 !important;
   }
 
-  #dd-company-name-input input:focus,
-  #dd-company-name-input input[type='text']:focus {
+  #dd-container input:focus,
+  #dd-container input[type='text']:focus {
     outline: none !important;
-    border-color: var(--primary-blue) !important;
+    border-color: #2b6cb0 !important;
     box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15) !important;
   }
 
-  #dd-company-name-input input::placeholder,
-  #dd-company-name-input input[type='text']::placeholder {
+  #dd-container input::placeholder,
+  #dd-container input[type='text']::placeholder {
     color: #718096 !important;
   }
 
-  /* Dropdown results styling - DTD uses ul for company list */
-  #dd-company-name-input ul {
+  /* Style dropdown results */
+  #dd-container ul {
     list-style: none !important;
     margin: 0 !important;
     padding: 0 !important;
     background: #fff !important;
-    border: 2px solid var(--primary-blue) !important;
+    border: 2px solid #2b6cb0 !important;
     border-top: none !important;
     border-radius: 0 0 12px 12px !important;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
     max-height: 300px !important;
     overflow-y: auto !important;
-    position: absolute !important;
-    z-index: 1000 !important;
-    width: 100% !important;
-    left: 0 !important;
   }
 
-  #dd-company-name-input li {
+  #dd-container li {
     padding: 0.875rem 1.25rem !important;
     cursor: pointer !important;
     color: #1a202c !important;
@@ -263,92 +249,29 @@ const structuredData = [
     margin: 0 !important;
   }
 
-  #dd-company-name-input li:last-child {
+  #dd-container li:last-child {
     border-bottom: none !important;
     border-radius: 0 0 10px 10px !important;
   }
 
-  #dd-company-name-input li:hover {
+  #dd-container li:hover {
     background: #f0f7ff !important;
   }
 
-  /* Ensure good text contrast on all widget elements */
-  #dd-company-name-input,
-  #dd-company-name-input * {
-    color: #1a202c;
-  }
-
-  #dd-company-name-input a {
-    color: #1e40af !important;
-    text-decoration: underline !important;
-  }
-
-  #dd-company-name-input a:hover {
-    color: #1e3a8a !important;
-  }
-
-  /* Company info container - displays after selection */
-  .dtd-company-info-container {
-    margin-top: 1.5rem;
-  }
-
-  #dd-container {
-    font-family: inherit;
-  }
-
-  /* Style the company info panel */
-  #dd-container .dd-company-info,
-  #dd-container > div {
-    padding: 1.5rem !important;
-    background: #f0f7ff !important;
-    border-radius: 12px !important;
-    border: 1px solid #e2e8f0 !important;
-  }
-
-  /* Ensure text contrast in company info */
-  #dd-container,
-  #dd-container * {
-    color: #1a202c;
-  }
-
-  #dd-container h3,
-  #dd-container h4 {
-    color: var(--primary-navy) !important;
-    margin-bottom: 0.75rem !important;
-  }
-
-  #dd-container p {
-    color: #1a202c !important;
-    line-height: 1.6 !important;
-  }
-
-  #dd-container a {
-    color: #1e40af !important;
-    text-decoration: underline !important;
-  }
-
-  #dd-container a:hover {
-    color: #1e3a8a !important;
-  }
-
-  /* Style buttons in company info */
-  #dd-container .btn,
-  #dd-container button,
-  #dd-container a.button {
+  /* Style buttons */
+  #dd-container button {
     display: inline-block !important;
     padding: 0.75rem 1.5rem !important;
-    background: var(--primary-blue) !important;
+    background: #2b6cb0 !important;
     color: #fff !important;
+    border: none !important;
     border-radius: 8px !important;
-    text-decoration: none !important;
     font-weight: 600 !important;
-    margin-top: 1rem !important;
+    cursor: pointer !important;
   }
 
-  #dd-container .btn:hover,
-  #dd-container button:hover,
-  #dd-container a.button:hover {
-    background: var(--primary-navy) !important;
+  #dd-container button:hover {
+    background: #1a365d !important;
   }
 
   /* Mobile Responsive */
