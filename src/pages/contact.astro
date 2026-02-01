@@ -285,33 +285,43 @@ const structuredData = [
       interactive: false,
     });
 
-    const bayAreaCounties = [
-      '06001',
-      '06013',
-      '06041',
-      '06055',
-      '06075',
-      '06081',
-      '06085',
-      '06087',
-      '06095',
-      '06097',
-    ];
+    // Bay Area counties approximate bounding box coordinates
+    const bayAreaBounds: [number, number, number, number] = [-123.5, 36.9, -121.0, 38.9];
 
     map.on('load', () => {
-      map.addSource('counties', {
-        type: 'vector',
-        url: 'mapbox://mapbox.82pkq93d',
+      // Add a simple highlight rectangle for the Bay Area region
+      map.addSource('bay-area-region', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Polygon',
+            coordinates: [
+              [
+                [-123.1, 37.0],
+                [-121.5, 37.0],
+                [-121.2, 37.4],
+                [-121.3, 38.0],
+                [-121.6, 38.3],
+                [-122.0, 38.5],
+                [-122.5, 38.5],
+                [-122.9, 38.3],
+                [-123.1, 38.0],
+                [-123.3, 37.6],
+                [-123.1, 37.0],
+              ],
+            ],
+          },
+        },
       });
 
       map.addLayer(
         {
           id: 'bay-area-fill',
           type: 'fill',
-          source: 'counties',
-          'source-layer': 'original',
-          paint: { 'fill-color': '#2d6a4f', 'fill-opacity': 0.3 },
-          filter: ['in', 'FIPS', ...bayAreaCounties],
+          source: 'bay-area-region',
+          paint: { 'fill-color': '#2d6a4f', 'fill-opacity': 0.2 },
         },
         'waterway-label'
       );
@@ -320,13 +330,14 @@ const structuredData = [
         {
           id: 'bay-area-borders',
           type: 'line',
-          source: 'counties',
-          'source-layer': 'original',
-          paint: { 'line-color': '#1b4332', 'line-width': 1.5 },
-          filter: ['in', 'FIPS', ...bayAreaCounties],
+          source: 'bay-area-region',
+          paint: { 'line-color': '#1b4332', 'line-width': 2 },
         },
         'waterway-label'
       );
+
+      // Add a marker at the approximate center
+      new mapboxgl.Marker({ color: '#1b4332' }).setLngLat([-122.1, 37.75]).addTo(map);
     });
   }
 

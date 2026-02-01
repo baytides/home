@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v4';
+const CACHE_VERSION = 'v5';
 const STATIC_CACHE = `baytides-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `baytides-dynamic-${CACHE_VERSION}`;
 const IMAGE_CACHE = `baytides-images-${CACHE_VERSION}`;
@@ -98,19 +98,28 @@ const strategies = {
   // Stale while revalidate (for dynamic content)
   staleWhileRevalidate: async (request, cacheName) => {
     const cached = await caches.match(request);
+
+    // Start the fetch in the background
     const fetchPromise = fetch(request)
-      .then((response) => {
+      .then(async (response) => {
         if (response.ok) {
-          caches.open(cacheName).then((cache) => {
-            cache.put(request, response.clone());
-            trimCache(cacheName, MAX_DYNAMIC_ITEMS);
-          });
+          const responseToCache = response.clone();
+          const cache = await caches.open(cacheName);
+          await cache.put(request, responseToCache);
+          trimCache(cacheName, MAX_DYNAMIC_ITEMS);
         }
         return response;
       })
       .catch(() => null);
 
-    return cached || fetchPromise;
+    // If we have a cached response, return it immediately
+    // The fetch continues in the background to update the cache
+    if (cached) {
+      return cached;
+    }
+
+    // No cache, wait for the network
+    return fetchPromise;
   },
 };
 
