@@ -67,7 +67,7 @@ const structuredData = [
 
         <div class="matching-widget">
           <div class="matching-search-container">
-            <label for="employer-search" class="search-label">
+            <label class="search-label" for="dd-input">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -84,16 +84,14 @@ const structuredData = [
               </svg>
               Search for your employer
             </label>
-            <div class="search-input-wrapper">
-              <input
-                type="text"
-                id="employer-search"
-                placeholder="Enter your company name..."
-                autocomplete="off"
-              />
-              <button type="button" id="search-btn" class="btn btn-primary">Search</button>
-            </div>
-            <div id="search-results" class="search-results" aria-live="polite"></div>
+            <!-- Double the Donation 360MatchPro Plugin -->
+            <div id="dd-container" class="dtd-widget-container"></div>
+            <script
+              src="https://doublethedonation.com/api/js/ddplugin.js"
+              id="double-the-donation-script"
+              data-ddkey="13qDoFLXlus5V13X"
+            >
+            </script>
           </div>
         </div>
 
@@ -138,167 +136,6 @@ const structuredData = [
   </section>
 </BaseLayout>
 
-<script is:inline>
-  (function () {
-    const API_KEY = '13qDoFLXlus5V13X';
-    const searchInput = document.getElementById('employer-search');
-    const searchBtn = document.getElementById('search-btn');
-    const resultsContainer = document.getElementById('search-results');
-
-    let debounceTimer;
-
-    function clearResults() {
-      while (resultsContainer.firstChild) {
-        resultsContainer.removeChild(resultsContainer.firstChild);
-      }
-    }
-
-    function createLoadingState() {
-      clearResults();
-      const loading = document.createElement('div');
-      loading.className = 'search-loading';
-      loading.textContent = 'Searching...';
-      resultsContainer.appendChild(loading);
-    }
-
-    function createNoResults(query) {
-      clearResults();
-      const noResults = document.createElement('div');
-      noResults.className = 'no-results';
-
-      const icon = document.createElement('div');
-      icon.className = 'no-results-icon';
-      icon.textContent = '?';
-      noResults.appendChild(icon);
-
-      const text = document.createElement('p');
-      text.textContent = 'No matching companies found for "' + query + '"';
-      noResults.appendChild(text);
-
-      const hint = document.createElement('p');
-      hint.className = 'no-results-hint';
-      hint.textContent = 'Try a different spelling or search for your parent company';
-      noResults.appendChild(hint);
-
-      resultsContainer.appendChild(noResults);
-    }
-
-    function createErrorState() {
-      clearResults();
-      const error = document.createElement('div');
-      error.className = 'search-error';
-      error.textContent = 'Unable to search at this time. Please try again later.';
-      resultsContainer.appendChild(error);
-    }
-
-    function createCompanyResult(company) {
-      const hasMatching =
-        company.matching_gift_offered === true || company.matching_gift_offered === 'true';
-
-      const result = document.createElement('div');
-      result.className = 'company-result';
-
-      const info = document.createElement('div');
-      info.className = 'company-info';
-
-      const name = document.createElement('span');
-      name.className = 'company-name';
-      name.textContent = company.company_name;
-      info.appendChild(name);
-
-      const status = document.createElement('span');
-      status.className = 'company-status ' + (hasMatching ? 'status-yes' : 'status-maybe');
-      status.textContent = hasMatching ? 'Matching Available' : 'Check with HR';
-      info.appendChild(status);
-
-      result.appendChild(info);
-
-      if (company.matching_gift_url) {
-        const link = document.createElement('a');
-        link.href = company.matching_gift_url;
-        link.target = '_blank';
-        link.rel = 'noopener';
-        link.className = 'btn btn-outline btn-small';
-        link.textContent = 'View Details';
-        result.appendChild(link);
-      } else {
-        const contactHr = document.createElement('span');
-        contactHr.className = 'contact-hr';
-        contactHr.textContent = 'Contact your HR department';
-        result.appendChild(contactHr);
-      }
-
-      return result;
-    }
-
-    function displayResults(companies) {
-      clearResults();
-
-      const header = document.createElement('div');
-      header.className = 'results-header';
-      const count = companies.length > 10 ? '10+' : companies.length;
-      header.textContent = count + ' ' + (companies.length === 1 ? 'result' : 'results') + ' found';
-      resultsContainer.appendChild(header);
-
-      companies.slice(0, 10).forEach(function (company) {
-        resultsContainer.appendChild(createCompanyResult(company));
-      });
-    }
-
-    function searchEmployers(query) {
-      if (!query || query.length < 2) {
-        clearResults();
-        return;
-      }
-
-      createLoadingState();
-
-      fetch(
-        'https://doublethedonation.com/api/360matchpro/v1/search/?query=' +
-          encodeURIComponent(query) +
-          '&key=' +
-          API_KEY
-      )
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          if (data.companies && data.companies.length > 0) {
-            displayResults(data.companies);
-          } else {
-            createNoResults(query);
-          }
-        })
-        .catch(function (error) {
-          console.error('Search error:', error);
-          createErrorState();
-        });
-    }
-
-    // Event listeners
-    searchInput.addEventListener('input', function () {
-      clearTimeout(debounceTimer);
-      var value = this.value.trim();
-      debounceTimer = setTimeout(function () {
-        searchEmployers(value);
-      }, 300);
-    });
-
-    searchInput.addEventListener('keypress', function (e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        clearTimeout(debounceTimer);
-        searchEmployers(this.value.trim());
-      }
-    });
-
-    searchBtn.addEventListener('click', function () {
-      clearTimeout(debounceTimer);
-      searchEmployers(searchInput.value.trim());
-    });
-  })();
-</script>
-
 <style>
   .matching-content {
     max-width: 800px;
@@ -333,7 +170,7 @@ const structuredData = [
     border-top: 4px solid var(--primary-blue);
   }
 
-  /* Custom Search Widget Styles */
+  /* Search Widget Container */
   .matching-search-container {
     max-width: 600px;
     margin: 0 auto;
@@ -354,187 +191,127 @@ const structuredData = [
     color: var(--primary-blue);
   }
 
-  .search-input-wrapper {
-    display: flex;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
+  /* Double the Donation Widget Container */
+  .dtd-widget-container {
+    position: relative;
+    min-height: 60px;
   }
 
-  .search-input-wrapper input {
-    flex: 1;
-    padding: 1rem 1.25rem;
-    font-size: 1rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    background: #fff;
-    color: var(--text-dark);
-    transition:
-      border-color 0.2s ease,
-      box-shadow 0.2s ease;
-    -webkit-appearance: none;
-    appearance: none;
+  /*
+   * Override DTD plugin default styles
+   * The plugin injects its own elements, so we use #dd-container to scope overrides
+   */
+  #dd-container {
+    font-family: inherit;
   }
 
-  .search-input-wrapper input:focus {
-    outline: none;
-    border-color: var(--primary-blue);
-    box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15);
+  /* Search input styling */
+  #dd-container input[type='text'],
+  #dd-input {
+    width: 100% !important;
+    padding: 1rem 1.25rem !important;
+    font-size: 1rem !important;
+    font-family: inherit !important;
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    background: #fff !important;
+    color: #1a202c !important;
+    box-sizing: border-box !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
   }
 
-  .search-input-wrapper input::placeholder {
-    color: #a0aec0;
+  #dd-container input[type='text']:focus,
+  #dd-input:focus {
+    outline: none !important;
+    border-color: var(--primary-blue) !important;
+    box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15) !important;
   }
 
-  .search-input-wrapper .btn {
-    flex-shrink: 0;
-    padding: 1rem 1.5rem;
+  #dd-container input[type='text']::placeholder,
+  #dd-input::placeholder {
+    color: #718096 !important;
   }
 
-  /* Search Results */
-  .search-results {
-    min-height: 0;
+  /* Dropdown results styling */
+  #dd-container ul,
+  #dd-container .dd-company-list,
+  .dd-company-list {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    border: 2px solid var(--primary-blue) !important;
+    border-top: none !important;
+    border-radius: 0 0 12px 12px !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+    max-height: 300px !important;
+    overflow-y: auto !important;
+    position: absolute !important;
+    z-index: 1000 !important;
+    width: 100% !important;
+    left: 0 !important;
   }
 
-  .results-header {
-    font-size: 0.875rem;
-    color: var(--text-light);
-    margin-bottom: 1rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid #e2e8f0;
+  #dd-container li,
+  #dd-container .dd-company-list li,
+  .dd-company-list li {
+    padding: 0.875rem 1.25rem !important;
+    cursor: pointer !important;
+    color: #1a202c !important;
+    font-size: 0.9375rem !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    background: #fff !important;
+    margin: 0 !important;
   }
 
-  .company-result {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1.25rem;
-    margin-bottom: 0.75rem;
-    background: var(--light-blue, #f0f7ff);
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    transition: all 0.2s ease;
+  #dd-container li:last-child,
+  .dd-company-list li:last-child {
+    border-bottom: none !important;
+    border-radius: 0 0 10px 10px !important;
   }
 
-  .company-result:hover {
-    border-color: var(--primary-blue);
-    box-shadow: 0 4px 12px rgba(43, 108, 176, 0.1);
-    transform: translateY(-2px);
+  #dd-container li:hover,
+  .dd-company-list li:hover {
+    background: #f0f7ff !important;
   }
 
-  .company-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.375rem;
-    min-width: 0;
+  /* Company info panel styling */
+  #dd-container .dd-company-info,
+  .dd-company-info {
+    margin-top: 1.5rem !important;
+    padding: 1.5rem !important;
+    background: #f0f7ff !important;
+    border-radius: 12px !important;
+    border: 1px solid #e2e8f0 !important;
   }
 
-  .company-name {
-    font-weight: 600;
-    color: var(--primary-navy);
-    font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  /* Ensure good text contrast on widget elements */
+  #dd-container,
+  #dd-container * {
+    color: #1a202c;
   }
 
-  .company-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    padding: 0.25rem 0.625rem;
-    border-radius: 20px;
-    width: fit-content;
+  #dd-container a {
+    color: #1e40af !important;
+    text-decoration: underline !important;
   }
 
-  .company-status.status-yes {
-    background: #c6f6d5;
-    color: #22543d;
+  #dd-container a:hover {
+    color: #1e3a8a !important;
   }
 
-  .company-status.status-maybe {
-    background: #fef3c7;
-    color: #92400e;
+  /* Success/info messages */
+  #dd-container .dd-success,
+  #dd-container .matching-yes {
+    color: #166534 !important;
+    background: #dcfce7 !important;
   }
 
-  .btn-outline.btn-small {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    border: 2px solid var(--primary-navy);
-    background: transparent;
-    color: var(--primary-navy);
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    white-space: nowrap;
-    transition: all 0.2s ease;
-  }
-
-  .btn-outline.btn-small:hover {
-    background: var(--primary-navy);
-    color: #fff;
-  }
-
-  .contact-hr {
-    font-size: 0.875rem;
-    color: var(--text-light);
-    white-space: nowrap;
-  }
-
-  /* Loading State */
-  .search-loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 2rem;
-    color: var(--text-light);
-  }
-
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  /* No Results State */
-  .no-results {
-    text-align: center;
-    padding: 2.5rem 1rem;
-  }
-
-  .no-results-icon {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 1rem;
-    background: var(--light-blue, #f0f7ff);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: var(--text-light);
-  }
-
-  .no-results p {
-    color: var(--text-dark);
-    margin-bottom: 0.5rem;
-  }
-
-  .no-results-hint {
-    font-size: 0.875rem;
-    color: var(--text-light);
-  }
-
-  /* Error State */
-  .search-error {
-    text-align: center;
-    padding: 2rem;
-    background: #fed7d7;
-    border-radius: 12px;
-    color: #c53030;
+  #dd-container .dd-warning,
+  #dd-container .matching-no {
+    color: #92400e !important;
+    background: #fef3c7 !important;
   }
 
   /* Mobile Responsive */
@@ -547,31 +324,12 @@ const structuredData = [
       font-size: 1rem;
     }
 
-    .search-input-wrapper {
-      flex-direction: column;
+    #dd-container input[type='text'] {
+      padding: 0.875rem 1rem !important;
     }
 
-    .search-input-wrapper .btn {
-      width: 100%;
-    }
-
-    .company-result {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.75rem;
-    }
-
-    .company-info {
-      width: 100%;
-    }
-
-    .company-name {
-      white-space: normal;
-    }
-
-    .btn-outline.btn-small {
-      width: 100%;
-      text-align: center;
+    #dd-container li {
+      padding: 0.75rem 1rem !important;
     }
   }
 
