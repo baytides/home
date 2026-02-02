@@ -35,6 +35,47 @@ import CheckoutLayout from '../layouts/CheckoutLayout.astro';
       <h1 class="checkout-title">Choose Your Donation</h1>
 
       <div class="checkout-card">
+        <!-- Donor Type Toggle -->
+        <div class="donor-type-toggle">
+          <span class="toggle-label">I am donating as:</span>
+          <div class="toggle-buttons">
+            <button type="button" class="toggle-btn active" data-donor-type="individual">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Individual
+            </button>
+            <button type="button" class="toggle-btn" data-donor-type="organization">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M3 21h18"></path>
+                <path d="M9 8h1"></path>
+                <path d="M9 12h1"></path>
+                <path d="M9 16h1"></path>
+                <path d="M14 8h1"></path>
+                <path d="M14 12h1"></path>
+                <path d="M14 16h1"></path>
+                <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+              </svg>
+              Organization
+            </button>
+          </div>
+        </div>
+
         <div class="donation-type-toggle">
           <button type="button" class="toggle-btn active" data-type="one-time">One-Time</button>
           <button type="button" class="toggle-btn" data-type="monthly">Monthly</button>
@@ -67,11 +108,21 @@ import CheckoutLayout from '../layouts/CheckoutLayout.astro';
           <label for="fund-select">Designate my gift to:</label>
           <select id="fund-select" name="fund">
             <option value="General Fund">Where needed most (General Fund)</option>
-            <option value="Programs">Programs</option>
+            <option value="Aegis Initiative">Aegis Initiative</option>
+            <option value="Bay Navigator">Bay Navigator</option>
             <option value="Events">Events</option>
-            <option value="Capital Campaign">Capital Campaign</option>
-            <option value="Grants">Grants</option>
+            <option value="Other">Other (specify below)</option>
           </select>
+        </div>
+
+        <div class="checkout-field" id="fund-other-wrapper" style="display: none">
+          <label for="fund-other">Please specify:</label>
+          <input
+            type="text"
+            id="fund-other"
+            name="fund-other"
+            placeholder="Enter fund designation"
+          />
         </div>
 
         <div class="checkout-field">
@@ -118,13 +169,33 @@ import CheckoutLayout from '../layouts/CheckoutLayout.astro';
 
     <!-- Step 2: Your Info -->
     <section class="checkout-step" id="step-2">
-      <h1 class="checkout-title">Your Information</h1>
+      <h1 class="checkout-title" id="step2-title">Your Information</h1>
 
       <div class="checkout-card">
         <div class="checkout-summary-mini">
           <span class="summary-amount" id="summary-amount-2">$100</span>
           <span class="summary-type" id="summary-type-2">One-time donation</span>
           <button type="button" class="edit-link" data-goto="1">Edit</button>
+        </div>
+
+        <!-- Organization Name (shown for organizations) -->
+        <div class="checkout-field" id="org-name-wrapper" style="display: none">
+          <label for="donor-org-name">
+            Organization Name
+            <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="donor-org-name"
+            name="org-name"
+            autocomplete="organization"
+            placeholder="Enter organization name"
+          />
+        </div>
+
+        <!-- Contact Person Label (shown for organizations) -->
+        <div class="form-section-label" id="contact-person-label" style="display: none">
+          <span>Contact Person</span>
         </div>
 
         <div class="donor-info-grid">
@@ -162,6 +233,22 @@ import CheckoutLayout from '../layouts/CheckoutLayout.astro';
             <span class="required">*</span>
           </label>
           <input type="email" id="donor-email" name="email" required autocomplete="email" />
+        </div>
+
+        <!-- Employer (shown for individuals only) -->
+        <div class="checkout-field" id="employer-wrapper">
+          <label for="donor-employer">
+            Employer
+            <span class="optional">(optional)</span>
+          </label>
+          <input
+            type="text"
+            id="donor-employer"
+            name="employer"
+            autocomplete="organization"
+            placeholder="Your employer's name"
+          />
+          <p class="field-hint">Many employers match charitable donations</p>
         </div>
 
         <div class="checkout-field">
@@ -224,21 +311,12 @@ import CheckoutLayout from '../layouts/CheckoutLayout.astro';
           </div>
         </div>
 
-        <div class="donor-info-grid">
-          <div class="checkout-field">
-            <label for="donor-phone">
-              Phone
-              <span class="optional">(optional)</span>
-            </label>
-            <input type="tel" id="donor-phone" name="phone" autocomplete="tel" />
-          </div>
-          <div class="checkout-field">
-            <label for="donor-org">
-              Organization
-              <span class="optional">(optional)</span>
-            </label>
-            <input type="text" id="donor-org" name="organization" autocomplete="organization" />
-          </div>
+        <div class="checkout-field">
+          <label for="donor-phone">
+            Phone
+            <span class="optional">(optional)</span>
+          </label>
+          <input type="tel" id="donor-phone" name="phone" autocomplete="tel" />
         </div>
       </div>
 
@@ -383,6 +461,67 @@ import CheckoutLayout from '../layouts/CheckoutLayout.astro';
           <strong id="final-email">your email</strong>.
         </p>
 
+        <!-- Impact Section -->
+        <div class="impact-section">
+          <h2>Your Impact</h2>
+          <div class="impact-cards">
+            <div class="impact-card">
+              <div class="impact-card-icon">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+              </div>
+              <h3>Digital Tools</h3>
+              <p>Funding Bay Navigator and open-source conservation tools</p>
+            </div>
+            <div class="impact-card">
+              <div class="impact-card-icon">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+              </div>
+              <h3>Education</h3>
+              <p>Supporting workshops and environmental literacy programs</p>
+            </div>
+            <div class="impact-card">
+              <div class="impact-card-icon">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <h3>Community</h3>
+              <p>Mobilizing volunteers to protect Bay shorelines</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Receipt Card -->
         <div class="receipt-card">
           <h2>Your Receipt</h2>
           <div class="receipt-details">
@@ -412,40 +551,78 @@ import CheckoutLayout from '../layouts/CheckoutLayout.astro';
             donation is tax-deductible to the fullest extent allowed by law. No goods or services
             were provided in exchange for this contribution.
           </p>
+
+          <div class="receipt-actions">
+            <button type="button" class="btn btn-primary" id="download-receipt">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7,10 12,15 17,10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download PDF
+            </button>
+            <button type="button" class="btn btn-secondary" id="print-receipt">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="6,9 6,2 18,2 18,9"></polyline>
+                <path
+                  d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"
+                >
+                </path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+              </svg>
+              Print Receipt
+            </button>
+          </div>
         </div>
 
-        <div class="receipt-actions">
-          <button type="button" class="btn btn-primary" id="download-receipt">
+        <!-- Matching Gift CTA (shown for individuals with employer) -->
+        <div class="matching-gift-cta" id="matching-gift-cta" style="display: none">
+          <div class="matching-gift-icon">
             <svg
-              width="20"
-              height="20"
+              width="28"
+              height="28"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
             >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7,10 12,15 17,10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
             </svg>
-            Download PDF
-          </button>
-          <button type="button" class="btn btn-secondary" id="print-receipt">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6,9 6,2 18,2 18,9"></polyline>
-              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2">
-              </path>
-              <rect x="6" y="14" width="12" height="8"></rect>
-            </svg>
-            Print Receipt
-          </button>
+          </div>
+          <div class="matching-gift-content">
+            <h3>Double Your Impact!</h3>
+            <p>
+              <strong id="employer-name-display">Your employer</strong> may match your donation. Check
+              if they have a matching gift program to multiply your generosity.
+            </p>
+            <a href="/donate/matching" class="btn btn-primary btn-small">
+              Check Matching Programs
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
         </div>
 
         <div class="success-cta">

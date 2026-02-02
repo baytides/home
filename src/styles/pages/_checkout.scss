@@ -347,6 +347,98 @@
   }
 }
 
+// Field hint text
+.field-hint {
+  margin: 0.375rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--text-light);
+}
+
+// Form section label (for grouping fields)
+.form-section-label {
+  margin: 1.25rem 0 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+
+  span {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+// ==========================================================================
+// Donor Type Toggle (Individual/Organization)
+// ==========================================================================
+
+.donor-type-toggle {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.toggle-label {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.75rem;
+}
+
+.toggle-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+
+  .toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1rem;
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    svg {
+      flex-shrink: 0;
+      opacity: 0.6;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover {
+      border-color: var(--primary-blue);
+      background: rgba(59, 143, 194, 0.05);
+
+      svg {
+        opacity: 1;
+      }
+    }
+
+    &.active {
+      background: linear-gradient(
+        135deg,
+        rgba(59, 143, 194, 0.1) 0%,
+        rgba(59, 143, 194, 0.05) 100%
+      );
+      border-color: var(--primary-blue);
+      color: var(--primary-navy);
+
+      svg {
+        opacity: 1;
+        color: var(--primary-blue);
+      }
+    }
+  }
+}
+
 // ==========================================================================
 // Payment Summary
 // ==========================================================================
@@ -600,6 +692,123 @@
   margin-bottom: 2rem;
 }
 
+// ==========================================================================
+// Impact Section (Step 4)
+// ==========================================================================
+
+.impact-section {
+  margin: 2rem 0;
+  text-align: center;
+
+  h2 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--primary-navy);
+    margin-bottom: 1rem;
+  }
+}
+
+.impact-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.impact-card {
+  background: linear-gradient(145deg, #f0f7fa 0%, #e8f4f8 100%);
+  border-radius: 12px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+
+  h3 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--primary-navy);
+    margin-bottom: 0.375rem;
+  }
+
+  p {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    line-height: 1.4;
+    margin: 0;
+  }
+}
+
+.impact-card-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--primary-blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.75rem;
+  color: #fff;
+}
+
+// ==========================================================================
+// Matching Gift CTA (Step 4)
+// ==========================================================================
+
+.matching-gift-cta {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #fcd34d;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.matching-gift-icon {
+  width: 48px;
+  height: 48px;
+  background: #b45309;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.matching-gift-content {
+  flex: 1;
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #78350f;
+    margin-bottom: 0.375rem;
+  }
+
+  p {
+    font-size: 0.875rem;
+    color: #92400e;
+    line-height: 1.5;
+    margin-bottom: 0.875rem;
+  }
+}
+
+.btn-small {
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+}
+
+// Receipt Actions (moved inside receipt card)
+.receipt-card .receipt-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.25rem;
+  margin-bottom: 0;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
 // Success CTA
 .success-cta {
   display: flex;
@@ -664,6 +873,10 @@
 
   .receipt-card {
     background: rgba(0, 0, 0, 0.2);
+
+    .receipt-actions {
+      border-top-color: rgba(255, 255, 255, 0.1);
+    }
   }
 
   .receipt-row {
@@ -672,6 +885,70 @@
 
   .success-cta {
     border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  // Donor type toggle dark mode
+  .donor-type-toggle {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .toggle-buttons .toggle-btn {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+
+    &:hover {
+      border-color: var(--accent-blue);
+      background: rgba(99, 179, 237, 0.1);
+    }
+
+    &.active {
+      background: rgba(99, 179, 237, 0.15);
+      border-color: var(--accent-blue);
+      color: var(--text-dark);
+
+      svg {
+        color: var(--accent-blue);
+      }
+    }
+  }
+
+  // Form section label dark mode
+  .form-section-label {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  // Impact cards dark mode
+  .impact-card {
+    background: linear-gradient(145deg, rgba(99, 179, 237, 0.1) 0%, rgba(99, 179, 237, 0.05) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    h3 {
+      color: var(--text-dark);
+    }
+  }
+
+  .impact-card-icon {
+    background: var(--accent-blue);
+    color: #1a202c;
+  }
+
+  // Matching gift CTA dark mode
+  .matching-gift-cta {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
+    border-color: rgba(245, 158, 11, 0.4);
+
+    h3 {
+      color: #fcd34d;
+    }
+
+    p {
+      color: #fde68a;
+    }
+  }
+
+  .matching-gift-icon {
+    background: #f59e0b;
   }
 }
 
@@ -735,5 +1012,55 @@
     .btn {
       width: 100%;
     }
+  }
+
+  .impact-cards {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .impact-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+    padding: 1rem;
+
+    h3 {
+      margin-bottom: 0.125rem;
+    }
+  }
+
+  .impact-card-icon {
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    flex-shrink: 0;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .matching-gift-cta {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .matching-gift-icon {
+    margin: 0 auto;
+  }
+
+  .matching-gift-content {
+    .btn {
+      width: 100%;
+    }
+  }
+
+  .toggle-buttons {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
   }
 }

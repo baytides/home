@@ -13,6 +13,8 @@ interface DonationData {
   amount: number;
   frequency: 'one-time' | 'monthly';
   fund: string;
+  fundOther: string;
+  donorType: 'individual' | 'organization';
   tributeType: 'none' | 'in_honor' | 'in_memory';
   tributeName: string;
   anonymous: boolean;
@@ -28,7 +30,8 @@ interface DonorInfo {
   state: string;
   zip: string;
   phone: string;
-  organization: string;
+  organizationName: string;
+  employer: string;
 }
 
 interface PaymentIntentResponse {
@@ -41,6 +44,8 @@ interface ReceiptData {
   amount: number;
   frequency: 'one-time' | 'monthly';
   fund: string;
+  fundOther: string;
+  donorType: 'individual' | 'organization';
   tributeType: 'none' | 'in_honor' | 'in_memory';
   tributeName: string;
   transactionId: string;
@@ -61,6 +66,8 @@ const donationData: DonationData = {
   amount: 100,
   frequency: 'one-time',
   fund: 'General Fund',
+  fundOther: '',
+  donorType: 'individual',
   tributeType: 'none',
   tributeName: '',
   anonymous: false,
@@ -76,7 +83,8 @@ const donorInfo: DonorInfo = {
   state: '',
   zip: '',
   phone: '',
-  organization: '',
+  organizationName: '',
+  employer: '',
 };
 
 let receiptData: ReceiptData | null = null;
@@ -146,13 +154,19 @@ function updateSummaries(): void {
   if (summaryAmount3) summaryAmount3.textContent = amountText;
   if (summaryType3) summaryType3.textContent = typeText;
 
+  // Format fund display (handle "Other" case)
+  const fundDisplay =
+    donationData.fund === 'Other' && donationData.fundOther
+      ? `Other: ${donationData.fundOther}`
+      : donationData.fund;
+
   // Update payment summary
   const paymentAmount = $('#payment-donation-amount');
   const paymentFund = $('#payment-fund');
   const paymentTotal = $('#payment-total');
 
   if (paymentAmount) paymentAmount.textContent = `$${donationData.amount.toFixed(2)}`;
-  if (paymentFund) paymentFund.textContent = donationData.fund;
+  if (paymentFund) paymentFund.textContent = fundDisplay;
   if (paymentTotal) paymentTotal.textContent = `$${donationData.amount.toFixed(2)}`;
 }
 
@@ -161,7 +175,17 @@ function updateSummaries(): void {
 // ==========================================================================
 
 function initStep1(): void {
-  // Donation type toggle
+  // Donor type toggle (Individual/Organization)
+  $$('.donor-type-toggle .toggle-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      $$('.donor-type-toggle .toggle-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      donationData.donorType = btn.dataset.donorType as 'individual' | 'organization';
+      updateStep2ForDonorType();
+    });
+  });
+
+  // Donation type toggle (one-time/monthly)
   $$('.donation-type-toggle .toggle-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       $$('.donation-type-toggle .toggle-btn').forEach((b) => b.classList.remove('active'));
@@ -201,8 +225,24 @@ function initStep1(): void {
 
   // Fund selection
   const fundSelect = $('#fund-select') as HTMLSelectElement;
+  const fundOtherWrapper = $('#fund-other-wrapper');
+  const fundOtherInput = $('#fund-other') as HTMLInputElement;
+
   fundSelect?.addEventListener('change', () => {
-    donationData.fund = fundSelect.value;
+    const value = fundSelect.value;
+    if (value === 'Other') {
+      if (fundOtherWrapper) fundOtherWrapper.style.display = 'block';
+      fundOtherInput?.focus();
+      donationData.fund = 'Other';
+    } else {
+      if (fundOtherWrapper) fundOtherWrapper.style.display = 'none';
+      donationData.fund = value;
+      donationData.fundOther = '';
+    }
+  });
+
+  fundOtherInput?.addEventListener('input', () => {
+    donationData.fundOther = fundOtherInput.value;
   });
 
   // Tribute type
@@ -250,6 +290,38 @@ function initStep1(): void {
 // Step 2: Donor Information
 // ==========================================================================
 
+function updateStep2ForDonorType(): void {
+  const isOrg = donationData.donorType === 'organization';
+  const step2Title = $('#step2-title');
+  const orgNameWrapper = $('#org-name-wrapper');
+  const contactPersonLabel = $('#contact-person-label');
+  const employerWrapper = $('#employer-wrapper');
+
+  // Update title
+  if (step2Title) {
+    step2Title.textContent = isOrg ? 'Organization Information' : 'Your Information';
+  }
+
+  // Show/hide organization name field
+  if (orgNameWrapper) {
+    orgNameWrapper.style.display = isOrg ? 'block' : 'none';
+    const orgNameInput = $('#donor-org-name') as HTMLInputElement;
+    if (orgNameInput) {
+      orgNameInput.required = isOrg;
+    }
+  }
+
+  // Show/hide contact person label
+  if (contactPersonLabel) {
+    contactPersonLabel.style.display = isOrg ? 'block' : 'none';
+  }
+
+  // Show/hide employer field (only for individuals)
+  if (employerWrapper) {
+    employerWrapper.style.display = isOrg ? 'none' : 'block';
+  }
+}
+
 function initStep2(): void {
   // Collect donor info on input
   const fields: { id: string; key: keyof DonorInfo }[] = [
@@ -262,7 +334,8 @@ function initStep2(): void {
     { id: 'donor-state', key: 'state' },
     { id: 'donor-zip', key: 'zip' },
     { id: 'donor-phone', key: 'phone' },
-    { id: 'donor-org', key: 'organization' },
+    { id: 'donor-org-name', key: 'organizationName' },
+    { id: 'donor-employer', key: 'employer' },
   ];
 
   fields.forEach(({ id, key }) => {
@@ -281,6 +354,12 @@ function initStep2(): void {
   $('#step2-next')?.addEventListener('click', () => {
     // Validate required fields
     const required = ['firstName', 'lastName', 'email', 'address', 'city', 'state', 'zip'];
+
+    // Add organization name as required if donating as organization
+    if (donationData.donorType === 'organization') {
+      required.push('organizationName');
+    }
+
     for (const key of required) {
       if (!donorInfo[key as keyof DonorInfo]) {
         alert('Please fill in all required fields.');
@@ -445,6 +524,8 @@ async function handlePaymentSubmit(): Promise<void> {
         amount: donationData.amount,
         frequency: donationData.frequency,
         fund: donationData.fund,
+        fundOther: donationData.fundOther,
+        donorType: donationData.donorType,
         tributeType: donationData.tributeType,
         tributeName: donationData.tributeName,
         transactionId: paymentIntent.id,
@@ -490,9 +571,15 @@ function showSuccess(): void {
         : '';
   }
 
+  // Format fund display (handle "Other" case)
+  const fundDisplay =
+    receiptData.fund === 'Other' && donationData.fundOther
+      ? `Other: ${donationData.fundOther}`
+      : receiptData.fund;
+
   if (receiptDate) receiptDate.textContent = receiptData.date;
   if (receiptAmount) receiptAmount.textContent = `$${receiptData.amount.toFixed(2)}`;
-  if (receiptFund) receiptFund.textContent = receiptData.fund;
+  if (receiptFund) receiptFund.textContent = fundDisplay;
   if (receiptTransactionId) receiptTransactionId.textContent = receiptData.transactionId;
 
   // Show tribute info if applicable
@@ -503,6 +590,24 @@ function showSuccess(): void {
         receiptData.tributeType === 'in_honor' ? 'In honor of' : 'In memory of';
     }
     if (receiptTributeName) receiptTributeName.textContent = receiptData.tributeName;
+  }
+
+  // Show matching gift CTA only for individuals with an employer
+  const matchingGiftCta = $('#matching-gift-cta');
+  const employerNameDisplay = $('#employer-name-display');
+
+  if (matchingGiftCta) {
+    // Only show for individual donors who provided an employer
+    const showMatchingCta = donationData.donorType === 'individual' && donorInfo.employer.trim();
+
+    if (showMatchingCta) {
+      matchingGiftCta.style.display = 'flex';
+      if (employerNameDisplay) {
+        employerNameDisplay.textContent = donorInfo.employer;
+      }
+    } else {
+      matchingGiftCta.style.display = 'none';
+    }
   }
 
   goToStep(4);
@@ -580,6 +685,12 @@ function generatePDF(): void {
   doc.setFont('helvetica', 'normal');
   y += lineHeight;
 
+  // Show organization name for org donors
+  if (receiptData.donorType === 'organization' && receiptData.donor.organizationName) {
+    doc.text(receiptData.donor.organizationName, leftCol, y);
+    y += lineHeight;
+  }
+
   const donorName = `${receiptData.donor.firstName} ${receiptData.donor.lastName}`;
   doc.text(donorName, leftCol, y);
   y += lineHeight;
@@ -612,7 +723,11 @@ function generatePDF(): void {
   doc.setFont('helvetica', 'bold');
   doc.text('Fund Designation:', leftCol, y);
   doc.setFont('helvetica', 'normal');
-  doc.text(receiptData.fund, rightCol, y);
+  const pdfFundDisplay =
+    receiptData.fund === 'Other' && receiptData.fundOther
+      ? `Other: ${receiptData.fundOther}`
+      : receiptData.fund;
+  doc.text(pdfFundDisplay, rightCol, y);
   y += lineHeight;
 
   // Tribute info
