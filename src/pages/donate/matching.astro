@@ -42,27 +42,41 @@ const structuredData = [
     ]}
   />
 
-  <section class="hero hero-page">
+  <!-- Hero Section -->
+  <section class="matching-hero">
     <div class="container">
-      <h1>Double Your Donation</h1>
-      <p>Many employers match charitable contributions, doubling or even tripling your impact</p>
+      <div class="hero-content">
+        <span class="hero-badge">Corporate Matching</span>
+        <h1>Double Your Impact</h1>
+        <p>
+          Many employers match charitable contributions, which means your donation could have twice
+          the impact for the San Francisco Bay.
+        </p>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-number">26M+</span>
+          <span class="stat-label">People work for matching gift companies</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">$2-4B</span>
+          <span class="stat-label">In matching gifts go unclaimed each year</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">65%</span>
+          <span class="stat-label">Of Fortune 500 companies offer matching</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="content-section">
+  <!-- Search Widget Section -->
+  <section class="matching-search-section">
     <div class="container">
-      <div class="matching-content">
-        <div class="matching-intro">
-          <h2>Does Your Employer Match Gifts?</h2>
-          <p>
-            Thousands of companies offer matching gift programs that can multiply your donation to
-            Bay Tides. Use the search tool below to find out if your employer participates.
-          </p>
-          <p>
-            Corporate matching gifts are one of the easiest ways to increase your charitable impact.
-            Some companies match donations dollar-for-dollar, while others may double or even triple
-            your contribution.
-          </p>
+      <div class="search-card">
+        <div class="search-header">
+          <h2>Check If Your Employer Matches</h2>
+          <p>Enter your employer's name below to see if they have a matching gift program</p>
         </div>
 
         <div class="matching-widget">
@@ -77,41 +91,344 @@ const structuredData = [
           </div>
         </div>
 
-        <div class="matching-info">
-          <h3>How It Works</h3>
-          <ol role="list">
-            <li>
-              <strong>Search for your employer</strong> using the tool above to see if they offer a matching
-              gift program.
-            </li>
-            <li>
-              <strong>Make your donation</strong> to Bay Tides through our{' '}
-              <a href="/donate">donation page</a>.
-            </li>
-            <li>
-              <strong>Submit a matching request</strong> through your employer's giving portal or HR department.
-            </li>
-            <li>
-              <strong>Your employer matches</strong> your gift, doubling your impact for the Bay.
-            </li>
-          </ol>
+        <div class="common-employers">
+          <p class="common-label">Bay Area companies with matching programs:</p>
+          <div class="employer-tags">
+            <span class="employer-tag">Google</span>
+            <span class="employer-tag">Apple</span>
+            <span class="employer-tag">Meta</span>
+            <span class="employer-tag">Salesforce</span>
+            <span class="employer-tag">Cisco</span>
+            <span class="employer-tag">Intel</span>
+            <span class="employer-tag">NVIDIA</span>
+            <span class="employer-tag">Adobe</span>
+            <span class="employer-tag">Genentech</span>
+            <span class="employer-tag">Gilead</span>
+            <span class="employer-tag">Kaiser Permanente</span>
+            <span class="employer-tag">Wells Fargo</span>
+            <span class="employer-tag">Visa</span>
+            <span class="employer-tag">Chevron</span>
+            <span class="employer-tag">PG&E</span>
+          </div>
+          <p class="eligibility-note">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>
+              <strong>Retired or part-time?</strong> Many companies extend matching programs to retirees
+              and part-time employees. Check the database above—you may still be eligible!
+            </span>
+          </p>
+          <p class="database-note">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span>
+              <strong>Company not listed?</strong> This database isn't exhaustive—your employer may still
+              offer matching gifts. Contact your HR department directly to find out about your company's
+              charitable matching program.
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works">
+    <div class="container">
+      <h2>How Matching Gifts Work</h2>
+      <p class="section-subtitle">
+        It only takes a few minutes to potentially double your donation
+      </p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-icon">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </div>
+          <h3>Search</h3>
+          <p>Use the tool above to check if your employer offers a matching gift program</p>
         </div>
 
-        <div class="matching-help">
-          <h3>Need Help?</h3>
+        <div class="step-connector">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-icon">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+              >
+              </path>
+            </svg>
+          </div>
+          <h3>Donate</h3>
+          <p>
+            Make your gift to Bay Tides through our <a href="/checkout">secure donation page</a>
+          </p>
+        </div>
+
+        <div class="step-connector">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-icon">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <h3>Submit</h3>
+          <p>Complete a matching gift request through your employer's HR portal</p>
+        </div>
+
+        <div class="step-connector">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </div>
+
+        <div class="step-card step-card-highlight">
+          <div class="step-number">4</div>
+          <div class="step-icon">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <h3>Double!</h3>
+          <p>Your employer sends a matching gift, doubling your impact for the Bay</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Section -->
+  <section class="matching-impact">
+    <div class="container">
+      <div class="impact-content">
+        <div class="impact-text">
+          <h2>Why Matching Gifts Matter</h2>
+          <p>
+            Corporate matching gifts are one of the most powerful ways to amplify your charitable
+            giving. When your employer matches your donation, you effectively double your
+            contribution without spending an additional dollar.
+          </p>
+          <ul class="impact-list">
+            <li>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>Your $100 donation becomes $200 for Bay conservation</span>
+            </li>
+            <li>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>Some employers offer 2:1 or 3:1 matching ratios</span>
+            </li>
+            <li>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>Many programs also match volunteer hours with grants</span>
+            </li>
+            <li>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>Retired employees often remain eligible for matching</span>
+            </li>
+          </ul>
+        </div>
+        <div class="impact-visual">
+          <div class="donation-multiplier">
+            <div class="multiplier-row">
+              <span class="multiplier-label">Your Gift</span>
+              <span class="multiplier-amount">$100</span>
+            </div>
+            <div class="multiplier-plus">+</div>
+            <div class="multiplier-row">
+              <span class="multiplier-label">Employer Match</span>
+              <span class="multiplier-amount">$100</span>
+            </div>
+            <div class="multiplier-equals">=</div>
+            <div class="multiplier-row multiplier-total">
+              <span class="multiplier-label">Total Impact</span>
+              <span class="multiplier-amount">$200</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Help Section -->
+  <section class="matching-help-section">
+    <div class="container">
+      <div class="help-card">
+        <div class="help-icon">
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <div class="help-content">
+          <h3>Need Help with Your Match?</h3>
           <p>
             If you have questions about matching gifts or need documentation for your employer's
-            program, please <a href="/contact">contact us</a>. We're happy to provide any
-            information needed to complete your matching gift request.
+            program, we're here to help. Contact us for:
           </p>
-          <p>
-            <strong>Bay Tides EIN:</strong> 93-3889081
-          </p>
+          <ul>
+            <li>Tax receipts and donation verification letters</li>
+            <li>Our EIN and nonprofit documentation</li>
+            <li>Assistance completing matching gift forms</li>
+          </ul>
+          <div class="help-details">
+            <p>
+              <strong>Bay Tides EIN:</strong> 93-3889081
+            </p>
+            <p>
+              <strong>Organization:</strong> Bay Tides, Inc.
+            </p>
+          </div>
+          <a href="/contact" class="btn btn-secondary">Contact Us</a>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="matching-cta">
+  <!-- CTA Section -->
+  <section class="matching-cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Double Your Impact?</h2>
+        <p>Make a donation today, then submit your matching gift request to your employer.</p>
+        <div class="cta-buttons">
           <a href="/checkout" class="btn btn-primary btn-large">Donate Now</a>
-          <p>Then check if your employer will match your gift</p>
+          <a href="/donate" class="btn btn-outline">Other Ways to Give</a>
         </div>
       </div>
     </div>
@@ -119,66 +436,150 @@ const structuredData = [
 </BaseLayout>
 
 <style>
-  .matching-content {
+  /* Hero Section */
+  .matching-hero {
+    background: linear-gradient(135deg, var(--primary-navy) 0%, #1a365d 100%);
+    padding: 4rem 0 5rem;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .matching-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .matching-hero .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .matching-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+
+  .hero-content p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    line-height: 1.6;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #63b3ed;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    opacity: 0.85;
+    line-height: 1.4;
+  }
+
+  /* Search Section */
+  .matching-search-section {
+    margin-top: -3rem;
+    padding-bottom: 4rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .search-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow:
+      0 20px 60px -10px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(0, 0, 0, 0.03);
     max-width: 800px;
     margin: 0 auto;
   }
 
-  .matching-intro {
-    margin-bottom: 3rem;
+  .search-header {
     text-align: center;
+    margin-bottom: 2rem;
   }
 
-  .matching-intro h2 {
-    margin-bottom: 1.5rem;
+  .search-header h2 {
+    font-size: 1.5rem;
+    color: var(--primary-navy);
+    margin-bottom: 0.5rem;
   }
 
-  .matching-intro p {
-    font-size: 1.125rem;
-    line-height: 1.8;
+  .search-header p {
     color: var(--text-light);
-    margin-bottom: 1rem;
   }
 
   .matching-widget {
-    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-    border-radius: 16px;
-    padding: 2.5rem;
-    margin-bottom: 3rem;
-    box-shadow:
-      0 4px 6px -1px rgba(0, 0, 0, 0.05),
-      0 10px 30px -5px rgba(0, 0, 0, 0.08),
-      0 0 0 1px rgba(0, 0, 0, 0.03);
-    border-top: 4px solid var(--primary-blue);
+    margin-bottom: 1.5rem;
   }
 
-  /* Search Widget Container */
   .matching-search-container {
     max-width: 600px;
     margin: 0 auto;
   }
 
-  /* Double the Donation Widget Container */
   .dtd-widget-container {
     position: relative;
     min-height: 60px;
   }
 
-  /*
-   * Override DTD plugin default styles
-   * The plugin renders everything inside #dd-container
-   */
+  /* Double the Donation Widget Overrides */
   #dd-container {
     font-family: inherit;
   }
 
-  /* Ensure all text has good contrast (dark text on white backgrounds) */
   #dd-container,
   #dd-container * {
     color: #1a202c;
   }
 
-  /* Style headings */
   #dd-container h3,
   #dd-container h4 {
     color: #1a365d !important;
@@ -190,7 +591,6 @@ const structuredData = [
     line-height: 1.6 !important;
   }
 
-  /* Style links */
   #dd-container a {
     color: #1e40af !important;
   }
@@ -199,7 +599,6 @@ const structuredData = [
     color: #1e3a8a !important;
   }
 
-  /* Style the search input */
   #dd-container input,
   #dd-container input[type='text'] {
     width: 100% !important;
@@ -225,7 +624,6 @@ const structuredData = [
     color: #718096 !important;
   }
 
-  /* Style dropdown results */
   #dd-container ul {
     list-style: none !important;
     margin: 0 !important;
@@ -258,7 +656,6 @@ const structuredData = [
     background: #f0f7ff !important;
   }
 
-  /* Style buttons */
   #dd-container button {
     display: inline-block !important;
     padding: 0.75rem 1.5rem !important;
@@ -274,121 +671,667 @@ const structuredData = [
     background: #1a365d !important;
   }
 
-  /* Mobile Responsive */
-  @media (max-width: 600px) {
-    .matching-widget {
-      padding: 1.5rem;
-    }
-
-    .search-label {
-      font-size: 1rem;
-    }
-
-    #dd-container input[type='text'] {
-      padding: 0.875rem 1rem !important;
-    }
-
-    #dd-container li {
-      padding: 0.75rem 1rem !important;
-    }
+  /* Common Employers */
+  .common-employers {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
   }
 
-  .matching-info {
-    margin-bottom: 3rem;
+  .common-label {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-bottom: 0.75rem;
   }
 
-  .matching-info h3 {
-    margin-bottom: 1.5rem;
+  .employer-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .employer-tag {
+    display: inline-block;
+    background: #f0f7fa;
+    color: var(--primary-navy);
+    padding: 0.375rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+
+  .eligibility-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    margin-top: 1.25rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border-radius: 10px;
+    border-left: 3px solid #f59e0b;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #92400e;
+  }
+
+  .eligibility-note svg {
+    flex-shrink: 0;
+    color: #f59e0b;
+    margin-top: 0.125rem;
+  }
+
+  .eligibility-note strong {
+    color: #78350f;
+  }
+
+  .database-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    margin-top: 0.75rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f0f7fa 0%, #e8f4f8 100%);
+    border-radius: 10px;
+    border-left: 3px solid var(--primary-blue);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-dark);
+  }
+
+  .database-note svg {
+    flex-shrink: 0;
+    color: var(--primary-blue);
+    margin-top: 0.125rem;
+  }
+
+  .database-note strong {
     color: var(--primary-navy);
   }
 
-  .matching-info ol {
-    list-style: none;
-    padding: 0;
-    counter-reset: steps;
+  /* How It Works Section */
+  .how-it-works {
+    padding: 5rem 0;
+    background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
   }
 
-  .matching-info li {
-    counter-increment: steps;
-    padding: 1rem 0 1rem 3.5rem;
+  .how-it-works h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--primary-navy);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1.125rem;
+    margin-bottom: 3rem;
+  }
+
+  .steps-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+
+  .step-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0 10px 20px -5px rgba(0, 0, 0, 0.08);
     position: relative;
-    border-bottom: 1px solid var(--border-color, #e2e8f0);
+    flex: 1;
+    min-width: 180px;
+    max-width: 220px;
   }
 
-  .matching-info li:last-child {
-    border-bottom: none;
+  .step-card-highlight {
+    background: linear-gradient(145deg, #f0fff4 0%, #c6f6d5 100%);
+    border: 2px solid #48bb78;
   }
 
-  .matching-info li::before {
-    content: counter(steps);
+  .step-number {
     position: absolute;
-    left: 0;
-    top: 1rem;
-    width: 2rem;
-    height: 2rem;
-    background: var(--primary-navy);
-    color: white;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 28px;
+    background: var(--primary-blue);
+    color: #fff;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 0.875rem;
   }
 
-  /* Ensure screen readers announce the list properly */
-  .matching-info ol[role='list'] {
-    list-style: none;
+  .step-card-highlight .step-number {
+    background: #48bb78;
   }
 
-  .matching-help {
-    background: var(--cream);
-    border-radius: 12px;
-    padding: 2rem;
-    margin-bottom: 3rem;
+  .step-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(145deg, #f0f7fa 0%, #e8f4f8 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: var(--primary-blue);
   }
 
-  .matching-help h3 {
-    margin-bottom: 1rem;
+  .step-card-highlight .step-icon {
+    background: linear-gradient(145deg, #c6f6d5 0%, #9ae6b4 100%);
+    color: #276749;
+  }
+
+  .step-card h3 {
+    font-size: 1rem;
     color: var(--primary-navy);
+    margin-bottom: 0.5rem;
   }
 
-  .matching-help p {
+  .step-card p {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .step-card a {
+    color: var(--primary-blue);
+    font-weight: 500;
+  }
+
+  .step-connector {
+    color: #cbd5e0;
+    flex-shrink: 0;
+  }
+
+  /* Impact Section */
+  .matching-impact {
+    padding: 5rem 0;
+    background: var(--primary-navy);
+    color: #fff;
+  }
+
+  .impact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .impact-text h2 {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+    color: #fff;
+  }
+
+  .impact-text > p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+  }
+
+  .impact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .impact-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.875rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .impact-list svg {
+    color: #48bb78;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .impact-visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .donation-multiplier {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    min-width: 280px;
+  }
+
+  .multiplier-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+  }
+
+  .multiplier-label {
+    font-size: 0.9375rem;
+    opacity: 0.85;
+  }
+
+  .multiplier-amount {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .multiplier-plus,
+  .multiplier-equals {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #63b3ed;
+    padding: 0.25rem 0;
+  }
+
+  .multiplier-total {
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+  }
+
+  .multiplier-total .multiplier-amount {
+    color: #48bb78;
+    font-size: 2rem;
+  }
+
+  /* Help Section */
+  .matching-help-section {
+    padding: 5rem 0;
+    background: #f8fafc;
+  }
+
+  .help-card {
+    display: flex;
+    gap: 2rem;
+    background: #fff;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0 10px 20px -5px rgba(0, 0, 0, 0.08);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .help-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(145deg, #fef3c7 0%, #fde68a 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #b45309;
+  }
+
+  .help-content h3 {
+    font-size: 1.25rem;
+    color: var(--primary-navy);
     margin-bottom: 0.75rem;
   }
 
-  .matching-help p:last-child {
-    margin-bottom: 0;
-  }
-
-  .matching-cta {
-    text-align: center;
-    padding: 2rem 0;
-  }
-
-  .matching-cta p {
-    margin-top: 1rem;
+  .help-content > p {
     color: var(--text-light);
+    margin-bottom: 1rem;
+  }
+
+  .help-content ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin-bottom: 1.25rem;
+    color: var(--text-dark);
+  }
+
+  .help-content li {
+    margin-bottom: 0.375rem;
+  }
+
+  .help-details {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .help-details p {
+    margin: 0 0 0.25rem;
     font-size: 0.9375rem;
   }
 
-  /* Dark mode overrides for light-background elements */
-  :global([data-theme='dark']) .matching-search {
+  .help-details p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* CTA Section */
+  .matching-cta-section {
+    padding: 5rem 0;
+    background: linear-gradient(145deg, #f0f7fa 0%, #e8f4f8 100%);
+  }
+
+  .cta-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    font-size: 2rem;
+    color: var(--primary-navy);
+    margin-bottom: 0.75rem;
+  }
+
+  .cta-content > p {
+    font-size: 1.125rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Button Styles */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    border: none;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #3182ce 100%);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 143, 194, 0.35);
+  }
+
+  .btn-secondary {
+    background: #fff;
+    color: var(--primary-navy);
+    border: 2px solid #e2e8f0;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--primary-blue);
+    background: rgba(59, 143, 194, 0.05);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--primary-blue);
+    border: 2px solid var(--primary-blue);
+  }
+
+  .btn-outline:hover {
+    background: var(--primary-blue);
+    color: #fff;
+  }
+
+  .btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.0625rem;
+  }
+
+  /* Dark Mode */
+  :global([data-theme='dark']) .search-card {
+    background: var(--card-bg);
+  }
+
+  :global([data-theme='dark']) .search-header h2 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .common-employers {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .employer-tag {
+    background: rgba(99, 179, 237, 0.15);
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .eligibility-note {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.1) 100%);
+    border-left-color: #fbbf24;
+    color: #fcd34d;
+  }
+
+  :global([data-theme='dark']) .eligibility-note svg {
+    color: #fbbf24;
+  }
+
+  :global([data-theme='dark']) .eligibility-note strong {
+    color: #fde68a;
+  }
+
+  :global([data-theme='dark']) .database-note {
+    background: linear-gradient(135deg, rgba(99, 179, 237, 0.15) 0%, rgba(99, 179, 237, 0.1) 100%);
+    border-left-color: var(--accent-blue);
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .database-note svg {
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .database-note strong {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .how-it-works {
+    background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  }
+
+  :global([data-theme='dark']) .step-card {
+    background: var(--card-bg);
+  }
+
+  :global([data-theme='dark']) .step-card h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .step-icon {
+    background: linear-gradient(145deg, rgba(99, 179, 237, 0.2) 0%, rgba(99, 179, 237, 0.1) 100%);
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .step-card-highlight {
+    background: linear-gradient(145deg, rgba(72, 187, 120, 0.2) 0%, rgba(72, 187, 120, 0.1) 100%);
+    border-color: #48bb78;
+  }
+
+  :global([data-theme='dark']) .step-card-highlight .step-icon {
+    background: linear-gradient(145deg, rgba(72, 187, 120, 0.3) 0%, rgba(72, 187, 120, 0.2) 100%);
+    color: #68d391;
+  }
+
+  :global([data-theme='dark']) .matching-help-section {
     background: var(--bg-secondary);
   }
 
-  :global([data-theme='dark']) .search-input-wrapper input {
+  :global([data-theme='dark']) .help-card {
+    background: var(--card-bg);
+  }
+
+  :global([data-theme='dark']) .help-content h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .help-icon {
+    background: linear-gradient(145deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
+    color: #fcd34d;
+  }
+
+  :global([data-theme='dark']) .help-details {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .matching-cta-section {
+    background: linear-gradient(145deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  }
+
+  :global([data-theme='dark']) .cta-content h2 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .btn-secondary {
     background: var(--bg-primary);
     border-color: rgba(255, 255, 255, 0.1);
     color: var(--text-dark);
   }
 
-  :global([data-theme='dark']) .popular-companies li {
-    background: var(--bg-primary);
-    color: var(--text-dark);
+  :global([data-theme='dark']) .btn-secondary:hover {
+    border-color: var(--accent-blue);
+    background: rgba(99, 179, 237, 0.1);
   }
 
-  :global([data-theme='dark']) .matching-help {
-    background: var(--bg-secondary);
+  /* Responsive */
+  @media (max-width: 900px) {
+    .hero-stats {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      max-width: 400px;
+    }
+
+    .stat-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-align: left;
+      padding: 1rem 1.25rem;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      margin-bottom: 0;
+    }
+
+    .stat-label {
+      font-size: 0.8125rem;
+    }
+
+    .steps-grid {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .step-card {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .step-connector {
+      transform: rotate(90deg);
+    }
+
+    .impact-content {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .impact-visual {
+      order: -1;
+    }
+
+    .help-card {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .help-icon {
+      margin: 0 auto;
+    }
+
+    .help-content ul {
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .matching-hero {
+      padding: 3rem 0 4rem;
+    }
+
+    .hero-content {
+      margin-bottom: 2rem;
+    }
+
+    .hero-content p {
+      font-size: 1.0625rem;
+    }
+
+    .search-card {
+      padding: 1.5rem;
+      border-radius: 16px;
+    }
+
+    .matching-search-section {
+      margin-top: -2rem;
+    }
+
+    .how-it-works,
+    .matching-impact,
+    .matching-help-section,
+    .matching-cta-section {
+      padding: 3rem 0;
+    }
+
+    .help-card {
+      padding: 1.5rem;
+    }
+
+    .donation-multiplier {
+      padding: 1.5rem;
+      min-width: 100%;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .cta-buttons .btn {
+      width: 100%;
+    }
   }
 </style>
