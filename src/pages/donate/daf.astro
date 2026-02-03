@@ -37,7 +37,18 @@ const structuredData = [
     ]}
   />
 
-  <section class="hero hero-page">
+  <section class="hero hero-page daf-video-hero">
+    <video
+      class="daf-hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="/assets/video/daf-hero-poster.webp"
+    >
+      <source src="/assets/video/daf-hero.webm" type="video/webm" />
+    </video>
+    <div class="daf-hero-overlay"></div>
     <div class="container">
       <h1>Donor Advised Funds</h1>
       <p>Recommend a grant from your DAF to support Bay conservation</p>
@@ -56,8 +67,239 @@ const structuredData = [
           </p>
         </div>
 
+        <!-- DAFDirect Widget -->
+        <div class="daf-widget-section">
+          <div class="daf-widget-header">
+            <img
+              src="/assets/images/daf-direct-logo.webp"
+              alt="DAFDirect"
+              class="dafdirect-logo"
+              width="60"
+              height="60"
+            />
+            <div>
+              <h3>Recommend a Grant Now</h3>
+              <p>Use DAFDirect to initiate your grant instantly</p>
+            </div>
+          </div>
+          <a
+            href="https://www.dafdirect.org/DAFDirect/daflink?_dafdirect_settings=OTMzODg5MDgxXzIxMTFfOTlmZWUwNTAtMTQxYS00OGU2LTg4MmUtNTdiN2UxOTViMWNl&designatedText=V2hlcmUgaXQncyBuZWVkZWQgbW9zdA==&amountValue="
+            target="_blank"
+            rel="noopener noreferrer"
+            class="dafdirect-btn"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path
+                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+              >
+              </path><path
+                d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08v0c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"
+              >
+              </path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path>
+            </svg>
+            Give Through DAFDirect
+          </a>
+          <p class="widget-note">
+            Supports Fidelity Charitable, Schwab Charitable, BNY Mellon, and 50+ DAF sponsors
+          </p>
+        </div>
+
+        <!-- Quick Links to DAF Providers -->
+        <div class="daf-providers">
+          <h3>Or Log In Directly to Your Provider</h3>
+          <p class="providers-subtitle">
+            Click your DAF provider to log in and recommend a grant to Bay Tides (EIN: 93-3889081)
+          </p>
+          <div class="provider-grid">
+            <a
+              href="https://www.fidelitycharitable.org/giving-account/open-an-account.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="provider-card"
+            >
+              <span class="provider-name">Fidelity Charitable</span>
+              <span class="provider-tag">Largest DAF sponsor</span>
+            </a>
+            <a
+              href="https://www.schwabcharitable.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="provider-card"
+            >
+              <span class="provider-name">Schwab Charitable</span>
+              <span class="provider-tag">Low minimums</span>
+            </a>
+            <a
+              href="https://www.vanguardcharitable.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="provider-card"
+            >
+              <span class="provider-name">Vanguard Charitable</span>
+              <span class="provider-tag">Low-cost investing</span>
+            </a>
+            <a
+              href="https://www.nptrust.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="provider-card"
+            >
+              <span class="provider-name">National Philanthropic Trust</span>
+              <span class="provider-tag">Independent sponsor</span>
+            </a>
+            <a
+              href="https://www.siliconvalleycf.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="provider-card"
+            >
+              <span class="provider-name">Silicon Valley Community Foundation</span>
+              <span class="provider-tag">Bay Area focused</span>
+            </a>
+            <a
+              href="https://www.jewishfed.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="provider-card"
+            >
+              <span class="provider-name">Jewish Community Federation</span>
+              <span class="provider-tag">Bay Area</span>
+            </a>
+          </div>
+          <p class="providers-note">
+            Don't see your provider? Log in to your DAF account and search for <strong>
+              Bay Tides
+            </strong> or EIN <strong>93-3889081</strong>.
+          </p>
+        </div>
+
+        <!-- Benefits Cards -->
+        <div class="daf-benefits-section">
+          <h3>Why Give Through a DAF?</h3>
+          <div class="benefits-grid">
+            <div class="benefit-card">
+              <div class="benefit-icon">
+                <!-- Lucide: receipt -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z">
+                  </path><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><path
+                    d="M12 17.5v-11"
+                  >
+                  </path>
+                </svg>
+              </div>
+              <h4>Immediate Tax Deduction</h4>
+              <p>Get your deduction when you contribute, give when you're ready</p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">
+                <!-- Lucide: trending-up -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline
+                    points="17 6 23 6 23 12"
+                  >
+                  </polyline>
+                </svg>
+              </div>
+              <h4>Tax-Free Growth</h4>
+              <p>Your charitable assets grow tax-free until you're ready to give</p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">
+                <!-- Lucide: calendar-check -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line
+                    x1="16"
+                    x2="16"
+                    y1="2"
+                    y2="6"
+                  >
+                  </line><line x1="8" x2="8" y1="2" y2="6"></line><line
+                    x1="3"
+                    x2="21"
+                    y1="10"
+                    y2="10"
+                  >
+                  </line><path d="m9 16 2 2 4-4"></path>
+                </svg>
+              </div>
+              <h4>Flexible Timing</h4>
+              <p>Recommend grants on your schedule—no pressure, no deadlines</p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">
+                <!-- Lucide: file-check -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z">
+                  </path><polyline points="14 2 14 8 20 8"></polyline><path d="m9 15 2 2 4-4">
+                  </path>
+                </svg>
+              </div>
+              <h4>Simple Recordkeeping</h4>
+              <p>One receipt for your contribution—your DAF tracks all grants</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Organization Info with Copy -->
         <div class="daf-info-box">
           <h3>Organization Information</h3>
+          <p class="info-subtitle">Use this information when recommending a grant</p>
           <dl class="daf-details">
             <div class="daf-detail-row">
               <dt>Legal Name</dt>
@@ -76,47 +318,88 @@ const structuredData = [
               <dd>501(c)(3) Public Charity</dd>
             </div>
           </dl>
+          <button
+            class="copy-btn"
+            data-copy="orginfo"
+            aria-label="Copy organization information to clipboard"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              >
+              </path>
+            </svg>
+            <span>Copy all information</span>
+          </button>
         </div>
 
-        <div class="daf-steps">
-          <h3>How to Make a Grant</h3>
-          <ol role="list">
-            <li>
-              <strong>Log in to your DAF account</strong> through your fund administrator (Fidelity Charitable,
-              Schwab Charitable, Vanguard Charitable, or your community foundation).
-            </li>
-            <li>
-              <strong>Search for Bay Tides</strong> using our name or EIN: 93-3889081.
-            </li>
-            <li>
-              <strong>Recommend your grant amount</strong> and submit your request.
-            </li>
-            <li>
-              <strong>Receive confirmation</strong> from both your fund administrator and Bay Tides.
-            </li>
-          </ol>
-        </div>
-
-        <div class="daf-benefits">
-          <h3>Benefits of DAF Giving</h3>
-          <ul>
-            <li>
-              <strong>Immediate tax deduction</strong> when you contribute to your DAF
-            </li>
-            <li>
-              <strong>Tax-free growth</strong> of your charitable assets
-            </li>
-            <li>
-              <strong>Flexible timing</strong> - give when it's right for you
-            </li>
-            <li>
-              <strong>Simplified recordkeeping</strong> - one receipt for your contribution
-            </li>
-            <li>
-              <strong>Legacy planning</strong> - name successors to continue your giving
-            </li>
-          </ul>
-        </div>
+        <!-- What is a DAF Explainer -->
+        <details class="daf-explainer">
+          <summary>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="chevron-icon"
+              aria-hidden="true"
+            >
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+            <span>What is a Donor Advised Fund?</span>
+          </summary>
+          <div class="explainer-content">
+            <p>
+              A Donor Advised Fund (DAF) is like a charitable savings account. You make a
+              tax-deductible contribution to the fund, and then recommend grants to qualified
+              nonprofits over time.
+            </p>
+            <div class="explainer-steps">
+              <div class="explainer-step">
+                <span class="step-num">1</span>
+                <div>
+                  <strong>Contribute</strong>
+                  <p>Make a tax-deductible gift of cash, stocks, or other assets to your DAF</p>
+                </div>
+              </div>
+              <div class="explainer-step">
+                <span class="step-num">2</span>
+                <div>
+                  <strong>Grow</strong>
+                  <p>Your contribution can be invested and grow tax-free</p>
+                </div>
+              </div>
+              <div class="explainer-step">
+                <span class="step-num">3</span>
+                <div>
+                  <strong>Give</strong>
+                  <p>Recommend grants to charities like Bay Tides whenever you're ready</p>
+                </div>
+              </div>
+            </div>
+            <p class="explainer-note">
+              DAFs are offered by community foundations, financial institutions, and independent
+              sponsors. Minimum contributions vary by provider, typically starting at
+              $5,000-$25,000.
+            </p>
+          </div>
+        </details>
 
         <div class="daf-help">
           <h3>Need Assistance?</h3>
@@ -305,4 +588,405 @@ const structuredData = [
   :global([data-theme='dark']) .daf-benefits {
     background: var(--bg-secondary);
   }
+
+  /* DAFDirect Widget Section */
+  .daf-widget-section {
+    background: linear-gradient(135deg, var(--light-blue) 0%, #e8f4f8 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .daf-widget-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+
+  .dafdirect-logo {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .daf-widget-header h3 {
+    margin: 0;
+    color: var(--primary-navy);
+    font-size: 1.25rem;
+  }
+
+  .daf-widget-header p {
+    margin: 0.25rem 0 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+  }
+
+  .dafdirect-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary-blue);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 102, 153, 0.3);
+  }
+
+  .dafdirect-btn:hover {
+    background: var(--primary-navy);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 51, 102, 0.35);
+  }
+
+  .widget-note {
+    margin: 1rem 0 0;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+
+  /* DAF Providers Grid */
+  .daf-providers {
+    margin-bottom: 3rem;
+  }
+
+  .daf-providers h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-navy);
+    text-align: center;
+  }
+
+  .providers-subtitle {
+    text-align: center;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .provider-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .provider-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.25rem 1rem;
+    background: var(--bg-primary, white);
+    border: 2px solid var(--border-color, #e2e8f0);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .provider-card:hover {
+    border-color: var(--primary-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .provider-name {
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    text-align: center;
+    margin-bottom: 0.25rem;
+  }
+
+  .provider-tag {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    background: var(--light-blue);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .providers-note {
+    text-align: center;
+    margin-top: 1.25rem;
+    font-size: 0.9rem;
+    color: var(--text-light);
+  }
+
+  /* Benefits Section */
+  .daf-benefits-section {
+    margin-bottom: 3rem;
+  }
+
+  .daf-benefits-section h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--primary-navy);
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .benefit-card {
+    background: var(--bg-primary, white);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .benefit-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 1rem;
+    background: var(--light-blue);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-blue);
+  }
+
+  .benefit-card h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    color: var(--text-dark);
+  }
+
+  .benefit-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  /* Organization Info Box */
+  .info-subtitle {
+    color: var(--text-light);
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--primary-navy);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .copy-btn:hover {
+    background: var(--primary-blue);
+  }
+
+  .copy-btn.copied {
+    background: #059669;
+  }
+
+  /* DAF Explainer Accordion */
+  .daf-explainer {
+    margin-bottom: 3rem;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .daf-explainer summary {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-primary, white);
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary-navy);
+    list-style: none;
+  }
+
+  .daf-explainer summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .daf-explainer summary:hover {
+    background: var(--light-blue);
+  }
+
+  .daf-explainer .chevron-icon {
+    transition: transform 0.2s ease;
+    color: var(--primary-blue);
+  }
+
+  .daf-explainer[open] .chevron-icon {
+    transform: rotate(90deg);
+  }
+
+  .explainer-content {
+    padding: 1.5rem;
+    background: var(--bg-secondary, #f8fafc);
+    border-top: 1px solid var(--border-color, #e2e8f0);
+  }
+
+  .explainer-content > p:first-child {
+    margin-top: 0;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  .explainer-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .explainer-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--primary-navy);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .explainer-step strong {
+    display: block;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+  }
+
+  .explainer-step p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .explainer-note {
+    margin-bottom: 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color, #e2e8f0);
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+
+  /* Dark Mode */
+  :global([data-theme='dark']) .daf-widget-section {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(0, 102, 153, 0.15) 100%);
+  }
+
+  :global([data-theme='dark']) .provider-card {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+  }
+
+  :global([data-theme='dark']) .provider-tag {
+    background: rgba(0, 102, 153, 0.2);
+    color: var(--primary-blue);
+  }
+
+  :global([data-theme='dark']) .benefit-card {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+  }
+
+  :global([data-theme='dark']) .benefit-icon {
+    background: rgba(0, 102, 153, 0.2);
+  }
+
+  :global([data-theme='dark']) .daf-explainer summary {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .daf-explainer summary:hover {
+    background: rgba(0, 102, 153, 0.15);
+  }
+
+  :global([data-theme='dark']) .explainer-content {
+    background: var(--bg-tertiary, rgba(0, 0, 0, 0.2));
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .daf-widget-header {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .dafdirect-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .provider-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .benefits-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .daf-detail-row {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .daf-detail-row dd {
+      text-align: left;
+    }
+  }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const copyBtn = document.querySelector('.copy-btn[data-copy="orginfo"]');
+
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        const orgInfo = `Bay Tides
+EIN: 93-3889081
+Address: 274 Redwood Shores Pkwy #619, Redwood City, CA 94065
+Tax Status: 501(c)(3) Public Charity`;
+
+        try {
+          await navigator.clipboard.writeText(orgInfo);
+          const span = copyBtn.querySelector('span');
+          const originalText = span.textContent;
+          span.textContent = 'Copied!';
+          copyBtn.classList.add('copied');
+
+          setTimeout(() => {
+            span.textContent = originalText;
+            copyBtn.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    }
+  });
+</script>
