@@ -114,6 +114,10 @@ input[type='radio'] {
   min-width: 260px;
   max-width: 300px;
   font-size: 0.875rem;
+  max-height: calc(100vh - 8rem);
+  max-height: calc(100dvh - 8rem); // Use dynamic viewport height for mobile
+  overflow-y: auto;
+  overscroll-behavior: contain;
 
   // Position variants
   &.bottom-left {
@@ -916,6 +920,8 @@ input[type='radio'] {
     left: 1rem;
     right: 1rem;
     max-width: none;
+    max-height: calc(100vh - 6rem);
+    max-height: calc(100dvh - 6rem);
   }
 
   .toast-container {

@@ -4,6 +4,25 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import PageHero from '../components/PageHero.astro';
 import Card from '../components/Card.astro';
 
+const inDevProjects = [
+  {
+    name: 'Tide Pool Kids',
+    tagline: 'An interactive adventure exploring Bay Area tide pools and ecosystems',
+    audience: 'K-8 students',
+    tech: ['Next.js', 'React', 'Phaser', 'TypeScript'],
+    logo: '/assets/images/tide-pool-kids-logo.png',
+    github: 'https://github.com/baytides/tide-pool-kids',
+  },
+  {
+    name: 'Climate Quest',
+    tagline: 'An Oregon Trail-style journey through California ecosystems',
+    audience: 'Grades 4-8',
+    tech: ['Next.js', 'React', 'TypeScript', 'Zustand'],
+    logo: null,
+    github: 'https://github.com/baytides/climate-quest',
+  },
+];
+
 const structuredData = [
   {
     '@context': 'https://schema.org',
@@ -50,253 +69,572 @@ const structuredData = [
 >
   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Projects' }]} />
 
-  <!-- Video Hero -->
-  <section class="hero hero-page projects-video-hero">
-    <video
-      class="projects-hero-video"
-      autoplay
-      muted
-      loop
-      playsinline
-      poster="/assets/video/projects-hero-poster.webp"
-    >
-      <source src="/assets/video/projects-hero.webm" type="video/webm" />
-    </video>
-    <div class="projects-hero-overlay"></div>
-    <div class="container">
-      <h1>Our Initiatives</h1>
-      <p>Programs and tools serving the Bay Area community</p>
+  <!-- Project Toggle -->
+  <div class="container">
+    <div class="project-toggle" role="tablist" aria-label="Project categories">
+      <button
+        role="tab"
+        aria-selected="true"
+        aria-controls="live-projects"
+        id="tab-live"
+        class="toggle-btn active"
+        data-tab="live"
+      >
+        Live Projects
+      </button>
+      <button
+        role="tab"
+        aria-selected="false"
+        aria-controls="in-development"
+        id="tab-dev"
+        class="toggle-btn"
+        data-tab="dev"
+      >
+        In Development
+      </button>
     </div>
-  </section>
+  </div>
 
-  <!-- Aegis Initiative -->
-  <section class="content-section">
-    <div class="container">
-      <div class="content-grid project-grid">
-        <div class="content-text">
-          <span class="badge">Veterans Program</span>
-          <h2>Aegis Initiative</h2>
-          <p>
-            <strong>Connecting veterans and service members with environmental stewardship.</strong>
-          </p>
-          <p>
-            The Aegis Initiative recognizes that those who served our nation bring valuable skills,
-            leadership, and purpose to defending our local environment. Veterans lead here, not just
-            participate.
-          </p>
-          <p>
-            Participants bring military experience in project management, logistics, communications,
-            data analysis, and engineering to conservation work that matters. In return, they gain
-            hands-on environmental sector experience, leadership opportunities, and connections to
-            Bay Area environmental organizations.
-          </p>
-          <div style="margin-top: 1.5rem">
-            <a
-              href="https://aegisinitiative.com"
-              class="btn btn-primary"
-              target="_blank"
-              rel="noopener"
-            >
-              Learn More
-              <span class="sr-only">(opens in new tab)</span>
-            </a>
-          </div>
-        </div>
-        <div class="content-image">
-          <div class="project-logo-card">
-            <picture class="logo-light-mode">
-              <source srcset="/assets/images/aegis/aegis-logo-dark.webp" type="image/webp" />
-              <img
-                src="/assets/images/aegis/aegis-logo-dark.svg"
-                alt="Aegis Initiative logo"
-                width="200"
-                height="200"
-              />
-            </picture>
-            <picture class="logo-dark-mode">
-              <source srcset="/assets/images/aegis/aegis-logo-light.webp" type="image/webp" />
-              <img
-                src="/assets/images/aegis/aegis-logo-light.svg"
-                alt="Aegis Initiative logo"
-                width="200"
-                height="200"
-              />
-            </picture>
-            <p>aegisinitiative.com</p>
-          </div>
-        </div>
+  <!-- Live Projects Tab -->
+  <div id="live-projects" role="tabpanel" aria-labelledby="tab-live" class="tab-content active">
+    <!-- Video Hero -->
+    <section class="hero hero-page projects-video-hero">
+      <video
+        class="projects-hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="/assets/video/projects-hero-poster.webp"
+      >
+        <source src="/assets/video/projects-hero.webm" type="video/webm" />
+      </video>
+      <div class="projects-hero-overlay"></div>
+      <div class="container">
+        <h1>Our Initiatives</h1>
+        <p>Programs and tools serving the Bay Area community</p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Bay Navigator -->
-  <section class="content-section alt-bg">
-    <div class="container">
-      <div class="content-grid project-grid-alt">
-        <div class="content-text">
-          <span class="badge">Community Resource</span>
-          <h2>Bay Navigator</h2>
-          <p>
-            <strong>Helping residents discover savings programs across the Bay Area.</strong>
-          </p>
-          <p>
-            We started Bay Navigator with a simple observation:
-            <strong>
-              financial barriers often prevent people from making sustainable choices
-            </strong>. When money is tight, public transit, energy-efficient upgrades, and outdoor
-            recreation can feel out of reach.
-          </p>
-          <p>
-            As we built the tool, we realized its potential extended far beyond environmental
-            programs. The Bay Area is one of the most expensive regions in the country, and
-            residents deserve a single place to find all the assistance available to them.
-          </p>
-          <p>So we expanded. Today, Bay Navigator covers:</p>
-          <ul style="margin: 1rem 0; padding-left: 1.5rem">
-            <li>
-              <strong>Transit savings</strong>
-              — discounted fares for Clipper, BART, Caltrain, and more
-            </li>
-            <li>
-              <strong>Utility assistance</strong>
-              — programs like CARE and FERA for energy bills
-            </li>
-            <li>
-              <strong>Community resources</strong>
-              — libraries, food assistance, and local services
-            </li>
-            <li>
-              <strong>Parks and recreation</strong>
-              — free and discounted access to public lands
-            </li>
-            <li>
-              <strong>Healthcare and wellness</strong>
-              — sliding-scale and low-cost programs
-            </li>
-          </ul>
-          <p>
-            A stronger community starts with residents who can thrive. By connecting people with
-            resources, we're building a more resilient Bay Area—and staying true to our
-            environmental mission along the way.
-          </p>
-          <div style="margin-top: 1.5rem">
-            <a
-              href="https://baynavigator.org"
-              class="btn btn-primary"
-              target="_blank"
-              rel="noopener"
-            >
-              Visit Bay Navigator
-              <span class="sr-only">(opens in new tab)</span>
-            </a>
-            <a
-              href="https://github.com/baytides/baynavigator"
-              class="btn btn-outline"
-              target="_blank"
-              rel="noopener"
-              style="margin-left: 0.5rem"
-            >
-              View on GitHub
-              <span class="sr-only">(opens in new tab)</span>
-            </a>
+    <!-- Aegis Initiative -->
+    <section class="content-section">
+      <div class="container">
+        <div class="content-grid project-grid">
+          <div class="content-text">
+            <span class="badge">Veterans Program</span>
+            <h2>Aegis Initiative</h2>
+            <p>
+              <strong>
+                Connecting veterans and service members with environmental stewardship.
+              </strong>
+            </p>
+            <p>
+              The Aegis Initiative recognizes that those who served our nation bring valuable
+              skills, leadership, and purpose to defending our local environment. Veterans lead
+              here, not just participate.
+            </p>
+            <p>
+              Participants bring military experience in project management, logistics,
+              communications, data analysis, and engineering to conservation work that matters. In
+              return, they gain hands-on environmental sector experience, leadership opportunities,
+              and connections to Bay Area environmental organizations.
+            </p>
+            <div style="margin-top: 1.5rem">
+              <a
+                href="https://aegisinitiative.com"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener"
+              >
+                Learn More
+                <span class="sr-only">(opens in new tab)</span>
+              </a>
+            </div>
           </div>
-        </div>
-        <div class="content-image">
-          <div class="project-logo-card">
-            <picture>
-              <source srcset="/assets/images/baynavigator-logo-new.webp" type="image/webp" />
-              <img
-                src="/assets/images/baynavigator-logo-new.svg"
-                alt="Bay Navigator logo"
-                width="200"
-                height="200"
-              />
-            </picture>
-            <p>baynavigator.org</p>
+          <div class="content-image">
+            <div class="project-logo-card">
+              <picture class="logo-light-mode">
+                <source srcset="/assets/images/aegis/aegis-logo-dark.webp" type="image/webp" />
+                <img
+                  src="/assets/images/aegis/aegis-logo-dark.svg"
+                  alt="Aegis Initiative logo"
+                  width="200"
+                  height="200"
+                />
+              </picture>
+              <picture class="logo-dark-mode">
+                <source srcset="/assets/images/aegis/aegis-logo-light.webp" type="image/webp" />
+                <img
+                  src="/assets/images/aegis/aegis-logo-light.svg"
+                  alt="Aegis Initiative logo"
+                  width="200"
+                  height="200"
+                />
+              </picture>
+              <p>aegisinitiative.com</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Our Digital Principles -->
-  <section class="content-section">
-    <div class="container">
-      <div class="section-title">
-        <h2>Our Digital Principles</h2>
-        <p>Values that guide our technology projects</p>
+    <!-- Bay Navigator -->
+    <section class="content-section alt-bg">
+      <div class="container">
+        <div class="content-grid project-grid-alt">
+          <div class="content-text">
+            <span class="badge">Community Resource</span>
+            <h2>Bay Navigator</h2>
+            <p>
+              <strong>Helping residents discover savings programs across the Bay Area.</strong>
+            </p>
+            <p>
+              We started Bay Navigator with a simple observation:
+              <strong>
+                financial barriers often prevent people from making sustainable choices
+              </strong>. When money is tight, public transit, energy-efficient upgrades, and outdoor
+              recreation can feel out of reach.
+            </p>
+            <p>
+              As we built the tool, we realized its potential extended far beyond environmental
+              programs. The Bay Area is one of the most expensive regions in the country, and
+              residents deserve a single place to find all the assistance available to them.
+            </p>
+            <p>So we expanded. Today, Bay Navigator covers:</p>
+            <ul style="margin: 1rem 0; padding-left: 1.5rem">
+              <li>
+                <strong>Transit savings</strong>
+                — discounted fares for Clipper, BART, Caltrain, and more
+              </li>
+              <li>
+                <strong>Utility assistance</strong>
+                — programs like CARE and FERA for energy bills
+              </li>
+              <li>
+                <strong>Community resources</strong>
+                — libraries, food assistance, and local services
+              </li>
+              <li>
+                <strong>Parks and recreation</strong>
+                — free and discounted access to public lands
+              </li>
+              <li>
+                <strong>Healthcare and wellness</strong>
+                — sliding-scale and low-cost programs
+              </li>
+            </ul>
+            <p>
+              A stronger community starts with residents who can thrive. By connecting people with
+              resources, we're building a more resilient Bay Area—and staying true to our
+              environmental mission along the way.
+            </p>
+            <div style="margin-top: 1.5rem">
+              <a
+                href="https://baynavigator.org"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener"
+              >
+                Visit Bay Navigator
+                <span class="sr-only">(opens in new tab)</span>
+              </a>
+              <a
+                href="https://github.com/baytides/baynavigator"
+                class="btn btn-outline"
+                target="_blank"
+                rel="noopener"
+                style="margin-left: 0.5rem"
+              >
+                View on GitHub
+                <span class="sr-only">(opens in new tab)</span>
+              </a>
+            </div>
+          </div>
+          <div class="content-image">
+            <div class="project-logo-card">
+              <picture>
+                <source srcset="/assets/images/baynavigator-logo-new.webp" type="image/webp" />
+                <img
+                  src="/assets/images/baynavigator-logo-new.svg"
+                  alt="Bay Navigator logo"
+                  width="200"
+                  height="200"
+                />
+              </picture>
+              <p>baynavigator.org</p>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="cards-grid">
-        <Card
-          title="Privacy-First"
-          icon="<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='18' height='11' x='3' y='11' rx='2' ry='2'/><path d='M7 11V7a5 5 0 0 1 10 0v4'/></svg>"
-        >
-          <p>
-            No accounts, no cookies, no tracking. We use privacy-friendly analytics and store
-            preferences only on your device. Your data stays yours.
-          </p>
-        </Card>
+    <!-- Our Digital Principles -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our Digital Principles</h2>
+          <p>Values that guide our technology projects</p>
+        </div>
 
-        <Card
-          title="Open Source"
-          icon="<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4'/><path d='M9 18c-4.51 2-5-2-7-2'/></svg>"
-        >
-          <p>
-            All our code is publicly available on GitHub. Anyone can inspect, audit, or contribute
-            to our projects. Transparency builds trust.
-          </p>
-        </Card>
-
-        <Card
-          title="Fully Accessible"
-          icon="<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='4' r='1'/><path d='m12 21-4-7h8l-4 7Z'/><path d='M12 12v2'/><path d='M6 9h12l-1.5 2H7.5L6 9z'/></svg>"
-        >
-          <p>
-            Built to WCAG 2.2 AAA standards with keyboard navigation, screen reader support, and
-            adjustable display options. Everyone deserves access.
-          </p>
-        </Card>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contribute -->
-  <section class="impact">
-    <div class="container">
-      <div class="impact-content">
-        <h2>Contribute to Our Projects</h2>
-        <p>
-          Our digital projects are open source and community-driven. Whether you're a developer,
-          designer, researcher, or just have ideas to share, we welcome your contributions.
-        </p>
-        <p>
-          Bay Navigator is just our first project. We're developing additional programs focused on
-          conservation, education, and community engagement throughout the Bay Area. Have an idea
-          for a project that could benefit the community?
-          <a href="/contact" style="color: inherit; text-decoration: underline">Get in touch</a>
-          with your suggestions.
-        </p>
-        <div style="margin-top: 1.5rem">
-          <a
-            href="https://github.com/baytides"
-            class="btn btn-primary"
-            target="_blank"
-            rel="noopener"
+        <div class="cards-grid">
+          <Card
+            title="Privacy-First"
+            icon="<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='18' height='11' x='3' y='11' rx='2' ry='2'/><path d='M7 11V7a5 5 0 0 1 10 0v4'/></svg>"
           >
-            Visit Our GitHub
-            <span class="sr-only">(opens in new tab)</span>
-          </a>
-          <a href="/volunteer" class="btn btn-outline" style="margin-left: 0.5rem">
-            Volunteer With Us
-          </a>
+            <p>
+              No accounts, no cookies, no tracking. We use privacy-friendly analytics and store
+              preferences only on your device. Your data stays yours.
+            </p>
+          </Card>
+
+          <Card
+            title="Open Source"
+            icon="<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4'/><path d='M9 18c-4.51 2-5-2-7-2'/></svg>"
+          >
+            <p>
+              All our code is publicly available on GitHub. Anyone can inspect, audit, or contribute
+              to our projects. Transparency builds trust.
+            </p>
+          </Card>
+
+          <Card
+            title="Fully Accessible"
+            icon="<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='4' r='1'/><path d='m12 21-4-7h8l-4 7Z'/><path d='M12 12v2'/><path d='M6 9h12l-1.5 2H7.5L6 9z'/></svg>"
+          >
+            <p>
+              Built to WCAG 2.2 AAA standards with keyboard navigation, screen reader support, and
+              adjustable display options. Everyone deserves access.
+            </p>
+          </Card>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- Contribute -->
+    <section class="impact">
+      <div class="container">
+        <div class="impact-content">
+          <h2>Contribute to Our Projects</h2>
+          <p>
+            Our digital projects are open source and community-driven. Whether you're a developer,
+            designer, researcher, or just have ideas to share, we welcome your contributions.
+          </p>
+          <p>
+            Bay Navigator is just our first project. We're developing additional programs focused on
+            conservation, education, and community engagement throughout the Bay Area. Have an idea
+            for a project that could benefit the community?
+            <a href="/contact" style="color: inherit; text-decoration: underline">Get in touch</a>
+            with your suggestions.
+          </p>
+          <div style="margin-top: 1.5rem">
+            <a
+              href="https://github.com/baytides"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener"
+            >
+              Visit Our GitHub
+              <span class="sr-only">(opens in new tab)</span>
+            </a>
+            <a href="/volunteer" class="btn btn-outline" style="margin-left: 0.5rem">
+              Volunteer With Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- In Development Tab -->
+  <div id="in-development" role="tabpanel" aria-labelledby="tab-dev" class="tab-content" hidden>
+    <section class="content-section">
+      <div class="container">
+        <div class="dev-intro">
+          <h2>We're cooking up some fun!</h2>
+          <p>
+            These games are still in the oven, but we'd love help from developers, educators, and
+            anyone who wants to pitch in.
+          </p>
+        </div>
+
+        <div class="dev-cards-grid">
+          {
+            inDevProjects.map((project) => (
+              <div class="dev-card">
+                <span class="badge">Educational Game</span>
+                {project.logo ? (
+                  <img
+                    src={project.logo}
+                    alt={`${project.name} logo`}
+                    class="dev-card-logo"
+                    width="280"
+                    height="158"
+                  />
+                ) : (
+                  <div class="dev-card-text-logo">
+                    <span>{project.name}</span>
+                  </div>
+                )}
+                <h3>{project.name}</h3>
+                <p class="dev-card-tagline">{project.tagline}</p>
+                <p class="dev-card-audience">
+                  <strong>Target audience:</strong> {project.audience}
+                </p>
+                <div class="tech-badges">
+                  {project.tech.map((t) => (
+                    <span class="tech-badge">{t}</span>
+                  ))}
+                </div>
+                <div class="dev-card-actions">
+                  <a
+                    href={project.github}
+                    class="btn btn-primary btn-sm"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    View on GitHub
+                    <span class="sr-only">(opens in new tab)</span>
+                  </a>
+                  <a
+                    href={`${project.github}/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22`}
+                    class="btn btn-outline btn-sm"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    Good First Issues
+                    <span class="sr-only">(opens in new tab)</span>
+                  </a>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="contribute-note">
+          <h3>New to open source?</h3>
+          <p>
+            No problem! Check out the <code>CONTRIBUTING.md</code> in each repo for setup instructions
+            and look for issues tagged <code>good-first-issue</code>.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
 </BaseLayout>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.toggle-btn');
+    const panels = document.querySelectorAll('.tab-content');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const target = tab.getAttribute('data-tab');
+
+        tabs.forEach((t) => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        panels.forEach((panel) => {
+          if (
+            (target === 'live' && panel.id === 'live-projects') ||
+            (target === 'dev' && panel.id === 'in-development')
+          ) {
+            panel.classList.add('active');
+            panel.removeAttribute('hidden');
+          } else {
+            panel.classList.remove('active');
+            panel.setAttribute('hidden', '');
+          }
+        });
+      });
+    });
+
+    // Check URL for tab parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+    if (tabParam === 'development') {
+      const devTab = document.querySelector('[data-tab="dev"]') as HTMLButtonElement;
+      devTab?.click();
+    }
+  });
+</script>
+
 <style>
+  /* Project Toggle */
+  .project-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 2rem 0;
+  }
+
+  .toggle-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--primary-blue);
+    background: transparent;
+    color: var(--primary-blue);
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .toggle-btn:hover {
+    background: var(--primary-blue-light, rgba(0, 105, 148, 0.1));
+  }
+
+  .toggle-btn:focus-visible {
+    outline: 3px solid var(--focus-color, #005fcc);
+    outline-offset: 2px;
+  }
+
+  .toggle-btn.active {
+    background: var(--primary-blue);
+    color: white;
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  /* In Development Section */
+  .dev-intro {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+
+  .dev-intro h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .dev-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .dev-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global([data-theme='dark']) .dev-card {
+    background: var(--card-bg);
+  }
+
+  .dev-card-logo {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    border-radius: 8px;
+    margin: 0.5rem auto 1rem;
+    display: block;
+  }
+
+  .dev-card-text-logo {
+    background: linear-gradient(135deg, #0077b6, #00b4d8, #48cae4);
+    border-radius: 8px;
+    padding: 2.5rem 1rem;
+    margin: 0.5rem 0 1rem;
+    text-align: center;
+  }
+
+  .dev-card-text-logo span {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .dev-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+  }
+
+  .dev-card-tagline {
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    flex-grow: 1;
+  }
+
+  .dev-card-audience {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+  }
+
+  .tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tech-badge {
+    background: var(--primary-blue-light, rgba(0, 105, 148, 0.1));
+    color: var(--primary-blue);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .dev-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .contribute-note {
+    background: var(--bg-alt, #f8f9fa);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    text-align: center;
+  }
+
+  :global([data-theme='dark']) .contribute-note {
+    background: var(--card-bg);
+  }
+
+  .contribute-note h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.125rem;
+  }
+
+  .contribute-note p {
+    margin: 0;
+  }
+
+  .contribute-note code {
+    background: var(--primary-blue-light, rgba(0, 105, 148, 0.1));
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+  }
+
+  /* Existing styles */
   .badge {
     display: inline-block;
     background: var(--primary-blue);
@@ -365,6 +703,10 @@ const structuredData = [
 
     .project-grid-alt .content-image {
       order: 0;
+    }
+
+    .dev-cards-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>
