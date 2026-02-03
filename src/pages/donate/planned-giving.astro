@@ -51,88 +51,892 @@ const structuredData = [
           <h2>Leave a Legacy</h2>
           <p>
             A planned gift to Bay Tides ensures that your commitment to protecting the San Francisco
-            Bay continues for generations to come. These gifts allow you to make a significant
-            impact while also providing potential tax benefits for you and your heirs.
+            Bay continues for generations to come. Whether you're including us in your will or
+            naming us as a beneficiary, every gift—large or small—makes a lasting difference.
           </p>
         </div>
 
-        <div class="giving-types">
-          <h3>Ways to Give</h3>
-
-          <div class="giving-type">
-            <h4>Bequest in Your Will or Trust</h4>
-            <p>
-              The simplest way to make a planned gift is to include Bay Tides in your will or living
-              trust. You can designate a specific dollar amount, a percentage of your estate, or the
-              remainder after other bequests are fulfilled.
-            </p>
-            <div class="sample-language">
-              <p><strong>Sample Bequest Language:</strong></p>
-              <blockquote>
-                "I give, devise, and bequeath [specific dollar amount, percentage, or description of
-                property] to Bay Tides, a California nonprofit corporation (EIN: 93-3889081),
-                located at 274 Redwood Shores Pkwy #619, Redwood City, CA 94065, to be used for its
-                general charitable purposes."
-              </blockquote>
+        <!-- Interactive Gift Finder Tool -->
+        <div class="gift-finder" role="region" aria-labelledby="gift-finder-heading">
+          <div class="gift-finder-header">
+            <div class="finder-icon">
+              <!-- Lucide: compass -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="10"></circle><polygon
+                  points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"
+                >
+                </polygon>
+              </svg>
+            </div>
+            <div>
+              <h3 id="gift-finder-heading">Find Your Giving Option</h3>
+              <p>
+                Answer a few questions to discover which planned giving approach fits your
+                situation.
+              </p>
             </div>
           </div>
 
-          <div class="giving-type">
-            <h4>Beneficiary Designations</h4>
-            <p>
-              Name Bay Tides as a beneficiary of your retirement account, life insurance policy, or
-              bank account. This simple designation can be made without changing your will and can
-              be updated at any time.
-            </p>
-            <ul>
-              <li>IRA, 401(k), or other retirement accounts</li>
-              <li>Life insurance policies</li>
-              <li>Bank or brokerage accounts (TOD/POD)</li>
-              <li>Commercial annuities</li>
-            </ul>
-          </div>
+          <div class="finder-content">
+            <!-- Question Screen -->
+            <div
+              class="finder-question active"
+              data-step="1"
+              role="group"
+              aria-labelledby="q1-label"
+            >
+              <p class="question-label" id="q1-label">How would you like to support Bay Tides?</p>
+              <div class="question-options" role="radiogroup" aria-labelledby="q1-label">
+                <button class="option-btn" data-answer="will" role="radio" aria-checked="false">
+                  <span class="option-icon">
+                    <!-- Lucide: file-text -->
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+                      >
+                      </path><polyline points="14 2 14 8 20 8"></polyline><line
+                        x1="16"
+                        y1="13"
+                        x2="8"
+                        y2="13"
+                      >
+                      </line><line x1="16" y1="17" x2="8" y2="17"></line><line
+                        x1="10"
+                        y1="9"
+                        x2="8"
+                        y2="9"
+                      >
+                      </line>
+                    </svg>
+                  </span>
+                  <span class="option-text">
+                    <strong>Through my will or trust</strong>
+                    <span>Include Bay Tides in your estate plans</span>
+                  </span>
+                </button>
+                <button
+                  class="option-btn"
+                  data-answer="retirement"
+                  role="radio"
+                  aria-checked="false"
+                >
+                  <span class="option-icon">
+                    <!-- Lucide: piggy-bank -->
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2h0V5z"
+                      >
+                      </path><path d="M2 9v1c0 1.1.9 2 2 2h1"></path><path d="M16 11h0"></path>
+                    </svg>
+                  </span>
+                  <span class="option-text">
+                    <strong>Through my retirement account</strong>
+                    <span>IRA, 401(k), or pension beneficiary</span>
+                  </span>
+                </button>
+                <button
+                  class="option-btn"
+                  data-answer="insurance"
+                  role="radio"
+                  aria-checked="false"
+                >
+                  <span class="option-icon">
+                    <!-- Lucide: shield -->
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                  </span>
+                  <span class="option-text">
+                    <strong>Through life insurance</strong>
+                    <span>Name Bay Tides as a policy beneficiary</span>
+                  </span>
+                </button>
+                <button class="option-btn" data-answer="income" role="radio" aria-checked="false">
+                  <span class="option-icon">
+                    <!-- Lucide: trending-up -->
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline
+                        points="17 6 23 6 23 12"
+                      >
+                      </polyline>
+                    </svg>
+                  </span>
+                  <span class="option-text">
+                    <strong>I'd like income while giving</strong>
+                    <span>Receive payments during your lifetime</span>
+                  </span>
+                </button>
+                <button class="option-btn" data-answer="all" role="radio" aria-checked="false">
+                  <span class="option-icon">
+                    <!-- Lucide: list -->
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <line x1="8" y1="6" x2="21" y2="6"></line><line
+                        x1="8"
+                        y1="12"
+                        x2="21"
+                        y2="12"
+                      >
+                      </line><line x1="8" y1="18" x2="21" y2="18"></line><line
+                        x1="3"
+                        y1="6"
+                        x2="3.01"
+                        y2="6"
+                      >
+                      </line><line x1="3" y1="12" x2="3.01" y2="12"></line><line
+                        x1="3"
+                        y1="18"
+                        x2="3.01"
+                        y2="18"
+                      >
+                      </line>
+                    </svg>
+                  </span>
+                  <span class="option-text">
+                    <strong>Show me all options</strong>
+                    <span>Compare different giving approaches</span>
+                  </span>
+                </button>
+              </div>
+            </div>
 
-          <div class="giving-type">
-            <h4>Charitable Remainder Trust</h4>
-            <p>
-              A charitable remainder trust provides you or your beneficiaries with income for life
-              or a term of years, with the remainder going to Bay Tides. This can provide an
-              immediate tax deduction and reduce estate taxes.
-            </p>
-          </div>
+            <!-- Result Screens -->
+            <div class="finder-result" data-result="will" aria-hidden="true">
+              <div class="result-header">
+                <span class="result-badge">Recommended for You</span>
+                <h4>Bequest in Your Will or Trust</h4>
+              </div>
+              <div class="result-body">
+                <p>
+                  The simplest and most popular way to make a planned gift. You can designate a
+                  specific dollar amount, a percentage of your estate, or the remainder after other
+                  bequests.
+                </p>
+                <div class="result-benefits">
+                  <div class="benefit-tag">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg> Easy to set up
+                  </div>
+                  <div class="benefit-tag">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg> Can be changed anytime
+                  </div>
+                  <div class="benefit-tag">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg> Reduces estate taxes
+                  </div>
+                  <div class="benefit-tag">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg> Any amount welcome
+                  </div>
+                </div>
+                <div class="sample-language">
+                  <p><strong>Sample Bequest Language:</strong></p>
+                  <blockquote>
+                    "I give, devise, and bequeath [specific dollar amount, percentage, or
+                    description of property] to Bay Tides, a California nonprofit corporation (EIN:
+                    93-3889081), located at 274 Redwood Shores Pkwy #619, Redwood City, CA 94065, to
+                    be used for its general charitable purposes."
+                  </blockquote>
+                  <button
+                    class="copy-btn"
+                    data-copy="bequest"
+                    aria-label="Copy bequest language to clipboard"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path
+                        d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                      >
+                      </path>
+                    </svg>
+                    <span>Copy to clipboard</span>
+                  </button>
+                </div>
+                <p class="result-note">
+                  Share this language with your attorney or add it to your will or trust document.
+                </p>
+              </div>
+              <button class="btn-back" aria-label="Go back to questions">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m15 18-6-6 6-6"></path>
+                </svg>
+                Start over
+              </button>
+            </div>
 
-          <div class="giving-type">
-            <h4>Charitable Lead Trust</h4>
-            <p>
-              A charitable lead trust provides payments to Bay Tides for a period of years, after
-              which the remaining assets pass to your heirs with reduced gift or estate taxes.
-            </p>
+            <div class="finder-result" data-result="retirement" aria-hidden="true">
+              <div class="result-header">
+                <span class="result-badge">Recommended for You</span>
+                <h4>Retirement Account Beneficiary</h4>
+              </div>
+              <div class="result-body">
+                <p>
+                  Name Bay Tides as a beneficiary of your IRA, 401(k), 403(b), or pension. This is
+                  one of the most tax-efficient ways to give—your heirs avoid income tax on
+                  inherited retirement funds.
+                </p>
+                <div class="result-benefits">
+                  <div class="benefit-tag">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg> No attorney needed
+                  </div>
+                  <div class="benefit-tag">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg> Update anytime
+                  </div>
+                  <div class="benefit-tag">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg> Tax-efficient for heirs
+                  </div>
+                  <div class="benefit-tag">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg> Partial or full amount
+                  </div>
+                </div>
+                <div class="how-to-box">
+                  <h5>How to designate Bay Tides:</h5>
+                  <ol>
+                    <li>Contact your plan administrator or log into your account</li>
+                    <li>Request a beneficiary change form</li>
+                    <li>List Bay Tides as primary or secondary beneficiary</li>
+                    <li>Use our EIN: <strong>93-3889081</strong></li>
+                  </ol>
+                </div>
+                <p class="result-note">
+                  You can designate any percentage—even 5% or 10% makes a difference.
+                </p>
+              </div>
+              <button class="btn-back" aria-label="Go back to questions">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m15 18-6-6 6-6"></path>
+                </svg>
+                Start over
+              </button>
+            </div>
+
+            <div class="finder-result" data-result="insurance" aria-hidden="true">
+              <div class="result-header">
+                <span class="result-badge">Recommended for You</span>
+                <h4>Life Insurance Beneficiary</h4>
+              </div>
+              <div class="result-body">
+                <p>
+                  Designate Bay Tides as a beneficiary of your life insurance policy. This is
+                  especially meaningful if you have a policy you no longer need for its original
+                  purpose.
+                </p>
+                <div class="result-benefits">
+                  <div class="benefit-tag">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg> Simple form change
+                  </div>
+                  <div class="benefit-tag">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg> Revocable anytime
+                  </div>
+                  <div class="benefit-tag">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg> Estate tax benefits
+                  </div>
+                  <div class="benefit-tag">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg> Multiplies your impact
+                  </div>
+                </div>
+                <div class="how-to-box">
+                  <h5>How to designate Bay Tides:</h5>
+                  <ol>
+                    <li>Contact your insurance company</li>
+                    <li>Request a beneficiary change form</li>
+                    <li>List Bay Tides with our EIN: <strong>93-3889081</strong></li>
+                    <li>Choose a percentage or the full policy</li>
+                  </ol>
+                </div>
+                <p class="result-note">
+                  Even naming us as a secondary beneficiary ensures your wishes are honored.
+                </p>
+              </div>
+              <button class="btn-back" aria-label="Go back to questions">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m15 18-6-6 6-6"></path>
+                </svg>
+                Start over
+              </button>
+            </div>
+
+            <div class="finder-result" data-result="income" aria-hidden="true">
+              <div class="result-header">
+                <span class="result-badge">Recommended for You</span>
+                <h4>Income-Generating Gifts</h4>
+              </div>
+              <div class="result-body">
+                <p>
+                  These options let you support Bay Tides while receiving income during your
+                  lifetime. They're ideal if you have appreciated assets and want both income and
+                  tax benefits.
+                </p>
+
+                <div class="income-options">
+                  <div class="income-option">
+                    <h5>Charitable Gift Annuity</h5>
+                    <p>
+                      Make a gift and receive fixed payments for life. Rates are based on your
+                      age—older donors receive higher rates.
+                    </p>
+                    <div class="mini-benefits">
+                      <span>Fixed income for life</span>
+                      <span>Immediate tax deduction</span>
+                      <span>Partially tax-free payments</span>
+                    </div>
+                  </div>
+                  <div class="income-option">
+                    <h5>Charitable Remainder Trust</h5>
+                    <p>
+                      Transfer assets into a trust that pays you (or beneficiaries) income, with the
+                      remainder going to Bay Tides.
+                    </p>
+                    <div class="mini-benefits">
+                      <span>Flexible payment options</span>
+                      <span>Avoid capital gains tax</span>
+                      <span>Reduce estate taxes</span>
+                    </div>
+                  </div>
+                </div>
+
+                <p class="result-note">
+                  These gifts typically require working with a financial advisor. We're happy to
+                  provide information to share with your advisor.
+                </p>
+              </div>
+              <button class="btn-back" aria-label="Go back to questions">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m15 18-6-6 6-6"></path>
+                </svg>
+                Start over
+              </button>
+            </div>
+
+            <div class="finder-result" data-result="all" aria-hidden="true">
+              <div class="result-header">
+                <h4>Compare All Giving Options</h4>
+              </div>
+              <div class="result-body">
+                <div class="comparison-table-wrapper">
+                  <table class="comparison-table" role="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Option</th>
+                        <th scope="col">Best For</th>
+                        <th scope="col">Complexity</th>
+                        <th scope="col">Can Change?</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Bequest (Will/Trust)</th>
+                        <td>Anyone with a will</td>
+                        <td><span class="complexity-tag simple">Simple</span></td>
+                        <td>Yes</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Retirement Beneficiary</th>
+                        <td>IRA/401(k) holders</td>
+                        <td><span class="complexity-tag simple">Simple</span></td>
+                        <td>Yes</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Life Insurance</th>
+                        <td>Policy owners</td>
+                        <td><span class="complexity-tag simple">Simple</span></td>
+                        <td>Yes</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Charitable Gift Annuity</th>
+                        <td>Those wanting income</td>
+                        <td><span class="complexity-tag moderate">Moderate</span></td>
+                        <td>No</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Charitable Remainder Trust</th>
+                        <td>Those with appreciated assets</td>
+                        <td><span class="complexity-tag complex">Complex</span></td>
+                        <td>No</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Charitable Lead Trust</th>
+                        <td>Those passing wealth to heirs</td>
+                        <td><span class="complexity-tag complex">Complex</span></td>
+                        <td>No</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="result-note">
+                  Not sure which is right for you? <a href="/contact">Contact us</a> to discuss your situation.
+                </p>
+              </div>
+              <button class="btn-back" aria-label="Go back to questions">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m15 18-6-6 6-6"></path>
+                </svg>
+                Start over
+              </button>
+            </div>
           </div>
         </div>
 
-        <div class="planned-benefits">
-          <h3>Benefits of Planned Giving</h3>
-          <ul>
-            <li>
-              <strong>Make a larger gift</strong> than you might be able to during your lifetime
-            </li>
-            <li>
-              <strong>Reduce estate taxes</strong> by removing assets from your taxable estate
-            </li>
-            <li>
-              <strong>Maintain flexibility</strong> - you can change your plans if circumstances change
-            </li>
-            <li>
-              <strong>Create a lasting legacy</strong> that reflects your values and priorities
-            </li>
-            <li>
-              <strong>Support the Bay</strong> for generations to come
-            </li>
-          </ul>
+        <!-- Visual Ways to Give Cards -->
+        <div class="giving-cards">
+          <h3>Ways to Give at a Glance</h3>
+          <div class="cards-grid">
+            <div class="giving-card">
+              <div class="card-icon">
+                <!-- Lucide: file-text -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z">
+                  </path><polyline points="14 2 14 8 20 8"></polyline><line
+                    x1="16"
+                    y1="13"
+                    x2="8"
+                    y2="13"
+                  >
+                  </line><line x1="16" y1="17" x2="8" y2="17"></line><line
+                    x1="10"
+                    y1="9"
+                    x2="8"
+                    y2="9"
+                  >
+                  </line>
+                </svg>
+              </div>
+              <h4>Bequest</h4>
+              <p>Include Bay Tides in your will or living trust</p>
+              <span class="card-tag">Most popular</span>
+            </div>
+            <div class="giving-card">
+              <div class="card-icon">
+                <!-- Lucide: piggy-bank -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2h0V5z"
+                  >
+                  </path><path d="M2 9v1c0 1.1.9 2 2 2h1"></path><path d="M16 11h0"></path>
+                </svg>
+              </div>
+              <h4>Retirement Account</h4>
+              <p>Name us as IRA or 401(k) beneficiary</p>
+              <span class="card-tag">Tax-efficient</span>
+            </div>
+            <div class="giving-card">
+              <div class="card-icon">
+                <!-- Lucide: shield -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <h4>Life Insurance</h4>
+              <p>Designate Bay Tides as policy beneficiary</p>
+              <span class="card-tag">Easy to arrange</span>
+            </div>
+            <div class="giving-card">
+              <div class="card-icon">
+                <!-- Lucide: repeat -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14">
+                  </path><polyline points="7 23 3 19 7 15"></polyline><path
+                    d="M21 13v2a4 4 0 0 1-4 4H3"
+                  >
+                  </path>
+                </svg>
+              </div>
+              <h4>Charitable Gift Annuity</h4>
+              <p>Receive fixed payments for life</p>
+              <span class="card-tag">Income for you</span>
+            </div>
+            <div class="giving-card">
+              <div class="card-icon">
+                <!-- Lucide: landmark -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <line x1="3" y1="22" x2="21" y2="22"></line><line x1="6" y1="18" x2="6" y2="11">
+                  </line><line x1="10" y1="18" x2="10" y2="11"></line><line
+                    x1="14"
+                    y1="18"
+                    x2="14"
+                    y2="11"
+                  >
+                  </line><line x1="18" y1="18" x2="18" y2="11"></line><polygon
+                    points="12 2 20 7 4 7"
+                  >
+                  </polygon>
+                </svg>
+              </div>
+              <h4>Charitable Trust</h4>
+              <p>CRT or CLT for complex estate planning</p>
+              <span class="card-tag">For larger estates</span>
+            </div>
+            <div class="giving-card">
+              <div class="card-icon">
+                <!-- Lucide: home -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline
+                    points="9 22 9 12 15 12 15 22"
+                  >
+                  </polyline>
+                </svg>
+              </div>
+              <h4>Real Estate</h4>
+              <p>Donate property or retained life estate</p>
+              <span class="card-tag">Appreciated assets</span>
+            </div>
+          </div>
         </div>
 
         <div class="planned-info">
           <h3>Organization Information</h3>
+          <p class="info-subtitle">
+            Share this information with your attorney or financial advisor
+          </p>
           <dl class="info-list">
             <div class="info-row">
               <dt>Legal Name</dt>
@@ -151,6 +955,30 @@ const structuredData = [
               <dd>501(c)(3) Public Charity</dd>
             </div>
           </dl>
+          <button
+            class="copy-btn copy-info-btn"
+            data-copy="orginfo"
+            aria-label="Copy organization information to clipboard"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              >
+              </path>
+            </svg>
+            <span>Copy all information</span>
+          </button>
         </div>
 
         <div class="planned-help">
@@ -177,7 +1005,7 @@ const structuredData = [
 
 <style>
   .planned-content {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
   }
 
@@ -196,99 +1024,459 @@ const structuredData = [
     color: var(--text-light);
   }
 
-  .giving-types {
-    margin-bottom: 3rem;
-  }
-
-  .giving-types > h3 {
-    margin-bottom: 2rem;
-    color: var(--primary-navy);
-    text-align: center;
-  }
-
-  .giving-type {
-    background: var(--light-blue);
-    border-radius: 12px;
+  /* Gift Finder Tool */
+  .gift-finder {
+    background: linear-gradient(135deg, #f0f7fa 0%, #e8f4f8 100%);
+    border-radius: 16px;
     padding: 2rem;
+    margin-bottom: 3rem;
+    border: 1px solid rgba(43, 108, 176, 0.1);
+  }
+
+  .gift-finder-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
     margin-bottom: 1.5rem;
   }
 
-  .giving-type h4 {
-    color: var(--primary-navy);
-    margin-bottom: 1rem;
-    font-size: 1.125rem;
+  .finder-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--primary-blue);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
   }
 
-  .giving-type p {
+  .gift-finder-header h3 {
+    margin: 0 0 0.25rem 0;
+    color: var(--primary-navy);
+    font-size: 1.25rem;
+  }
+
+  .gift-finder-header p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 0.9375rem;
+  }
+
+  .finder-content {
+    position: relative;
+  }
+
+  .finder-question {
+    display: none;
+  }
+
+  .finder-question.active {
+    display: block;
+  }
+
+  .question-label {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--primary-navy);
+    margin-bottom: 1rem;
+  }
+
+  .question-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .option-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+  }
+
+  .option-btn:hover {
+    border-color: var(--primary-blue);
+    background: rgba(43, 108, 176, 0.03);
+  }
+
+  .option-btn:focus-visible {
+    outline: 3px solid var(--primary-blue);
+    outline-offset: 2px;
+  }
+
+  .option-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--light-blue);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-navy);
+    flex-shrink: 0;
+  }
+
+  .option-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .option-text strong {
+    color: var(--primary-navy);
+    font-size: 1rem;
+  }
+
+  .option-text span {
+    color: var(--text-light);
+    font-size: 0.875rem;
+  }
+
+  /* Result Screens */
+  .finder-result {
+    display: none;
+  }
+
+  .finder-result.active {
+    display: block;
+  }
+
+  .result-header {
+    margin-bottom: 1rem;
+  }
+
+  .result-badge {
+    display: inline-block;
+    background: var(--primary-blue);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .result-header h4 {
+    color: var(--primary-navy);
+    font-size: 1.375rem;
+    margin: 0;
+  }
+
+  .result-body {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .result-body > p {
     margin-bottom: 1rem;
     line-height: 1.7;
   }
 
-  .giving-type ul {
-    margin: 1rem 0 0 1.5rem;
+  .result-benefits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
   }
 
-  .giving-type li {
-    padding: 0.25rem 0;
+  .benefit-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    background: #f0fff4;
+    border: 1px solid #9ae6b4;
+    border-radius: 20px;
+    font-size: 0.8125rem;
+    color: #22543d;
   }
 
   .sample-language {
-    background: white;
+    background: var(--cream);
     border-radius: 8px;
-    padding: 1.5rem;
-    margin-top: 1rem;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
   }
 
   .sample-language p {
-    margin-bottom: 0.75rem;
+    margin: 0 0 0.75rem 0;
+    font-weight: 600;
+    color: var(--primary-navy);
   }
 
   .sample-language blockquote {
-    margin: 0;
+    margin: 0 0 1rem 0;
     padding: 1rem;
-    background: var(--cream);
+    background: white;
     border-left: 4px solid var(--primary-navy);
     border-radius: 0 8px 8px 0;
     font-style: italic;
     color: var(--text-dark);
     line-height: 1.7;
+    font-size: 0.9375rem;
   }
 
-  .planned-benefits {
-    background: var(--cream);
-    border-radius: 12px;
-    padding: 2rem;
-    margin-bottom: 3rem;
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--primary-navy);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background 0.2s;
   }
 
-  .planned-benefits h3 {
-    margin-bottom: 1.5rem;
+  .copy-btn:hover {
+    background: var(--primary-blue);
+  }
+
+  .copy-btn:focus-visible {
+    outline: 3px solid var(--primary-blue);
+    outline-offset: 2px;
+  }
+
+  .copy-btn.copied {
+    background: #22543d;
+  }
+
+  .how-to-box {
+    background: var(--light-blue);
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .how-to-box h5 {
+    margin: 0 0 0.75rem 0;
+    color: var(--primary-navy);
+    font-size: 0.9375rem;
+  }
+
+  .how-to-box ol {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  .how-to-box li {
+    padding: 0.25rem 0;
+    line-height: 1.5;
+  }
+
+  .result-note {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin: 0;
+    font-style: italic;
+  }
+
+  .income-options {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .income-option {
+    background: var(--light-blue);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+
+  .income-option h5 {
+    margin: 0 0 0.5rem 0;
+    color: var(--primary-navy);
+    font-size: 1rem;
+  }
+
+  .income-option p {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .mini-benefits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .mini-benefits span {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background: white;
+    border-radius: 4px;
+    color: var(--text-dark);
+  }
+
+  .btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    color: var(--text-light);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-back:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+  }
+
+  .btn-back:focus-visible {
+    outline: 3px solid var(--primary-blue);
+    outline-offset: 2px;
+  }
+
+  /* Comparison Table */
+  .comparison-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .comparison-table thead th {
+    background: var(--light-blue);
+    color: var(--primary-navy);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .comparison-table tbody th {
+    font-weight: 600;
     color: var(--primary-navy);
   }
 
-  .planned-benefits ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .complexity-tag {
+    display: inline-block;
+    padding: 0.25rem 0.625rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
   }
 
-  .planned-benefits li {
-    padding: 0.75rem 0;
-    padding-left: 2rem;
+  .complexity-tag.simple {
+    background: #f0fff4;
+    color: #22543d;
+  }
+
+  .complexity-tag.moderate {
+    background: #fefcbf;
+    color: #744210;
+  }
+
+  .complexity-tag.complex {
+    background: #fed7d7;
+    color: #9b2c2c;
+  }
+
+  /* Visual Cards Grid */
+  .giving-cards {
+    margin-bottom: 3rem;
+  }
+
+  .giving-cards h3 {
+    text-align: center;
+    color: var(--primary-navy);
+    margin-bottom: 1.5rem;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .giving-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.2s;
     position: relative;
   }
 
-  .planned-benefits li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 1.1rem;
-    width: 8px;
-    height: 8px;
-    background: var(--primary-navy);
-    border-radius: 50%;
+  .giving-card:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 4px 12px rgba(43, 108, 176, 0.15);
+    transform: translateY(-2px);
   }
 
+  .card-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--light-blue);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-navy);
+    margin: 0 auto 1rem;
+  }
+
+  .giving-card h4 {
+    color: var(--primary-navy);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .giving-card p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  .card-tag {
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    background: var(--primary-blue);
+    color: white;
+    padding: 0.25rem 0.625rem;
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Organization Info */
   .planned-info {
     background: var(--light-blue);
     border-radius: 12px;
@@ -297,12 +1485,18 @@ const structuredData = [
   }
 
   .planned-info h3 {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.25rem;
     color: var(--primary-navy);
   }
 
+  .info-subtitle {
+    color: var(--text-light);
+    font-size: 0.9375rem;
+    margin-bottom: 1.5rem;
+  }
+
   .info-list {
-    margin: 0;
+    margin: 0 0 1.5rem 0;
   }
 
   .info-row {
@@ -325,6 +1519,11 @@ const structuredData = [
     margin: 0;
     color: var(--text-light);
     text-align: right;
+  }
+
+  .copy-info-btn {
+    width: 100%;
+    justify-content: center;
   }
 
   .planned-help {
@@ -353,27 +1552,129 @@ const structuredData = [
     font-size: 0.9375rem;
   }
 
-  /* Dark mode overrides for light-background elements */
-  :global([data-theme='dark']) .sample-language {
+  /* Responsive */
+  @media (max-width: 768px) {
+    .cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gift-finder-header {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+    }
+
+    .info-row {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .info-row dd {
+      text-align: left;
+    }
+
+    .comparison-table {
+      font-size: 0.8125rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 0.5rem 0.75rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .result-benefits {
+      flex-direction: column;
+    }
+
+    .benefit-tag {
+      justify-content: flex-start;
+    }
+  }
+
+  /* Dark mode */
+  :global([data-theme='dark']) .gift-finder {
+    background: linear-gradient(135deg, rgba(99, 179, 237, 0.1) 0%, rgba(99, 179, 237, 0.05) 100%);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .option-btn {
+    background: var(--bg-secondary);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .option-btn:hover {
+    background: var(--bg-primary);
+    border-color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .option-icon {
+    background: var(--bg-primary);
+  }
+
+  :global([data-theme='dark']) .result-body {
     background: var(--bg-secondary);
   }
 
-  :global([data-theme='dark']) .sample-language p {
-    color: var(--text-dark);
+  :global([data-theme='dark']) .benefit-tag {
+    background: rgba(72, 187, 120, 0.15);
+    border-color: rgba(72, 187, 120, 0.3);
+    color: #9ae6b4;
+  }
+
+  :global([data-theme='dark']) .sample-language {
+    background: var(--bg-primary);
   }
 
   :global([data-theme='dark']) .sample-language blockquote {
-    background: var(--bg-primary);
+    background: var(--bg-secondary);
     color: var(--text-dark);
     border-left-color: var(--accent-blue);
   }
 
-  :global([data-theme='dark']) .giving-type {
-    background: var(--bg-secondary);
+  :global([data-theme='dark']) .how-to-box {
+    background: var(--bg-primary);
   }
 
-  :global([data-theme='dark']) .planned-benefits {
+  :global([data-theme='dark']) .income-option {
+    background: var(--bg-primary);
+  }
+
+  :global([data-theme='dark']) .mini-benefits span {
     background: var(--bg-secondary);
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .btn-back {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .comparison-table th,
+  :global([data-theme='dark']) .comparison-table td {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .comparison-table thead th {
+    background: var(--bg-primary);
+  }
+
+  :global([data-theme='dark']) .giving-card {
+    background: var(--bg-secondary);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .giving-card:hover {
+    border-color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .card-icon {
+    background: var(--bg-primary);
   }
 
   :global([data-theme='dark']) .planned-info {
@@ -383,4 +1684,137 @@ const structuredData = [
   :global([data-theme='dark']) .info-row {
     border-bottom-color: rgba(255, 255, 255, 0.1);
   }
+
+  :global([data-theme='dark']) .complexity-tag.simple {
+    background: rgba(72, 187, 120, 0.15);
+    color: #9ae6b4;
+  }
+
+  :global([data-theme='dark']) .complexity-tag.moderate {
+    background: rgba(236, 201, 75, 0.15);
+    color: #f6e05e;
+  }
+
+  :global([data-theme='dark']) .complexity-tag.complex {
+    background: rgba(252, 129, 129, 0.15);
+    color: #feb2b2;
+  }
 </style>
+
+<script>
+  // Gift Finder Tool
+  document.addEventListener('DOMContentLoaded', () => {
+    const questionScreen = document.querySelector('.finder-question') as HTMLElement;
+    const optionBtns = document.querySelectorAll('.option-btn');
+    const resultScreens = document.querySelectorAll('.finder-result');
+    const backBtns = document.querySelectorAll('.btn-back');
+    const copyBtns = document.querySelectorAll('.copy-btn');
+
+    // Bequest language text
+    const bequestText = `I give, devise, and bequeath [specific dollar amount, percentage, or description of property] to Bay Tides, a California nonprofit corporation (EIN: 93-3889081), located at 274 Redwood Shores Pkwy #619, Redwood City, CA 94065, to be used for its general charitable purposes.`;
+
+    // Organization info text
+    const orgInfoText = `Bay Tides
+EIN / Tax ID: 93-3889081
+Address: 274 Redwood Shores Pkwy #619, Redwood City, CA 94065
+Tax Status: 501(c)(3) Public Charity`;
+
+    function showResult(resultId: string) {
+      // Hide question
+      questionScreen.classList.remove('active');
+
+      // Hide all results
+      resultScreens.forEach((screen) => {
+        screen.classList.remove('active');
+        screen.setAttribute('aria-hidden', 'true');
+      });
+
+      // Show selected result
+      const targetResult = document.querySelector(`[data-result="${resultId}"]`);
+      if (targetResult) {
+        targetResult.classList.add('active');
+        targetResult.setAttribute('aria-hidden', 'false');
+        // Focus the result header for screen readers
+        const header = targetResult.querySelector('h4');
+        if (header) {
+          (header as HTMLElement).setAttribute('tabindex', '-1');
+          (header as HTMLElement).focus();
+        }
+      }
+    }
+
+    function resetToQuestion() {
+      // Hide all results
+      resultScreens.forEach((screen) => {
+        screen.classList.remove('active');
+        screen.setAttribute('aria-hidden', 'true');
+      });
+
+      // Show question
+      questionScreen.classList.add('active');
+
+      // Reset button states
+      optionBtns.forEach((btn) => {
+        btn.setAttribute('aria-checked', 'false');
+      });
+    }
+
+    // Option button click handlers
+    optionBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const answer = btn.getAttribute('data-answer');
+        if (answer) {
+          // Update aria state
+          optionBtns.forEach((b) => b.setAttribute('aria-checked', 'false'));
+          btn.setAttribute('aria-checked', 'true');
+          showResult(answer);
+        }
+      });
+
+      // Keyboard support
+      btn.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    });
+
+    // Back button handlers
+    backBtns.forEach((btn) => {
+      btn.addEventListener('click', resetToQuestion);
+    });
+
+    // Copy button handlers
+    copyBtns.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const copyType = btn.getAttribute('data-copy');
+        let textToCopy = '';
+
+        if (copyType === 'bequest') {
+          textToCopy = bequestText;
+        } else if (copyType === 'orginfo') {
+          textToCopy = orgInfoText;
+        }
+
+        try {
+          await navigator.clipboard.writeText(textToCopy);
+          const span = btn.querySelector('span');
+          const originalText = span?.textContent || '';
+          if (span) {
+            span.textContent = 'Copied!';
+            btn.classList.add('copied');
+          }
+          setTimeout(() => {
+            if (span) {
+              span.textContent = originalText;
+              btn.classList.remove('copied');
+            }
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    });
+  });
+</script>
