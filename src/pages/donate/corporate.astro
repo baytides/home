@@ -29,6 +29,11 @@ const structuredData = [
   canonicalUrl="https://baytides.org/donate/corporate"
   structuredData={structuredData}
 >
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  </Fragment>
+
   <Breadcrumb
     items={[
       { label: 'Home', href: '/' },
@@ -68,98 +73,14 @@ const structuredData = [
           </p>
         </div>
 
-        <div class="partnership-options">
-          <h3>Partnership Opportunities</h3>
-
-          <div class="partnership-card">
-            <div class="partnership-icon">
+        <!-- Partnership Finder Tool -->
+        <div class="partnership-finder" role="region" aria-labelledby="finder-heading">
+          <div class="finder-header">
+            <div class="finder-icon" aria-hidden="true">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                <path d="M2 17l10 5 10-5"></path>
-                <path d="M2 12l10 5 10-5"></path>
-              </svg>
-            </div>
-            <div class="partnership-details">
-              <h4>Program Sponsorship</h4>
-              <p>
-                Sponsor specific Bay Tides programs such as shoreline cleanups, educational
-                workshops, or digital tool development. Your company receives recognition and the
-                opportunity to engage directly with program activities.
-              </p>
-            </div>
-          </div>
-
-          <div class="partnership-card">
-            <div class="partnership-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-              </svg>
-            </div>
-            <div class="partnership-details">
-              <h4>Employee Volunteer Events</h4>
-              <p>
-                Organize team volunteer days for shoreline restoration, habitat cleanup, or
-                community education events. We handle logistics and provide all necessary materials
-                and training.
-              </p>
-            </div>
-          </div>
-
-          <div class="partnership-card">
-            <div class="partnership-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                <line x1="1" y1="10" x2="23" y2="10"></line>
-              </svg>
-            </div>
-            <div class="partnership-details">
-              <h4>Matching Gift Programs</h4>
-              <p>
-                Amplify your employees' charitable giving by matching their donations to Bay Tides.
-                We can help you promote the program and track employee participation.
-              </p>
-            </div>
-          </div>
-
-          <div class="partnership-card">
-            <div class="partnership-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
+                width="28"
+                height="28"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -168,134 +89,2165 @@ const structuredData = [
                 stroke-linejoin="round"
               >
                 <circle cx="12" cy="12" r="10"></circle>
-                <line x1="2" y1="12" x2="22" y2="12"></line>
-                <path
-                  d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
-                >
-                </path>
+                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
               </svg>
             </div>
-            <div class="partnership-details">
-              <h4>Cause Marketing</h4>
+            <div>
+              <h3 id="finder-heading">Partnership Finder</h3>
               <p>
-                Tie product sales or services to Bay Tides donations. A portion of proceeds supports
-                our mission while showcasing your company's values to customers.
+                We'd love to learn about your organization and what you're hoping to achieve through
+                a partnership. There are no right or wrong answers—the more you share, the better we
+                can understand if we're a good fit and how we might collaborate meaningfully for a
+                greater Bay Area.
               </p>
             </div>
           </div>
 
-          <div class="partnership-card">
-            <div class="partnership-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polygon
-                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-                >
-                </polygon>
-              </svg>
+          <div class="finder-content">
+            <!-- Progress Bar -->
+            <div
+              class="finder-progress"
+              role="progressbar"
+              aria-valuenow="0"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-label="Quiz progress"
+            >
+              <div class="progress-track">
+                <div class="progress-bar" id="progress-bar"></div>
+              </div>
+              <span class="progress-text" id="progress-text" aria-live="polite">Step 1 of 8</span>
             </div>
-            <div class="partnership-details">
-              <h4>Annual Corporate Giving</h4>
-              <p>
-                Make an annual gift to support Bay Tides' general operations. Corporate donors
-                receive recognition on our website and in communications.
-              </p>
-            </div>
-          </div>
 
-          <div class="partnership-card">
-            <div class="partnership-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="16 18 22 12 16 6"></polyline>
-                <polyline points="8 6 2 12 8 18"></polyline>
-              </svg>
+            <!-- Step 0: Role Gate -->
+            <fieldset class="finder-step active" data-step="0">
+              <legend class="step-label">Before we begin, please tell us about your role:</legend>
+              <div class="step-options" role="radiogroup" aria-required="true">
+                <button
+                  class="option-btn"
+                  data-field="role"
+                  data-value="decision-maker"
+                  role="radio"
+                  aria-checked="false"
+                  type="button"
+                >
+                  <span class="option-icon" aria-hidden="true">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle
+                        cx="9"
+                        cy="7"
+                        r="4"
+                      >
+                      </circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path
+                        d="M16 3.13a4 4 0 0 1 0 7.75"
+                      >
+                      </path>
+                    </svg>
+                  </span>
+                  <span class="option-text">
+                    <strong>I'm a decision-maker</strong>
+                    <span>for partnerships/sponsorships</span>
+                  </span>
+                </button>
+                <button
+                  class="option-btn"
+                  data-field="role"
+                  data-value="authorized"
+                  role="radio"
+                  aria-checked="false"
+                  type="button"
+                >
+                  <span class="option-icon" aria-hidden="true">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path
+                        d="m9 12 2 2 4-4"
+                      >
+                      </path>
+                    </svg>
+                  </span>
+                  <span class="option-text">
+                    <strong>I have authorization</strong>
+                    <span>to explore partnership options</span>
+                  </span>
+                </button>
+                <button
+                  class="option-btn"
+                  data-field="role"
+                  data-value="researching"
+                  role="radio"
+                  aria-checked="false"
+                  type="button"
+                >
+                  <span class="option-icon" aria-hidden="true">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                  </span>
+                  <span class="option-text">
+                    <strong>I'm researching</strong>
+                    <span>on behalf of my company</span>
+                  </span>
+                </button>
+                <button
+                  class="option-btn"
+                  data-field="role"
+                  data-value="browsing"
+                  role="radio"
+                  aria-checked="false"
+                  type="button"
+                >
+                  <span class="option-icon" aria-hidden="true">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle
+                        cx="12"
+                        cy="12"
+                        r="3"
+                      >
+                      </circle>
+                    </svg>
+                  </span>
+                  <span class="option-text">
+                    <strong>Just browsing</strong>
+                    <span>for personal interest</span>
+                  </span>
+                </button>
+              </div>
+              <div class="researcher-note" id="researcher-note" hidden>
+                <p>
+                  <strong>Note:</strong> We recommend looping in a decision-maker before submitting an
+                  inquiry so we can have a productive conversation. You're welcome to continue and share
+                  the results with your team.
+                </p>
+              </div>
+            </fieldset>
+
+            <!-- Browsing Exit Screen -->
+            <div class="finder-step browsing-exit" data-step="browsing" hidden>
+              <div class="exit-message">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path
+                    d="M12 8h.01"
+                  >
+                  </path>
+                </svg>
+                <h4>Thanks for your interest!</h4>
+                <p>
+                  This tool is designed for companies actively exploring partnerships. Feel free to
+                  look around our site to learn more about Bay Tides, or contact us with any
+                  questions.
+                </p>
+                <div class="exit-actions">
+                  <a href="/contact" class="btn btn-primary">Contact Us</a>
+                  <a href="/about" class="btn btn-secondary">Learn About Us</a>
+                </div>
+              </div>
             </div>
-            <div class="partnership-details">
-              <h4>Technology Partnerships</h4>
-              <p>
-                Support our open-source digital tools like Bay Navigator with software licenses,
-                cloud credits, or technical expertise. Ideal for tech companies.
+
+            <!-- Step 1: Company Profile -->
+            <fieldset class="finder-step" data-step="1" hidden>
+              <legend class="step-label">Tell us about your organization:</legend>
+              <div class="form-fields">
+                <div class="form-group">
+                  <label for="company-name">
+                    Company/Organization Name
+                    <span class="required" aria-hidden="true">*</span>
+                    <span class="sr-only">(required)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="company-name"
+                    data-field="companyName"
+                    required
+                    autocomplete="organization"
+                    aria-describedby="company-name-hint"
+                  />
+                  <span id="company-name-hint" class="field-hint">
+                    Enter your company's legal or common name
+                  </span>
+                </div>
+                <div class="form-group">
+                  <label for="industry">
+                    Industry
+                    <span class="required" aria-hidden="true">*</span>
+                    <span class="sr-only">(required)</span>
+                  </label>
+                  <select id="industry" data-field="industry" required>
+                    <option value="">Select an industry...</option>
+                    <option value="technology">Technology</option>
+                    <option value="finance">Finance</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="retail">Retail</option>
+                    <option value="manufacturing">Manufacturing</option>
+                    <option value="professional-services">Professional Services</option>
+                    <option value="nonprofit">Nonprofit</option>
+                    <option value="education">Education</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label id="company-size-label">
+                    Company Size
+                    <span class="required" aria-hidden="true">*</span>
+                    <span class="sr-only">(required)</span>
+                  </label>
+                  <div
+                    class="radio-group"
+                    role="radiogroup"
+                    aria-labelledby="company-size-label"
+                    aria-required="true"
+                  >
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="company-size"
+                        data-field="companySize"
+                        value="1-50"
+                      />
+                      <span>1–50 employees</span>
+                    </label>
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="company-size"
+                        data-field="companySize"
+                        value="51-200"
+                      />
+                      <span>51–200 employees</span>
+                    </label>
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="company-size"
+                        data-field="companySize"
+                        value="201-1000"
+                      />
+                      <span>201–1,000 employees</span>
+                    </label>
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="company-size"
+                        data-field="companySize"
+                        value="1000+"
+                      />
+                      <span>1,000+ employees</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label id="locations-label">
+                    Bay Area Office Locations
+                    <span class="required" aria-hidden="true">*</span>
+                    <span class="sr-only">(required, select at least one)</span>
+                  </label>
+                  <div class="checkbox-group" role="group" aria-labelledby="locations-label">
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="locations" value="san-francisco" />
+                      <span>San Francisco</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="locations" value="oakland-east-bay" />
+                      <span>Oakland / East Bay</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="locations" value="san-jose-south-bay" />
+                      <span>San Jose / South Bay</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="locations" value="peninsula" />
+                      <span>Peninsula</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="locations" value="north-bay" />
+                      <span>North Bay</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="locations" value="remote" />
+                      <span>Remote / No local office</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="step-nav">
+                <button class="btn btn-secondary btn-back" type="button">Back</button>
+                <button class="btn btn-primary btn-next" type="button">Continue</button>
+              </div>
+            </fieldset>
+
+            <!-- Step 2: Goals & Motivations -->
+            <fieldset class="finder-step" data-step="2" hidden>
+              <legend class="step-label">What are your partnership goals?</legend>
+              <div class="form-fields">
+                <div class="form-group">
+                  <label id="goals-label">
+                    Select your top 3 partnership goals
+                    <span class="required" aria-hidden="true">*</span>
+                    <span class="sr-only">(required)</span>
+                  </label>
+                  <p class="field-hint" id="goals-hint">
+                    Click to select up to 3 options in order of priority
+                  </p>
+                  <div
+                    class="ranking-group"
+                    role="listbox"
+                    aria-labelledby="goals-label"
+                    aria-describedby="goals-hint"
+                    aria-multiselectable="true"
+                  >
+                    <button
+                      type="button"
+                      class="ranking-option"
+                      data-field="goals"
+                      data-value="employee-engagement"
+                      role="option"
+                      aria-selected="false"
+                    >
+                      <span class="rank-badge" aria-hidden="true"></span>
+                      <span>Employee engagement</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="ranking-option"
+                      data-field="goals"
+                      data-value="brand-visibility"
+                      role="option"
+                      aria-selected="false"
+                    >
+                      <span class="rank-badge" aria-hidden="true"></span>
+                      <span>Brand visibility</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="ranking-option"
+                      data-field="goals"
+                      data-value="community-impact"
+                      role="option"
+                      aria-selected="false"
+                    >
+                      <span class="rank-badge" aria-hidden="true"></span>
+                      <span>Community impact</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="ranking-option"
+                      data-field="goals"
+                      data-value="esg-reporting"
+                      role="option"
+                      aria-selected="false"
+                    >
+                      <span class="rank-badge" aria-hidden="true"></span>
+                      <span>ESG / Sustainability reporting</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="ranking-option"
+                      data-field="goals"
+                      data-value="team-building"
+                      role="option"
+                      aria-selected="false"
+                    >
+                      <span class="rank-badge" aria-hidden="true"></span>
+                      <span>Team building</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="ranking-option"
+                      data-field="goals"
+                      data-value="cause-marketing"
+                      role="option"
+                      aria-selected="false"
+                    >
+                      <span class="rank-badge" aria-hidden="true"></span>
+                      <span>Customer-facing cause marketing</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="ranking-option"
+                      data-field="goals"
+                      data-value="local-environment"
+                      role="option"
+                      aria-selected="false"
+                    >
+                      <span class="rank-badge" aria-hidden="true"></span>
+                      <span>Supporting local environment</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="success-definition">
+                    What does success look like for your organization?
+                    <span class="required" aria-hidden="true">*</span>
+                    <span class="sr-only">(required)</span>
+                  </label>
+                  <textarea
+                    id="success-definition"
+                    data-field="successDefinition"
+                    rows="3"
+                    placeholder="Help us understand what a successful partnership means to you..."
+                    required
+                    aria-describedby="success-hint"
+                  >
+                  </textarea>
+                  <span id="success-hint" class="field-hint">
+                    This helps us tailor our approach to meet your specific needs
+                  </span>
+                </div>
+              </div>
+              <div class="step-nav">
+                <button class="btn btn-secondary btn-back" type="button">Back</button>
+                <button class="btn btn-primary btn-next" type="button">Continue</button>
+              </div>
+            </fieldset>
+
+            <!-- Step 3: Involvement Preferences -->
+            <fieldset class="finder-step" data-step="3" hidden>
+              <legend class="step-label">How would you like to be involved?</legend>
+              <div class="form-fields">
+                <div class="form-group">
+                  <label id="involvement-label">
+                    Preferred involvement level
+                    <span class="required" aria-hidden="true">*</span>
+                    <span class="sr-only">(required)</span>
+                  </label>
+                  <div
+                    class="step-options involvement-options"
+                    role="radiogroup"
+                    aria-labelledby="involvement-label"
+                    aria-required="true"
+                  >
+                    <button
+                      class="option-btn"
+                      data-field="involvement"
+                      data-value="hands-on"
+                      role="radio"
+                      aria-checked="false"
+                      type="button"
+                    >
+                      <span class="option-icon" aria-hidden="true">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"></path><path
+                            d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"
+                          >
+                          </path><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"></path><path
+                            d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"
+                          >
+                          </path>
+                        </svg>
+                      </span>
+                      <span class="option-text">
+                        <strong>Hands-on</strong>
+                        <span>Volunteer events, active participation</span>
+                      </span>
+                    </button>
+                    <button
+                      class="option-btn"
+                      data-field="involvement"
+                      data-value="financial"
+                      role="radio"
+                      aria-checked="false"
+                      type="button"
+                    >
+                      <span class="option-icon" aria-hidden="true">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <line x1="12" y1="1" x2="12" y2="23"></line><path
+                            d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                          >
+                          </path>
+                        </svg>
+                      </span>
+                      <span class="option-text">
+                        <strong>Financial</strong>
+                        <span>Sponsorship, grants, donations</span>
+                      </span>
+                    </button>
+                    <button
+                      class="option-btn"
+                      data-field="involvement"
+                      data-value="in-kind"
+                      role="radio"
+                      aria-checked="false"
+                      type="button"
+                    >
+                      <span class="option-icon" aria-hidden="true">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="m7.5 4.27 9 5.15"></path><path
+                            d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"
+                          >
+                          </path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path>
+                        </svg>
+                      </span>
+                      <span class="option-text">
+                        <strong>In-Kind</strong>
+                        <span>Goods, services, expertise</span>
+                      </span>
+                    </button>
+                    <button
+                      class="option-btn"
+                      data-field="involvement"
+                      data-value="hybrid"
+                      role="radio"
+                      aria-checked="false"
+                      type="button"
+                    >
+                      <span class="option-icon" aria-hidden="true">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path><path d="M19 3v4">
+                          </path><path d="M21 5h-4"></path>
+                        </svg>
+                      </span>
+                      <span class="option-text">
+                        <strong>Hybrid</strong>
+                        <span>Multiple types of involvement</span>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Conditional: Financial -->
+                <div class="conditional-fields financial-fields" id="financial-fields" hidden>
+                  <div class="form-group">
+                    <label id="budget-label">Budget range</label>
+                    <div class="radio-group" role="radiogroup" aria-labelledby="budget-label">
+                      <label class="radio-option">
+                        <input type="radio" name="budget" data-field="budget" value="under-5k" />
+                        <span>Under $5,000</span>
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="budget" data-field="budget" value="5k-15k" />
+                        <span>$5,000 – $15,000</span>
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="budget" data-field="budget" value="15k-50k" />
+                        <span>$15,000 – $50,000</span>
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="budget" data-field="budget" value="50k-plus" />
+                        <span>$50,000+</span>
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="budget" data-field="budget" value="not-sure" />
+                        <span>Not sure yet</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Conditional: Hands-on -->
+                <div class="conditional-fields hands-on-fields" id="hands-on-fields" hidden>
+                  <div class="form-group">
+                    <label id="team-size-label">Approximate team size for volunteer events</label>
+                    <div class="radio-group" role="radiogroup" aria-labelledby="team-size-label">
+                      <label class="radio-option">
+                        <input
+                          type="radio"
+                          name="team-size"
+                          data-field="teamSize"
+                          value="under-10"
+                        />
+                        <span>Under 10</span>
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="team-size" data-field="teamSize" value="10-25" />
+                        <span>10–25</span>
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="team-size" data-field="teamSize" value="25-50" />
+                        <span>25–50</span>
+                      </label>
+                      <label class="radio-option">
+                        <input
+                          type="radio"
+                          name="team-size"
+                          data-field="teamSize"
+                          value="50-plus"
+                        />
+                        <span>50+</span>
+                      </label>
+                      <label class="radio-option">
+                        <input
+                          type="radio"
+                          name="team-size"
+                          data-field="teamSize"
+                          value="flexible"
+                        />
+                        <span>Flexible</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label id="frequency-label">Preferred frequency</label>
+                    <div class="radio-group" role="radiogroup" aria-labelledby="frequency-label">
+                      <label class="radio-option">
+                        <input
+                          type="radio"
+                          name="frequency"
+                          data-field="frequency"
+                          value="one-time"
+                        />
+                        <span>One-time event</span>
+                      </label>
+                      <label class="radio-option">
+                        <input
+                          type="radio"
+                          name="frequency"
+                          data-field="frequency"
+                          value="quarterly"
+                        />
+                        <span>Quarterly</span>
+                      </label>
+                      <label class="radio-option">
+                        <input
+                          type="radio"
+                          name="frequency"
+                          data-field="frequency"
+                          value="ongoing"
+                        />
+                        <span>Ongoing / Recurring</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Conditional: In-Kind -->
+                <div class="conditional-fields in-kind-fields" id="in-kind-fields" hidden>
+                  <div class="form-group">
+                    <label id="in-kind-label">What type of in-kind support can you offer?</label>
+                    <div class="checkbox-group" role="group" aria-labelledby="in-kind-label">
+                      <label class="checkbox-option">
+                        <input type="checkbox" data-field="inKindTypes" value="equipment" />
+                        <span>Equipment / Supplies</span>
+                      </label>
+                      <label class="checkbox-option">
+                        <input
+                          type="checkbox"
+                          data-field="inKindTypes"
+                          value="professional-services"
+                        />
+                        <span>Professional services (legal, marketing, design, accounting)</span>
+                      </label>
+                      <label class="checkbox-option">
+                        <input
+                          type="checkbox"
+                          data-field="inKindTypes"
+                          value="software-development"
+                        />
+                        <span>Software development / Coding</span>
+                      </label>
+                      <label class="checkbox-option">
+                        <input type="checkbox" data-field="inKindTypes" value="technology" />
+                        <span>Technology (software licenses, cloud credits)</span>
+                      </label>
+                      <label class="checkbox-option">
+                        <input type="checkbox" data-field="inKindTypes" value="food-catering" />
+                        <span>Food / Catering for events</span>
+                      </label>
+                      <label class="checkbox-option">
+                        <input type="checkbox" data-field="inKindTypes" value="venue" />
+                        <span>Venue / Meeting space</span>
+                      </label>
+                      <label class="checkbox-option">
+                        <input type="checkbox" data-field="inKindTypes" value="other" />
+                        <span>Other</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="in-kind-description">
+                      Brief description of in-kind offering (optional)
+                    </label>
+                    <textarea
+                      id="in-kind-description"
+                      data-field="inKindDescription"
+                      rows="2"
+                      placeholder="Tell us more about what you can offer..."
+                    >
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="step-nav">
+                <button class="btn btn-secondary btn-back" type="button">Back</button>
+                <button class="btn btn-primary btn-next" type="button">Continue</button>
+              </div>
+            </fieldset>
+
+            <!-- Step 4: Matching & Programs -->
+            <fieldset class="finder-step" data-step="4" hidden>
+              <legend class="step-label">Matching gifts and program interests</legend>
+              <div class="form-fields">
+                <div class="form-group">
+                  <label id="matching-label">
+                    Does your company have a matching gift program?
+                    <span class="required" aria-hidden="true">*</span>
+                    <span class="sr-only">(required)</span>
+                  </label>
+                  <div
+                    class="radio-group"
+                    role="radiogroup"
+                    aria-labelledby="matching-label"
+                    aria-required="true"
+                  >
+                    <label class="radio-option">
+                      <input type="radio" name="matching" data-field="matchingGift" value="yes" />
+                      <span>Yes</span>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="matching" data-field="matchingGift" value="no" />
+                      <span>No</span>
+                    </label>
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="matching"
+                        data-field="matchingGift"
+                        value="not-sure"
+                      />
+                      <span>Not sure</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group matching-details" id="matching-details" hidden>
+                  <label for="matching-details-input">
+                    Please share details about your matching program
+                  </label>
+                  <textarea
+                    id="matching-details-input"
+                    data-field="matchingDetails"
+                    rows="2"
+                    placeholder="Match ratio, annual cap, eligibility requirements..."
+                  >
+                  </textarea>
+                </div>
+                <div class="form-group">
+                  <label id="programs-label">
+                    Which programs interest you?
+                    <span class="required" aria-hidden="true">*</span>
+                    <span class="sr-only">(required, select at least one)</span>
+                  </label>
+                  <div class="checkbox-group" role="group" aria-labelledby="programs-label">
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="programs" value="shoreline-cleanups" />
+                      <span>Shoreline cleanups</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="programs" value="habitat-restoration" />
+                      <span>Habitat restoration</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="programs" value="digital-tools" />
+                      <span>Digital tools / Bay Navigator</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="programs" value="event-sponsorship" />
+                      <span>Event sponsorship</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="programs" value="general-operations" />
+                      <span>General operations support</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="step-nav">
+                <button class="btn btn-secondary btn-back" type="button">Back</button>
+                <button class="btn btn-primary btn-next" type="button">Continue</button>
+              </div>
+            </fieldset>
+
+            <!-- Step 5: Existing Initiatives (Optional) -->
+            <fieldset class="finder-step" data-step="5" hidden>
+              <legend class="step-label">Tell us about your existing initiatives</legend>
+              <p class="optional-note">
+                The following questions are optional, but additional details help us tailor our
+                recommendations and prepare for a more productive conversation.
               </p>
+              <div class="form-fields">
+                <div class="form-group">
+                  <label id="csr-label">
+                    Does your company have existing CSR or sustainability programs?
+                  </label>
+                  <div class="radio-group" role="radiogroup" aria-labelledby="csr-label">
+                    <label class="radio-option">
+                      <input type="radio" name="csr" data-field="csrPrograms" value="yes" />
+                      <span>Yes</span>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="csr" data-field="csrPrograms" value="no" />
+                      <span>No</span>
+                    </label>
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="csr"
+                        data-field="csrPrograms"
+                        value="in-development"
+                      />
+                      <span>In development</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group csr-details" id="csr-details" hidden>
+                  <label for="csr-description">Briefly describe your current initiatives</label>
+                  <textarea
+                    id="csr-description"
+                    data-field="csrDescription"
+                    rows="2"
+                    placeholder="This helps us find complementary ways to collaborate..."
+                  >
+                  </textarea>
+                </div>
+                <div class="form-group">
+                  <label for="other-causes">
+                    Any environmental or community causes your company already supports?
+                  </label>
+                  <textarea
+                    id="other-causes"
+                    data-field="otherCauses"
+                    rows="2"
+                    placeholder="Optional"
+                  >
+                  </textarea>
+                </div>
+                <div class="form-group">
+                  <label id="env-practices-label">Current environmental practices</label>
+                  <div class="checkbox-group" role="group" aria-labelledby="env-practices-label">
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="envPractices" value="waste-reduction" />
+                      <span>Waste reduction / Recycling program</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="envPractices" value="carbon-tracking" />
+                      <span>Carbon footprint tracking</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input
+                        type="checkbox"
+                        data-field="envPractices"
+                        value="sustainable-procurement"
+                      />
+                      <span>Sustainable procurement policies</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="envPractices" value="green-commute" />
+                      <span>Green commute incentives</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="envPractices" value="leed-certified" />
+                      <span>LEED or green-certified facilities</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="envPractices" value="b-corp" />
+                      <span>B Corp or similar certification</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="envPractices" value="renewable-energy" />
+                      <span>Renewable energy usage</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="envPractices" value="none-yet" />
+                      <span>None yet — looking to start</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="step-nav">
+                <button class="btn btn-secondary btn-back" type="button">Back</button>
+                <button class="btn btn-primary btn-next" type="button">Continue</button>
+              </div>
+            </fieldset>
+
+            <!-- Step 6: Visibility & Marketing (Optional) -->
+            <fieldset class="finder-step" data-step="6" hidden>
+              <legend class="step-label">Visibility and marketing preferences</legend>
+              <p class="optional-note">These questions are optional.</p>
+              <div class="form-fields">
+                <div class="form-group">
+                  <label id="visibility-label">What visibility opportunities interest you?</label>
+                  <div class="checkbox-group" role="group" aria-labelledby="visibility-label">
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="visibility" value="co-branded" />
+                      <span>Co-branded content</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="visibility" value="social-media" />
+                      <span>Social media features</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="visibility" value="logo-website" />
+                      <span>Logo on website</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="visibility" value="press-release" />
+                      <span>Press release announcements</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="visibility" value="event-naming" />
+                      <span>Event naming rights</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="visibility" value="newsletter" />
+                      <span>Newsletter mentions</span>
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" data-field="visibility" value="none" />
+                      <span>None needed</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label id="comms-team-label">
+                    Do you have an internal communications team we'd coordinate with?
+                  </label>
+                  <div class="radio-group" role="radiogroup" aria-labelledby="comms-team-label">
+                    <label class="radio-option">
+                      <input type="radio" name="comms-team" data-field="commsTeam" value="yes" />
+                      <span>Yes</span>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="comms-team" data-field="commsTeam" value="no" />
+                      <span>No</span>
+                    </label>
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="comms-team"
+                        data-field="commsTeam"
+                        value="not-sure"
+                      />
+                      <span>Not sure</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="step-nav">
+                <button class="btn btn-secondary btn-back" type="button">Back</button>
+                <button class="btn btn-primary btn-next" type="button">Continue</button>
+              </div>
+            </fieldset>
+
+            <!-- Step 7: Timeline (Optional) -->
+            <fieldset class="finder-step" data-step="7" hidden>
+              <legend class="step-label">Timeline and decision-making</legend>
+              <p class="optional-note">These questions are optional.</p>
+              <div class="form-fields">
+                <div class="form-group">
+                  <label id="decision-label">Where are you in the decision process?</label>
+                  <div class="radio-group" role="radiogroup" aria-labelledby="decision-label">
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="decision-stage"
+                        data-field="decisionStage"
+                        value="exploring"
+                      />
+                      <span>Just exploring</span>
+                    </label>
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="decision-stage"
+                        data-field="decisionStage"
+                        value="comparing"
+                      />
+                      <span>Comparing options</span>
+                    </label>
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="decision-stage"
+                        data-field="decisionStage"
+                        value="ready"
+                      />
+                      <span>Ready to move forward</span>
+                    </label>
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="decision-stage"
+                        data-field="decisionStage"
+                        value="budgeted"
+                      />
+                      <span>Already budgeted for this year</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label id="timeline-label">Ideal timeline to begin partnership</label>
+                  <div class="radio-group" role="radiogroup" aria-labelledby="timeline-label">
+                    <label class="radio-option">
+                      <input type="radio" name="timeline" data-field="timeline" value="1-month" />
+                      <span>Within 1 month</span>
+                    </label>
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="timeline"
+                        data-field="timeline"
+                        value="1-3-months"
+                      />
+                      <span>1–3 months</span>
+                    </label>
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="timeline"
+                        data-field="timeline"
+                        value="3-6-months"
+                      />
+                      <span>3–6 months</span>
+                    </label>
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="timeline"
+                        data-field="timeline"
+                        value="next-fiscal"
+                      />
+                      <span>Next fiscal year</span>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="timeline" data-field="timeline" value="flexible" />
+                      <span>Flexible</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="step-nav">
+                <button class="btn btn-secondary btn-back" type="button">Back</button>
+                <button class="btn btn-primary btn-next" type="button">View Results</button>
+              </div>
+            </fieldset>
+
+            <!-- Results Screen -->
+            <div class="finder-step results-screen" data-step="results" hidden>
+              <div class="results-header">
+                <h4>Your Partnership Recommendation</h4>
+                <p>Based on your responses, here's what we recommend:</p>
+              </div>
+
+              <!-- Recommended Tier -->
+              <div class="recommended-tier">
+                <div class="tier-badge" id="result-tier-badge" aria-hidden="true"></div>
+                <div class="tier-info">
+                  <h5 class="tier-name" id="result-tier-name"></h5>
+                  <p class="tier-description" id="result-tier-description"></p>
+                </div>
+              </div>
+
+              <!-- Impact Statement -->
+              <div class="impact-statement">
+                <h5>Your Projected Impact</h5>
+                <p class="impact-text" id="result-impact-text"></p>
+              </div>
+
+              <!-- Benefits -->
+              <div class="tier-benefits">
+                <h5>Partnership Benefits</h5>
+                <ul class="benefits-list" id="result-benefits-list"></ul>
+              </div>
+
+              <!-- Response Summary -->
+              <div class="response-summary">
+                <div class="summary-header">
+                  <h5>Your Responses</h5>
+                  <p>Review and edit if needed before submitting</p>
+                </div>
+                <div class="summary-sections" id="summary-sections"></div>
+              </div>
+
+              <div class="results-cta">
+                <h5>Ready to start a conversation?</h5>
+                <p>Submit your information and we'll be in touch within 2–3 business days.</p>
+                <button
+                  class="btn btn-primary btn-submit-inquiry"
+                  type="button"
+                  id="btn-submit-inquiry"
+                >
+                  Continue to Submit
+                </button>
+              </div>
+            </div>
+
+            <!-- Contact Form Screen -->
+            <div class="finder-step contact-screen" data-step="contact" hidden>
+              <p class="step-label">Your Contact Information</p>
+              <form id="partnership-form" action="https://forms.baytides.org" method="POST">
+                <input type="hidden" name="form_type" value="corporate-partnership" />
+                <input
+                  type="hidden"
+                  name="redirect"
+                  value="https://baytides.org/donate/corporate?submitted=true"
+                />
+                <input type="hidden" name="quiz_data" id="quiz-data-field" value="" />
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  class="hidden"
+                  style="display: none"
+                  aria-hidden="true"
+                  tabindex="-1"
+                />
+
+                <div class="form-fields contact-fields">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="contact-name">
+                        Your Name
+                        <span class="required" aria-hidden="true">*</span>
+                        <span class="sr-only">(required)</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="contact-name"
+                        name="contact_name"
+                        required
+                        autocomplete="name"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="job-title">
+                        Job Title
+                        <span class="required" aria-hidden="true">*</span>
+                        <span class="sr-only">(required)</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="job-title"
+                        name="job_title"
+                        required
+                        autocomplete="organization-title"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="contact-email">
+                        Email
+                        <span class="required" aria-hidden="true">*</span>
+                        <span class="sr-only">(required)</span>
+                      </label>
+                      <input
+                        type="email"
+                        id="contact-email"
+                        name="email"
+                        required
+                        autocomplete="email"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="contact-phone">
+                        Phone
+                        <span class="required" aria-hidden="true">*</span>
+                        <span class="sr-only">(required)</span>
+                      </label>
+                      <input
+                        type="tel"
+                        id="contact-phone"
+                        name="phone"
+                        required
+                        autocomplete="tel"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="company-website">
+                      Company Website
+                      <span class="required" aria-hidden="true">*</span>
+                      <span class="sr-only">(required)</span>
+                    </label>
+                    <input
+                      type="url"
+                      id="company-website"
+                      name="website"
+                      required
+                      placeholder="https://"
+                      autocomplete="url"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label id="contact-method-label">Preferred contact method</label>
+                    <div
+                      class="radio-group inline"
+                      role="radiogroup"
+                      aria-labelledby="contact-method-label"
+                    >
+                      <label class="radio-option">
+                        <input type="radio" name="contact_method" value="email" checked />
+                        <span>Email</span>
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="contact_method" value="phone" />
+                        <span>Phone</span>
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="contact_method" value="either" />
+                        <span>Either</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label id="best-time-label">Best time to reach you</label>
+                    <div
+                      class="radio-group inline"
+                      role="radiogroup"
+                      aria-labelledby="best-time-label"
+                    >
+                      <label class="radio-option">
+                        <input type="radio" name="best_time" value="morning" />
+                        <span>Morning</span>
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="best_time" value="afternoon" />
+                        <span>Afternoon</span>
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="best_time" value="no-preference" checked />
+                        <span>No preference</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="referral-source">How did you hear about Bay Tides?</label>
+                    <select id="referral-source" name="referral_source">
+                      <option value="">Select...</option>
+                      <option value="web-search">Web search</option>
+                      <option value="social-media">Social media</option>
+                      <option value="referral">Referral from another organization</option>
+                      <option value="news">News / Press</option>
+                      <option value="event">Event</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="additional-notes">Additional notes or questions</label>
+                    <textarea
+                      id="additional-notes"
+                      name="notes"
+                      rows="3"
+                      placeholder="Anything else you'd like us to know..."
+                    >
+                    </textarea>
+                  </div>
+
+                  <fieldset
+                    class="turnstile-fieldset"
+                    style="border: none; padding: 0; margin: 0 0 1rem"
+                  >
+                    <legend class="sr-only">Security verification</legend>
+                    <div
+                      class="cf-turnstile"
+                      data-sitekey="0x4AAAAAACJ4PUuzOaD_Xf63"
+                      data-theme="auto"
+                    >
+                    </div>
+                  </fieldset>
+                </div>
+
+                <div class="step-nav">
+                  <button class="btn btn-secondary btn-back" type="button" id="contact-back-btn">
+                    Back to Results
+                  </button>
+                  <button type="submit" class="btn btn-primary">Submit Partnership Inquiry</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Success Screen -->
+            <div class="finder-step success-screen" data-step="success" hidden>
+              <div class="success-message">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="64"
+                  height="64"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline
+                    points="22 4 12 14.01 9 11.01"
+                  >
+                  </polyline>
+                </svg>
+                <h4>Thank You!</h4>
+                <p>
+                  We've received your partnership inquiry and will be in touch within 2–3 business
+                  days.
+                </p>
+                <p class="success-note">
+                  A copy of your responses has been sent to our team for review.
+                </p>
+                <div class="success-actions">
+                  <button class="btn btn-secondary" type="button" onclick="window.print()">
+                    Print Your Results
+                  </button>
+                  <a href="/" class="btn btn-primary">Return to Home</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="corporate-benefits">
-          <h3>Benefits of Partnership</h3>
-          <ul>
-            <li>
-              <strong>Brand visibility</strong> - Recognition on our website, social media, and printed
-              materials
-            </li>
-            <li>
-              <strong>Employee engagement</strong> - Meaningful volunteer opportunities that boost morale
-              and teamwork
-            </li>
-            <li>
-              <strong>Community impact</strong> - Direct connection to tangible environmental outcomes
-              in the Bay Area
-            </li>
-            <li>
-              <strong>ESG reporting</strong> - Documented environmental and social contributions for sustainability
-              reports
-            </li>
-            <li>
-              <strong>Tax benefits</strong> - Corporate charitable contributions are tax-deductible
-            </li>
-            <li>
-              <strong>Networking</strong> - Connect with other community-minded businesses and leaders
-            </li>
-          </ul>
-        </div>
-
-        <div class="corporate-process">
-          <h3>Getting Started</h3>
-          <ol role="list">
-            <li>
-              <strong>Reach out</strong> to discuss your company's interests and goals.
-            </li>
-            <li>
-              <strong>We'll customize</strong> a partnership package that aligns with your objectives
-              and budget.
-            </li>
-            <li>
-              <strong>Formalize the partnership</strong> with a simple agreement outlining benefits and
-              commitments.
-            </li>
-            <li>
-              <strong>Launch and promote</strong> the partnership to maximize impact and visibility.
-            </li>
-          </ol>
+        <!-- Partnership Tiers Overview -->
+        <div class="tiers-overview">
+          <h3>Partnership Tiers</h3>
+          <div class="tiers-grid">
+            <article class="tier-card" data-tier="bay-friend">
+              <div class="tier-header">
+                <span class="tier-icon" aria-hidden="true">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"
+                    >
+                    </path><path
+                      d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"
+                    >
+                    </path><path
+                      d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"
+                    >
+                    </path>
+                  </svg>
+                </span>
+                <h4>Bay Friend</h4>
+                <span class="tier-range">Under $5,000</span>
+              </div>
+              <ul>
+                <li>Logo on website</li>
+                <li>Logo on GitHub and open-source repositories</li>
+                <li>Social media recognition</li>
+                <li>Volunteer event participation</li>
+              </ul>
+            </article>
+            <article class="tier-card" data-tier="bay-steward">
+              <div class="tier-header">
+                <span class="tier-icon" aria-hidden="true">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M15.5 5.5c.83.67 2 2.33 2 4a4.5 4.5 0 0 1-4.5 4.5c-.28 0-.56-.02-.83-.07"
+                    >
+                    </path><circle cx="14" cy="8" r="1" fill="currentColor"></circle><path
+                      d="M18 9.5c1.5 0 3 1 3 3s-1.5 3-3 3"
+                    >
+                    </path><path d="M3 18c0-2 2-4 6-4h3c2.5 0 4.5.5 6 1.5"></path><path
+                      d="M3 18c0 1.5 1.5 3 4.5 3h6c3 0 4.5-1.5 4.5-3"
+                    >
+                    </path><path d="M9 14c-2 0-4.5.5-5.5 2"></path>
+                  </svg>
+                </span>
+                <h4>Bay Steward</h4>
+                <span class="tier-range">$5,000 – $15,000</span>
+              </div>
+              <ul>
+                <li>All Bay Friend benefits</li>
+                <li>Newsletter features</li>
+                <li>Co-branded content</li>
+                <li>Annual impact report</li>
+              </ul>
+            </article>
+            <article class="tier-card" data-tier="shoreline-champion">
+              <div class="tier-header">
+                <span class="tier-icon" aria-hidden="true">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M12 3c-1.5 0-3 1-4.5 2.5S4 9 4 11c0 3 2.5 5 4.5 6.5L12 21l3.5-3.5C17.5 16 20 14 20 11c0-2-1-3.5-2.5-5.5S13.5 3 12 3z"
+                    >
+                    </path><path d="M12 3v8"></path><path d="M12 11l-4 4"></path><path
+                      d="M12 11l4 4"
+                    >
+                    </path><circle cx="12" cy="8" r="1" fill="currentColor"></circle>
+                  </svg>
+                </span>
+                <h4>Shoreline Champion</h4>
+                <span class="tier-range">$15,000 – $50,000</span>
+              </div>
+              <ul>
+                <li>All Bay Steward benefits</li>
+                <li>Press release announcement</li>
+                <li>Event sponsorship recognition</li>
+                <li>Dedicated account contact</li>
+              </ul>
+            </article>
+            <article class="tier-card featured" data-tier="legacy-partner">
+              <div class="tier-header">
+                <span class="tier-icon" aria-hidden="true">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                    >
+                    </polygon>
+                  </svg>
+                </span>
+                <h4>Legacy Partner</h4>
+                <span class="tier-range">$50,000+</span>
+              </div>
+              <ul>
+                <li>All Shoreline Champion benefits</li>
+                <li>Named scholarship program</li>
+                <li>Multi-year partnership planning</li>
+                <li>Priority program access</li>
+              </ul>
+            </article>
+          </div>
         </div>
 
         <div class="corporate-cta">
-          <h3>Let's Talk</h3>
-          <p>We'd love to explore how a partnership with Bay Tides can benefit your company.</p>
+          <h3>Questions?</h3>
+          <p>
+            We're happy to discuss partnership options that fit your organization's unique needs.
+          </p>
           <a href="/contact" class="btn btn-primary btn-large">Contact Us</a>
         </div>
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  interface QuizData {
+    role?: string;
+    companyName?: string;
+    industry?: string;
+    companySize?: string;
+    locations?: string[];
+    goals?: string[];
+    successDefinition?: string;
+    involvement?: string;
+    budget?: string;
+    teamSize?: string;
+    frequency?: string;
+    inKindTypes?: string[];
+    inKindDescription?: string;
+    matchingGift?: string;
+    matchingDetails?: string;
+    programs?: string[];
+    csrPrograms?: string;
+    csrDescription?: string;
+    otherCauses?: string;
+    envPractices?: string[];
+    visibility?: string[];
+    commsTeam?: string;
+    decisionStage?: string;
+    timeline?: string;
+  }
+
+  interface TierInfo {
+    name: string;
+    range: string;
+    icon: string;
+    description: string;
+    impact: string;
+    benefits: string[];
+  }
+
+  // SVG icons for tiers
+  const tierIcons = {
+    wave: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>',
+    duck: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 5.5c.83.67 2 2.33 2 4a4.5 4.5 0 0 1-4.5 4.5c-.28 0-.56-.02-.83-.07"/><circle cx="14" cy="8" r="1" fill="currentColor"/><path d="M18 9.5c1.5 0 3 1 3 3s-1.5 3-3 3"/><path d="M3 18c0-2 2-4 6-4h3c2.5 0 4.5.5 6 1.5"/><path d="M3 18c0 1.5 1.5 3 4.5 3h6c3 0 4.5-1.5 4.5-3"/><path d="M9 14c-2 0-4.5.5-5.5 2"/></svg>',
+    eagle:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-1.5 0-3 1-4.5 2.5S4 9 4 11c0 3 2.5 5 4.5 6.5L12 21l3.5-3.5C17.5 16 20 14 20 11c0-2-1-3.5-2.5-5.5S13.5 3 12 3z"/><path d="M12 3v8"/><path d="M12 11l-4 4"/><path d="M12 11l4 4"/><circle cx="12" cy="8" r="1" fill="currentColor"/></svg>',
+    star: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+  };
+
+  const tierData: Record<string, TierInfo> = {
+    'bay-friend': {
+      name: 'Bay Friend',
+      range: 'Under $5,000',
+      icon: tierIcons.wave,
+      description: 'Perfect for small companies or those just starting their partnership journey.',
+      impact:
+        'Supports 1 shoreline cleanup, removing approximately 500 lbs of debris from the Bay.',
+      benefits: [
+        'Logo on our website',
+        'Logo on GitHub and open-source repositories',
+        'Social media recognition',
+        'Volunteer event participation for your team',
+      ],
+    },
+    'bay-steward': {
+      name: 'Bay Steward',
+      range: '$5,000 – $15,000',
+      icon: tierIcons.duck,
+      description: 'Ideal for mid-size companies seeking meaningful engagement and visibility.',
+      impact: 'Funds 2–3 restoration events and engages 100+ volunteers in Bay conservation.',
+      benefits: [
+        'All Bay Friend benefits',
+        'Newsletter features',
+        'Co-branded content opportunities',
+        'Annual impact report',
+      ],
+    },
+    'shoreline-champion': {
+      name: 'Shoreline Champion',
+      range: '$15,000 – $50,000',
+      icon: tierIcons.eagle,
+      description: 'For organizations committed to making a significant, visible impact.',
+      impact: 'Sponsors a full season of programs, reaching 500+ community members.',
+      benefits: [
+        'All Bay Steward benefits',
+        'Press release announcement',
+        'Event sponsorship recognition',
+        'Dedicated account contact',
+      ],
+    },
+    'legacy-partner': {
+      name: 'Legacy Partner',
+      range: '$50,000+',
+      icon: tierIcons.star,
+      description: 'Our highest tier for organizations creating lasting change for the Bay.',
+      impact:
+        "Enables major habitat restoration, digital tool development, and establishes a named scholarship in your organization's name.",
+      benefits: [
+        'All Shoreline Champion benefits',
+        'Named scholarship program (while sustaining partner)',
+        'Multi-year partnership planning',
+        'Priority program access',
+      ],
+    },
+  };
+
+  function initPartnershipFinder() {
+    const finder = document.querySelector('.partnership-finder');
+    if (!finder) return;
+
+    const quizData: QuizData = {};
+    let currentStep = 0;
+    const totalSteps = 8;
+    let selectedGoals: string[] = [];
+
+    // Check for submission success
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('submitted') === 'true') {
+      showStep('success');
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+
+    function updateProgress(step: number) {
+      const progressBar = document.getElementById('progress-bar');
+      const progressText = document.getElementById('progress-text');
+      const progressContainer = finder.querySelector('.finder-progress');
+
+      if (progressBar && progressText && progressContainer) {
+        const percent = (step / totalSteps) * 100;
+        progressBar.style.width = `${percent}%`;
+        progressText.textContent = `Step ${step} of ${totalSteps}`;
+        progressContainer.setAttribute('aria-valuenow', String(percent));
+      }
+    }
+
+    function showStep(step: number | string) {
+      const allSteps = finder.querySelectorAll('.finder-step');
+      allSteps.forEach((s) => {
+        (s as HTMLElement).hidden = true;
+        s.classList.remove('active');
+      });
+
+      const targetStep = finder.querySelector(`[data-step="${step}"]`) as HTMLElement;
+      if (targetStep) {
+        targetStep.hidden = false;
+        targetStep.classList.add('active');
+
+        // Focus management for accessibility
+        const heading = targetStep.querySelector('legend, h4, .step-label');
+        if (heading) {
+          (heading as HTMLElement).tabIndex = -1;
+          (heading as HTMLElement).focus();
+        }
+      }
+
+      if (typeof step === 'number') {
+        currentStep = step;
+        updateProgress(step);
+      }
+    }
+
+    function collectFieldData() {
+      // Collect text inputs
+      finder
+        .querySelectorAll(
+          'input[type="text"], input[type="email"], input[type="tel"], input[type="url"], textarea, select'
+        )
+        .forEach((el) => {
+          const input = el as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+          const field = input.dataset.field;
+          if (field && input.value) {
+            (quizData as Record<string, unknown>)[field] = input.value;
+          }
+        });
+
+      // Collect radio buttons
+      finder.querySelectorAll('input[type="radio"]:checked').forEach((el) => {
+        const input = el as HTMLInputElement;
+        const field = input.dataset.field;
+        if (field) {
+          (quizData as Record<string, unknown>)[field] = input.value;
+        }
+      });
+
+      // Collect checkboxes
+      const checkboxFields: Record<string, string[]> = {};
+      finder.querySelectorAll('input[type="checkbox"]:checked').forEach((el) => {
+        const input = el as HTMLInputElement;
+        const field = input.dataset.field;
+        if (field && input.value) {
+          if (!checkboxFields[field]) checkboxFields[field] = [];
+          checkboxFields[field].push(input.value);
+        }
+      });
+      Object.keys(checkboxFields).forEach((field) => {
+        (quizData as Record<string, unknown>)[field] = checkboxFields[field];
+      });
+
+      // Goals ranking
+      if (selectedGoals.length > 0) {
+        quizData.goals = selectedGoals;
+      }
+    }
+
+    function validateStep(step: number): boolean {
+      const stepEl = finder.querySelector(`[data-step="${step}"]`);
+      if (!stepEl) return true;
+
+      let isValid = true;
+
+      // Check required text inputs
+      stepEl
+        .querySelectorAll('input[required], textarea[required], select[required]')
+        .forEach((el) => {
+          const input = el as HTMLInputElement;
+          if (!input.value.trim()) {
+            isValid = false;
+            input.classList.add('error');
+            input.setAttribute('aria-invalid', 'true');
+          } else {
+            input.classList.remove('error');
+            input.removeAttribute('aria-invalid');
+          }
+        });
+
+      // Check required radio groups
+      if (step === 1) {
+        const companySize = stepEl.querySelector('input[name="company-size"]:checked');
+        const locations = stepEl.querySelectorAll('input[data-field="locations"]:checked');
+        if (!companySize || locations.length === 0) isValid = false;
+      }
+
+      if (step === 2) {
+        if (selectedGoals.length < 1) isValid = false;
+      }
+
+      if (step === 3) {
+        if (!quizData.involvement) isValid = false;
+      }
+
+      if (step === 4) {
+        const matching = stepEl.querySelector('input[name="matching"]:checked');
+        const programs = stepEl.querySelectorAll('input[data-field="programs"]:checked');
+        if (!matching || programs.length === 0) isValid = false;
+      }
+
+      return isValid;
+    }
+
+    function getRecommendedTier(): string {
+      const budget = quizData.budget;
+
+      if (budget === '50k-plus') return 'legacy-partner';
+      if (budget === '15k-50k') return 'shoreline-champion';
+      if (budget === '5k-15k') return 'bay-steward';
+      return 'bay-friend';
+    }
+
+    function formatValue(value: string | undefined): string {
+      if (!value) return 'Not provided';
+      return value
+        .split('-')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    }
+
+    function formatBudget(budget: string): string {
+      const budgetMap: Record<string, string> = {
+        'under-5k': 'Under $5,000',
+        '5k-15k': '$5,000 – $15,000',
+        '15k-50k': '$15,000 – $50,000',
+        '50k-plus': '$50,000+',
+        'not-sure': 'Not sure yet',
+      };
+      return budgetMap[budget] || budget;
+    }
+
+    function renderResults() {
+      const tierKey = getRecommendedTier();
+      const tier = tierData[tierKey];
+
+      // Update tier display using safe DOM methods
+      const tierBadge = document.getElementById('result-tier-badge');
+      const tierName = document.getElementById('result-tier-name');
+      const tierDesc = document.getElementById('result-tier-description');
+      const impactText = document.getElementById('result-impact-text');
+      const benefitsList = document.getElementById('result-benefits-list');
+
+      if (tierBadge) {
+        // Clear and insert SVG icon safely
+        tierBadge.textContent = '';
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = tier.icon;
+        const svg = tempDiv.firstChild;
+        if (svg) tierBadge.appendChild(svg);
+      }
+      if (tierName) tierName.textContent = `${tier.name} (${tier.range})`;
+      if (tierDesc) tierDesc.textContent = tier.description;
+      if (impactText) impactText.textContent = tier.impact;
+
+      if (benefitsList) {
+        benefitsList.textContent = '';
+        tier.benefits.forEach((benefit) => {
+          const li = document.createElement('li');
+          li.textContent = benefit;
+          benefitsList.appendChild(li);
+        });
+      }
+
+      // Render response summary using safe DOM methods
+      const summaryContainer = document.getElementById('summary-sections');
+      if (summaryContainer) {
+        summaryContainer.textContent = '';
+        renderSummary(summaryContainer);
+      }
+    }
+
+    function createSummarySection(
+      container: HTMLElement,
+      title: string,
+      editStep: number,
+      items: Array<{ label: string; value: string }>
+    ) {
+      const section = document.createElement('div');
+      section.className = 'summary-section';
+
+      const header = document.createElement('div');
+      header.className = 'summary-section-header';
+
+      const h6 = document.createElement('h6');
+      h6.textContent = title;
+      header.appendChild(h6);
+
+      const editBtn = document.createElement('button');
+      editBtn.type = 'button';
+      editBtn.className = 'edit-btn';
+      editBtn.textContent = 'Edit';
+      editBtn.dataset.editStep = String(editStep);
+      editBtn.addEventListener('click', () => showStep(editStep));
+      header.appendChild(editBtn);
+
+      section.appendChild(header);
+
+      const dl = document.createElement('dl');
+      items.forEach((item) => {
+        const dt = document.createElement('dt');
+        dt.textContent = item.label;
+        dl.appendChild(dt);
+
+        const dd = document.createElement('dd');
+        dd.textContent = item.value;
+        dl.appendChild(dd);
+      });
+      section.appendChild(dl);
+
+      container.appendChild(section);
+    }
+
+    function renderSummary(container: HTMLElement) {
+      // Company Profile
+      if (quizData.companyName) {
+        createSummarySection(container, 'Company Profile', 1, [
+          { label: 'Company', value: quizData.companyName },
+          { label: 'Industry', value: formatValue(quizData.industry) },
+          { label: 'Size', value: `${quizData.companySize} employees` },
+          { label: 'Locations', value: (quizData.locations || []).map(formatValue).join(', ') },
+        ]);
+      }
+
+      // Goals & Motivations
+      if (quizData.goals && quizData.goals.length > 0) {
+        createSummarySection(container, 'Goals & Motivations', 2, [
+          {
+            label: 'Top Goals',
+            value: quizData.goals.map((g, i) => `${i + 1}. ${formatValue(g)}`).join(', '),
+          },
+          { label: 'Success Definition', value: quizData.successDefinition || 'Not provided' },
+        ]);
+      }
+
+      // Involvement
+      if (quizData.involvement) {
+        const involvementItems: Array<{ label: string; value: string }> = [
+          { label: 'Type', value: formatValue(quizData.involvement) },
+        ];
+
+        if (quizData.budget) {
+          involvementItems.push({ label: 'Budget', value: formatBudget(quizData.budget) });
+        }
+        if (quizData.teamSize) {
+          involvementItems.push({ label: 'Team Size', value: formatValue(quizData.teamSize) });
+        }
+        if (quizData.frequency) {
+          involvementItems.push({ label: 'Frequency', value: formatValue(quizData.frequency) });
+        }
+        if (quizData.inKindTypes && quizData.inKindTypes.length > 0) {
+          involvementItems.push({
+            label: 'In-Kind',
+            value: quizData.inKindTypes.map(formatValue).join(', '),
+          });
+        }
+
+        createSummarySection(container, 'Involvement', 3, involvementItems);
+      }
+
+      // Programs & Matching
+      if (quizData.programs && quizData.programs.length > 0) {
+        const matchingValue = quizData.matchingDetails
+          ? `${formatValue(quizData.matchingGift)} — ${quizData.matchingDetails}`
+          : formatValue(quizData.matchingGift);
+
+        createSummarySection(container, 'Programs & Matching', 4, [
+          { label: 'Matching Gift', value: matchingValue },
+          { label: 'Interested Programs', value: quizData.programs.map(formatValue).join(', ') },
+        ]);
+      }
+    }
+
+    // Event Handlers
+
+    // Role selection (Step 0)
+    finder.querySelectorAll('[data-step="0"] .option-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const value = (btn as HTMLElement).dataset.value;
+
+        // Update selection state
+        finder.querySelectorAll('[data-step="0"] .option-btn').forEach((b) => {
+          b.classList.remove('selected');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('selected');
+        btn.setAttribute('aria-checked', 'true');
+
+        quizData.role = value;
+
+        // Show researcher note if applicable
+        const researcherNote = document.getElementById('researcher-note');
+        if (researcherNote) {
+          researcherNote.hidden = value !== 'researching';
+        }
+
+        // Handle browsing exit
+        if (value === 'browsing') {
+          setTimeout(() => showStep('browsing'), 300);
+        } else {
+          setTimeout(() => showStep(1), 300);
+        }
+      });
+    });
+
+    // Involvement selection (Step 3)
+    finder.querySelectorAll('.involvement-options .option-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const value = (btn as HTMLElement).dataset.value;
+
+        finder.querySelectorAll('.involvement-options .option-btn').forEach((b) => {
+          b.classList.remove('selected');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('selected');
+        btn.setAttribute('aria-checked', 'true');
+
+        quizData.involvement = value;
+
+        // Show/hide conditional fields
+        const financialFields = document.getElementById('financial-fields');
+        const handsOnFields = document.getElementById('hands-on-fields');
+        const inKindFields = document.getElementById('in-kind-fields');
+
+        if (financialFields) {
+          financialFields.hidden = !(value === 'financial' || value === 'hybrid');
+        }
+        if (handsOnFields) {
+          handsOnFields.hidden = !(value === 'hands-on' || value === 'hybrid');
+        }
+        if (inKindFields) {
+          inKindFields.hidden = !(value === 'in-kind' || value === 'hybrid');
+        }
+      });
+    });
+
+    // Goals ranking (Step 2)
+    finder.querySelectorAll('.ranking-option').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const value = (btn as HTMLElement).dataset.value;
+        if (!value) return;
+
+        const badge = btn.querySelector('.rank-badge');
+
+        if (btn.classList.contains('selected')) {
+          // Deselect
+          btn.classList.remove('selected');
+          btn.setAttribute('aria-selected', 'false');
+          const index = selectedGoals.indexOf(value);
+          if (index > -1) selectedGoals.splice(index, 1);
+          if (badge) badge.textContent = '';
+
+          // Re-number remaining
+          selectedGoals.forEach((goal, i) => {
+            const goalBtn = finder.querySelector(`.ranking-option[data-value="${goal}"]`);
+            const goalBadge = goalBtn?.querySelector('.rank-badge');
+            if (goalBadge) goalBadge.textContent = String(i + 1);
+          });
+        } else if (selectedGoals.length < 3) {
+          // Select
+          btn.classList.add('selected');
+          btn.setAttribute('aria-selected', 'true');
+          selectedGoals.push(value);
+          if (badge) badge.textContent = String(selectedGoals.length);
+        }
+      });
+    });
+
+    // Matching gift details toggle
+    finder.querySelectorAll('input[name="matching"]').forEach((radio) => {
+      radio.addEventListener('change', () => {
+        const matchingDetails = document.getElementById('matching-details');
+        if (matchingDetails) {
+          matchingDetails.hidden = (radio as HTMLInputElement).value !== 'yes';
+        }
+      });
+    });
+
+    // CSR details toggle
+    finder.querySelectorAll('input[name="csr"]').forEach((radio) => {
+      radio.addEventListener('change', () => {
+        const csrDetails = document.getElementById('csr-details');
+        const value = (radio as HTMLInputElement).value;
+        if (csrDetails) {
+          csrDetails.hidden = !(value === 'yes' || value === 'in-development');
+        }
+      });
+    });
+
+    // Navigation buttons
+    finder.querySelectorAll('.btn-next').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        collectFieldData();
+
+        if (!validateStep(currentStep)) {
+          // Create accessible error message
+          const errorDiv = document.createElement('div');
+          errorDiv.setAttribute('role', 'alert');
+          errorDiv.className = 'validation-error';
+          errorDiv.textContent = 'Please fill in all required fields before continuing.';
+
+          const existingError = finder.querySelector('.validation-error');
+          if (existingError) existingError.remove();
+
+          const currentStepEl = finder.querySelector(`[data-step="${currentStep}"]`);
+          currentStepEl?.insertBefore(errorDiv, currentStepEl.querySelector('.step-nav'));
+
+          return;
+        }
+
+        // Remove any existing error
+        const existingError = finder.querySelector('.validation-error');
+        if (existingError) existingError.remove();
+
+        if (currentStep === 7) {
+          // Show results
+          renderResults();
+          showStep('results');
+        } else {
+          showStep(currentStep + 1);
+        }
+      });
+    });
+
+    finder.querySelectorAll('.btn-back').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (currentStep === 1) {
+          showStep(0);
+        } else if (currentStep > 1) {
+          showStep(currentStep - 1);
+        }
+      });
+    });
+
+    // Submit inquiry button
+    const submitBtn = document.getElementById('btn-submit-inquiry');
+    if (submitBtn) {
+      submitBtn.addEventListener('click', () => {
+        showStep('contact');
+      });
+    }
+
+    // Contact form back button
+    const contactBackBtn = document.getElementById('contact-back-btn');
+    if (contactBackBtn) {
+      contactBackBtn.addEventListener('click', () => {
+        showStep('results');
+      });
+    }
+
+    // Form submission
+    const form = document.getElementById('partnership-form') as HTMLFormElement;
+    if (form) {
+      form.addEventListener('submit', () => {
+        // Populate quiz data field
+        const quizDataField = document.getElementById('quiz-data-field') as HTMLInputElement;
+        if (quizDataField) {
+          quizDataField.value = JSON.stringify(quizData);
+        }
+      });
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPartnershipFinder);
+  } else {
+    initPartnershipFinder();
+  }
+</script>
 
 <style>
   .corporate-content {
@@ -320,30 +2272,453 @@ const structuredData = [
     margin: 0 auto;
   }
 
-  .partnership-options {
+  /* Partnership Finder */
+  .partnership-finder {
+    background: var(--light-blue);
+    border-radius: 16px;
+    padding: 2rem;
     margin-bottom: 3rem;
   }
 
-  .partnership-options > h3 {
+  .finder-header {
+    display: flex;
+    gap: 1.25rem;
     margin-bottom: 2rem;
-    color: var(--primary-navy);
-    text-align: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
   }
 
-  .partnership-card {
+  .finder-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--primary-navy);
+    color: white;
+    border-radius: 12px;
     display: flex;
-    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .finder-header h3 {
+    margin: 0 0 0.5rem;
+    color: var(--primary-navy);
+  }
+
+  .finder-header p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+  }
+
+  /* Progress Bar */
+  .finder-progress {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    width: 0;
+    background: var(--primary-navy);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+
+  .progress-text {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    white-space: nowrap;
+    font-weight: 500;
+  }
+
+  /* Fieldsets */
+  .finder-step {
+    border: none;
+    padding: 0;
+    margin: 0;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .step-label,
+  .finder-step legend {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-navy);
+    margin-bottom: 1.5rem;
+    display: block;
+    width: 100%;
+  }
+
+  .optional-note {
+    font-size: 0.9375rem;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    line-height: 1.6;
+  }
+
+  /* Validation Error */
+  .validation-error {
+    padding: 1rem;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    color: #dc2626;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  /* Option Buttons */
+  .step-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .option-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.125rem 1.5rem;
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    font-size: 1rem;
+  }
+
+  .option-btn:hover {
+    border-color: var(--primary-navy);
+    transform: translateY(-1px);
+  }
+
+  .option-btn:focus {
+    outline: 3px solid var(--primary-navy);
+    outline-offset: 2px;
+  }
+
+  .option-btn.selected {
+    border-color: var(--primary-navy);
+    background: rgba(26, 54, 93, 0.05);
+  }
+
+  .option-icon {
+    width: 52px;
+    height: 52px;
     background: var(--light-blue);
     border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-navy);
+    flex-shrink: 0;
   }
 
-  .partnership-icon {
-    width: 64px;
-    height: 64px;
+  .option-btn.selected .option-icon {
+    background: var(--primary-navy);
+    color: white;
+  }
+
+  .option-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .option-text strong {
+    color: var(--primary-navy);
+    font-size: 1.0625rem;
+  }
+
+  .option-text span {
+    color: var(--text-light);
+    font-size: 0.9375rem;
+  }
+
+  /* Researcher Note */
+  .researcher-note {
+    margin-top: 1.25rem;
+    padding: 1.25rem;
+    background: #fef3cd;
+    border-radius: 8px;
+    border-left: 4px solid #f59e0b;
+  }
+
+  .researcher-note p {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  /* Browsing Exit */
+  .exit-message {
+    text-align: center;
+    padding: 2.5rem;
+  }
+
+  .exit-message svg {
+    color: var(--primary-navy);
+    margin-bottom: 1.25rem;
+  }
+
+  .exit-message h4 {
+    color: var(--primary-navy);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .exit-message p {
+    color: var(--text-light);
+    margin-bottom: 1.75rem;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+
+  .exit-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Form Fields */
+  .form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .form-group label {
+    font-weight: 600;
+    color: var(--primary-navy);
+    font-size: 1rem;
+  }
+
+  .required {
+    color: #dc3545;
+  }
+
+  .field-hint {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-top: -0.25rem;
+  }
+
+  .form-group input[type='text'],
+  .form-group input[type='email'],
+  .form-group input[type='tel'],
+  .form-group input[type='url'],
+  .form-group select,
+  .form-group textarea {
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--border-color, #d1d5db);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-navy);
+    box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.15);
+  }
+
+  .form-group input.error,
+  .form-group select.error,
+  .form-group textarea.error {
+    border-color: #dc3545;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 600px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Radio & Checkbox Groups */
+  .radio-group,
+  .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .radio-group.inline {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+
+  .radio-option,
+  .checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  .radio-option input,
+  .checkbox-option input {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary-navy);
+    cursor: pointer;
+  }
+
+  .radio-option span,
+  .checkbox-option span {
+    line-height: 1.4;
+  }
+
+  /* Ranking Options */
+  .ranking-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
+
+  .ranking-option {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 1.125rem;
+    background: white;
+    border: 2px solid var(--border-color, #d1d5db);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+    font-family: inherit;
+  }
+
+  .ranking-option:hover {
+    border-color: var(--primary-navy);
+  }
+
+  .ranking-option:focus {
+    outline: 3px solid var(--primary-navy);
+    outline-offset: 2px;
+  }
+
+  .ranking-option.selected {
+    border-color: var(--primary-navy);
+    background: rgba(26, 54, 93, 0.05);
+  }
+
+  .rank-badge {
+    width: 26px;
+    height: 26px;
+    background: var(--border-color, #d1d5db);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .ranking-option.selected .rank-badge {
+    background: var(--primary-navy);
+  }
+
+  /* Conditional Fields */
+  .conditional-fields {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-navy);
+  }
+
+  /* Step Navigation */
+  .step-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+  }
+
+  /* Results Screen */
+  .results-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .results-header h4 {
+    color: var(--primary-navy);
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  .results-header p {
+    color: var(--text-light);
+    font-size: 1.0625rem;
+  }
+
+  .recommended-tier {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.75rem;
     background: white;
     border-radius: 12px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .tier-badge {
+    width: 72px;
+    height: 72px;
+    background: var(--light-blue);
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -351,140 +2726,595 @@ const structuredData = [
     color: var(--primary-navy);
   }
 
-  .partnership-details h4 {
-    color: var(--primary-navy);
-    margin-bottom: 0.5rem;
-    font-size: 1.0625rem;
+  .tier-badge svg {
+    width: 40px;
+    height: 40px;
   }
 
-  .partnership-details p {
-    font-size: 0.9375rem;
+  .tier-info h5 {
+    color: var(--primary-navy);
+    margin: 0 0 0.375rem;
+    font-size: 1.375rem;
+  }
+
+  .tier-info p {
     color: var(--text-light);
+    margin: 0;
+    font-size: 1rem;
     line-height: 1.6;
-    margin: 0;
   }
 
-  .corporate-benefits {
-    background: var(--cream);
+  .impact-statement {
+    padding: 1.75rem;
+    background: #ecfdf5;
     border-radius: 12px;
-    padding: 2rem;
-    margin-bottom: 3rem;
-  }
-
-  .corporate-benefits h3 {
     margin-bottom: 1.5rem;
-    color: var(--primary-navy);
+    border-left: 4px solid #10b981;
   }
 
-  .corporate-benefits ul {
-    list-style: none;
-    padding: 0;
+  .impact-statement h5 {
+    color: #047857;
+    margin: 0 0 0.625rem;
+    font-size: 1.125rem;
+  }
+
+  .impact-statement p {
+    color: #065f46;
     margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
   }
 
-  .corporate-benefits li {
-    padding: 0.75rem 0;
-    padding-left: 2rem;
-    position: relative;
-  }
-
-  .corporate-benefits li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 1.1rem;
-    width: 8px;
-    height: 8px;
-    background: var(--primary-navy);
-    border-radius: 50%;
-  }
-
-  .corporate-process {
-    margin-bottom: 3rem;
-  }
-
-  .corporate-process h3 {
+  .tier-benefits {
+    padding: 1.75rem;
+    background: white;
+    border-radius: 12px;
     margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .tier-benefits h5 {
     color: var(--primary-navy);
+    margin: 0 0 1rem;
+    font-size: 1.125rem;
   }
 
-  .corporate-process ol {
-    list-style: none;
-    padding: 0;
-    counter-reset: steps;
+  .tier-benefits ul {
+    margin: 0;
+    padding-left: 1.5rem;
   }
 
-  .corporate-process li {
-    counter-increment: steps;
-    padding: 1rem 0 1rem 3.5rem;
-    position: relative;
-    border-bottom: 1px solid var(--border-color, #e2e8f0);
+  .tier-benefits li {
+    margin-bottom: 0.625rem;
+    color: var(--text-light);
+    font-size: 1rem;
+    line-height: 1.5;
   }
 
-  .corporate-process li:last-child {
+  /* Response Summary */
+  .response-summary {
+    padding: 1.75rem;
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .summary-header {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color, #e5e7eb);
+  }
+
+  .summary-header h5 {
+    color: var(--primary-navy);
+    margin: 0 0 0.375rem;
+    font-size: 1.125rem;
+  }
+
+  .summary-header p {
+    color: var(--text-light);
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+
+  /* Summary sections - use :global() for dynamically generated content */
+  .summary-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  :global(.summary-section) {
+    padding: 1.25rem;
+    margin: 0 -1.25rem;
+    border-bottom: 1px solid var(--border-color, #e5e7eb);
+    transition: background-color 0.15s ease;
+  }
+
+  :global(.summary-section:first-child) {
+    margin-top: -0.5rem;
+  }
+
+  :global(.summary-section:last-child) {
     border-bottom: none;
+    margin-bottom: -0.5rem;
   }
 
-  .corporate-process li::before {
-    content: counter(steps);
-    position: absolute;
-    left: 0;
-    top: 1rem;
-    width: 2rem;
-    height: 2rem;
+  :global(.summary-section:hover) {
+    background: rgba(26, 54, 93, 0.02);
+  }
+
+  :global(.summary-section-header) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  :global(.summary-section-header h6) {
+    color: var(--primary-navy);
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  :global(.edit-btn) {
+    background: var(--light-blue);
+    border: 1px solid transparent;
+    color: var(--primary-navy);
+    font-size: 0.8125rem;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.375rem 0.875rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+
+  :global(.edit-btn:hover) {
     background: var(--primary-navy);
     color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
+  }
+
+  :global(.edit-btn:focus) {
+    outline: 2px solid var(--primary-navy);
+    outline-offset: 2px;
+  }
+
+  :global(.summary-section dl) {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0.625rem 1rem;
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+
+  :global(.summary-section dt) {
+    color: var(--text-muted, #6b7280);
+    font-weight: 500;
     font-size: 0.875rem;
   }
 
+  :global(.summary-section dd) {
+    margin: 0;
+    color: var(--text);
+    line-height: 1.5;
+    word-break: break-word;
+  }
+
+  @media (max-width: 600px) {
+    :global(.summary-section dl) {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+
+    :global(.summary-section dt) {
+      margin-top: 0.5rem;
+    }
+
+    :global(.summary-section dt:first-child) {
+      margin-top: 0;
+    }
+  }
+
+  /* Results CTA */
+  .results-cta {
+    text-align: center;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+  }
+
+  .results-cta h5 {
+    color: var(--primary-navy);
+    margin: 0 0 0.625rem;
+    font-size: 1.25rem;
+  }
+
+  .results-cta p {
+    color: var(--text-light);
+    margin: 0 0 1.25rem;
+    font-size: 1rem;
+  }
+
+  /* Contact Form */
+  .contact-fields {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* Success Screen */
+  .success-message {
+    text-align: center;
+    padding: 3rem 2rem;
+  }
+
+  .success-message svg {
+    color: #10b981;
+    margin-bottom: 1.5rem;
+  }
+
+  .success-message h4 {
+    color: var(--primary-navy);
+    margin-bottom: 1rem;
+    font-size: 1.75rem;
+  }
+
+  .success-message p {
+    color: var(--text-light);
+    margin-bottom: 0.75rem;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  .success-note {
+    font-size: 0.9375rem !important;
+    color: var(--text-muted) !important;
+  }
+
+  .success-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  /* Tiers Overview */
+  .tiers-overview {
+    margin-bottom: 3rem;
+  }
+
+  .tiers-overview h3 {
+    text-align: center;
+    color: var(--primary-navy);
+    margin-bottom: 2rem;
+    font-size: 1.75rem;
+  }
+
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .tier-card {
+    background: var(--light-blue);
+    border-radius: 12px;
+    padding: 1.75rem;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .tier-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .tier-card.featured {
+    background: var(--primary-navy);
+    color: white;
+  }
+
+  .tier-header {
+    text-align: center;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .tier-card.featured .tier-header {
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .tier-icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(26, 54, 93, 0.08);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.875rem;
+    color: var(--primary-navy);
+  }
+
+  .tier-card.featured .tier-icon {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+  }
+
+  .tier-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .tier-header h4 {
+    color: var(--primary-navy);
+    margin: 0 0 0.375rem;
+    font-size: 1.25rem;
+  }
+
+  .tier-card.featured .tier-header h4 {
+    color: white;
+  }
+
+  .tier-range {
+    font-size: 0.9375rem;
+    color: var(--text-light);
+    font-weight: 500;
+  }
+
+  .tier-card.featured .tier-range {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .tier-card ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.9375rem;
+  }
+
+  .tier-card li {
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  .tier-card.featured li {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* CTA */
   .corporate-cta {
     text-align: center;
-    padding: 2rem 0;
+    padding: 2.5rem 0;
     border-top: 1px solid var(--border-color, #e2e8f0);
   }
 
   .corporate-cta h3 {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.875rem;
     color: var(--primary-navy);
+    font-size: 1.5rem;
   }
 
   .corporate-cta p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
     color: var(--text-light);
+    font-size: 1.0625rem;
   }
 
-  @media (max-width: 600px) {
-    .partnership-card {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .partnership-icon {
-      width: 48px;
-      height: 48px;
-    }
-
-    .partnership-icon svg {
-      width: 24px;
-      height: 24px;
-    }
+  /* Screen Reader Only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 
-  /* Dark mode overrides for light-background elements */
-  :global([data-theme='dark']) .partnership-card {
+  /* Dark Mode */
+  :global([data-theme='dark']) .partnership-finder {
     background: var(--bg-secondary);
   }
 
-  :global([data-theme='dark']) .partnership-icon {
+  :global([data-theme='dark']) .finder-header {
+    border-bottom-color: var(--border-color);
+  }
+
+  :global([data-theme='dark']) .finder-icon {
+    background: var(--accent-ocean);
+  }
+
+  :global([data-theme='dark']) .finder-header h3,
+  :global([data-theme='dark']) .step-label,
+  :global([data-theme='dark']) .finder-step legend,
+  :global([data-theme='dark']) .form-group label {
+    color: var(--text);
+  }
+
+  :global([data-theme='dark']) .progress-track {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .progress-bar {
+    background: var(--accent-ocean);
+  }
+
+  :global([data-theme='dark']) .option-btn {
+    background: var(--bg-primary);
+    border-color: var(--border-color);
+  }
+
+  :global([data-theme='dark']) .option-btn:hover,
+  :global([data-theme='dark']) .option-btn.selected {
+    border-color: var(--accent-ocean);
+  }
+
+  :global([data-theme='dark']) .option-btn.selected {
+    background: rgba(67, 153, 225, 0.1);
+  }
+
+  :global([data-theme='dark']) .option-icon {
+    background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .option-btn.selected .option-icon {
+    background: var(--accent-ocean);
+  }
+
+  :global([data-theme='dark']) .option-text strong,
+  :global([data-theme='dark']) .tier-info h5,
+  :global([data-theme='dark']) .results-header h4,
+  :global([data-theme='dark']) .tier-benefits h5,
+  :global([data-theme='dark']) .summary-header h5,
+  :global([data-theme='dark']) .summary-section-header h6,
+  :global([data-theme='dark']) .results-cta h5 {
+    color: var(--text);
+  }
+
+  :global([data-theme='dark']) .ranking-option {
+    background: var(--bg-primary);
+    border-color: var(--border-color);
+  }
+
+  :global([data-theme='dark']) .ranking-option:hover,
+  :global([data-theme='dark']) .ranking-option.selected {
+    border-color: var(--accent-ocean);
+  }
+
+  :global([data-theme='dark']) .ranking-option.selected {
+    background: rgba(67, 153, 225, 0.1);
+  }
+
+  :global([data-theme='dark']) .ranking-option.selected .rank-badge {
+    background: var(--accent-ocean);
+  }
+
+  :global([data-theme='dark']) .conditional-fields,
+  :global([data-theme='dark']) .optional-note {
     background: var(--bg-primary);
   }
 
-  :global([data-theme='dark']) .corporate-benefits {
+  :global([data-theme='dark']) .conditional-fields {
+    border-left-color: var(--accent-ocean);
+  }
+
+  :global([data-theme='dark']) .recommended-tier,
+  :global([data-theme='dark']) .tier-benefits,
+  :global([data-theme='dark']) .response-summary {
+    background: var(--bg-primary);
+  }
+
+  :global([data-theme='dark']) .impact-statement {
+    background: rgba(16, 185, 129, 0.1);
+    border-left-color: #10b981;
+  }
+
+  :global([data-theme='dark']) .impact-statement h5 {
+    color: #34d399;
+  }
+
+  :global([data-theme='dark']) .impact-statement p {
+    color: #6ee7b7;
+  }
+
+  :global([data-theme='dark']) .tier-card {
     background: var(--bg-secondary);
+  }
+
+  :global([data-theme='dark']) .tier-card.featured {
+    background: var(--accent-ocean);
+  }
+
+  :global([data-theme='dark']) .tier-header h4 {
+    color: var(--text);
+  }
+
+  :global([data-theme='dark']) .tier-card.featured .tier-header h4 {
+    color: white;
+  }
+
+  :global([data-theme='dark']) .tier-icon {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+  }
+
+  :global([data-theme='dark']) .tier-card.featured .tier-icon {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+  }
+
+  :global([data-theme='dark']) .tier-badge {
+    background: var(--bg-secondary);
+    color: var(--accent-ocean);
+  }
+
+  :global([data-theme='dark']) .summary-section:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  :global([data-theme='dark']) .summary-section {
+    border-bottom-color: var(--border-color);
+  }
+
+  :global([data-theme='dark']) .summary-section-header h6 {
+    color: var(--text);
+  }
+
+  :global([data-theme='dark']) .form-group input,
+  :global([data-theme='dark']) .form-group select,
+  :global([data-theme='dark']) .form-group textarea {
+    background: var(--bg-primary);
+    border-color: var(--border-color);
+    color: var(--text);
+  }
+
+  :global([data-theme='dark']) .form-group input:focus,
+  :global([data-theme='dark']) .form-group select:focus,
+  :global([data-theme='dark']) .form-group textarea:focus {
+    border-color: var(--accent-ocean);
+    box-shadow: 0 0 0 3px rgba(67, 153, 225, 0.2);
+  }
+
+  :global([data-theme='dark']) .researcher-note {
+    background: rgba(245, 158, 11, 0.1);
+    border-left-color: #f59e0b;
+    color: #fcd34d;
+  }
+
+  :global([data-theme='dark']) .exit-message svg {
+    color: var(--accent-ocean);
+  }
+
+  :global([data-theme='dark']) .success-message svg {
+    color: #34d399;
+  }
+
+  :global([data-theme='dark']) .validation-error {
+    background: rgba(220, 38, 38, 0.1);
+    border-color: rgba(220, 38, 38, 0.3);
+    color: #f87171;
+  }
+
+  :global([data-theme='dark'] .edit-btn) {
+    background: var(--bg-secondary);
+    color: var(--accent-ocean);
+  }
+
+  :global([data-theme='dark'] .edit-btn:hover) {
+    background: var(--accent-ocean);
+    color: white;
+  }
+
+  :global([data-theme='dark'] .summary-section dt) {
+    color: var(--text-muted);
   }
 </style>
