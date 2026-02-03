@@ -9,7 +9,7 @@ const structuredData = [
     name: 'Corporate Partnerships & Sponsorships',
     description:
       "Partner with Bay Tides to demonstrate your company's commitment to environmental stewardship and community impact.",
-    url: 'https://baytides.org/donate/corporate',
+    url: 'https://baytides.org/donate/corporate-partnerships',
   },
   {
     '@context': 'https://schema.org',
@@ -26,7 +26,7 @@ const structuredData = [
 <BaseLayout
   title="Corporate Partnerships & Sponsorships"
   description="Partner with Bay Tides to support Bay Area environmental conservation. Explore sponsorship opportunities, employee engagement programs, and corporate giving options."
-  canonicalUrl="https://baytides.org/donate/corporate"
+  canonicalUrl="https://baytides.org/donate/corporate-partnerships"
   structuredData={structuredData}
 >
   <Fragment slot="head">
@@ -258,6 +258,9 @@ const structuredData = [
                   inquiry so we can have a productive conversation. You're welcome to continue and share
                   the results with your team.
                 </p>
+                <button type="button" class="btn btn-primary" id="researcher-continue">
+                  Continue
+                </button>
               </div>
             </fieldset>
 
@@ -701,7 +704,7 @@ const structuredData = [
                     <div class="radio-group" role="radiogroup" aria-labelledby="budget-label">
                       <label class="radio-option">
                         <input type="radio" name="budget" data-field="budget" value="under-5k" />
-                        <span>Under $5,000</span>
+                        <span>$2,000 – $5,000</span>
                       </label>
                       <label class="radio-option">
                         <input type="radio" name="budget" data-field="budget" value="5k-15k" />
@@ -1267,7 +1270,7 @@ const structuredData = [
                 <input
                   type="hidden"
                   name="redirect"
-                  value="https://baytides.org/donate/corporate?submitted=true"
+                  value="https://baytides.org/donate/corporate-partnerships?submitted=true"
                 />
                 <input type="hidden" name="quiz_data" id="quiz-data-field" value="" />
                 <input
@@ -1485,6 +1488,7 @@ const structuredData = [
         <!-- Partnership Tiers Overview -->
         <div class="tiers-overview">
           <h3>Partnership Tiers</h3>
+          <p class="tiers-subtitle">Annual contribution levels</p>
           <div class="tiers-grid">
             <article class="tier-card" data-tier="bay-friend">
               <div class="tier-header">
@@ -1513,7 +1517,7 @@ const structuredData = [
                   </svg>
                 </span>
                 <h4>Bay Friend</h4>
-                <span class="tier-range">Under $5,000</span>
+                <span class="tier-range">$2,000 – $5,000</span>
               </div>
               <ul>
                 <li>Logo on website</li>
@@ -1525,6 +1529,7 @@ const structuredData = [
             <article class="tier-card" data-tier="bay-steward">
               <div class="tier-header">
                 <span class="tier-icon" aria-hidden="true">
+                  <!-- Lucide bird icon (ISC license) -->
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="32"
@@ -1536,16 +1541,12 @@ const structuredData = [
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   >
-                    <path
-                      d="M15.5 5.5c.83.67 2 2.33 2 4a4.5 4.5 0 0 1-4.5 4.5c-.28 0-.56-.02-.83-.07"
-                    >
-                    </path><circle cx="14" cy="8" r="1" fill="currentColor"></circle><path
-                      d="M18 9.5c1.5 0 3 1 3 3s-1.5 3-3 3"
-                    >
-                    </path><path d="M3 18c0-2 2-4 6-4h3c2.5 0 4.5.5 6 1.5"></path><path
-                      d="M3 18c0 1.5 1.5 3 4.5 3h6c3 0 4.5-1.5 4.5-3"
-                    >
-                    </path><path d="M9 14c-2 0-4.5.5-5.5 2"></path>
+                    <path d="M16 7h.01"></path>
+                    <path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"></path>
+                    <path d="m20 7 2 .5-2 .5"></path>
+                    <path d="M10 18v3"></path>
+                    <path d="M14 17.75V21"></path>
+                    <path d="M7 18a6 6 0 0 0 3.84-10.61"></path>
                   </svg>
                 </span>
                 <h4>Bay Steward</h4>
@@ -1561,6 +1562,7 @@ const structuredData = [
             <article class="tier-card" data-tier="shoreline-champion">
               <div class="tier-header">
                 <span class="tier-icon" aria-hidden="true">
+                  <!-- Tabler feather icon (MIT license) -->
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="32"
@@ -1572,13 +1574,11 @@ const structuredData = [
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   >
+                    <path d="m4 20 10-10m0-5v5h5m-9-1v5h5m-9-1v5h5m-5-5 4-4 4-4"></path>
                     <path
-                      d="M12 3c-1.5 0-3 1-4.5 2.5S4 9 4 11c0 3 2.5 5 4.5 6.5L12 21l3.5-3.5C17.5 16 20 14 20 11c0-2-1-3.5-2.5-5.5S13.5 3 12 3z"
+                      d="M19 10c.638-.636 1-1.515 1-2.486A3.515 3.515 0 0 0 16.483 4c-.97 0-1.847.367-2.483 1m-3 13 4-4 4-4"
                     >
-                    </path><path d="M12 3v8"></path><path d="M12 11l-4 4"></path><path
-                      d="M12 11l4 4"
-                    >
-                    </path><circle cx="12" cy="8" r="1" fill="currentColor"></circle>
+                    </path>
                   </svg>
                 </span>
                 <h4>Shoreline Champion</h4>
@@ -1676,16 +1676,18 @@ const structuredData = [
   // SVG icons for tiers
   const tierIcons = {
     wave: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>',
-    duck: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 5.5c.83.67 2 2.33 2 4a4.5 4.5 0 0 1-4.5 4.5c-.28 0-.56-.02-.83-.07"/><circle cx="14" cy="8" r="1" fill="currentColor"/><path d="M18 9.5c1.5 0 3 1 3 3s-1.5 3-3 3"/><path d="M3 18c0-2 2-4 6-4h3c2.5 0 4.5.5 6 1.5"/><path d="M3 18c0 1.5 1.5 3 4.5 3h6c3 0 4.5-1.5 4.5-3"/><path d="M9 14c-2 0-4.5.5-5.5 2"/></svg>',
+    // Lucide bird icon (ISC license)
+    duck: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/></svg>',
+    // Tabler feather icon (MIT license)
     eagle:
-      '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-1.5 0-3 1-4.5 2.5S4 9 4 11c0 3 2.5 5 4.5 6.5L12 21l3.5-3.5C17.5 16 20 14 20 11c0-2-1-3.5-2.5-5.5S13.5 3 12 3z"/><path d="M12 3v8"/><path d="M12 11l-4 4"/><path d="M12 11l4 4"/><circle cx="12" cy="8" r="1" fill="currentColor"/></svg>',
+      '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 20 10-10m0-5v5h5m-9-1v5h5m-9-1v5h5m-5-5 4-4 4-4"/><path d="M19 10c.638-.636 1-1.515 1-2.486A3.515 3.515 0 0 0 16.483 4c-.97 0-1.847.367-2.483 1m-3 13 4-4 4-4"/></svg>',
     star: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
   };
 
   const tierData: Record<string, TierInfo> = {
     'bay-friend': {
       name: 'Bay Friend',
-      range: 'Under $5,000',
+      range: '$2,000 – $5,000',
       icon: tierIcons.wave,
       description: 'Perfect for small companies or those just starting their partnership journey.',
       impact:
@@ -1901,7 +1903,7 @@ const structuredData = [
 
     function formatBudget(budget: string): string {
       const budgetMap: Record<string, string> = {
-        'under-5k': 'Under $5,000',
+        'under-5k': '$2,000 – $5,000',
         '5k-15k': '$5,000 – $15,000',
         '15k-50k': '$15,000 – $50,000',
         '50k-plus': '$50,000+',
@@ -2074,14 +2076,22 @@ const structuredData = [
           researcherNote.hidden = value !== 'researching';
         }
 
-        // Handle browsing exit
+        // Handle browsing exit or auto-advance (except for researching)
         if (value === 'browsing') {
           setTimeout(() => showStep('browsing'), 300);
-        } else {
+        } else if (value !== 'researching') {
           setTimeout(() => showStep(1), 300);
         }
       });
     });
+
+    // Researcher continue button
+    const researcherContinue = document.getElementById('researcher-continue');
+    if (researcherContinue) {
+      researcherContinue.addEventListener('click', () => {
+        showStep(1);
+      });
+    }
 
     // Involvement selection (Step 3)
     finder.querySelectorAll('.involvement-options .option-btn').forEach((btn) => {
@@ -2476,6 +2486,10 @@ const structuredData = [
     margin: 0;
     font-size: 0.9375rem;
     line-height: 1.6;
+  }
+
+  .researcher-note .btn {
+    margin-top: 1rem;
   }
 
   /* Browsing Exit */
@@ -2990,14 +3004,33 @@ const structuredData = [
   .tiers-overview h3 {
     text-align: center;
     color: var(--primary-navy);
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem;
     font-size: 1.75rem;
+  }
+
+  .tiers-subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1rem;
   }
 
   .tiers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
+  }
+
+  @media (max-width: 1024px) {
+    .tiers-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .tiers-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .tier-card {
