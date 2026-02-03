@@ -3,7 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import PageHero from '../components/PageHero.astro';
 
-const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
+// Public token - URL restricted in Mapbox dashboard to baytides.org
+const mapboxToken =
+  'pk.eyJ1IjoiYmF5dGlkZXMiLCJhIjoiY21qdGt1NjVmNHQ2djNlcHlpa3p0MnViaSJ9.FHuSFIzE8EXe_9Vp5QpM2Q';
 
 const structuredData = [
   {
@@ -258,6 +260,8 @@ const structuredData = [
       const errorMessages: Record<string, string> = {
         spam: 'Your submission was flagged as spam.',
         captcha: 'CAPTCHA verification failed. Please try again.',
+        disposable_email: 'Please use a permanent email address, not a disposable one.',
+        invalid_email: 'The email address appears to be invalid. Please check and try again.',
       };
       const errorType = params.get('error') || '';
       showFormStatus(

@@ -35,6 +35,15 @@ interface TurnstileResponse {
   'error-codes'?: string[];
 }
 
+interface EmailVerificationResponse {
+  email: string;
+  valid: boolean;
+  deliverable: string;
+  disposable: boolean;
+  suggestion?: string;
+  error?: string;
+}
+
 // ==========================================================================
 // Rate Limiting Configuration
 // ==========================================================================
@@ -156,6 +165,29 @@ async function verifyTurnstile(
   });
   const result = await response.json<TurnstileResponse>();
   return result.success === true;
+}
+
+// ==========================================================================
+// Email Verification
+// ==========================================================================
+
+async function verifyEmail(email: string): Promise<EmailVerificationResponse | null> {
+  try {
+    const response = await fetch(
+      `https://verify.baytides.org/v1/${encodeURIComponent(email)}/verification`,
+      { method: 'GET' }
+    );
+
+    if (!response.ok) {
+      console.error('Email verification API error:', response.status);
+      return null; // Don't block on verification failures
+    }
+
+    return await response.json<EmailVerificationResponse>();
+  } catch (error) {
+    console.error('Email verification error:', error);
+    return null; // Don't block on network errors
+  }
 }
 
 // ==========================================================================
@@ -414,6 +446,21 @@ export default {
 
       const formType = (formData.get('form_type') as string | null) || 'contact';
       const email = formData.get('email') as string;
+
+      // Verify email address
+      if (email) {
+        const emailVerification = await verifyEmail(email);
+        if (emailVerification) {
+          // Block disposable emails
+          if (emailVerification.disposable) {
+            return redirectWithError(formData, 'disposable_email');
+          }
+          // Block clearly invalid/undeliverable emails
+          if (emailVerification.deliverable === 'no') {
+            return redirectWithError(formData, 'invalid_email');
+          }
+        }
+      }
 
       if (formType === 'newsletter') {
         // Add subscriber to MailerLite
