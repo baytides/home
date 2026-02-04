@@ -100,7 +100,7 @@
 
 // Donation form - the hero element
 .donation-form-container {
-  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  background: linear-gradient(145deg, var(--gradient-card-start) 0%, var(--gradient-card-end) 100%);
   border-radius: 20px;
   padding: 2.5rem;
   margin-top: 2rem;
@@ -121,7 +121,7 @@
   display: flex;
   gap: 0;
   margin-bottom: 2rem;
-  background: #f1f5f9;
+  background: var(--hover-bg);
   border-radius: 12px;
   padding: 5px;
   position: relative;
@@ -145,7 +145,7 @@
     }
 
     &.active {
-      background: #fff;
+      background: var(--card-bg);
       color: var(--primary-navy);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
@@ -161,8 +161,8 @@
 
   .amount-btn {
     padding: 1.125rem 1rem;
-    border: 2px solid #e2e8f0;
-    background: #fff;
+    border: 2px solid var(--border-light);
+    background: var(--card-bg);
     border-radius: 12px;
     cursor: pointer;
     font-weight: 700;
@@ -210,8 +210,8 @@
 .custom-amount-input {
   display: flex;
   align-items: center;
-  background: #fff;
-  border: 2px solid #e2e8f0;
+  background: var(--card-bg);
+  border: 2px solid var(--border-light);
   border-radius: 12px;
   // Note: Removed overflow:hidden to allow content reflow at 400% zoom (WCAG 2.2 AAA)
   transition:
@@ -228,8 +228,8 @@
     font-weight: 700;
     font-size: 1.125rem;
     color: var(--text-light);
-    background: #f8fafc;
-    border-right: 1px solid #e2e8f0;
+    background: var(--hover-bg);
+    border-right: 1px solid var(--border-light);
   }
 
   input {
@@ -268,10 +268,10 @@
   select {
     width: 100%;
     padding: 1rem 1.25rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-light);
     border-radius: 12px;
     font-size: 1rem;
-    background: #fff
+    background: var(--card-bg)
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 8L1 3h10z'/%3E%3C/svg%3E")
       no-repeat right 1rem center;
     background-size: 12px;
@@ -289,7 +289,7 @@
     }
 
     &:hover {
-      border-color: #cbd5e0;
+      border-color: var(--border-medium);
     }
   }
 }
@@ -310,10 +310,10 @@
   input {
     width: 100%;
     padding: 1rem 1.25rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-light);
     border-radius: 12px;
     font-size: 1rem;
-    background: #fff;
+    background: var(--card-bg);
     color: var(--text-dark);
     transition:
       border-color 0.2s ease,
@@ -335,9 +335,9 @@
 .anonymous-option {
   margin-bottom: 2rem;
   padding: 1.25rem;
-  background: #f8fafc;
+  background: var(--hover-bg);
   border-radius: 12px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-light);
 
   .checkbox-label {
     display: flex;
@@ -437,7 +437,7 @@
 .payment-section {
   margin-top: 2rem;
   padding-top: 2rem;
-  border-top: 2px solid #e2e8f0;
+  border-top: 2px solid var(--border-light);
   animation: slideDown 0.3s ease;
 }
 
@@ -512,10 +512,10 @@
   input {
     width: 100%;
     padding: 0.875rem 1rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-light);
     border-radius: 10px;
     font-size: 1rem;
-    background: #fff;
+    background: var(--card-bg);
     color: var(--text-dark);
     transition:
       border-color 0.2s ease,
@@ -543,7 +543,7 @@
   color: var(--primary-navy);
   margin: 1.5rem 0 1rem;
   padding-top: 1rem;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--border-light);
 }
 
 // Stripe Payment Element container
@@ -554,9 +554,9 @@
   // Style the Stripe iframe container
   .StripeElement {
     padding: 1rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-light);
     border-radius: 12px;
-    background: #fff;
+    background: var(--card-bg);
     transition:
       border-color 0.2s ease,
       box-shadow 0.2s ease;
@@ -628,7 +628,7 @@
 }
 
 .donation-summary {
-  background: #f8fafc;
+  background: var(--hover-bg);
   border-radius: 12px;
   padding: 1.25rem;
   margin-bottom: 1.5rem;
@@ -640,7 +640,7 @@
     padding: 0.5rem 0;
 
     &:not(:last-child) {
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid var(--border-light);
     }
   }
 
@@ -681,7 +681,7 @@
 .manage-donations {
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--border-light);
   text-align: center;
 
   p {
@@ -733,8 +733,8 @@
   gap: 1.5rem;
   margin: 3rem 0;
   padding: 2rem 0;
-  border-top: 1px solid #e2e8f0;
-  border-bottom: 1px solid #e2e8f0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
 
   .stat {
     text-align: center;
@@ -776,9 +776,9 @@
   display: flex;
   flex-direction: column;
   padding: 2rem;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 16px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-light);
   transition: all 0.3s ease;
   text-align: center;
 

@@ -3,7 +3,12 @@
 // ==========================================================================
 
 .hero {
-  background: linear-gradient(135deg, var(--primary-navy) 0%, #234e7a 40%, #2b6cb0 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-navy) 0%,
+    var(--gradient-navy-mid) 40%,
+    var(--gradient-navy-light) 100%
+  );
   color: #fff;
   padding: 10rem 0 6rem;
   text-align: center;

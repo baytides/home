@@ -50,6 +50,20 @@
   --card-bg: #ffffff;
   --footer-bg: #1a365d;
 
+  // UI element colors
+  --border-light: #e2e8f0;
+  --border-medium: #cbd5e0;
+  --divider: #eee;
+  --input-bg: #ffffff;
+  --input-border: #e2e8f0;
+  --hover-bg: #f7fafc;
+
+  // Gradient colors (for consistent gradients)
+  --gradient-navy-mid: #234e7a;
+  --gradient-navy-light: #2b6cb0;
+  --gradient-card-start: #ffffff;
+  --gradient-card-end: #f8fafc;
+
   // Status colors - WCAG 2.2 AAA compliant
   --error: #9b1c1c; // 8.5:1 AAA (darker for AAA compliance)
   --error-light: #fc8181;
@@ -99,6 +113,20 @@
   --error-light: #fca5a5;
   --success: #a7f3d0;
   --success-light: #a7f3d0;
+
+  // UI element colors for dark mode
+  --border-light: #3d4a5c;
+  --border-medium: #4a5568;
+  --divider: rgba(255, 255, 255, 0.1);
+  --input-bg: #2d3748;
+  --input-border: #4a5568;
+  --hover-bg: #3d4a5c;
+
+  // Gradient colors for dark mode
+  --gradient-navy-mid: #2d4a6a;
+  --gradient-navy-light: #3d6a9a;
+  --gradient-card-start: #2d3748;
+  --gradient-card-end: #1a202c;
 
   // Dark mode toast colors
   --toast-success-bg: #065f46;

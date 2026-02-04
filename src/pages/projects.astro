@@ -139,7 +139,7 @@ const structuredData = [
               return, they gain hands-on environmental sector experience, leadership opportunities,
               and connections to Bay Area environmental organizations.
             </p>
-            <div style="margin-top: 1.5rem">
+            <div class="project-actions">
               <a
                 href="https://aegisinitiative.com"
                 class="btn btn-primary"
@@ -201,7 +201,7 @@ const structuredData = [
               residents deserve a single place to find all the assistance available to them.
             </p>
             <p>So we expanded. Today, Bay Navigator covers:</p>
-            <ul style="margin: 1rem 0; padding-left: 1.5rem">
+            <ul class="bay-nav-features">
               <li>
                 <strong>Transit savings</strong>
                 — discounted fares for Clipper, BART, Caltrain, and more
@@ -228,7 +228,7 @@ const structuredData = [
               resources, we're building a more resilient Bay Area—and staying true to our
               environmental mission along the way.
             </p>
-            <div style="margin-top: 1.5rem">
+            <div class="project-actions">
               <a
                 href="https://baynavigator.org"
                 class="btn btn-primary"
@@ -243,7 +243,6 @@ const structuredData = [
                 class="btn btn-outline"
                 target="_blank"
                 rel="noopener"
-                style="margin-left: 0.5rem"
               >
                 View on GitHub
                 <span class="sr-only">(opens in new tab)</span>
@@ -323,10 +322,10 @@ const structuredData = [
             Bay Navigator is just our first project. We're developing additional programs focused on
             conservation, education, and community engagement throughout the Bay Area. Have an idea
             for a project that could benefit the community?
-            <a href="/contact" style="color: inherit; text-decoration: underline">Get in touch</a>
+            <a href="/contact" class="impact-link">Get in touch</a>
             with your suggestions.
           </p>
-          <div style="margin-top: 1.5rem">
+          <div class="project-actions">
             <a
               href="https://github.com/baytides"
               class="btn btn-primary"
@@ -336,9 +335,7 @@ const structuredData = [
               Visit Our GitHub
               <span class="sr-only">(opens in new tab)</span>
             </a>
-            <a href="/volunteer" class="btn btn-outline" style="margin-left: 0.5rem">
-              Volunteer With Us
-            </a>
+            <a href="/volunteer" class="btn btn-outline">Volunteer With Us</a>
           </div>
         </div>
       </div>
@@ -527,16 +524,12 @@ const structuredData = [
   }
 
   .dev-card {
-    background: white;
+    background: var(--gradient-card-start);
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-  }
-
-  :global([data-theme='dark']) .dev-card {
-    background: var(--card-bg);
   }
 
   .dev-card-logo {
@@ -608,14 +601,10 @@ const structuredData = [
   }
 
   .contribute-note {
-    background: var(--bg-alt, #f8f9fa);
+    background: var(--hover-bg);
     border-radius: 12px;
     padding: 1.5rem 2rem;
     text-align: center;
-  }
-
-  :global([data-theme='dark']) .contribute-note {
-    background: var(--card-bg);
   }
 
   .contribute-note h3 {
@@ -634,6 +623,26 @@ const structuredData = [
     font-size: 0.875rem;
   }
 
+  /* Project actions */
+  .project-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Bay Navigator features list */
+  .bay-nav-features {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  /* Impact link */
+  .impact-link {
+    color: inherit;
+    text-decoration: underline;
+  }
+
   /* Existing styles */
   .badge {
     display: inline-block;
@@ -647,7 +656,7 @@ const structuredData = [
   }
 
   .project-logo-card {
-    background: white;
+    background: var(--gradient-card-start);
     border-radius: 12px;
     padding: 2rem;
     text-align: center;
@@ -676,10 +685,6 @@ const structuredData = [
 
   :global([data-theme='dark']) .logo-dark-mode {
     display: block;
-  }
-
-  :global([data-theme='dark']) .project-logo-card {
-    background: var(--card-bg);
   }
 
   .project-grid {

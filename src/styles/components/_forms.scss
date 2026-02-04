@@ -28,12 +28,13 @@
   textarea {
     width: 100%;
     padding: 1rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-light);
     border-radius: 8px;
     font-family: inherit;
     font-size: 1rem;
     transition: border-color 0.3s ease;
-    background: var(--white);
+    background: var(--card-bg);
+    color: var(--text-dark);
 
     &:focus {
       outline: 0;
@@ -54,15 +55,15 @@
   margin-bottom: 1rem;
 
   &.success {
-    background: #c6f6d5;
-    color: #22543d;
-    border: 1px solid #9ae6b4;
+    background: var(--success-light);
+    color: var(--success);
+    border: 1px solid var(--success);
   }
 
   &.error {
-    background: #fed7d7;
-    color: #822727;
-    border: 1px solid #fc8181;
+    background: var(--error-light);
+    color: var(--error);
+    border: 1px solid var(--error);
   }
 }
 
@@ -150,9 +151,11 @@ textarea[aria-invalid='true'] {
   input {
     flex: 1;
     padding: 1rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-light);
     border-radius: 8px;
     font-size: 1rem;
+    background: var(--card-bg);
+    color: var(--text-dark);
 
     &:focus {
       outline: 0;
@@ -226,7 +229,7 @@ textarea[aria-invalid='true'] {
 
   .amount-btn {
     padding: 1rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-light);
     background: var(--bg-primary);
     border-radius: 8px;
     cursor: pointer;
@@ -256,7 +259,7 @@ textarea[aria-invalid='true'] {
   display: flex;
   align-items: center;
   background: var(--bg-primary);
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--border-light);
   border-radius: 8px;
   overflow: hidden;
 
@@ -302,7 +305,7 @@ textarea[aria-invalid='true'] {
   select {
     width: 100%;
     padding: 1rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-light);
     border-radius: 8px;
     font-size: 1rem;
     background: var(--bg-primary);
@@ -446,12 +449,13 @@ textarea[aria-invalid='true'] {
   textarea {
     width: 100%;
     padding: 0.875rem 1rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-light);
     border-radius: 8px;
     font-family: inherit;
     font-size: 1rem;
     transition: border-color 0.3s ease;
-    background: var(--white);
+    background: var(--card-bg);
+    color: var(--text-dark);
 
     &:focus {
       outline: 0;
@@ -889,8 +893,8 @@ textarea[aria-invalid='true'] {
 
 // Availability grid base styles
 .availability-grid {
-  background: var(--white);
-  border: 1px solid #e2e8f0;
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -955,7 +959,7 @@ textarea[aria-invalid='true'] {
   display: grid;
   grid-template-columns: 90px repeat(7, 1fr);
   background: var(--light-blue);
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--border-light);
   min-width: 500px;
 
   .availability-time-label,
@@ -976,7 +980,7 @@ textarea[aria-invalid='true'] {
 .availability-row {
   display: grid;
   grid-template-columns: 90px repeat(7, 1fr);
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--border-light);
   min-width: 500px;
 
   &:last-child {

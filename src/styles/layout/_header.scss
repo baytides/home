@@ -206,7 +206,7 @@ nav {
   }
 
   nav li {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--divider);
 
     &:last-child {
       border-bottom: none;

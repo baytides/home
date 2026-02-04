@@ -13,11 +13,11 @@
   font-size: 1rem;
 
   &-primary {
-    background: #2b6cb0;
+    background: var(--gradient-navy-light);
     color: #fff;
 
     &:hover {
-      background: #1a365d;
+      background: var(--primary-navy);
       color: #fff;
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(66, 153, 225, 0.4);
@@ -25,11 +25,11 @@
   }
 
   &-secondary {
-    background: #1a365d;
+    background: var(--primary-navy);
     color: #fff;
 
     &:hover {
-      background: #2b6cb0;
+      background: var(--gradient-navy-light);
       color: #fff;
       transform: translateY(-2px);
     }
@@ -100,7 +100,7 @@
 
   &:hover {
     background: #fff;
-    color: #1a365d;
+    color: var(--primary-navy);
   }
 }
 
@@ -117,13 +117,33 @@
 
 // Dark theme adjustments
 [data-theme='dark'] {
-  .btn-secondary {
+  .btn-primary {
     background: var(--accent-blue);
-    color: #1a202c;
+    color: var(--bg-primary);
 
     &:hover {
       background: var(--primary-blue);
-      color: #1a202c;
+      color: var(--bg-primary);
+    }
+  }
+
+  .btn-secondary {
+    background: var(--accent-blue);
+    color: var(--bg-primary);
+
+    &:hover {
+      background: var(--primary-blue);
+      color: var(--bg-primary);
+    }
+  }
+
+  .btn-outline {
+    color: var(--text-dark);
+    border-color: var(--text-dark);
+
+    &:hover {
+      background: var(--text-dark);
+      color: var(--bg-primary);
     }
   }
 
@@ -133,7 +153,7 @@
 
     &:hover {
       background: var(--accent-blue);
-      color: #1a202c;
+      color: var(--bg-primary);
     }
   }
 
@@ -153,7 +173,7 @@
 
     &:hover {
       background: #e2e8f0;
-      color: #1a202c;
+      color: var(--bg-primary);
     }
   }
 }
