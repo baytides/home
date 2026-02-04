@@ -1122,6 +1122,14 @@ const structuredData = [
     color: var(--text-dark);
   }
 
+  :global([data-theme='dark']) .search-header p {
+    color: var(--text-light);
+  }
+
+  :global([data-theme='dark']) .common-label {
+    color: var(--text-light);
+  }
+
   :global([data-theme='dark']) .common-employers {
     border-top-color: rgba(255, 255, 255, 0.1);
   }
@@ -1163,12 +1171,24 @@ const structuredData = [
     background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
   }
 
+  :global([data-theme='dark']) .how-it-works h2 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .section-subtitle {
+    color: var(--text-light);
+  }
+
   :global([data-theme='dark']) .step-card {
     background: var(--card-bg);
   }
 
   :global([data-theme='dark']) .step-card h3 {
     color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .step-card p {
+    color: var(--text-light);
   }
 
   :global([data-theme='dark']) .step-icon {
@@ -1198,6 +1218,18 @@ const structuredData = [
     color: var(--text-dark);
   }
 
+  :global([data-theme='dark']) .help-content > p {
+    color: var(--text-light);
+  }
+
+  :global([data-theme='dark']) .help-content ul {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .help-details p {
+    color: var(--text-dark);
+  }
+
   :global([data-theme='dark']) .help-icon {
     background: linear-gradient(145deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
     color: #fcd34d;
@@ -1213,6 +1245,10 @@ const structuredData = [
 
   :global([data-theme='dark']) .cta-content h2 {
     color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .cta-content > p {
+    color: var(--text-light);
   }
 
   :global([data-theme='dark']) .btn-secondary {

@@ -1801,6 +1801,10 @@
     margin: 1.5rem 0;
   }
 
+  .minor-alert[hidden] {
+    display: none;
+  }
+
   .minor-alert-icon {
     flex-shrink: 0;
     color: #d97706;
@@ -1841,7 +1845,7 @@
   :global([data-theme='dark']) .progress-step.active .step-number {
     background: var(--accent-blue);
     border-color: var(--accent-blue);
-    color: var(--primary-navy);
+    color: #1a365d;
   }
 
   :global([data-theme='dark']) .progress-step.active .step-label {
