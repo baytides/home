@@ -504,6 +504,32 @@ const providerStats = {
             <div class="tip-number" aria-hidden="true">4</div>
             <h3>Use Wi-Fi Over Cellular</h3>
             <p>Wi-Fi connections use significantly less energy than cellular data.</p>
+            <button
+              type="button"
+              class="tip-action tip-action-secondary"
+              id="wifi-settings-btn"
+              style="display: none;"
+              aria-label="Open Wi-Fi settings"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M5 13a10 10 0 0 1 14 0"></path>
+                <path d="M8.5 16.5a5 5 0 0 1 7 0"></path>
+                <path d="M2 8.82a15 15 0 0 1 20 0"></path>
+                <line x1="12" x2="12.01" y1="20" y2="20"></line>
+              </svg>
+              <span>Switch to Wi-Fi</span>
+            </button>
             <span class="tip-info" id="network-status">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1087,6 +1113,15 @@ const providerStats = {
     opacity: 1;
   }
 
+  .tip-action-secondary {
+    background: var(--primary-blue);
+    margin-bottom: 0.75rem;
+  }
+
+  .tip-action-secondary:hover {
+    background: #2563eb;
+  }
+
   /* CTA Buttons */
   .cta-buttons {
     display: flex;
@@ -1450,8 +1485,16 @@ const providerStats = {
   function initNetworkDetection() {
     const networkStatus = document.getElementById('network-status');
     const networkStatusText = document.getElementById('network-status-text');
+    const wifiSettingsBtn = document.getElementById('wifi-settings-btn');
 
     if (!networkStatus || !networkStatusText) return;
+
+    // Detect mobile devices
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
     // Check if Network Information API is available (Chrome, Edge, Opera, Android browsers)
     const connection =
@@ -1468,6 +1511,11 @@ const providerStats = {
       // Remove existing classes
       networkStatus.classList.remove('wifi-connected', 'cellular-detected');
 
+      // Hide Wi-Fi button by default
+      if (wifiSettingsBtn) {
+        wifiSettingsBtn.style.display = 'none';
+      }
+
       if (connection.type === 'wifi' || connection.type === 'ethernet') {
         // User is on Wi-Fi or wired
         networkStatus.classList.add('wifi-connected');
@@ -1475,7 +1523,21 @@ const providerStats = {
       } else if (connection.type === 'cellular' || ['2g', '3g', '4g', 'slow-2g'].includes(type)) {
         // User is on cellular
         networkStatus.classList.add('cellular-detected');
-        networkStatusText.textContent = 'Consider switching to Wi-Fi to save energy';
+
+        // Show button on mobile when on cellular
+        if (isMobile && wifiSettingsBtn) {
+          wifiSettingsBtn.style.display = 'inline-flex';
+
+          if (isAndroid) {
+            networkStatusText.textContent = 'Tap to open Settings > Wi-Fi';
+          } else if (isIOS) {
+            networkStatusText.textContent = 'Swipe down for Control Center > Wi-Fi';
+          } else {
+            networkStatusText.textContent = 'Open Settings to enable Wi-Fi';
+          }
+        } else {
+          networkStatusText.textContent = 'Consider switching to Wi-Fi to save energy';
+        }
       } else if (type === '4g') {
         // Fast connection but might be cellular
         networkStatusText.textContent = 'Fast connection detected';
@@ -1483,6 +1545,59 @@ const providerStats = {
         networkStatusText.textContent = 'Check your device settings';
       }
     };
+
+    // Setup Wi-Fi settings button
+    if (wifiSettingsBtn) {
+      wifiSettingsBtn.addEventListener('click', () => {
+        // Try Android intent (works in some browsers like Samsung Internet)
+        if (isAndroid) {
+          // Attempt to open Android Wi-Fi settings via intent
+          // This works in Samsung Internet and some other Android browsers
+          const intentUrl =
+            'intent://settings/wifi#Intent;scheme=android-app;package=com.android.settings;end';
+
+          // Create a hidden iframe to try the intent without navigating away
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = intentUrl;
+          document.body.appendChild(iframe);
+
+          // Remove iframe after attempt
+          setTimeout(() => {
+            document.body.removeChild(iframe);
+          }, 1000);
+
+          // Also show helpful message
+          const buttonSpan = wifiSettingsBtn.querySelector('span');
+          if (buttonSpan) {
+            buttonSpan.textContent = 'Open Settings > Wi-Fi';
+          }
+          wifiSettingsBtn.style.background = 'var(--success)';
+
+          setTimeout(() => {
+            if (buttonSpan) {
+              buttonSpan.textContent = 'Switch to Wi-Fi';
+            }
+            wifiSettingsBtn.style.background = '';
+          }, 3000);
+        } else if (isIOS) {
+          // iOS doesn't support opening settings from web
+          // Show instructions instead
+          const buttonSpan = wifiSettingsBtn.querySelector('span');
+          if (buttonSpan) {
+            buttonSpan.textContent = 'Settings > Wi-Fi';
+          }
+          wifiSettingsBtn.style.background = 'var(--success)';
+
+          setTimeout(() => {
+            if (buttonSpan) {
+              buttonSpan.textContent = 'Switch to Wi-Fi';
+            }
+            wifiSettingsBtn.style.background = '';
+          }, 3000);
+        }
+      });
+    }
 
     // Initial check
     updateNetworkStatus();
