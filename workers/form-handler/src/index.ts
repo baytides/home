@@ -521,6 +521,8 @@ Submitted: ${new Date().toISOString()}
         const firstName = formData.get('first_name') as string;
         const lastName = formData.get('last_name') as string;
         const phone = formData.get('phone') as string;
+        const dob = formData.get('date_of_birth') as string;
+        const isMinor = formData.get('is_minor') === 'true';
         const address = (formData.get('address') as string | null) || 'Not provided';
         const city = (formData.get('city') as string | null) || '';
         const state = (formData.get('state') as string | null) || '';
@@ -543,7 +545,6 @@ Submitted: ${new Date().toISOString()}
         const experience = (formData.get('experience') as string | null) || 'Not provided';
         const referral = (formData.get('referral') as string | null) || 'Not specified';
         const message = (formData.get('message') as string | null) || '';
-        const completeWaiverNow = formData.get('complete_waiver_now') === 'on';
         const needsAccommodations = formData.get('needs_accommodations') === 'on';
         const accommodations = (formData.get('accommodations') as string | null) || '';
 
@@ -559,6 +560,7 @@ New volunteer registration received:
 Name: ${firstName} ${lastName}
 Email: ${email}
 Phone: ${phone}
+Date of Birth: ${dob}${isMinor ? ' (Minor - under 18)' : ''}
 Address: ${fullAddress}
 
 === EMERGENCY CONTACT ===
@@ -593,7 +595,8 @@ Please contact them to discuss and confirm arrangements.
 === AGREEMENTS ===
 Terms & Conditions: Accepted
 Privacy Policy: Accepted
-Waiver: ${completeWaiverNow ? 'Will complete online' : 'Will complete at event'}
+${isMinor ? 'Minor Participant: Yes (parent/guardian signature required for waiver)' : ''}
+Waiver Status: Pending - volunteer directed to complete online
 
 ---
 Submitted: ${submittedDate}
@@ -638,24 +641,18 @@ ${accommodations}
 `
     : ''
 }
+=== NEXT STEP: SIGN YOUR LIABILITY WAIVER ===
+
+A liability waiver is required before you can participate in any volunteer activities.
+
+Complete your waiver online at: https://baytides.org/volunteer/waiver
 ${
-  completeWaiverNow
+  isMinor
     ? `
-=== NEXT STEP: COMPLETE YOUR WAIVER ===
-
-Please complete the liability waiver before your first volunteer event:
-https://baytides.org/volunteer/waiver
-
-`
-    : `
-=== REMINDER: LIABILITY WAIVER ===
-
-A signed liability waiver is required before participating in any volunteer activities.
-You can complete it online at: https://baytides.org/volunteer/waiver
-Or complete it in person at your first event.
-
-`
+Since you are under 18, a parent or guardian will need to sign the waiver on your behalf.`
+    : ''
 }
+You can also complete the waiver at your first volunteer event if you prefer to do it in person.
 === WHAT'S NEXT? ===
 
 1. Watch your inbox for upcoming volunteer opportunities

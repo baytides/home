@@ -81,6 +81,18 @@
         </div>
       </div>
 
+      <div class="form-row">
+        <div class="form-group">
+          <label for="vol-dob">
+            Date of Birth
+            <span aria-hidden="true">*</span>
+            <span class="sr-only">(required)</span>
+          </label>
+          <input type="date" id="vol-dob" name="date_of_birth" required />
+          <span class="field-hint" id="dob-hint"></span>
+        </div>
+      </div>
+
       <div class="form-group">
         <label for="vol-address">Street Address</label>
         <input type="text" id="vol-address" name="address" autocomplete="street-address" />
@@ -491,22 +503,8 @@
         </span>
       </label>
 
-      <div class="waiver-option">
-        <p class="waiver-note">
-          A liability waiver must be completed before participating in any volunteer activities.
-        </p>
-        <label class="checkbox-label">
-          <input type="checkbox" name="complete_waiver_now" id="complete-waiver" />
-          <span>
-            I would like to complete the <a href="/volunteer/waiver" target="_blank">
-              liability waiver
-            </a> now
-          </span>
-        </label>
-        <p class="waiver-alt">
-          <small>You can also complete the waiver at your first event or in person.</small>
-        </p>
-      </div>
+      <!-- Hidden field for minor status -->
+      <input type="hidden" name="is_minor" id="is-minor" value="false" />
     </fieldset>
 
     <!-- Turnstile CAPTCHA -->
@@ -524,33 +522,124 @@
     container: HTMLElement,
     message: string,
     type: 'success' | 'error',
-    showWaiverLink: boolean = false
+    isMinor: boolean = false
   ) {
     const div = document.createElement('div');
     div.className = `form-status ${type}`;
     div.setAttribute('role', 'alert');
-    div.textContent = message;
 
-    if (showWaiverLink && type === 'success') {
-      const br = document.createElement('br');
-      const link = document.createElement('a');
-      link.href = '/volunteer/waiver';
-      link.className = 'btn btn-secondary';
-      link.style.marginTop = '1rem';
-      link.style.display = 'inline-block';
-      link.textContent = 'Complete Liability Waiver';
-      div.appendChild(br);
-      div.appendChild(link);
+    if (type === 'success') {
+      // Create structured success message using safe DOM methods
+      const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      icon.setAttribute('width', '48');
+      icon.setAttribute('height', '48');
+      icon.setAttribute('viewBox', '0 0 24 24');
+      icon.setAttribute('fill', 'none');
+      icon.setAttribute('stroke', 'currentColor');
+      icon.setAttribute('stroke-width', '2');
+      icon.setAttribute('class', 'status-icon');
+      const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path1.setAttribute('d', 'M22 11.08V12a10 10 0 1 1-5.93-9.14');
+      const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+      polyline.setAttribute('points', '22 4 12 14.01 9 11.01');
+      icon.appendChild(path1);
+      icon.appendChild(polyline);
+      div.appendChild(icon);
+
+      const title = document.createElement('h3');
+      title.className = 'status-title';
+      title.textContent = 'Thank You for Registering!';
+      div.appendChild(title);
+
+      const mainMsg = document.createElement('p');
+      mainMsg.textContent = message;
+      div.appendChild(mainMsg);
+
+      // Waiver requirement box
+      const waiverBox = document.createElement('div');
+      waiverBox.className = 'waiver-requirement-box';
+
+      const waiverTitle = document.createElement('h4');
+      waiverTitle.className = 'waiver-requirement-title';
+      waiverTitle.textContent = 'One More Step: Liability Waiver';
+      waiverBox.appendChild(waiverTitle);
+
+      const waiverText = document.createElement('p');
+      waiverText.className = 'waiver-requirement-text';
+      if (isMinor) {
+        waiverText.innerHTML =
+          'Before you can participate in any volunteer activities, we need a signed liability waiver on file. ' +
+          '<strong>Since you are under 18, a parent or guardian must sign the waiver on your behalf.</strong>';
+      } else {
+        waiverText.innerHTML =
+          'Before you can participate in any volunteer activities, <strong>we need a signed liability waiver on file.</strong>';
+      }
+      waiverBox.appendChild(waiverText);
+
+      // Action buttons container
+      const actionsDiv = document.createElement('div');
+      actionsDiv.className = 'waiver-actions';
+
+      // Complete now button
+      const completeNowBtn = document.createElement('a');
+      completeNowBtn.href = '/volunteer/waiver';
+      completeNowBtn.className = 'btn btn-primary';
+      completeNowBtn.textContent = 'Complete Waiver Now';
+      actionsDiv.appendChild(completeNowBtn);
+
+      // Email link button
+      const emailLinkBtn = document.createElement('a');
+      emailLinkBtn.href = '/volunteer/waiver?send-link=true';
+      emailLinkBtn.className = 'btn btn-secondary';
+      emailLinkBtn.textContent = 'Send Link to My Email';
+      actionsDiv.appendChild(emailLinkBtn);
+
+      waiverBox.appendChild(actionsDiv);
+
+      // Note text
+      const noteText = document.createElement('p');
+      noteText.className = 'waiver-note';
+      noteText.innerHTML =
+        '<small>You can also complete the waiver at your first event if you prefer to do it in person.</small>';
+      waiverBox.appendChild(noteText);
+
+      div.appendChild(waiverBox);
+    } else {
+      div.textContent = message;
     }
 
     container.textContent = '';
     container.appendChild(div);
   }
 
+  function calculateAge(dob: Date): number {
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+    return age;
+  }
+
+  function calculate18thBirthday(dobStr: string): string {
+    if (!dobStr) return '';
+    const dob = new Date(dobStr + 'T00:00:00');
+    const eighteenthBirthday = new Date(dob);
+    eighteenthBirthday.setFullYear(dob.getFullYear() + 18);
+    return eighteenthBirthday.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  }
+
   function initVolunteerForm() {
     const form = document.getElementById('volunteer-form') as HTMLFormElement;
     const statusDiv = document.getElementById('volunteer-form-status');
-    const waiverCheckbox = document.getElementById('complete-waiver') as HTMLInputElement;
+    const dobInput = document.getElementById('vol-dob') as HTMLInputElement;
+    const dobHint = document.getElementById('dob-hint');
+    const isMinorInput = document.getElementById('is-minor') as HTMLInputElement;
     const accommodationsCheckbox = document.getElementById(
       'needs-accommodations'
     ) as HTMLInputElement;
@@ -561,6 +650,36 @@
     const otherInterestGroup = document.getElementById('other-interest-group');
 
     if (!form) return;
+
+    // Date of birth change handler - detect minor status
+    if (dobInput) {
+      dobInput.addEventListener('change', () => {
+        const dobValue = dobInput.value;
+        if (!dobValue) {
+          if (dobHint) dobHint.textContent = '';
+          if (isMinorInput) isMinorInput.value = 'false';
+          return;
+        }
+
+        const dob = new Date(dobValue + 'T00:00:00');
+        const age = calculateAge(dob);
+        const isMinor = age < 18;
+
+        if (isMinorInput) isMinorInput.value = isMinor ? 'true' : 'false';
+
+        if (isMinor) {
+          if (dobHint) {
+            dobHint.textContent = `You are ${age} years old. Parent/guardian signature required for waiver.`;
+            dobHint.className = 'field-hint minor-hint';
+          }
+        } else {
+          if (dobHint) {
+            dobHint.textContent = '';
+            dobHint.className = 'field-hint';
+          }
+        }
+      });
+    }
 
     // Toggle "Other" interest text field visibility
     if (otherInterestCheckbox && otherInterestGroup) {
@@ -583,15 +702,14 @@
     const params = new URLSearchParams(window.location.search);
 
     if (params.get('submitted') === 'true' && statusDiv) {
-      const showWaiver = params.get('waiver') === 'true';
-      let message =
-        "Thank you for registering! We'll be in touch about upcoming volunteer opportunities.";
+      const isMinor = params.get('minor') === 'true';
+      const message =
+        "Welcome to the Bay Tides volunteer community! We're excited to have you join us in protecting the San Francisco Bay.";
 
-      if (showWaiver) {
-        message += ' Please complete the liability waiver below.';
-      }
+      showVolunteerFormStatus(statusDiv, message, 'success', isMinor);
 
-      showVolunteerFormStatus(statusDiv, message, 'success', showWaiver);
+      // Hide the form after successful submission
+      form.style.display = 'none';
 
       // Scroll to status
       statusDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -637,15 +755,15 @@
         e.preventDefault();
         const firstError = form.querySelector('.error') as HTMLElement;
         firstError?.focus();
+        return;
       }
 
-      // Add waiver flag if checked
-      if (waiverCheckbox?.checked) {
-        const redirectInput = form.querySelector('input[name="redirect"]') as HTMLInputElement;
-        if (redirectInput) {
-          redirectInput.value =
-            'https://baytides.org/volunteer/registration?submitted=true&waiver=true';
-        }
+      // Add minor flag to redirect URL if applicable
+      const isMinorVal = isMinorInput?.value === 'true';
+      const redirectInput = form.querySelector('input[name="redirect"]') as HTMLInputElement;
+      if (redirectInput && isMinorVal) {
+        redirectInput.value =
+          'https://baytides.org/volunteer/registration?submitted=true&minor=true';
       }
     });
   }
