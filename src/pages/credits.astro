@@ -29,42 +29,87 @@ const structuredData = [
 const infrastructure = [
   {
     name: 'Cloudflare',
-    description: 'Global CDN, DDoS protection, and edge computing',
+    description: 'Global CDN, DDoS protection, Pages hosting, and Workers edge computing',
     url: 'https://cloudflare.com',
-    category: 'Infrastructure',
+    category: 'Hosting',
   },
   {
-    name: 'Azure',
-    description: 'Cloud computing and virtual machine hosting',
+    name: 'Microsoft Azure',
+    description: 'Cloud computing and VM hosting for our Tor Snowflake proxy',
     url: 'https://azure.microsoft.com',
-    category: 'Infrastructure',
+    category: 'Cloud',
+  },
+  {
+    name: 'GitHub',
+    description: 'Code hosting, version control, and CI/CD via GitHub Actions',
+    url: 'https://github.com',
+    category: 'DevOps',
   },
   {
     name: 'Resend',
-    description: 'Transactional email delivery',
+    description: 'Transactional email delivery for form submissions',
     url: 'https://resend.com',
-    category: 'Infrastructure',
+    category: 'Email',
   },
 ];
 
 const frameworks = [
   {
     name: 'Astro',
-    description: 'Static site generator with zero JavaScript by default',
+    description: 'Static site generator with content-first architecture',
     url: 'https://astro.build',
     category: 'Framework',
   },
   {
-    name: 'Sass/SCSS',
-    description: 'CSS preprocessor for maintainable stylesheets',
-    url: 'https://sass-lang.com',
-    category: 'Framework',
+    name: 'React',
+    description: 'UI component library for interactive features',
+    url: 'https://react.dev',
+    category: 'Library',
   },
   {
     name: 'TypeScript',
-    description: 'Type-safe JavaScript for reliable code',
+    description: 'Type-safe JavaScript for reliable, maintainable code',
     url: 'https://typescriptlang.org',
-    category: 'Framework',
+    category: 'Language',
+  },
+  {
+    name: 'Sass/SCSS',
+    description: 'CSS preprocessor for scalable stylesheets',
+    url: 'https://sass-lang.com',
+    category: 'Styling',
+  },
+];
+
+const devTools = [
+  {
+    name: 'Wrangler',
+    description: 'CLI for deploying Cloudflare Workers',
+    url: 'https://developers.cloudflare.com/workers/wrangler/',
+    category: 'CLI',
+  },
+  {
+    name: 'Playwright',
+    description: 'End-to-end testing framework for quality assurance',
+    url: 'https://playwright.dev',
+    category: 'Testing',
+  },
+  {
+    name: 'ESLint',
+    description: 'JavaScript linter for code quality',
+    url: 'https://eslint.org',
+    category: 'Linting',
+  },
+  {
+    name: 'Prettier',
+    description: 'Opinionated code formatter for consistent style',
+    url: 'https://prettier.io',
+    category: 'Formatting',
+  },
+  {
+    name: 'Husky',
+    description: 'Git hooks for automated quality checks',
+    url: 'https://typicode.github.io/husky/',
+    category: 'Git Hooks',
   },
 ];
 
@@ -73,39 +118,51 @@ const services = [
     name: 'Stripe',
     description: 'Secure payment processing for donations',
     url: 'https://stripe.com',
-    category: 'Service',
+    category: 'Payments',
   },
   {
     name: 'Mapbox',
-    description: 'Interactive mapping for location features',
+    description: 'Interactive mapping for event and project locations',
     url: 'https://mapbox.com',
-    category: 'Service',
+    category: 'Maps',
   },
   {
     name: 'Tor Project',
-    description: 'Snowflake proxy for internet freedom',
-    url: 'https://torproject.org',
-    category: 'Service',
+    description: 'Snowflake proxy helping people access the free internet',
+    url: 'https://snowflake.torproject.org',
+    category: 'Privacy',
+  },
+  {
+    name: 'Lighthouse CI',
+    description: 'Automated performance, accessibility, and SEO auditing',
+    url: 'https://github.com/GoogleChrome/lighthouse-ci',
+    category: 'Monitoring',
   },
 ];
 
 const openSource = [
   {
-    name: 'Font Awesome',
-    description: 'Icon library used throughout the site',
-    url: 'https://fontawesome.com',
-    license: 'CC BY 4.0 / MIT',
-  },
-  {
     name: 'Lucide Icons',
-    description: 'Beautiful, consistent icon set',
+    description: 'Beautiful, consistent open-source icon set',
     url: 'https://lucide.dev',
     license: 'ISC',
   },
   {
-    name: 'Normalize.css',
-    description: 'CSS reset for cross-browser consistency',
-    url: 'https://necolas.github.io/normalize.css/',
+    name: 'Motion',
+    description: 'Animation library for smooth UI transitions',
+    url: 'https://motion.dev',
+    license: 'MIT',
+  },
+  {
+    name: 'pdf-lib',
+    description: 'PDF generation for volunteer forms',
+    url: 'https://pdf-lib.js.org',
+    license: 'MIT',
+  },
+  {
+    name: 'libphonenumber',
+    description: 'Phone number validation and formatting',
+    url: 'https://www.npmjs.com/package/phone',
     license: 'MIT',
   },
 ];
@@ -239,8 +296,58 @@ const openSource = [
     </div>
   </section>
 
+  <!-- Developer Tools -->
+  <section class="content-section alt-bg" aria-labelledby="devtools-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="devtools-heading">Developer Tools</h2>
+        <p>Quality assurance and development workflow tools</p>
+      </div>
+
+      <div class="credits-grid" role="list" aria-label="Developer tools">
+        {
+          devTools.map((item) => (
+            <article class="credit-card" role="listitem">
+              <div class="credit-card-content">
+                <h3>{item.name}</h3>
+                <p>{item.description}</p>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="credit-link"
+                  aria-label={`Visit ${item.name} website (opens in new tab)`}
+                >
+                  Visit Website
+                  <span aria-hidden="true">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+              <span class="credit-badge">{item.category}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
   <!-- Third-Party Services -->
-  <section class="content-section alt-bg" aria-labelledby="services-heading">
+  <section class="content-section" aria-labelledby="services-heading">
     <div class="container">
       <div class="section-title">
         <h2 id="services-heading">Third-Party Services</h2>
@@ -290,7 +397,7 @@ const openSource = [
   </section>
 
   <!-- Open Source -->
-  <section class="content-section" aria-labelledby="opensource-heading">
+  <section class="content-section alt-bg" aria-labelledby="opensource-heading">
     <div class="container">
       <div class="section-title">
         <h2 id="opensource-heading">Open Source</h2>
@@ -340,7 +447,7 @@ const openSource = [
   </section>
 
   <!-- Community Contributors -->
-  <section class="content-section alt-bg" aria-labelledby="contributors-heading">
+  <section class="content-section" aria-labelledby="contributors-heading">
     <div class="container">
       <div class="section-title">
         <h2 id="contributors-heading">Community Contributors</h2>
@@ -367,7 +474,7 @@ const openSource = [
   </section>
 
   <!-- Image Credits -->
-  <section class="content-section" aria-labelledby="images-heading">
+  <section class="content-section alt-bg" aria-labelledby="images-heading">
     <div class="container">
       <div class="section-title">
         <h2 id="images-heading">Photography & Media</h2>
@@ -392,7 +499,7 @@ const openSource = [
           </li>
           <li>
             <strong>Iconography:</strong>
-            Lucide Icons and Font Awesome (licensed under MIT/CC BY 4.0)
+            Lucide Icons (ISC License)
           </li>
         </ul>
 

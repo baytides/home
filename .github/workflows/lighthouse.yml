@@ -31,6 +31,12 @@ jobs:
             https://baytides.org/
             https://baytides.org/about/
             https://baytides.org/contact/
+            https://baytides.org/accessibility/
+            https://baytides.org/projects/
+            https://baytides.org/volunteer/
+            https://baytides.org/events/
+            https://baytides.org/security/
+            https://baytides.org/privacy/
           budgetPath: ./lighthouse-budget.json
           uploadArtifacts: true
           temporaryPublicStorage: true

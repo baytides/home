@@ -115,6 +115,40 @@ nav {
 }
 
 // ==========================================================================
+// Onion Link (Tor Hidden Service)
+// ==========================================================================
+
+.onion-link {
+  text-decoration: none;
+  gap: 0.375rem;
+  color: var(--tor-purple, #7d4698);
+
+  &:hover {
+    background: rgba(125, 70, 152, 0.1);
+    color: var(--tor-purple, #7d4698);
+  }
+
+  .onion-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: none;
+
+    @media (min-width: 480px) {
+      display: inline;
+    }
+  }
+}
+
+[data-theme='dark'] .onion-link {
+  color: var(--tor-purple-light, #b388c7);
+
+  &:hover {
+    background: rgba(179, 136, 199, 0.15);
+    color: var(--tor-purple-light, #b388c7);
+  }
+}
+
+// ==========================================================================
 // Mobile Menu
 // ==========================================================================
 

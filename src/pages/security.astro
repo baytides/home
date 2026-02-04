@@ -1,0 +1,1544 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Security & Privacy',
+    description: 'How Bay Tides protects your data and privacy through rigorous security practices',
+    publisher: {
+      '@type': 'NonprofitOrganization',
+      name: 'Bay Tides',
+      url: 'https://baytides.org',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Security' },
+    ],
+  },
+];
+
+const infrastructureFeatures = [
+  {
+    title: 'DDoS Mitigation',
+    description:
+      'Unlimited protection against volumetric, protocol, and application-layer attacks. Malicious traffic is absorbed at the edge before reaching our servers.',
+    icon: 'shield',
+  },
+  {
+    title: 'Web Application Firewall',
+    description:
+      'Managed rulesets block SQL injection, cross-site scripting, and OWASP Top 10 threats automatically, with custom rules for our specific needs.',
+    icon: 'firewall',
+  },
+  {
+    title: 'Bot Management',
+    description:
+      'Machine learning-powered detection blocks credential stuffing, content scraping, and automated abuse while allowing legitimate traffic through.',
+    icon: 'bot',
+  },
+  {
+    title: 'TLS 1.3 Encryption',
+    description:
+      'All connections use the latest encryption standard. HTTPS is enforced site-wide with HSTS preloading and automatic certificate management.',
+    icon: 'lock',
+  },
+  {
+    title: 'Static Architecture',
+    description:
+      'No server-side database means no SQL injection, session hijacking, or server compromise risks. Attack surface is minimized by design.',
+    icon: 'server',
+  },
+  {
+    title: 'Global CDN',
+    description:
+      'Content is served from 300+ edge locations worldwide, reducing latency and providing redundancy against regional outages or attacks.',
+    icon: 'globe',
+  },
+];
+
+const privacyFeatures = [
+  {
+    title: 'Tor Hidden Service',
+    description:
+      'Access Bay Tides via our .onion address for complete anonymity. Your IP address is never visible to our servers when using Tor.',
+    icon: 'globe',
+  },
+  {
+    title: 'Snowflake Proxy',
+    description:
+      'We run a Tor Snowflake proxy to help people in censored regions access the free internet, supporting global digital freedom.',
+    icon: 'snowflake',
+  },
+  {
+    title: 'No Fingerprinting',
+    description:
+      "We don't use browser fingerprinting, canvas tracking, or any technique to identify users across sessions.",
+    icon: 'fingerprint',
+  },
+  {
+    title: 'System Fonts',
+    description:
+      "We use your device's native fonts instead of Google Fonts, eliminating requests to Google's servers when you visit.",
+    icon: 'type',
+  },
+  {
+    title: 'No Social Trackers',
+    description:
+      'No Facebook Pixel, Twitter widgets, or social media embeds that monitor your browsing behavior across the web.',
+    icon: 'eye-off',
+  },
+  {
+    title: 'Local Preferences',
+    description:
+      'Your settings (theme, accessibility options) are stored locally in your browser, never transmitted to our servers.',
+    icon: 'hard-drive',
+  },
+];
+
+const securityPractices = [
+  {
+    title: 'Automated Security Scanning',
+    provider: 'GitHub',
+    description:
+      'Dependabot monitors all dependencies for known vulnerabilities and automatically creates pull requests for security updates.',
+    icon: 'scan',
+  },
+  {
+    title: 'Code Review',
+    provider: 'GitHub',
+    description:
+      'All code changes require review before deployment. No direct commits to production branches.',
+    icon: 'review',
+  },
+  {
+    title: 'Continuous Integration',
+    provider: 'GitHub Actions',
+    description:
+      'Automated testing, linting, and security checks run on every pull request before merge.',
+    icon: 'ci',
+  },
+  {
+    title: 'Content Security Policy',
+    provider: 'Cloudflare',
+    description:
+      'Strict CSP headers prevent XSS attacks by controlling which resources can be loaded.',
+    icon: 'csp',
+  },
+  {
+    title: 'Subresource Integrity',
+    provider: 'Build Process',
+    description: 'External resources include integrity hashes to prevent tampering.',
+    icon: 'hash',
+  },
+  {
+    title: 'Security Headers',
+    provider: 'Cloudflare',
+    description:
+      'X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy headers are enforced.',
+    icon: 'headers',
+  },
+];
+
+const certifications = [
+  {
+    name: 'Cloudflare Project Galileo',
+    description: 'Enterprise protection for public interest sites',
+    status: 'Protected',
+  },
+  {
+    name: 'WCAG 2.2 AAA',
+    description: 'Highest level of web accessibility compliance',
+    status: 'Compliant',
+  },
+  {
+    name: 'Zero Tracking',
+    description: 'No cookies, fingerprinting, or behavioral tracking',
+    status: 'Enforced',
+  },
+];
+
+const dataWeDoNotCollect = [
+  'IP addresses or device fingerprints',
+  'Browsing history or search history',
+  'Click patterns or mouse movements',
+  'Gender or demographic profiling',
+  'Names or emails (unless voluntarily provided)',
+];
+
+const selfHostedServices = [
+  {
+    name: 'Plausible Analytics',
+    description:
+      'Privacy-focused web analytics with no personal data collection and full GDPR compliance.',
+    benefit:
+      'Your browsing data stays on our infrastructure, not with Google or other ad-tech companies.',
+    icon: 'chart',
+  },
+  {
+    name: 'Form Processing',
+    description:
+      'Contact forms are processed by our own Cloudflare Workers—no third-party form services.',
+    benefit:
+      'Your messages go directly to us without passing through data-collecting intermediaries.',
+    icon: 'form',
+  },
+  {
+    name: 'Document Platform',
+    description:
+      'Volunteer waivers and forms are generated client-side using open-source PDF libraries.',
+    benefit: 'Your personal information never leaves your browser until you explicitly submit it.',
+    icon: 'file',
+  },
+];
+---
+
+<BaseLayout
+  title="Security & Privacy"
+  description="Learn how Bay Tides protects your data and privacy through enterprise-grade security, Tor integration, and privacy-first design principles."
+  canonicalUrl="https://baytides.org/security"
+  structuredData={structuredData}
+  preloadImages={['/assets/video/security-hero-poster.jpg']}
+>
+  <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Security' }]} />
+
+  <!-- Hero Section with Video -->
+  <section class="hero hero-page security-video-hero">
+    <video
+      class="security-hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="/assets/video/security-hero-poster.jpg"
+    >
+      <source src="/assets/video/security-hero.webm" type="video/webm" />
+    </video>
+    <div class="security-hero-overlay"></div>
+    <div class="container">
+      <h1>Security & Privacy</h1>
+      <p>Your trust is our foundation</p>
+    </div>
+  </section>
+
+  <!-- Introduction -->
+  <section class="content-section" aria-labelledby="intro-heading">
+    <div class="container">
+      <div class="security-intro">
+        <h2 id="intro-heading" class="sr-only">Introduction</h2>
+        <p class="intro-text">
+          At Bay Tides, we believe privacy is a fundamental right. Our infrastructure is designed
+          from the ground up to protect your data, respect your anonymity, and provide secure access
+          to information—even in regions where internet freedom is restricted.
+        </p>
+        <div class="security-badges">
+          {
+            certifications.map((cert) => (
+              <div class="security-badge">
+                <span class="badge-status">{cert.status}</span>
+                <span class="badge-name">{cert.name}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Infrastructure Security -->
+  <section class="content-section alt-bg" aria-labelledby="infrastructure-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="infrastructure-heading">Infrastructure Security</h2>
+        <p>Enterprise-grade protection for a nonprofit mission</p>
+      </div>
+
+      <div class="features-grid">
+        {
+          infrastructureFeatures.map((feature) => (
+            <div class="feature-card">
+              <div class="feature-icon" aria-hidden="true">
+                {feature.icon === 'shield' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                )}
+                {feature.icon === 'firewall' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <path d="M4 10h16" />
+                    <path d="M10 4v16" />
+                  </svg>
+                )}
+                {feature.icon === 'bot' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 8V4H8" />
+                    <rect width="16" height="12" x="4" y="8" rx="2" />
+                    <path d="M2 14h2" />
+                    <path d="M20 14h2" />
+                    <path d="M15 13v2" />
+                    <path d="M9 13v2" />
+                  </svg>
+                )}
+                {feature.icon === 'lock' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                )}
+                {feature.icon === 'server' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+                    <line x1="6" y1="6" x2="6.01" y2="6" />
+                    <line x1="6" y1="18" x2="6.01" y2="18" />
+                  </svg>
+                )}
+                {feature.icon === 'globe' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg>
+                )}
+              </div>
+              <h3>{feature.title}</h3>
+              <p>{feature.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy Features -->
+  <section class="content-section" aria-labelledby="privacy-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="privacy-heading">Privacy Features</h2>
+        <p>Tools and practices that protect your anonymity</p>
+      </div>
+
+      <div class="features-grid">
+        {
+          privacyFeatures.map((feature) => (
+            <div class="feature-card privacy-card">
+              <div class="feature-icon" aria-hidden="true">
+                {feature.icon === 'globe' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                  </svg>
+                )}
+                {feature.icon === 'snowflake' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 512 512"
+                    fill="currentColor"
+                  >
+                    <path d="M280 24c0-13.3-10.7-24-24-24s-24 10.7-24 24v80.4l-44.7-44.7c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l78.6 78.6v66.3l-57.4-33.2-23.8-88.8c-3.4-12.8-16.6-20.4-29.4-17s-20.4 16.6-17 29.4l13 48.5-69.8-40.3c-11.5-6.6-26.2-2.7-32.8 8.8s-2.7 26.2 8.8 32.8l69.8 40.3-48.5 13c-12.8 3.4-20.4 16.6-17 29.4 3.4 12.8 16.6 20.4 29.4 17l88.8-23.8 57.4 33.2-57.4 33.2-88.8-23.8c-12.8-3.4-26 4.2-29.4 17s4.2 26 17 29.4l48.5 13-69.8 40.3c-11.5 6.6-15.4 21.3-8.8 32.8s21.3 15.4 32.8 8.8l69.8-40.3-13 48.5c-3.4 12.8 4.2 26 17 29.4s26-4.2 29.4-17l23.8-88.8 57.4-33.2v66.3l-78.6 78.6c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l44.7-44.7V488c0 13.3 10.7 24 24 24s24-10.7 24-24v-80.4l44.7 44.7c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-78.6-78.6v-66.3l57.4 33.2 23.8 88.8c3.4 12.8 16.6 20.4 29.4 17s20.4-16.6 17-29.4l-13-48.5 69.8 40.3c11.5 6.6 26.2 2.7 32.8-8.8s2.7-26.2-8.8-32.8l-69.8-40.3 48.5-13c12.8-3.4 20.4-16.6 17-29.4s-16.6-20.4-29.4-17l-88.8 23.8-57.4-33.2 57.4-33.2 88.8 23.8c12.8 3.4 26-4.2 29.4-17s-4.2-26-17-29.4l-48.5-13 69.8-40.3c11.5-6.6 15.4-21.3 8.8-32.8s-21.3-15.4-32.8-8.8l-69.8 40.3 13-48.5c3.4-12.8-4.2-26-17-29.4s-26 4.2-29.4 17l-23.8 88.8-57.4 33.2v-66.3l78.6-78.6c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L280 104.4V24z" />
+                  </svg>
+                )}
+                {feature.icon === 'fingerprint' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 4" />
+                    <path d="M5 19.5C5.5 18 6 15 6 12c0-.7.12-1.37.34-2" />
+                    <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02" />
+                    <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4" />
+                    <path d="M8.65 22c.21-.66.45-1.32.57-2" />
+                    <path d="M14 13.12c0 2.38 0 6.38-1 8.88" />
+                    <path d="M2 16h.01" />
+                    <path d="M21.8 16c.2-2 .131-5.354 0-6" />
+                    <path d="M9 6.8a6 6 0 0 1 9 5.2c0 .47 0 1.17-.02 2" />
+                  </svg>
+                )}
+                {feature.icon === 'type' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="4 7 4 4 20 4 20 7" />
+                    <line x1="9" y1="20" x2="15" y2="20" />
+                    <line x1="12" y1="4" x2="12" y2="20" />
+                  </svg>
+                )}
+                {feature.icon === 'eye-off' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                )}
+                {feature.icon === 'hard-drive' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="22" y1="12" x2="2" y2="12" />
+                    <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+                    <line x1="6" y1="16" x2="6.01" y2="16" />
+                    <line x1="10" y1="16" x2="10.01" y2="16" />
+                  </svg>
+                )}
+              </div>
+              <h3>{feature.title}</h3>
+              <p>{feature.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Data We Don't Collect -->
+  <section class="content-section alt-bg" aria-labelledby="nocollect-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="nocollect-heading">What We Don't Collect</h2>
+        <p>Privacy means not collecting data in the first place</p>
+      </div>
+
+      <div class="no-collect-content">
+        <div class="no-collect-list-wide">
+          <ul>
+            {
+              dataWeDoNotCollect.map((item) => (
+                <li>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="15" y1="9" x2="9" y2="15" />
+                    <line x1="9" y1="9" x2="15" y2="15" />
+                  </svg>
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
+          <div class="no-collect-cta">
+            <a href="/privacy" class="btn btn-outline">Read Full Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Self-Hosted & Open Source -->
+  <section class="content-section" aria-labelledby="selfhosted-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="selfhosted-heading">Self-Hosted & Open Source</h2>
+        <p>We control our infrastructure so your data doesn't end up with third parties</p>
+      </div>
+
+      <div class="selfhosted-intro">
+        <p>
+          We believe privacy promises are only as good as the infrastructure behind them. That's why
+          we self-host as much as possible using open-source software. When your data stays on
+          systems we control, we can actually guarantee where it goes—and where it doesn't.
+        </p>
+      </div>
+
+      <div class="selfhosted-grid">
+        {
+          selfHostedServices.map((service) => (
+            <div class="selfhosted-card">
+              <div class="selfhosted-icon" aria-hidden="true">
+                {service.icon === 'chart' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="18" y1="20" x2="18" y2="10" />
+                    <line x1="12" y1="20" x2="12" y2="4" />
+                    <line x1="6" y1="20" x2="6" y2="14" />
+                  </svg>
+                )}
+                {service.icon === 'form' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                  </svg>
+                )}
+                {service.icon === 'file' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+                    <polyline points="13 2 13 9 20 9" />
+                  </svg>
+                )}
+                {service.icon === 'server' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+                    <line x1="6" y1="6" x2="6.01" y2="6" />
+                    <line x1="6" y1="18" x2="6.01" y2="18" />
+                  </svg>
+                )}
+              </div>
+              <div class="selfhosted-content">
+                <h3>{service.name}</h3>
+                <p class="selfhosted-desc">{service.description}</p>
+                <p class="selfhosted-benefit">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  {service.benefit}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="opensource-commitment">
+        <h3>Our Open Source Commitment</h3>
+        <p>
+          We prioritize open-source solutions because they can be audited, verified, and trusted by
+          the community. Proprietary software often comes with hidden data collection—open source
+          doesn't. When we say your data is private, you can verify it yourself.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security Practices -->
+  <section class="content-section alt-bg" aria-labelledby="practices-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="practices-heading">Security Practices</h2>
+        <p>How we maintain security throughout our development lifecycle</p>
+      </div>
+
+      <div class="practices-grid">
+        {
+          securityPractices.map((practice) => (
+            <div class="practice-card">
+              <div class="practice-icon" aria-hidden="true">
+                {practice.icon === 'scan' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+                    <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+                    <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+                    <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+                    <path d="M7 12h10" />
+                  </svg>
+                )}
+                {practice.icon === 'review' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                    <path d="M11 8v6" />
+                    <path d="M8 11h6" />
+                  </svg>
+                )}
+                {practice.icon === 'ci' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                  </svg>
+                )}
+                {practice.icon === 'csp' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                )}
+                {practice.icon === 'hash' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="4" y1="9" x2="20" y2="9" />
+                    <line x1="4" y1="15" x2="20" y2="15" />
+                    <line x1="10" y1="3" x2="8" y2="21" />
+                    <line x1="16" y1="3" x2="14" y2="21" />
+                  </svg>
+                )}
+                {practice.icon === 'headers' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <line x1="10" y1="9" x2="8" y2="9" />
+                  </svg>
+                )}
+              </div>
+              <div class="practice-content">
+                <div class="practice-header">
+                  <h3>{practice.title}</h3>
+                  <span class="practice-provider">{practice.provider}</span>
+                </div>
+                <p>{practice.description}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Report a Vulnerability -->
+  <section class="content-section report-section" aria-labelledby="report-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="report-heading">Report a Vulnerability</h2>
+        <p>Help us keep Bay Tides secure</p>
+      </div>
+
+      <div class="report-content">
+        <p>
+          We take security seriously and appreciate responsible disclosure of any vulnerabilities
+          you may find. If you discover a security issue, please report it to us privately.
+        </p>
+
+        <div class="report-methods">
+          <div class="report-method">
+            <h3>Contact Form</h3>
+            <p>
+              Use our <a href="/contact">secure contact form</a> to report vulnerabilities privately
+            </p>
+          </div>
+          <div class="report-method">
+            <h3>GitHub</h3>
+            <p>
+              Open a <a
+                href="https://github.com/baytides/home/security/advisories/new"
+                target="_blank"
+                rel="noopener"
+              >
+                private security advisory
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="report-guidelines">
+          <h3>What to Include</h3>
+          <ul>
+            <li>Description of the vulnerability</li>
+            <li>Steps to reproduce the issue</li>
+            <li>Potential impact assessment</li>
+            <li>Any suggested remediation</li>
+          </ul>
+        </div>
+
+        <p class="report-note">
+          We commit to acknowledging reports within 48 hours and will work with you to understand
+          and address the issue. We do not pursue legal action against researchers who act in good
+          faith.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Links -->
+  <section class="impact" aria-labelledby="related-heading">
+    <div class="container">
+      <div class="impact-content">
+        <h2 id="related-heading">Learn More</h2>
+        <p>
+          Explore our commitment to privacy and transparency through our policies and practices.
+        </p>
+        <div class="related-links">
+          <a href="/privacy" class="btn btn-secondary">Privacy Policy</a>
+          <a href="/terms" class="btn btn-secondary">Terms of Service</a>
+          <a href="/accessibility" class="btn btn-secondary">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Introduction */
+  .security-intro {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .intro-text {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+
+  .security-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .security-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .badge-status {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--success);
+    background: var(--success-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    margin-bottom: 0.5rem;
+  }
+
+  .badge-name {
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.875rem;
+  }
+
+  /* Features Grid */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .feature-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .feature-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--light-blue);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-blue);
+    margin-bottom: 1.25rem;
+  }
+
+  .privacy-card .feature-icon {
+    background: rgba(125, 70, 152, 0.1);
+    color: var(--tor-purple, #7d4698);
+  }
+
+  .feature-card h3 {
+    font-size: 1.125rem;
+    color: var(--primary-navy);
+    margin-bottom: 0.75rem;
+  }
+
+  .feature-card p {
+    color: var(--text-light);
+    line-height: 1.6;
+    font-size: 0.9375rem;
+  }
+
+  /* Self-Hosted Section */
+  .selfhosted-intro {
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+
+  .selfhosted-intro p {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--text-light);
+  }
+
+  .selfhosted-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .selfhosted-card {
+    display: flex;
+    gap: 1.25rem;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .selfhosted-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .selfhosted-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--light-blue) 0%, rgba(43, 108, 176, 0.15) 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-blue);
+  }
+
+  .selfhosted-content h3 {
+    font-size: 1rem;
+    color: var(--primary-navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .selfhosted-desc {
+    font-size: 0.9375rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+
+  .selfhosted-benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--success, #059669);
+    margin: 0;
+    padding: 0.75rem;
+    background: var(--success-light, rgba(5, 150, 105, 0.1));
+    border-radius: 8px;
+  }
+
+  .selfhosted-benefit svg {
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .opensource-commitment {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--light-blue) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(43, 108, 176, 0.2);
+  }
+
+  .opensource-commitment h3 {
+    font-size: 1.125rem;
+    color: var(--primary-navy);
+    margin-bottom: 1rem;
+  }
+
+  .opensource-commitment p {
+    color: var(--text-light);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  /* No Collect Section */
+  .no-collect-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .no-collect-list-wide {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-top: 2rem;
+  }
+
+  .no-collect-list-wide ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem 2rem;
+  }
+
+  .no-collect-list-wide li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    color: var(--text-light);
+  }
+
+  .no-collect-list-wide li svg {
+    flex-shrink: 0;
+    color: var(--error, #dc2626);
+  }
+
+  .no-collect-cta {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .btn-outline {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--primary-blue);
+    color: var(--primary-blue);
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-outline:hover {
+    background: var(--primary-blue);
+    color: white;
+  }
+
+  /* Practices Grid */
+  .practices-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .practice-card {
+    display: flex;
+    gap: 1.25rem;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .practice-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .practice-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(
+      135deg,
+      var(--success-light, rgba(5, 150, 105, 0.1)) 0%,
+      rgba(5, 150, 105, 0.05) 100%
+    );
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--success, #059669);
+  }
+
+  .practice-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .practice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .practice-header h3 {
+    font-size: 1rem;
+    color: var(--primary-navy);
+    margin: 0;
+  }
+
+  .practice-provider {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary-blue);
+    background: var(--light-blue);
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+  }
+
+  .practice-card p {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+
+  /* Report Section */
+  .report-section {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(234, 88, 12, 0.05) 100%);
+    border-top: 1px solid rgba(220, 38, 38, 0.1);
+    border-bottom: 1px solid rgba(220, 38, 38, 0.1);
+  }
+
+  .report-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .report-content > p {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+
+  .report-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .report-method {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .report-method h3 {
+    color: var(--primary-navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .report-method p {
+    margin: 0;
+    color: var(--text-light);
+  }
+
+  .report-method a {
+    color: var(--primary-blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .report-guidelines {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .report-guidelines h3 {
+    color: var(--primary-navy);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  .report-guidelines ul {
+    margin: 0;
+    padding-left: 1.5rem;
+  }
+
+  .report-guidelines li {
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .report-note {
+    font-size: 0.9375rem;
+    color: var(--text-light);
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    border-left: 4px solid var(--success);
+  }
+
+  /* Related Links */
+  .related-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  /* Dark Theme */
+  :global([data-theme='dark']) .security-badge {
+    background: var(--card-bg);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  :global([data-theme='dark']) .badge-status {
+    background: rgba(167, 243, 208, 0.15);
+  }
+
+  :global([data-theme='dark']) .feature-card {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .feature-card h3,
+  :global([data-theme='dark']) .practice-header h3,
+  :global([data-theme='dark']) .report-method h3,
+  :global([data-theme='dark']) .report-guidelines h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .feature-icon {
+    background: rgba(43, 108, 176, 0.2);
+  }
+
+  :global([data-theme='dark']) .privacy-card .feature-icon {
+    background: rgba(179, 136, 199, 0.2);
+    color: var(--tor-purple-light, #b388c7);
+  }
+
+  :global([data-theme='dark']) .practice-card,
+  :global([data-theme='dark']) .report-method,
+  :global([data-theme='dark']) .report-guidelines {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .practice-icon {
+    background: linear-gradient(135deg, rgba(167, 243, 208, 0.15) 0%, rgba(5, 150, 105, 0.1) 100%);
+  }
+
+  :global([data-theme='dark']) .practice-provider {
+    background: rgba(163, 213, 255, 0.15);
+  }
+
+  :global([data-theme='dark']) .report-note {
+    background: var(--card-bg);
+    border-left-color: var(--success);
+  }
+
+  :global([data-theme='dark']) .report-section {
+    background: linear-gradient(
+      135deg,
+      rgba(248, 113, 113, 0.08) 0%,
+      rgba(251, 146, 60, 0.08) 100%
+    );
+    border-top-color: rgba(248, 113, 113, 0.15);
+    border-bottom-color: rgba(248, 113, 113, 0.15);
+  }
+
+  :global([data-theme='dark']) .no-collect-list-wide {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .no-collect-cta {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .btn-outline {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .btn-outline:hover {
+    background: var(--accent-blue);
+    color: #0c1729;
+  }
+
+  :global([data-theme='dark']) .selfhosted-card {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .selfhosted-icon {
+    background: linear-gradient(135deg, rgba(43, 108, 176, 0.25) 0%, rgba(43, 108, 176, 0.1) 100%);
+  }
+
+  :global([data-theme='dark']) .selfhosted-content h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .selfhosted-benefit {
+    background: rgba(5, 150, 105, 0.15);
+  }
+
+  :global([data-theme='dark']) .opensource-commitment {
+    background: linear-gradient(135deg, rgba(99, 179, 237, 0.15) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border-color: rgba(99, 179, 237, 0.3);
+  }
+
+  :global([data-theme='dark']) .opensource-commitment h3 {
+    color: var(--text-dark);
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .security-badges {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .security-badge {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .badge-status {
+      margin-bottom: 0;
+    }
+
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .practices-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .practice-card {
+      flex-direction: column;
+    }
+
+    .practice-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    .practice-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .no-collect-list-wide ul {
+      grid-template-columns: 1fr;
+    }
+
+    .selfhosted-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .selfhosted-card {
+      flex-direction: column;
+    }
+
+    .selfhosted-icon {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  /* Security Video Hero */
+  .security-video-hero {
+    position: relative;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--primary-navy);
+  }
+
+  .security-hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .security-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(12, 23, 41, 0.6) 0%, rgba(12, 23, 41, 0.7) 100%);
+    z-index: 1;
+  }
+
+  .security-video-hero .container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .security-video-hero h1 {
+    color: #ffffff !important;
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .security-video-hero p {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Reduced motion: hide video, show poster */
+  @media (prefers-reduced-motion: reduce) {
+    .security-hero-video {
+      display: none;
+    }
+    .security-video-hero {
+      background-image: url('/assets/video/security-hero-poster.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+  }
+
+  :global([data-reduced-motion='true']) .security-hero-video {
+    display: none;
+  }
+
+  :global([data-reduced-motion='true']) .security-video-hero {
+    background-image: url('/assets/video/security-hero-poster.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+</style>

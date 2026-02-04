@@ -1,0 +1,7 @@
+# Site configuration
+# This file contains site-wide settings that may be updated by CI/CD
+
+# Tor Hidden Service (.onion) address
+# Updated automatically when the Tor VM is deployed
+# Leave empty if not yet configured
+onion_address: ''

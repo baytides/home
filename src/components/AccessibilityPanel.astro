@@ -83,10 +83,53 @@
         <input type="checkbox" id="high-contrast-toggle" />
         High Contrast
       </label>
-      <label>
-        <input type="checkbox" id="large-text-toggle" />
-        Large Text
-      </label>
+      <div class="text-size-control">
+        <span class="text-size-label">Text Size</span>
+        <div class="text-size-adjuster">
+          <button
+            type="button"
+            class="size-btn"
+            id="text-size-decrease"
+            aria-label="Decrease text size"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </button>
+          <span class="text-size-value" id="text-size-value" aria-live="polite">100%</span>
+          <button
+            type="button"
+            class="size-btn"
+            id="text-size-increase"
+            aria-label="Increase text size"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="panel-section">
@@ -213,7 +256,9 @@
     const panel = document.getElementById('accessibility-panel');
     const closeBtn = document.getElementById('panel-close');
     const highContrastToggle = document.getElementById('high-contrast-toggle') as HTMLInputElement;
-    const largeTextToggle = document.getElementById('large-text-toggle') as HTMLInputElement;
+    const textSizeDecrease = document.getElementById('text-size-decrease');
+    const textSizeIncrease = document.getElementById('text-size-increase');
+    const textSizeValue = document.getElementById('text-size-value');
     const reducedMotionToggle = document.getElementById(
       'reduced-motion-toggle'
     ) as HTMLInputElement;
@@ -227,14 +272,47 @@
 
     if (!toggle || !panel) return;
 
+    // Text size constants
+    const TEXT_SIZE_MIN = 70;
+    const TEXT_SIZE_MAX = 200;
+    const TEXT_SIZE_STEP = 10;
+    const TEXT_SIZE_DEFAULT = 100;
+
     // Load saved preferences
     const savedHighContrast = localStorage.getItem('a11y-high-contrast') === 'true';
-    const savedLargeText = localStorage.getItem('a11y-large-text') === 'true';
+    const savedTextSize = parseInt(localStorage.getItem('a11y-text-size') || '100', 10);
     const savedReducedMotion = localStorage.getItem('a11y-reduced-motion') === 'true';
     const savedTextSpacing = localStorage.getItem('a11y-text-spacing') === 'true';
     const savedUnderlineLinks = localStorage.getItem('a11y-underline-links') === 'true';
     const savedPosition = localStorage.getItem('a11y-button-position') || 'bottom-left';
     const savedHidden = localStorage.getItem('a11y-button-hidden') === 'true';
+
+    // Text size helper functions
+    function applyTextSize(size: number) {
+      const clampedSize = Math.max(TEXT_SIZE_MIN, Math.min(TEXT_SIZE_MAX, size));
+      if (textSizeValue) textSizeValue.textContent = `${clampedSize}%`;
+
+      if (clampedSize === TEXT_SIZE_DEFAULT) {
+        document.documentElement.removeAttribute('data-font-size');
+      } else {
+        document.documentElement.setAttribute('data-font-size', String(clampedSize));
+      }
+
+      // Update button disabled states
+      if (textSizeDecrease) {
+        (textSizeDecrease as HTMLButtonElement).disabled = clampedSize <= TEXT_SIZE_MIN;
+      }
+      if (textSizeIncrease) {
+        (textSizeIncrease as HTMLButtonElement).disabled = clampedSize >= TEXT_SIZE_MAX;
+      }
+
+      return clampedSize;
+    }
+
+    function getCurrentTextSize(): number {
+      const attr = document.documentElement.getAttribute('data-font-size');
+      return attr ? parseInt(attr, 10) : TEXT_SIZE_DEFAULT;
+    }
 
     // Apply saved preferences
     if (savedHighContrast) {
@@ -242,10 +320,8 @@
       if (highContrastToggle) highContrastToggle.checked = true;
     }
 
-    if (savedLargeText) {
-      document.documentElement.setAttribute('data-font-size', 'large');
-      if (largeTextToggle) largeTextToggle.checked = true;
-    }
+    // Apply saved text size
+    applyTextSize(savedTextSize);
 
     if (savedReducedMotion) {
       document.documentElement.setAttribute('data-reduced-motion', 'true');
@@ -355,15 +431,17 @@
       localStorage.setItem('a11y-high-contrast', String(enabled));
     });
 
-    // Large text toggle
-    largeTextToggle?.addEventListener('change', () => {
-      const enabled = largeTextToggle.checked;
-      if (enabled) {
-        document.documentElement.setAttribute('data-font-size', 'large');
-      } else {
-        document.documentElement.removeAttribute('data-font-size');
-      }
-      localStorage.setItem('a11y-large-text', String(enabled));
+    // Text size controls
+    textSizeDecrease?.addEventListener('click', () => {
+      const currentSize = getCurrentTextSize();
+      const newSize = applyTextSize(currentSize - TEXT_SIZE_STEP);
+      localStorage.setItem('a11y-text-size', String(newSize));
+    });
+
+    textSizeIncrease?.addEventListener('click', () => {
+      const currentSize = getCurrentTextSize();
+      const newSize = applyTextSize(currentSize + TEXT_SIZE_STEP);
+      localStorage.setItem('a11y-text-size', String(newSize));
     });
 
     // Reduced motion toggle
@@ -432,7 +510,7 @@
 
       // Reset form controls
       if (highContrastToggle) highContrastToggle.checked = false;
-      if (largeTextToggle) largeTextToggle.checked = false;
+      applyTextSize(TEXT_SIZE_DEFAULT); // Reset text size to 100%
       if (reducedMotionToggle) reducedMotionToggle.checked = false;
       if (textSpacingToggle) textSpacingToggle.checked = false;
       if (underlineLinksToggle) underlineLinksToggle.checked = false;
@@ -445,7 +523,7 @@
 
       // Clear localStorage
       localStorage.removeItem('a11y-high-contrast');
-      localStorage.removeItem('a11y-large-text');
+      localStorage.removeItem('a11y-text-size');
       localStorage.removeItem('a11y-reduced-motion');
       localStorage.removeItem('a11y-text-spacing');
       localStorage.removeItem('a11y-underline-links');

@@ -47,18 +47,35 @@ const { src, poster, alt, width = 600, height = 400, class: className = '' } = A
     transform: scale(1.02);
   }
 
-  /* Respect reduced motion preference */
+  /* Respect reduced motion preference (OS setting) */
   @media (prefers-reduced-motion: reduce) {
     .hover-video,
     .play-indicator {
       transition: none;
     }
   }
+
+  /* Respect reduced motion preference (accessibility panel setting) */
+  :global([data-reduced-motion='true']) .hover-video-container {
+    /* Video will be paused via JavaScript, poster image will show */
+  }
+
+  :global([data-reduced-motion='true']) .hover-video {
+    transition: none;
+  }
 </style>
 
 <script>
   function initHoverVideos() {
     const containers = document.querySelectorAll('[data-hover-video]');
+
+    // Check if reduced motion is enabled
+    function isReducedMotion() {
+      return (
+        document.documentElement.getAttribute('data-reduced-motion') === 'true' ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      );
+    }
 
     containers.forEach((container) => {
       const video = container.querySelector('video') as HTMLVideoElement;
@@ -78,7 +95,7 @@ const { src, poster, alt, width = 600, height = 400, class: className = '' } = A
 
       // Play on hover (desktop)
       container.addEventListener('mouseenter', () => {
-        if (!isTouch) {
+        if (!isTouch && !isReducedMotion()) {
           video.play();
           container.classList.add('is-playing');
           isPlaying = true;
@@ -95,6 +112,7 @@ const { src, poster, alt, width = 600, height = 400, class: className = '' } = A
       });
 
       // Toggle on click/tap (mobile and desktop fallback)
+      // Allow manual toggle even with reduced motion (user-initiated)
       container.addEventListener('click', () => {
         if (isPlaying) {
           video.pause();
@@ -124,6 +142,13 @@ const { src, poster, alt, width = 600, height = 400, class: className = '' } = A
         container.classList.remove('is-playing');
         isPlaying = false;
       });
+
+      // Pause video if reduced motion is enabled and video is currently playing
+      if (isReducedMotion() && isPlaying) {
+        video.pause();
+        container.classList.remove('is-playing');
+        isPlaying = false;
+      }
     });
   }
 
