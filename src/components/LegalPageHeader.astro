@@ -1,0 +1,286 @@
+---
+/**
+ * LegalPageHeader Component
+ * Header for legal pages with TL;DR summary box and simple language toggle
+ */
+
+interface Props {
+  version?: string;
+  effectiveDate: string;
+  lastUpdated: string;
+  summary: string;
+}
+
+const { version, effectiveDate, lastUpdated, summary } = Astro.props;
+---
+
+<div class="legal-header">
+  <div class="legal-meta">
+    {
+      version && (
+        <span class="meta-item">
+          <strong>Version:</strong> {version}
+        </span>
+      )
+    }
+    <span class="meta-item"><strong>Effective:</strong> {effectiveDate}</span>
+    <span class="meta-item"><strong>Updated:</strong> {lastUpdated}</span>
+  </div>
+
+  <div class="legal-controls">
+    <button class="simple-toggle" id="simple-toggle" aria-pressed="false">
+      <svg
+        class="toggle-icon"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M12 16v-4"></path>
+        <path d="M12 8h.01"></path>
+      </svg>
+      <span class="toggle-text">Simple Language</span>
+      <span class="toggle-switch">
+        <span class="toggle-thumb"></span>
+      </span>
+    </button>
+
+    <button class="expand-all-btn" id="expand-all-btn">
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="15 3 21 3 21 9"></polyline>
+        <polyline points="9 21 3 21 3 15"></polyline>
+        <line x1="21" y1="3" x2="14" y2="10"></line>
+        <line x1="3" y1="21" x2="10" y2="14"></line>
+      </svg>
+      <span>Expand All</span>
+    </button>
+  </div>
+
+  <div class="tldr-box">
+    <div class="tldr-header">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path
+          d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"
+        >
+        </path>
+      </svg>
+      <h3>TL;DR - The Quick Version</h3>
+    </div>
+    <p>{summary}</p>
+  </div>
+</div>
+
+<style>
+  .legal-header {
+    max-width: 900px;
+    margin: 0 auto 2rem;
+  }
+
+  .legal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    color: var(--text-light);
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+  }
+
+  .meta-item strong {
+    color: var(--text-dark);
+    font-weight: 500;
+  }
+
+  .legal-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .simple-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg-secondary, #f8fafc);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9375rem;
+    color: var(--text-dark);
+  }
+
+  .simple-toggle:hover {
+    border-color: var(--primary-blue);
+    background: var(--light-blue);
+  }
+
+  .toggle-icon {
+    color: var(--primary-blue);
+  }
+
+  .toggle-switch {
+    width: 44px;
+    height: 24px;
+    background: #cbd5e1;
+    border-radius: 12px;
+    position: relative;
+    transition: background 0.2s ease;
+  }
+
+  .toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .simple-toggle[aria-pressed='true'] .toggle-switch {
+    background: var(--primary-blue);
+  }
+
+  .simple-toggle[aria-pressed='true'] .toggle-thumb {
+    transform: translateX(20px);
+  }
+
+  .expand-all-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9375rem;
+    color: var(--text-light);
+  }
+
+  .expand-all-btn:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+    background: var(--light-blue);
+  }
+
+  .tldr-box {
+    background: linear-gradient(135deg, var(--light-blue) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border: 1px solid rgba(43, 108, 176, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+
+  .tldr-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--primary-blue);
+  }
+
+  .tldr-header h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .tldr-box p {
+    margin: 0;
+    line-height: 1.7;
+    color: var(--text-dark);
+  }
+
+  /* Dark mode */
+  :global([data-theme='dark']) .legal-meta {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .simple-toggle {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .simple-toggle:hover {
+    border-color: var(--accent-blue);
+    background: rgba(99, 179, 237, 0.1);
+  }
+
+  :global([data-theme='dark']) .toggle-icon {
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .toggle-switch {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  :global([data-theme='dark']) .simple-toggle[aria-pressed='true'] .toggle-switch {
+    background: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .expand-all-btn {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .expand-all-btn:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    background: rgba(99, 179, 237, 0.1);
+  }
+
+  :global([data-theme='dark']) .tldr-box {
+    background: linear-gradient(135deg, rgba(99, 179, 237, 0.15) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border-color: rgba(99, 179, 237, 0.3);
+  }
+
+  :global([data-theme='dark']) .tldr-header {
+    color: var(--accent-blue);
+  }
+
+  @media (max-width: 640px) {
+    .legal-meta {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .legal-controls {
+      flex-direction: column;
+    }
+
+    .simple-toggle,
+    .expand-all-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

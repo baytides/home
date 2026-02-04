@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import PageHero from '../components/PageHero.astro';
+import LegalPageHeader from '../components/LegalPageHeader.astro';
+import LegalSection from '../components/LegalSection.astro';
 
 const structuredData = [
   {
@@ -15,7 +17,7 @@ const structuredData = [
       name: 'Bay Tides',
       url: 'https://baytides.org',
     },
-    dateModified: '2025-12-28',
+    dateModified: '2025-02-03',
   },
   {
     '@context': 'https://schema.org',
@@ -33,338 +35,889 @@ const structuredData = [
   description="Bay Tides Terms of Service. Review the terms and conditions for using our website and services."
   canonicalUrl="https://baytides.org/terms"
   structuredData={structuredData}
-  preloadImages={['/assets/images/hero-bg.webp']}
 >
   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Terms of Service' }]} />
 
   <PageHero title="Terms of Service" subtitle="Please read these terms carefully" />
 
-  <section class="content-section">
+  <section class="content-section legal-page">
     <div class="container">
-      <div class="content-centered" style="text-align: left; max-width: 900px">
-        <p>
-          <strong>Effective Date:</strong>
-          December 28, 2025
-        </p>
-        <p>
-          <strong>Last Updated:</strong>
-          December 28, 2025
-        </p>
+      <LegalPageHeader
+        version="2.0"
+        effectiveDate="February 3, 2025"
+        lastUpdated="February 3, 2025"
+        summary="By using our website, you agree to use it responsibly and legally. We provide our services 'as is' without guarantees. Any disputes will be handled through informal resolution first, then small claims court or regular courts if needed. We're committed to protecting your privacy and making our site accessible to everyone."
+      />
 
-        <p>
-          Welcome to Bay Tides. These Terms of Service ("Terms") govern your access to and use of
-          the Bay Tides website at baytides.org (the "Site") and any services, features, or content
-          we provide (collectively, the "Services"). By accessing or using our Services, you agree
-          to be bound by these Terms. If you do not agree to these Terms, please do not use our
-          Services.
-        </p>
-
-        <h2>1. Acceptance of Terms</h2>
-        <p>
-          By accessing or using our Site and Services, you acknowledge that you have read,
-          understood, and agree to be bound by these Terms, as well as our
-          <a href="/privacy">Privacy Policy</a>, which is incorporated herein by reference. We
-          reserve the right to modify these Terms at any time. Your continued use of the Services
-          after any changes indicates your acceptance of the modified Terms.
-        </p>
-
-        <h2>2. Eligibility</h2>
-        <p>
-          You must be at least 13 years of age to use our Services. If you are under 18, you
-          represent that you have your parent or guardian's permission to use the Services. By using
-          our Services, you represent and warrant that you meet these eligibility requirements.
-        </p>
-
-        <h2>3. Description of Services</h2>
-        <p>
-          Bay Tides is a 501(c)(3) nonprofit organization dedicated to protecting and preserving the
-          San Francisco Bay. Our Services include:
-        </p>
-        <ul>
-          <li>Information about our conservation programs and initiatives</li>
-          <li>Volunteer registration and coordination</li>
-          <li>Donation processing through third-party platforms</li>
-          <li>Educational resources and content</li>
-          <li>Newsletter subscriptions</li>
-          <li>Contact forms for inquiries</li>
-        </ul>
-
-        <h2>4. User Conduct</h2>
-        <p>When using our Services, you agree not to:</p>
-        <ul>
-          <li>Violate any applicable laws, regulations, or these Terms</li>
-          <li>Provide false or misleading information</li>
-          <li>Impersonate any person or entity</li>
-          <li>Interfere with or disrupt the Services or servers</li>
-          <li>Attempt to gain unauthorized access to any part of the Services</li>
-          <li>Use the Services for any unlawful or fraudulent purpose</li>
-          <li>Transmit any viruses, malware, or harmful code</li>
-          <li>Harvest or collect information about other users</li>
-          <li>Use automated systems to access the Services without permission</li>
-          <li>Engage in any activity that could damage our reputation</li>
-        </ul>
-
-        <h2>5. Donations</h2>
-        <p>
-          Donations to Bay Tides are processed through Donorbox, a secure third-party payment
-          platform. By making a donation, you agree to Donorbox's terms of service. All donations
-          are final and non-refundable except in cases of processing errors. Bay Tides is a
-          registered 501(c)(3) nonprofit organization, and donations may be tax-deductible to the
-          extent permitted by law. We will provide donation receipts for tax purposes upon request.
-        </p>
-
-        <h2>6. Volunteer Activities</h2>
-        <p>
-          Participation in volunteer activities is subject to additional terms and waivers that will
-          be provided at the time of registration. Volunteers must comply with all safety guidelines
-          and instructions provided by Bay Tides staff. We reserve the right to refuse or terminate
-          volunteer participation at our discretion.
-        </p>
-
-        <h2>7. Intellectual Property</h2>
-        <p>
-          All content on our Site, including but not limited to text, graphics, logos, images,
-          photographs, and software, is the property of Bay Tides or our licensors and is protected
-          by copyright, trademark, and other intellectual property laws. You may not:
-        </p>
-        <ul>
-          <li>Reproduce, distribute, or publicly display our content without permission</li>
-          <li>Modify or create derivative works based on our content</li>
-          <li>Use our trademarks or logos without written authorization</li>
-          <li>Remove any copyright or proprietary notices from our content</li>
-        </ul>
-        <p>
-          You may share links to our Site and use our content for personal, non-commercial purposes
-          with proper attribution.
-        </p>
-
-        <h2>8. Third-Party Services and Links</h2>
-        <p>Our Services may contain links to third-party websites or services, including:</p>
-        <ul>
-          <li>Donorbox for donation processing</li>
-          <li>Web3Forms for contact form submissions</li>
-          <li>Social media platforms</li>
-        </ul>
-        <p>
-          We are not responsible for the content, terms, or privacy practices of third-party
-          services. Your use of third-party services is at your own risk and subject to their
-          respective terms.
-        </p>
-
-        <h2>9. Disclaimer of Warranties</h2>
-        <p>
-          THE SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND,
-          EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF
-          MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WE DO NOT WARRANT
-          THAT:
-        </p>
-        <ul>
-          <li>The Services will be uninterrupted, secure, or error-free</li>
-          <li>The results obtained from using the Services will be accurate or reliable</li>
-          <li>Any errors in the Services will be corrected</li>
-        </ul>
-
-        <h2>10. Limitation of Liability</h2>
-        <p>
-          TO THE FULLEST EXTENT PERMITTED BY LAW, BAY TIDES, ITS OFFICERS, DIRECTORS, EMPLOYEES,
-          VOLUNTEERS, AND AGENTS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
-          CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO:
-        </p>
-        <ul>
-          <li>Loss of profits, data, or goodwill</li>
-          <li>Service interruption or computer damage</li>
-          <li>Personal injury or property damage</li>
-        </ul>
-        <p>
-          IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE AMOUNT YOU PAID TO US IN THE TWELVE (12)
-          MONTHS PRECEDING THE CLAIM, OR ONE HUNDRED DOLLARS ($100), WHICHEVER IS GREATER.
-        </p>
-
-        <h2>11. Indemnification</h2>
-        <p>
-          You agree to indemnify, defend, and hold harmless Bay Tides and its officers, directors,
-          employees, volunteers, and agents from and against any claims, liabilities, damages,
-          losses, costs, or expenses (including reasonable attorneys' fees) arising out of or
-          relating to:
-        </p>
-        <ul>
-          <li>Your use of our Services</li>
-          <li>Your violation of these Terms</li>
-          <li>Your violation of any rights of another party</li>
-          <li>Your conduct in connection with the Services</li>
-        </ul>
-
-        <h2>12. Dispute Resolution and Mandatory Arbitration</h2>
-        <p>
-          <strong>
-            PLEASE READ THIS SECTION CAREFULLY. IT AFFECTS YOUR LEGAL RIGHTS, INCLUDING YOUR RIGHT
-            TO FILE A LAWSUIT IN COURT.
-          </strong>
-        </p>
-
-        <h3>12.1 Agreement to Arbitrate</h3>
-        <p>
-          You and Bay Tides agree that any dispute, claim, or controversy arising out of or relating
-          to these Terms, our Services, or any aspect of your relationship with Bay Tides
-          (collectively, "Disputes") will be resolved exclusively through final and binding
-          individual arbitration, rather than in court, except as set forth below.
-        </p>
-
-        <h3>12.2 Waiver of Class Actions</h3>
-        <p>
-          YOU AND BAY TIDES AGREE THAT EACH MAY BRING CLAIMS AGAINST THE OTHER ONLY IN YOUR OR ITS
-          INDIVIDUAL CAPACITY AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS,
-          COLLECTIVE, OR REPRESENTATIVE ACTION. Unless both you and Bay Tides agree otherwise, the
-          arbitrator may not consolidate more than one person's claims and may not preside over any
-          form of class, collective, or representative proceeding.
-        </p>
-
-        <h3>12.3 Informal Resolution First</h3>
-        <p>
-          Before initiating arbitration, you agree to first contact us at our website contact form
-          to attempt to resolve the dispute informally. We will attempt to resolve the dispute by
-          contacting you via email. If we are unable to resolve a dispute within thirty (30) days,
-          either party may proceed to arbitration.
-        </p>
-
-        <h3>12.4 Arbitration Procedures</h3>
-        <p>
-          Any arbitration shall be administered by JAMS under its Streamlined Arbitration Rules and
-          Procedures, as modified by this agreement. The arbitration will be conducted by a single
-          neutral arbitrator. The arbitration shall take place in San Mateo County, California, or
-          at another mutually agreed location, or via videoconference if agreed by the parties.
-        </p>
-
-        <h3>12.5 Arbitration Fees</h3>
-        <p>
-          Each party shall initially bear its own filing fees and share equally in the arbitrator's
-          fees. However, if you prevail in the arbitration, Bay Tides will reimburse your filing
-          fees and pay the full arbitrator's fees for disputes involving $5,000 or less. For
-          disputes involving more than $5,000, the arbitrator shall determine the allocation of fees
-          based on the outcome and merits of the case.
-        </p>
-
-        <h3>12.6 Exceptions to Arbitration</h3>
-        <p>
-          Either party may bring an individual action in small claims court for disputes within the
-          court's jurisdiction. Additionally, either party may seek injunctive or other equitable
-          relief in any court of competent jurisdiction to prevent the actual or threatened
-          infringement or misappropriation of intellectual property rights.
-        </p>
-
-        <h3>12.7 Opt-Out</h3>
-        <p>
-          You may opt out of this arbitration agreement by sending written notice to Bay Tides via
-          our contact form within fourteen (14) days of first using our Services. Your notice must
-          include your name, address, and a clear statement that you wish to opt out of this
-          arbitration agreement. If you opt out, you will not be precluded from using our Services,
-          but this arbitration agreement will not apply to you.
-        </p>
-
-        <h3>12.8 Survival</h3>
-        <p>
-          This arbitration agreement will survive termination of your relationship with Bay Tides
-          and your use of our Services.
-        </p>
-
-        <h2>13. Governing Law</h2>
-        <p>
-          These Terms and any disputes arising hereunder shall be governed by and construed in
-          accordance with the laws of the State of California, without regard to its conflict of law
-          principles. For any matters not subject to arbitration, you consent to the exclusive
-          jurisdiction of the state and federal courts located in San Mateo County, California.
-        </p>
-
-        <h2>14. Privacy</h2>
-        <p>
-          Your use of our Services is also governed by our
-          <a href="/privacy">Privacy Policy</a>, which describes how we collect, use, and protect
-          your personal information. By using our Services, you consent to our privacy practices as
-          described in the Privacy Policy.
-        </p>
-
-        <h2>15. Modifications to Services</h2>
-        <p>
-          We reserve the right to modify, suspend, or discontinue any part of our Services at any
-          time without notice or liability. We may also impose limits on certain features or
-          restrict access to parts of the Services without notice or liability.
-        </p>
-
-        <h2>16. Termination</h2>
-        <p>
-          We may terminate or suspend your access to our Services immediately, without prior notice
-          or liability, for any reason, including if you breach these Terms. Upon termination, your
-          right to use the Services will cease immediately. All provisions of these Terms which by
-          their nature should survive termination shall survive, including intellectual property
-          rights, disclaimers, indemnification, and limitations of liability.
-        </p>
-
-        <h2>17. Severability</h2>
-        <p>
-          If any provision of these Terms is found to be unenforceable or invalid, that provision
-          will be limited or eliminated to the minimum extent necessary, and the remaining
-          provisions will remain in full force and effect.
-        </p>
-
-        <h2>18. Entire Agreement</h2>
-        <p>
-          These Terms, together with our Privacy Policy and any other legal notices or agreements
-          published by us on the Site, constitute the entire agreement between you and Bay Tides
-          concerning your use of the Services and supersede all prior agreements and understandings.
-        </p>
-
-        <h2>19. Waiver</h2>
-        <p>
-          Our failure to enforce any right or provision of these Terms shall not constitute a waiver
-          of such right or provision. Any waiver of any provision of these Terms will be effective
-          only if in writing and signed by Bay Tides.
-        </p>
-
-        <h2>20. California Residents</h2>
-        <p>
-          If you are a California resident, you may have additional rights under the California
-          Consumer Privacy Act (CCPA). Please refer to our
-          <a href="/privacy">Privacy Policy</a>
-          for more information. Under California Civil Code Section 1789.3, California users are entitled
-          to the following consumer rights notice: You may contact the Complaint Assistance Unit of the
-          Division of Consumer Services of the California Department of Consumer Affairs by mail at 1625
-          North Market Blvd., Sacramento, CA 95834, or by telephone at (916) 445-1254 or (800) 952-5210.
-        </p>
-
-        <h2>21. Accessibility</h2>
-        <p>
-          Bay Tides is committed to making our website accessible to all users. If you experience
-          any difficulty accessing any part of our website, please
-          <a href="/contact">contact us</a>
-          and we will work to provide the information you need.
-        </p>
-
-        <h2>22. Contact Information</h2>
-        <p>
-          If you have any questions about these Terms of Service, please
-          <a href="/contact">contact us</a>
-          through our website.
-        </p>
-
-        <div class="info-box">
-          <p style="margin-bottom: 0">
-            <strong>Summary:</strong>
-            By using our website and services, you agree to use them responsibly and legally. We provide
-            our services "as is" without guarantees. Disputes will be resolved through individual arbitration
-            rather than court proceedings. We're committed to protecting your privacy and making our site
-            accessible to everyone.
+      <div class="legal-content">
+        <LegalSection
+          title="Acceptance of Terms"
+          sectionNumber={1}
+          simpleSummary="Using our site means you agree to these rules. We may update them, and continued use means you accept changes."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline
+              points="22 4 12 14.01 9 11.01"
+            >
+            </polyline>
+          </svg>
+          <p>
+            By accessing or using our Site and Services, you acknowledge that you have read,
+            understood, and agree to be bound by these Terms, as well as our
+            <a href="/privacy">Privacy Policy</a>, which is incorporated herein by reference. We
+            reserve the right to modify these Terms at any time. Your continued use of the Services
+            after any changes indicates your acceptance of the modified Terms.
           </p>
-        </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Eligibility"
+          sectionNumber={2}
+          simpleSummary="You must be at least 13 to use our site. If you're under 18, you need parent/guardian permission."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4">
+            </circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path
+              d="M16 3.13a4 4 0 0 1 0 7.75"
+            >
+            </path>
+          </svg>
+          <p>
+            You must be at least 13 years of age to use our Services. If you are under 18, you
+            represent that you have your parent or guardian's permission to use the Services. By
+            using our Services, you represent and warrant that you meet these eligibility
+            requirements.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Description of Services"
+          sectionNumber={3}
+          simpleSummary="We're a nonprofit protecting the San Francisco Bay. Our site offers info, volunteer signups, donations, educational content, newsletters, and contact forms."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M2 12c.6.5 1.2 1 2.5 1C7 13 7 11 9.5 11c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"
+            >
+            </path><path
+              d="M2 19c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"
+            >
+            </path><path
+              d="M2 5c.6.5 1.2 1 2.5 1C7 6 7 4 9.5 4c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"
+            >
+            </path>
+          </svg>
+          <p>
+            Bay Tides is a 501(c)(3) nonprofit organization dedicated to protecting and preserving
+            the San Francisco Bay. Our Services include:
+          </p>
+          <ul>
+            <li>Information about our conservation programs and initiatives</li>
+            <li>Volunteer registration and coordination</li>
+            <li>Donation processing through secure payment platforms</li>
+            <li>Educational resources and content</li>
+            <li>Newsletter subscriptions</li>
+            <li>Contact forms for inquiries</li>
+          </ul>
+        </LegalSection>
+
+        <LegalSection
+          title="User Conduct"
+          sectionNumber={4}
+          simpleSummary="Don't break laws, lie, hack, spread viruses, or do anything harmful when using our site."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <p>When using our Services, you agree not to:</p>
+          <ul>
+            <li>Violate any applicable laws, regulations, or these Terms</li>
+            <li>Provide false or misleading information</li>
+            <li>Impersonate any person or entity</li>
+            <li>Interfere with or disrupt the Services or servers</li>
+            <li>Attempt to gain unauthorized access to any part of the Services</li>
+            <li>Use the Services for any unlawful or fraudulent purpose</li>
+            <li>Transmit any viruses, malware, or harmful code</li>
+            <li>Harvest or collect information about other users</li>
+            <li>Use automated systems to access the Services without permission</li>
+            <li>Engage in any activity that could damage our reputation</li>
+          </ul>
+        </LegalSection>
+
+        <LegalSection
+          title="Donations"
+          sectionNumber={5}
+          simpleSummary="Donations are processed securely through Stripe. Donations are final except for errors. We're a 501(c)(3), so donations may be tax-deductible."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            >
+            </path>
+          </svg>
+          <p>
+            Donations to Bay Tides are processed through Stripe, a secure third-party payment
+            processor. Your payment information is handled directly by Stripe and is never stored on
+            our servers. By making a donation, you agree to <a
+              href="https://stripe.com/legal/end-users"
+              target="_blank"
+              rel="noopener"
+            >
+              Stripe's terms of service
+            </a>.
+          </p>
+          <p>
+            All donations are final and non-refundable except in cases of processing errors. Bay
+            Tides is a registered 501(c)(3) nonprofit organization, and donations may be
+            tax-deductible to the extent permitted by law. We will provide donation receipts for tax
+            purposes automatically via email.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Volunteer Activities"
+          sectionNumber={6}
+          simpleSummary="Volunteering requires additional agreements and waivers. Follow safety guidelines and staff instructions."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4">
+            </circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path
+              d="M16 3.13a4 4 0 0 1 0 7.75"
+            >
+            </path>
+          </svg>
+          <p>
+            Participation in volunteer activities is subject to additional terms and waivers that
+            will be provided at the time of registration. Please review our <a
+              href="/volunteer/terms"
+            >
+              Volunteer Terms
+            </a> and
+            <a href="/volunteer/privacy">Volunteer Privacy Policy</a> before registering.
+          </p>
+          <p>
+            Volunteers must comply with all safety guidelines and instructions provided by Bay Tides
+            staff. We reserve the right to refuse or terminate volunteer participation at our
+            discretion.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Intellectual Property"
+          sectionNumber={7}
+          simpleSummary="Our content is protected by copyright. You can share links and use content for personal purposes with attribution, but don't copy or modify our stuff."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle><path d="M14.83 14.83a4 4 0 1 1 0-5.66"></path>
+          </svg>
+          <p>
+            All content on our Site, including but not limited to text, graphics, logos, images,
+            photographs, and software, is the property of Bay Tides or our licensors and is
+            protected by copyright, trademark, and other intellectual property laws. You may not:
+          </p>
+          <ul>
+            <li>Reproduce, distribute, or publicly display our content without permission</li>
+            <li>Modify or create derivative works based on our content</li>
+            <li>Use our trademarks or logos without written authorization</li>
+            <li>Remove any copyright or proprietary notices from our content</li>
+          </ul>
+          <p>
+            You may share links to our Site and use our content for personal, non-commercial
+            purposes with proper attribution.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Third-Party Services and Links"
+          sectionNumber={8}
+          simpleSummary="We use trusted services like Stripe for payments, Cloudflare for forms, and MailerLite for newsletters. We're not responsible for their content."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path
+              d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+            >
+            </path>
+          </svg>
+          <p>
+            Our Services may contain links to or integrate with third-party services, including:
+          </p>
+          <ul>
+            <li><strong>Stripe</strong> for secure donation processing</li>
+            <li><strong>Cloudflare</strong> for form handling and spam protection</li>
+            <li><strong>MailerLite</strong> for newsletter management</li>
+            <li><strong>Plausible Analytics</strong> for privacy-friendly website analytics</li>
+            <li><strong>Social media platforms</strong> for community engagement</li>
+          </ul>
+          <p>
+            We are not responsible for the content, terms, or privacy practices of third-party
+            services. Your use of third-party services is at your own risk and subject to their
+            respective terms.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Disclaimer of Warranties"
+          sectionNumber={9}
+          simpleSummary="Our site is provided 'as is' without promises that everything will work perfectly all the time."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+            >
+            </path><line x1="12" y1="9" x2="12" y2="13"></line><line
+              x1="12"
+              y1="17"
+              x2="12.01"
+              y2="17"
+            >
+            </line>
+          </svg>
+          <p>
+            THE SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND,
+            EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF
+            MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WE DO NOT
+            WARRANT THAT:
+          </p>
+          <ul>
+            <li>The Services will be uninterrupted, secure, or error-free</li>
+            <li>The results obtained from using the Services will be accurate or reliable</li>
+            <li>Any errors in the Services will be corrected</li>
+          </ul>
+        </LegalSection>
+
+        <LegalSection
+          title="Limitation of Liability"
+          sectionNumber={10}
+          simpleSummary="We're not liable for indirect damages like lost profits. Our total liability is limited to $100 or what you paid us, whichever is more."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path
+              d="M7 11V7a5 5 0 0 1 10 0v4"
+            >
+            </path>
+          </svg>
+          <p>
+            TO THE FULLEST EXTENT PERMITTED BY LAW, BAY TIDES, ITS OFFICERS, DIRECTORS, EMPLOYEES,
+            VOLUNTEERS, AND AGENTS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
+            CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO:
+          </p>
+          <ul>
+            <li>Loss of profits, data, or goodwill</li>
+            <li>Service interruption or computer damage</li>
+            <li>Personal injury or property damage</li>
+          </ul>
+          <p>
+            IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE AMOUNT YOU PAID TO US IN THE TWELVE
+            (12) MONTHS PRECEDING THE CLAIM, OR ONE HUNDRED DOLLARS ($100), WHICHEVER IS GREATER.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Indemnification"
+          sectionNumber={11}
+          simpleSummary="If your actions cause legal problems for us, you agree to cover our costs and defend us."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4">
+            </path>
+          </svg>
+          <p>
+            You agree to indemnify, defend, and hold harmless Bay Tides and its officers, directors,
+            employees, volunteers, and agents from and against any claims, liabilities, damages,
+            losses, costs, or expenses (including reasonable attorneys' fees) arising out of or
+            relating to:
+          </p>
+          <ul>
+            <li>Your use of our Services</li>
+            <li>Your violation of these Terms</li>
+            <li>Your violation of any rights of another party</li>
+            <li>Your conduct in connection with the Services</li>
+          </ul>
+        </LegalSection>
+
+        <LegalSection
+          title="Dispute Resolution"
+          sectionNumber={12}
+          simpleSummary="If there's a problem, let's try to work it out first. If we can't, you can use small claims court or regular court in California."
+          defaultOpen
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line
+              x1="9"
+              y1="9"
+              x2="9.01"
+              y2="9"
+            >
+            </line><line x1="15" y1="9" x2="15.01" y2="9"></line>
+          </svg>
+          <div class="subsection">
+            <h4>12.1 Informal Resolution First</h4>
+            <p>
+              Before initiating any formal proceeding, you agree to first contact us through our
+              <a href="/contact">contact form</a> to attempt to resolve the dispute informally. We will
+              attempt to resolve the dispute by contacting you via email. We ask that you give us at least
+              thirty (30) days to work through the issue before pursuing other options.
+            </p>
+          </div>
+
+          <div class="subsection">
+            <h4>12.2 Small Claims Court</h4>
+            <p>
+              Either party may bring an individual action in small claims court for disputes within
+              the court's jurisdiction. This is often the fastest and most cost-effective way to
+              resolve smaller disputes.
+            </p>
+          </div>
+
+          <div class="subsection">
+            <h4>12.3 Court Proceedings</h4>
+            <p>
+              For disputes that cannot be resolved informally or through small claims court, either
+              party may pursue resolution through the state or federal courts located in San Mateo
+              County, California. Both parties consent to the jurisdiction of these courts.
+            </p>
+          </div>
+
+          <div class="subsection">
+            <h4>12.4 Equitable Relief</h4>
+            <p>
+              Either party may seek injunctive or other equitable relief in any court of competent
+              jurisdiction to prevent the actual or threatened infringement or misappropriation of
+              intellectual property rights.
+            </p>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Governing Law"
+          sectionNumber={13}
+          simpleSummary="California law applies. Any legal matters go to courts in San Mateo County, California."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line
+              x1="4"
+              y1="22"
+              x2="4"
+              y2="15"
+            >
+            </line>
+          </svg>
+          <p>
+            These Terms and any disputes arising hereunder shall be governed by and construed in
+            accordance with the laws of the State of California, without regard to its conflict of
+            law principles. You consent to the exclusive jurisdiction of the state and federal
+            courts located in San Mateo County, California.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Privacy"
+          sectionNumber={14}
+          simpleSummary="Your privacy matters. Check our Privacy Policy for details on how we handle your data."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path
+              d="M7 11V7a5 5 0 0 1 10 0v4"
+            >
+            </path>
+          </svg>
+          <p>
+            Your use of our Services is also governed by our
+            <a href="/privacy">Privacy Policy</a>, which describes how we collect, use, and protect
+            your personal information. By using our Services, you consent to our privacy practices
+            as described in the Privacy Policy.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Modifications to Services"
+          sectionNumber={15}
+          simpleSummary="We can change or stop any part of our site at any time."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path
+              d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+            >
+            </path>
+          </svg>
+          <p>
+            We reserve the right to modify, suspend, or discontinue any part of our Services at any
+            time without notice or liability. We may also impose limits on certain features or
+            restrict access to parts of the Services without notice or liability.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Termination"
+          sectionNumber={16}
+          simpleSummary="We can end your access if you break the rules. Some parts of these terms continue even after termination."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line
+              x1="9"
+              y1="9"
+              x2="15"
+              y2="15"
+            >
+            </line>
+          </svg>
+          <p>
+            We may terminate or suspend your access to our Services immediately, without prior
+            notice or liability, for any reason, including if you breach these Terms. Upon
+            termination, your right to use the Services will cease immediately. All provisions of
+            these Terms which by their nature should survive termination shall survive, including
+            intellectual property rights, disclaimers, indemnification, and limitations of
+            liability.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Severability"
+          sectionNumber={17}
+          simpleSummary="If part of these terms is invalid, the rest still applies."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12">
+            </line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6">
+            </line><line x1="3" y1="12" x2="3.01" y2="12"></line><line
+              x1="3"
+              y1="18"
+              x2="3.01"
+              y2="18"
+            >
+            </line>
+          </svg>
+          <p>
+            If any provision of these Terms is found to be unenforceable or invalid, that provision
+            will be limited or eliminated to the minimum extent necessary, and the remaining
+            provisions will remain in full force and effect.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Entire Agreement"
+          sectionNumber={18}
+          simpleSummary="These terms plus our Privacy Policy are the complete agreement between us."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline
+              points="14 2 14 8 20 8"
+            >
+            </polyline><line x1="16" y1="13" x2="8" y2="13"></line><line
+              x1="16"
+              y1="17"
+              x2="8"
+              y2="17"
+            >
+            </line><polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <p>
+            These Terms, together with our Privacy Policy and any other legal notices or agreements
+            published by us on the Site, constitute the entire agreement between you and Bay Tides
+            concerning your use of the Services and supersede all prior agreements and
+            understandings.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Waiver"
+          sectionNumber={19}
+          simpleSummary="If we don't enforce a rule once, that doesn't mean we give up our right to enforce it later."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+          </svg>
+          <p>
+            Our failure to enforce any right or provision of these Terms shall not constitute a
+            waiver of such right or provision. Any waiver of any provision of these Terms will be
+            effective only if in writing and signed by Bay Tides.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="California Residents"
+          sectionNumber={20}
+          simpleSummary="California residents have extra privacy rights under CCPA. See our Privacy Policy for details."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="10" r="3"></circle><path
+              d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z"
+            >
+            </path>
+          </svg>
+          <p>
+            If you are a California resident, you may have additional rights under the California
+            Consumer Privacy Act (CCPA). Please refer to our
+            <a href="/privacy">Privacy Policy</a>
+            for more information.
+          </p>
+          <p>
+            Under California Civil Code Section 1789.3, California users are entitled to the
+            following consumer rights notice: You may contact the Complaint Assistance Unit of the
+            Division of Consumer Services of the California Department of Consumer Affairs by mail
+            at 1625 North Market Blvd., Sacramento, CA 95834, or by telephone at (916) 445-1254 or
+            (800) 952-5210.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Accessibility"
+          sectionNumber={21}
+          simpleSummary="We want everyone to be able to use our site. Contact us if you have trouble accessing anything."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line
+              x1="4.93"
+              y1="4.93"
+              x2="9.17"
+              y2="9.17"
+            >
+            </line><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line><line
+              x1="14.83"
+              y1="9.17"
+              x2="19.07"
+              y2="4.93"
+            >
+            </line><line x1="14.83" y1="9.17" x2="18.36" y2="5.64"></line><line
+              x1="4.93"
+              y1="19.07"
+              x2="9.17"
+              y2="14.83"
+            >
+            </line>
+          </svg>
+          <p>
+            Bay Tides is committed to making our website accessible to all users. If you experience
+            any difficulty accessing any part of our website, please
+            <a href="/contact">contact us</a>
+            and we will work to provide the information you need.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Contact Information"
+          sectionNumber={22}
+          simpleSummary="Questions? Reach out through our contact page."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+            </path><polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <p>
+            If you have any questions about these Terms of Service, please
+            <a href="/contact">contact us</a>
+            through our website.
+          </p>
+        </LegalSection>
       </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .info-box {
-    margin-top: 3rem;
-    padding: 1.5rem;
-    background: var(--light-blue);
-    border-radius: 8px;
+  .legal-page {
+    padding-bottom: 4rem;
+  }
+
+  .legal-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .subsection {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--border-color, #e2e8f0);
+  }
+
+  .subsection h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-dark);
+  }
+
+  .subsection p {
+    margin: 0;
+  }
+
+  :global([data-theme='dark']) .subsection {
+    border-left-color: rgba(255, 255, 255, 0.2);
   }
 </style>
+
+<script>
+  // Simple language toggle functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('simple-toggle');
+    const expandAllBtn = document.getElementById('expand-all-btn');
+    const sections = document.querySelectorAll('.legal-section');
+
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const isPressed = toggle.getAttribute('aria-pressed') === 'true';
+        toggle.setAttribute('aria-pressed', String(!isPressed));
+        document.body.classList.toggle('simple-language-mode', !isPressed);
+      });
+    }
+
+    if (expandAllBtn) {
+      let allExpanded = false;
+      expandAllBtn.addEventListener('click', () => {
+        allExpanded = !allExpanded;
+        sections.forEach((section) => {
+          const details = section.querySelector('details');
+          if (details) {
+            details.open = allExpanded;
+          }
+        });
+        const btnText = expandAllBtn.querySelector('span');
+        if (btnText) {
+          btnText.textContent = allExpanded ? 'Collapse All' : 'Expand All';
+        }
+      });
+    }
+  });
+</script>

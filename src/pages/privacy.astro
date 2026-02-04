@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import PageHero from '../components/PageHero.astro';
+import LegalPageHeader from '../components/LegalPageHeader.astro';
+import LegalSection from '../components/LegalSection.astro';
 
 const structuredData = [
   {
@@ -14,7 +16,7 @@ const structuredData = [
       name: 'Bay Tides',
       url: 'https://baytides.org',
     },
-    dateModified: '2025-12-28',
+    dateModified: '2025-02-03',
   },
   {
     '@context': 'https://schema.org',
@@ -32,853 +34,1071 @@ const structuredData = [
   description="Bay Tides privacy policy. Our commitment to protecting your privacy while you learn about our conservation work."
   canonicalUrl="https://baytides.org/privacy"
   structuredData={structuredData}
-  preloadImages={['/assets/images/hero-bg.webp']}
 >
   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Privacy Policy' }]} />
 
   <PageHero title="Privacy Policy" subtitle="Your privacy matters to us" />
 
-  <section class="content-section">
+  <section class="content-section legal-page">
     <div class="container">
-      <div class="content-centered" style="text-align: left; max-width: 900px">
-        <p>
-          <strong>Privacy Policy Version:</strong>
-          1.0
-        </p>
-        <p>
-          <strong>Effective Date:</strong>
-          December 28, 2025
-        </p>
-        <p>
-          <strong>Last Updated:</strong>
-          December 28, 2025
-        </p>
+      <LegalPageHeader
+        version="2.0"
+        effectiveDate="February 3, 2025"
+        lastUpdated="February 3, 2025"
+        summary="We minimize data collection and use privacy-friendly analytics (no cookies, no personal data). Forms are processed by our own Cloudflare Workers and donations by Stripe - we don't store your payment information. We never sell or share your data with advertisers or data brokers. Your theme preference is stored only on your device."
+      />
 
-        <div class="info-box">
+      <div class="legal-content">
+        <LegalSection
+          title="About Bay Tides"
+          sectionNumber={1}
+          simpleSummary="We're a 501(c)(3) nonprofit protecting the San Francisco Bay through education, advocacy, and hands-on action."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M2 12c.6.5 1.2 1 2.5 1C7 13 7 11 9.5 11c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"
+            >
+            </path><path
+              d="M2 19c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"
+            >
+            </path><path
+              d="M2 5c.6.5 1.2 1 2.5 1C7 6 7 4 9.5 4c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"
+            >
+            </path>
+          </svg>
           <p>
-            <strong>Simple Summary:</strong>
-            We minimize data collection. We use privacy-friendly analytics (no cookies, no personal data).
-            Contact forms are processed by Web3Forms and donations by Donorbox - we don't store your payment
-            information. We never sell or share your data with advertisers or data brokers. Your theme
-            preference is stored only on your device.
+            <strong>Bay Tides</strong> is a qualified tax-exempt nonprofit organization under Section
+            501(c)(3) of the Internal Revenue Code.
           </p>
-        </div>
-
-        <p>
-          Bay Tides is a
-          <strong>501(c)(3) nonprofit organization</strong>
-          committed to protecting and preserving the San Francisco Bay. We take your privacy seriously
-          and have designed this website with privacy-by-design principles and data minimization as core
-          values.
-        </p>
-
-        <h2>Quick Navigation</h2>
-        <ol>
-          <li><a href="#about-bay-tides">About Bay Tides</a></li>
-          <li><a href="#privacy-commitment">Our Privacy Commitment</a></li>
-          <li><a href="#info-not-collected">Information We Do NOT Collect</a></li>
-          <li><a href="#info-collected">Information We May Collect</a></li>
-          <li><a href="#how-website-works">How the Website Works</a></li>
-          <li><a href="#plausible-analytics">Plausible Analytics</a></li>
-          <li><a href="#third-party-services">Third-Party Services</a></li>
-          <li><a href="#cookies-tracking">Cookies and Tracking</a></li>
-          <li><a href="#data-retention">Data Retention</a></li>
-          <li><a href="#your-rights">Your Rights</a></li>
-          <li><a href="#data-security">Data Security</a></li>
-          <li><a href="#childrens-privacy">Children's Privacy</a></li>
-          <li><a href="#external-links">External Links</a></li>
-          <li><a href="#changes-policy">Changes to This Policy</a></li>
-          <li><a href="#contact-us">Contact Us</a></li>
-        </ol>
-
-        <hr />
-
-        <h2 id="about-bay-tides">1. About Bay Tides</h2>
-        <p>
-          <strong>Bay Tides</strong>
-          is a qualified tax-exempt nonprofit organization under Section 501(c)(3) of the Internal Revenue
-          Code.
-        </p>
-        <p>
-          <strong>Our Mission:</strong>
-          Bay Tides empowers communities to protect and preserve the San Francisco Bay's environment through
-          education, advocacy, and hands-on action.
-        </p>
-        <p>
-          <strong>Service Area:</strong>
-          San Francisco Bay Area, California
-        </p>
-
-        <hr />
-
-        <h2 id="privacy-commitment">2. Our Privacy Commitment</h2>
-        <p>
-          We believe in
-          <strong>privacy-by-design</strong>
-          and
-          <strong>data minimization</strong>. This means:
-        </p>
-        <ul>
-          <li>We collect only the minimum information necessary to provide our services</li>
-          <li>We do not use cookies for tracking or advertising</li>
-          <li>We do not display targeted advertisements</li>
-          <li>
-            We do not sell, rent, or share your personal information with advertisers or data
-            brokers
-          </li>
-          <li>We do not create user profiles or track behavior across websites</li>
-          <li>We use privacy-focused analytics that collects no personal data</li>
-        </ul>
-
-        <hr />
-
-        <h2 id="info-not-collected">3. Information We Do NOT Collect</h2>
-        <p>
-          To be absolutely clear about our privacy practices, here is what we explicitly do
-          <strong>NOT</strong>
-          collect:
-        </p>
-
-        <h3>Personal Identifiers (Unless Voluntarily Provided)</h3>
-        <p>
-          We do not automatically collect names, email addresses, phone numbers, postal addresses,
-          Social Security numbers, driver's license numbers, or any government-issued ID numbers.
-          The only personal information we receive is what you voluntarily submit through our
-          contact or donation forms.
-        </p>
-
-        <h3>Online Identifiers</h3>
-        <p>
-          Our systems do not log IP addresses, create device fingerprints, collect MAC addresses,
-          generate browser fingerprints, or track unique device identifiers. While our hosting
-          provider (GitHub Pages) and CDN (Cloudflare) may collect IP addresses for security
-          purposes, we do not have access to these logs and do not request or receive this
-          information.
-        </p>
-
-        <h3>Behavioral Data</h3>
-        <p>
-          We do not track or collect browsing history, search history, detailed page view
-          statistics, time-on-page metrics, click patterns, mouse movements, or scroll depth. Our
-          analytics only measure aggregate, anonymous metrics.
-        </p>
-
-        <h3>Demographic Information</h3>
-        <p>
-          We do not collect or infer age, gender, race, ethnicity, income level, employment status,
-          education level, marital status, or household size.
-        </p>
-
-        <h3>Protected Categories</h3>
-        <p>
-          We do not collect health information, financial information (beyond donation processing),
-          biometric data, sexual orientation, religious beliefs, or political affiliations.
-        </p>
-
-        <hr />
-
-        <h2 id="info-collected">4. Information We May Collect</h2>
-        <p>
-          We only collect personal information that you
-          <strong>voluntarily provide</strong>
-          when you:
-        </p>
-
-        <h3>Contact Forms</h3>
-        <p>
-          When you submit our contact form, we receive your name, email address, selected topic, and
-          message content. This information is processed by Web3Forms and forwarded to us via email.
-        </p>
-
-        <h3>Newsletter Subscriptions</h3>
-        <p>
-          When you subscribe to our newsletter, we receive your email address. You can unsubscribe
-          at any time.
-        </p>
-
-        <h3>Donations</h3>
-        <p>
-          When you make a donation through Donorbox, we receive your name, email, and donation
-          amount for record-keeping and tax receipt purposes.
-          <strong>We do not receive or store your payment card information</strong>
-          - this is handled securely by Donorbox.
-        </p>
-
-        <h3>Volunteer Registration</h3>
-        <p>
-          When you register for volunteer events, we collect the information you provide to
-          coordinate activities and communicate with you.
-        </p>
-
-        <hr />
-
-        <h2 id="how-website-works">5. How the Website Works</h2>
-
-        <h3>Client-Side Local Storage Only</h3>
-        <p>
-          This website uses your browser's
-          <strong>local storage</strong>
-          exclusively for functionality preferences. Local storage:
-        </p>
-        <ul>
-          <li>Stays only on your device</li>
-          <li>Is never transmitted to our servers</li>
-          <li>Is never seen by us or any third party</li>
-          <li>Can be cleared by you at any time through your browser settings</li>
-        </ul>
-
-        <p><strong>What is stored locally:</strong></p>
-        <ul>
-          <li>
-            <strong>Theme preference</strong>
-            (Light/Dark mode) - a simple CSS preference string
-          </li>
-        </ul>
-
-        <p>
-          <strong>How to clear this data:</strong>
-          You can clear local storage through your browser settings under "Cookies and Site Data" or "Clear
-          browsing data."
-        </p>
-
-        <p>
-          <strong>Browser Display Note:</strong>
-          Some browsers display local storage under "Cookies" in their settings interface. This is a browser
-          UI grouping, not an indication that we use cookies. Local storage is technically distinct from
-          HTTP cookies: it is never sent to our servers with requests, cannot be read by us, and does
-          not track you across websites.
-        </p>
-
-        <h3>No User Accounts</h3>
-        <p>
-          We do not offer user accounts, sign-in features, or require registration to access our
-          website content.
-        </p>
-
-        <hr />
-
-        <h2 id="plausible-analytics">6. Plausible Analytics</h2>
-        <p>
-          <strong>Hosting:</strong>
-          Self-hosted Plausible Analytics on infrastructure we control
-        </p>
-        <p>
-          <strong>Status:</strong>
-          Currently ENABLED
-        </p>
-
-        <p>
-          We use a
-          <strong>self-hosted version of Plausible Analytics</strong>
-          to understand basic usage patterns and improve our website. Unlike many analytics services,
-          Plausible collects only essential, aggregated metrics with strict privacy protections.
-        </p>
-
-        <h3>What We Measure</h3>
-        <p>
-          We measure only the following aggregate metrics that do
-          <strong>NOT</strong>
-          identify individuals:
-        </p>
-        <ul>
-          <li>Unique and total site visitor counts</li>
-          <li>Country of origin (country level only, not city or region)</li>
-          <li>Browser type (e.g., Chrome, Firefox, Safari)</li>
-          <li>Operating system (e.g., Windows, macOS, iOS, Android)</li>
-          <li>Referral sources (how visitors found our site)</li>
-        </ul>
-
-        <h3>What We Do NOT Collect</h3>
-        <ul>
-          <li>
-            <strong>IP Addresses:</strong>
-            No IP addresses are collected, logged, or stored
-          </li>
-          <li>
-            <strong>Personally Identifiable Information:</strong>
-            No names, emails, or any personal identifiers
-          </li>
-          <li>
-            <strong>Session Identifiers:</strong>
-            No session tokens, cookies, or user tracking IDs
-          </li>
-          <li>
-            <strong>Device Fingerprints:</strong>
-            No unique device identifiers or fingerprinting data
-          </li>
-          <li>
-            <strong>Behavioral Details:</strong>
-            No page-by-page tracking, click tracking, or time-on-page metrics
-          </li>
-        </ul>
-
-        <h3>Technical Privacy Measures</h3>
-        <ul>
-          <li>
-            <strong>No Cookies:</strong>
-            Plausible does not set or use cookies of any kind
-          </li>
-          <li>
-            <strong>No Cross-Site Tracking:</strong>
-            Data is not tracked across multiple websites
-          </li>
-          <li>
-            <strong>No User Profiles:</strong>
-            No individual user profiles or histories are maintained
-          </li>
-          <li>
-            <strong>HTTPS Encryption:</strong>
-            All data transmission is encrypted
-          </li>
-        </ul>
-
-        <p>
-          Learn more at
-          <a href="https://plausible.io/data-policy" target="_blank" rel="noopener">
-            Plausible's Data Policy
-          </a>.
-        </p>
-
-        <hr />
-
-        <h2 id="third-party-services">7. Third-Party Services</h2>
-        <p>We use minimal third-party services, and we are transparent about each one:</p>
-
-        <h3>Cloudflare Workers (Contact Forms)</h3>
-        <p>
-          <strong>Service:</strong>
-          Form submission processing
-        </p>
-        <p>
-          <strong>Data Collected:</strong>
-          Name, email, topic, and message content you submit
-        </p>
-        <p>
-          <strong>Data Handling:</strong>
-          Your submission is processed by our Cloudflare Worker and forwarded to us via MailChannels.
-          We use Cloudflare Turnstile for spam protection, which does not use tracking cookies.
-        </p>
-        <p>
-          <strong>Privacy Policy:</strong>
-          <a href="https://www.cloudflare.com/privacy/" target="_blank" rel="noopener">
-            cloudflare.com/privacy
-          </a>
-        </p>
-
-        <h3>MailerLite (Newsletter)</h3>
-        <p>
-          <strong>Service:</strong>
-          Newsletter management
-        </p>
-        <p>
-          <strong>Data Collected:</strong>
-          Email address when you subscribe to our newsletter
-        </p>
-        <p>
-          <strong>Data Handling:</strong>
-          Your email is stored in MailerLite for newsletter delivery. You can unsubscribe at any time.
-        </p>
-        <p>
-          <strong>Privacy Policy:</strong>
-          <a href="https://www.mailerlite.com/legal/privacy-policy" target="_blank" rel="noopener">
-            mailerlite.com/legal/privacy-policy
-          </a>
-        </p>
-
-        <h3>Donorbox (Donations)</h3>
-        <p>
-          <strong>Service:</strong>
-          Donation processing
-        </p>
-        <p>
-          <strong>Data Collected:</strong>
-          Name, email, donation amount, and payment information
-        </p>
-        <p>
-          <strong>Data Handling:</strong>
-          Donorbox is PCI-DSS compliant and processes payments securely. We do not receive or store your
-          payment card information.
-        </p>
-        <p>
-          <strong>Privacy Policy:</strong>
-          <a href="https://donorbox.org/privacy" target="_blank" rel="noopener">
-            donorbox.org/privacy
-          </a>
-        </p>
-
-        <h3>Cloudflare Pages (Website Hosting)</h3>
-        <p>
-          <strong>Service:</strong>
-          Static website hosting and CDN
-        </p>
-        <p>
-          <strong>Provider:</strong>
-          Cloudflare, Inc.
-        </p>
-        <p>
-          <strong>Data Collected by Cloudflare:</strong>
-          Cloudflare may collect IP addresses and browser information for security and abuse prevention
-          purposes. Cloudflare does not use this data for advertising and has strong privacy protections.
-        </p>
-        <p>
-          <strong>Privacy Policy:</strong>
-          <a href="https://www.cloudflare.com/privacy/" target="_blank" rel="noopener">
-            Cloudflare Privacy Policy
-          </a>
-        </p>
-
-        <h3>Cloudflare (CDN and Security)</h3>
-        <p>
-          <strong>Service:</strong>
-          Content delivery network and DDoS protection
-        </p>
-        <p>
-          <strong>Data Collected by Cloudflare:</strong>
-          Cloudflare may collect technical request metadata as part of its security and CDN operations.
-        </p>
-        <p>
-          <strong>Why We Use Cloudflare:</strong>
-          Cloudflare has a strong reputation for privacy, does not use collected data for advertising,
-          and complies with GDPR, CCPA, and other major privacy regulations.
-        </p>
-        <p>
-          <strong>Privacy Policy:</strong>
-          <a href="https://www.cloudflare.com/privacy/" target="_blank" rel="noopener">
-            cloudflare.com/privacy
-          </a>
-        </p>
-
-        <h3>Google Fonts</h3>
-        <p>
-          <strong>Service:</strong>
-          Web font delivery
-        </p>
-        <p>
-          <strong>Data Collected:</strong>
-          Google may collect limited technical information when fonts are loaded, including IP address
-          and browser information.
-        </p>
-        <p>
-          <strong>Privacy Policy:</strong>
-          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">
-            Google Privacy Policy
-          </a>
-        </p>
-
-        <hr />
-
-        <h2 id="cookies-tracking">8. Cookies and Tracking</h2>
-
-        <h3>This Website Does NOT Use Cookies</h3>
-        <p>We do not use cookies for any purpose. This means:</p>
-        <ul>
-          <li>No tracking cookies</li>
-          <li>No advertising cookies</li>
-          <li>No third-party cookies</li>
-          <li>No cookie consent banners are needed</li>
-        </ul>
-
-        <h3>Why We Don't Use Cookies</h3>
-        <ul>
-          <li>Cookies can track users across sessions and websites, creating privacy concerns</li>
-          <li>
-            Our website uses local storage for essential functionality, which is more
-            privacy-friendly
-          </li>
-          <li>People visiting our site deserve privacy without tracking</li>
-          <li>
-            Not using cookies simplifies the user experience and eliminates complex consent
-            management
-          </li>
-        </ul>
-
-        <h3>Do Not Track (DNT) Signals</h3>
-        <p>
-          Since we do not track users under any circumstances, DNT signals are unnecessary but fully
-          respected. We implement a universal "do not track" policy regardless of browser settings.
-        </p>
-
-        <h3>Global Privacy Control (GPC)</h3>
-        <p>
-          We respect Global Privacy Control signals. Since we do not sell or share personal
-          information, GPC compliance is automatic.
-        </p>
-
-        <hr />
-
-        <h2 id="data-retention">9. Data Retention</h2>
-
-        <h3>Voluntarily Provided Information</h3>
-        <p>
-          Information you voluntarily provide (contact form submissions, newsletter subscriptions,
-          donation records) is retained only as long as necessary to:
-        </p>
-        <ul>
-          <li>Fulfill the purposes described in this policy</li>
-          <li>
-            Comply with legal and regulatory requirements (e.g., donation records for tax purposes)
-          </li>
-          <li>Resolve disputes and enforce agreements</li>
-        </ul>
-
-        <h3>Analytics Data</h3>
-        <p>
-          Plausible Analytics retains aggregated statistics for website improvement. Since
-          individual visitor data is never collected, there is nothing to delete on a per-person
-          basis.
-        </p>
-
-        <h3>Local Storage</h3>
-        <p>
-          Data stored in your browser's local storage (theme preference) persists until you clear
-          your browser data. This data is under your exclusive control.
-        </p>
-
-        <hr />
-
-        <h2 id="your-rights">10. Your Rights</h2>
-        <p>You have the right to:</p>
-        <ul>
-          <li>
-            <strong>Access</strong>
-            the personal information we hold about you
-          </li>
-          <li>
-            <strong>Correct</strong>
-            inaccurate or incomplete information
-          </li>
-          <li>
-            <strong>Delete</strong>
-            your personal information (subject to legal requirements)
-          </li>
-          <li>
-            <strong>Opt out</strong>
-            of marketing communications at any time
-          </li>
-          <li>
-            <strong>Withdraw consent</strong>
-            where processing is based on consent
-          </li>
-        </ul>
-        <p>
-          To exercise these rights, please
-          <a href="/contact">contact us</a>.
-        </p>
-
-        <h3>California Residents (CCPA/CPRA)</h3>
-        <p>
-          Under the
-          <strong>California Consumer Privacy Act (CCPA)</strong>
-          and
-          <strong>California Privacy Rights Act (CPRA)</strong>, California residents have specific
-          rights regarding their personal information:
-        </p>
-        <ul>
-          <li>
-            <strong>Right to Know:</strong>
-            What personal information is collected and how it's used
-          </li>
-          <li>
-            <strong>Right to Delete:</strong>
-            Request deletion of personal information
-          </li>
-          <li>
-            <strong>Right to Opt-Out:</strong>
-            Opt out of the sale or sharing of personal information
-          </li>
-          <li>
-            <strong>Right to Correct:</strong>
-            Correct inaccurate personal information
-          </li>
-          <li>
-            <strong>Right to Non-Discrimination:</strong>
-            We cannot discriminate against you for exercising your rights
-          </li>
-        </ul>
-        <p>
-          <strong>Important:</strong>
-          We do
-          <strong>NOT</strong>
-          sell personal information. We do
-          <strong>NOT</strong>
-          share personal information with third parties for cross-context behavioral advertising.
-        </p>
-
-        <h3>European Residents (GDPR)</h3>
-        <p>
-          If you are located in the European Economic Area, United Kingdom, or Switzerland, you have
-          rights under the
-          <strong>General Data Protection Regulation (GDPR)</strong>. Our privacy practices respect
-          GDPR principles:
-        </p>
-        <ul>
-          <li>
-            <strong>Data Minimization:</strong>
-            We collect minimal personal data
-          </li>
-          <li>
-            <strong>Purpose Limitation:</strong>
-            Data is used only for stated purposes
-          </li>
-          <li>
-            <strong>Storage Limitation:</strong>
-            Data is not retained longer than necessary
-          </li>
-          <li>
-            <strong>Right to Erasure:</strong>
-            You can request deletion of your data
-          </li>
-          <li>
-            <strong>Data Portability:</strong>
-            You can request a copy of your data
-          </li>
-        </ul>
-        <p>
-          Our use of Plausible Analytics ensures we do not require cookie consent for analytics
-          purposes.
-        </p>
-
-        <h3>Other State Privacy Laws</h3>
-        <p>
-          We comply with privacy laws in all US states, including the Virginia Consumer Data
-          Protection Act (VCDPA), Colorado Privacy Act (CPA), Connecticut Data Privacy Act (CTDPA),
-          Utah Consumer Privacy Act (UCPA), and Nevada Privacy Law (SB 220).
-        </p>
-
-        <hr />
-
-        <h2 id="data-security">11. Data Security</h2>
-        <p>
-          We implement appropriate technical and organizational measures to protect information:
-        </p>
-        <ul>
-          <li>
-            <strong>HTTPS Encryption:</strong>
-            All traffic uses TLS encryption
-          </li>
-          <li>
-            <strong>Static Site Architecture:</strong>
-            No server-side database to breach
-          </li>
-          <li>
-            <strong>Secure Third-Party Providers:</strong>
-            All service providers are vetted for security
-          </li>
-          <li>
-            <strong>Limited Data Collection:</strong>
-            Fewer attack vectors due to minimal data
-          </li>
-          <li>
-            <strong>Cloudflare Protection:</strong>
-            DDoS protection and security filtering
-          </li>
-        </ul>
-        <p>
-          However, no method of transmission over the Internet is 100% secure. We cannot guarantee
-          absolute security.
-        </p>
-
-        <hr />
-
-        <h2 id="childrens-privacy">12. Children's Privacy (COPPA Compliance)</h2>
-        <p>
-          This website is compliant with the
-          <strong>Children's Online Privacy Protection Act (COPPA)</strong>.
-        </p>
-        <ul>
-          <li>Our Site is not directed to children under 13</li>
-          <li>We do not knowingly collect personal information from children under 13</li>
-          <li>No registration or account creation is required</li>
-          <li>
-            Children can safely browse our informational content without parental consent because
-            minimal personal information is collected
-          </li>
-        </ul>
-        <p>
-          If you believe we have inadvertently collected information from a child under 13, please
-          <a href="/contact">contact us</a>
-          immediately.
-        </p>
-
-        <hr />
-
-        <h2 id="external-links">13. External Links</h2>
-        <p>
-          Our Site may contain links to third-party websites. When you click an external link, you
-          leave baytides.org and become subject to the privacy policy of the destination website.
-        </p>
-        <p><strong>Important:</strong></p>
-        <ul>
-          <li>We are not responsible for the privacy practices of external sites</li>
-          <li>We do not control or endorse the content of external websites</li>
-          <li>Different organizations have different privacy policies</li>
-          <li>
-            We recommend reviewing the privacy policy of any external site before providing personal
-            information
-          </li>
-        </ul>
-
-        <hr />
-
-        <h2 id="changes-policy">14. Changes to This Policy</h2>
-
-        <h3>Material Changes</h3>
-        <p>
-          If we make material changes to this privacy policy (such as beginning to collect new types
-          of personal information), we will:
-        </p>
-        <ul>
-          <li>Update the "Last Updated" date at the top of this page</li>
-          <li>Provide prominent notice on the website for at least 30 days</li>
-          <li>Material changes will not take effect until at least 30 days after notice</li>
-        </ul>
-
-        <h3>Non-Material Changes</h3>
-        <p>
-          For minor updates (clarifications, formatting changes, contact information updates), we
-          will update the "Last Updated" date. Non-material changes take effect immediately upon
-          posting.
-        </p>
-
-        <p>
-          Your continued use of the website after changes are posted indicates your acceptance of
-          the updated policy.
-        </p>
-
-        <hr />
-
-        <h2 id="contact-us">15. Contact Us</h2>
-        <p>
-          If you have questions about this Privacy Policy or our privacy practices, please
-          <a href="/contact">contact us</a>
-          through our website.
-        </p>
-        <p>
-          <strong>Response Time:</strong>
-          We strive to respond to privacy inquiries within 30 days (or as required by applicable law).
-        </p>
-
-        <h3>Complaints</h3>
-        <p>If you believe your privacy rights have been violated, you may:</p>
-        <ul>
-          <li>
-            Contact us through our
-            <a href="/contact">contact form</a>
-          </li>
-          <li>File a complaint with the California Attorney General's Office (oag.ca.gov)</li>
-          <li>File a complaint with the Federal Trade Commission (ftc.gov)</li>
-          <li>For EU residents, file a complaint with your local Data Protection Authority</li>
-        </ul>
-
-        <hr />
-
-        <h2>Legal Compliance Summary</h2>
-        <p>This privacy policy and website are designed to comply with:</p>
-
-        <h3>Federal Laws</h3>
-        <ul>
-          <li>
-            <strong>Children's Online Privacy Protection Act (COPPA):</strong>
-            Protecting children under 13
-          </li>
-          <li>
-            <strong>Federal Trade Commission Act (FTC Act):</strong>
-            No deceptive privacy practices
-          </li>
-          <li>
-            <strong>Americans with Disabilities Act (ADA):</strong>
-            Accessible digital content
-          </li>
-        </ul>
-
-        <h3>State Laws</h3>
-        <ul>
-          <li>
-            <strong>
-              California Consumer Privacy Act (CCPA) / California Privacy Rights Act (CPRA)
-            </strong>
-          </li>
-          <li><strong>California Online Privacy Protection Act (CalOPPA)</strong></li>
-          <li><strong>Virginia, Colorado, Connecticut, Utah, Nevada privacy laws</strong></li>
-        </ul>
-
-        <h3>International Standards</h3>
-        <ul>
-          <li>
-            <strong>General Data Protection Regulation (GDPR):</strong>
-            Principles respected for international visitors
-          </li>
-          <li>
-            <strong>ePrivacy Directive (Cookie Law):</strong>
-            No cookies used
-          </li>
-          <li>
-            <strong>WCAG 2.2 Level AAA:</strong>
-            Accessibility standards
-          </li>
-        </ul>
-
-        <hr />
-
-        <div class="info-box">
-          <h2 style="margin-top: 0">The Bottom Line</h2>
           <p>
-            <strong>Bay Tides</strong>
-            is a 501(c)(3) nonprofit organization designed to help you learn about and support conservation
-            efforts while
-            <strong>respecting your privacy</strong>.
+            <strong>Our Mission:</strong> Bay Tides empowers communities to protect and preserve the San
+            Francisco Bay's environment through education, advocacy, and hands-on action.
+          </p>
+          <p>
+            <strong>Service Area:</strong> San Francisco Bay Area, California
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Our Privacy Commitment"
+          sectionNumber={2}
+          simpleSummary="We believe in privacy-by-design: minimal data collection, no tracking cookies, no ads, and we never sell your data."
+          defaultOpen
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4">
+            </path>
+          </svg>
+          <p>
+            We believe in <strong>privacy-by-design</strong> and <strong>data minimization</strong>.
+            This means:
           </p>
           <ul>
+            <li>We collect only the minimum information necessary to provide our services</li>
+            <li>We do not use cookies for tracking or advertising</li>
+            <li>We do not display targeted advertisements</li>
             <li>
-              We use
-              <strong>ZERO tracking cookies</strong>
+              We do not sell, rent, or share your personal information with advertisers or data
+              brokers
+            </li>
+            <li>We do not create user profiles or track behavior across websites</li>
+            <li>We use privacy-focused analytics that collects no personal data</li>
+          </ul>
+        </LegalSection>
+
+        <LegalSection
+          title="Information We Do NOT Collect"
+          sectionNumber={3}
+          simpleSummary="We don't collect your IP address, track your browsing behavior, or gather demographic data. The only info we get is what you voluntarily give us."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07">
+            </line>
+          </svg>
+          <p>
+            To be absolutely clear about our privacy practices, here is what we explicitly do <strong
+            >
+              NOT
+            </strong> collect:
+          </p>
+          <div class="subsection">
+            <h4>Personal Identifiers (Unless Voluntarily Provided)</h4>
+            <p>
+              We do not automatically collect names, email addresses, phone numbers, postal
+              addresses, Social Security numbers, driver's license numbers, or any government-issued
+              ID numbers. The only personal information we receive is what you voluntarily submit
+              through our contact or donation forms.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>Online Identifiers</h4>
+            <p>
+              Our systems do not log IP addresses, create device fingerprints, collect MAC
+              addresses, generate browser fingerprints, or track unique device identifiers. While
+              our hosting provider (Cloudflare Pages) may collect IP addresses for security
+              purposes, we do not have access to these logs and do not request or receive this
+              information.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>Behavioral Data</h4>
+            <p>
+              We do not track or collect browsing history, search history, detailed page view
+              statistics, time-on-page metrics, click patterns, mouse movements, or scroll depth.
+              Our analytics only measure aggregate, anonymous metrics.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>Demographic &amp; Protected Information</h4>
+            <p>
+              We do not collect or infer age, gender, race, ethnicity, income level, employment
+              status, education level, health information, biometric data, sexual orientation,
+              religious beliefs, or political affiliations.
+            </p>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Information We May Collect"
+          sectionNumber={4}
+          simpleSummary="We only collect what you voluntarily give us: contact form info, newsletter email, donation details for receipts, and volunteer registration info."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline
+              points="14 2 14 8 20 8"
+            >
+            </polyline><line x1="16" y1="13" x2="8" y2="13"></line><line
+              x1="16"
+              y1="17"
+              x2="8"
+              y2="17"
+            >
+            </line><polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <p>
+            We only collect personal information that you <strong>voluntarily provide</strong> when you:
+          </p>
+          <div class="subsection">
+            <h4>Contact Forms</h4>
+            <p>
+              When you submit our contact form, we receive your name, email address, selected topic,
+              and message content. This information is processed by our Cloudflare Worker and
+              forwarded to us via email.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>Newsletter Subscriptions</h4>
+            <p>
+              When you subscribe to our newsletter, we receive your email address. You can
+              unsubscribe at any time using the link in any newsletter.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>Donations</h4>
+            <p>
+              When you make a donation through our donation page, payments are processed securely by
+              Stripe. We receive your name, email, and donation amount for record-keeping and tax
+              receipt purposes.
+              <strong>We do not receive or store your payment card information</strong> - this is handled
+              directly and securely by Stripe.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>Volunteer Registration</h4>
+            <p>
+              When you register for volunteer events, we collect the information you provide to
+              coordinate activities and communicate with you. See our <a href="/volunteer/privacy">
+                Volunteer Privacy Policy
+              </a>
+              for details specific to volunteer data.
+            </p>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="How the Website Works"
+          sectionNumber={5}
+          simpleSummary="We use local storage on your device only for your theme preference (light/dark mode). This data never leaves your device."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line
+              x1="8"
+              y1="21"
+              x2="16"
+              y2="21"
+            >
+            </line><line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+          <div class="subsection">
+            <h4>Client-Side Local Storage Only</h4>
+            <p>
+              This website uses your browser's <strong>local storage</strong> exclusively for functionality
+              preferences:
+            </p>
+            <ul>
+              <li>Stays only on your device</li>
+              <li>Is never transmitted to our servers</li>
+              <li>Is never seen by us or any third party</li>
+              <li>Can be cleared by you at any time through your browser settings</li>
+            </ul>
+            <p>
+              <strong>What is stored locally:</strong> Theme preference (Light/Dark mode) - a simple CSS
+              preference string
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>No User Accounts</h4>
+            <p>
+              We do not offer user accounts, sign-in features, or require registration to access our
+              website content.
+            </p>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Plausible Analytics"
+          sectionNumber={6}
+          simpleSummary="We use self-hosted, privacy-friendly Plausible Analytics. It collects no personal data, uses no cookies, and only measures anonymous aggregate stats."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4">
+            </line><line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          <p>
+            We use a <strong>self-hosted version of Plausible Analytics</strong> to understand basic usage
+            patterns and improve our website. Unlike many analytics services, Plausible collects only
+            essential, aggregated metrics with strict privacy protections.
+          </p>
+          <div class="subsection">
+            <h4>What We Measure (Anonymous &amp; Aggregate Only)</h4>
+            <ul>
+              <li>Unique and total site visitor counts</li>
+              <li>Country of origin (country level only, not city or region)</li>
+              <li>Browser type (e.g., Chrome, Firefox, Safari)</li>
+              <li>Operating system (e.g., Windows, macOS, iOS, Android)</li>
+              <li>Referral sources (how visitors found our site)</li>
+            </ul>
+          </div>
+          <div class="subsection">
+            <h4>What We Do NOT Collect</h4>
+            <ul>
+              <li>
+                <strong>IP Addresses:</strong> No IP addresses are collected, logged, or stored
+              </li>
+              <li>
+                <strong>Personally Identifiable Information:</strong> No names, emails, or any personal
+                identifiers
+              </li>
+              <li>
+                <strong>Session Identifiers:</strong> No session tokens, cookies, or user tracking IDs
+              </li>
+              <li>
+                <strong>Device Fingerprints:</strong> No unique device identifiers or fingerprinting data
+              </li>
+              <li>
+                <strong>Behavioral Details:</strong> No page-by-page tracking, click tracking, or time-on-page
+                metrics
+              </li>
+            </ul>
+          </div>
+          <p>
+            Learn more at <a href="https://plausible.io/data-policy" target="_blank" rel="noopener">
+              Plausible's Data Policy
+            </a>.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Third-Party Services"
+          sectionNumber={7}
+          simpleSummary="We use Stripe for donations, Cloudflare for forms/hosting, MailerLite for newsletters, and Plausible for analytics. All are privacy-focused."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path
+              d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+            >
+            </path>
+          </svg>
+          <p>We use minimal third-party services, and we are transparent about each one:</p>
+
+          <div class="service-card">
+            <h4>Stripe (Donations)</h4>
+            <p><strong>Purpose:</strong> Secure donation processing</p>
+            <p>
+              <strong>Data Collected:</strong> Name, email, donation amount, and payment information
+            </p>
+            <p>
+              <strong>Data Handling:</strong> Stripe is PCI-DSS Level 1 compliant (the highest level of
+              certification). We never see or store your payment card information - it's handled entirely
+              by Stripe.
+            </p>
+            <p>
+              <strong>Privacy Policy:</strong>
+              <a href="https://stripe.com/privacy" target="_blank" rel="noopener">
+                stripe.com/privacy
+              </a>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h4>Cloudflare Workers (Forms)</h4>
+            <p><strong>Purpose:</strong> Form submission processing</p>
+            <p>
+              <strong>Data Collected:</strong> Name, email, topic, and message content you submit
+            </p>
+            <p>
+              <strong>Data Handling:</strong> Your submission is processed by our Cloudflare Worker and
+              forwarded to us via MailChannels. We use Cloudflare Turnstile for spam protection, which
+              does not use tracking cookies.
+            </p>
+            <p>
+              <strong>Privacy Policy:</strong>
+              <a href="https://www.cloudflare.com/privacy/" target="_blank" rel="noopener">
+                cloudflare.com/privacy
+              </a>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h4>MailerLite (Newsletter)</h4>
+            <p><strong>Purpose:</strong> Newsletter management</p>
+            <p><strong>Data Collected:</strong> Email address when you subscribe</p>
+            <p>
+              <strong>Data Handling:</strong> Your email is stored in MailerLite for newsletter delivery.
+              You can unsubscribe at any time.
+            </p>
+            <p>
+              <strong>Privacy Policy:</strong>
+              <a
+                href="https://www.mailerlite.com/legal/privacy-policy"
+                target="_blank"
+                rel="noopener"
+              >
+                mailerlite.com/legal/privacy-policy
+              </a>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h4>Cloudflare Pages (Hosting)</h4>
+            <p><strong>Purpose:</strong> Static website hosting and CDN</p>
+            <p>
+              <strong>Data Collected:</strong> Cloudflare may collect IP addresses and browser information
+              for security and abuse prevention. They do not use this data for advertising.
+            </p>
+            <p>
+              <strong>Privacy Policy:</strong>
+              <a href="https://www.cloudflare.com/privacy/" target="_blank" rel="noopener">
+                cloudflare.com/privacy
+              </a>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h4>Mapbox (Maps)</h4>
+            <p><strong>Purpose:</strong> Interactive maps on our events and volunteer pages</p>
+            <p>
+              <strong>Data Collected:</strong> Mapbox may collect limited technical information when maps
+              are loaded.
+            </p>
+            <p>
+              <strong>Privacy Policy:</strong>
+              <a href="https://www.mapbox.com/legal/privacy" target="_blank" rel="noopener">
+                mapbox.com/legal/privacy
+              </a>
+            </p>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Cookies and Tracking"
+          sectionNumber={8}
+          simpleSummary="We don't use cookies. Period. No tracking cookies, no advertising cookies, no third-party cookies. That's why you don't see a cookie banner."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line
+              x1="9"
+              y1="9"
+              x2="15"
+              y2="15"
+            >
+            </line>
+          </svg>
+          <div class="subsection">
+            <h4>This Website Does NOT Use Cookies</h4>
+            <ul>
+              <li>No tracking cookies</li>
+              <li>No advertising cookies</li>
+              <li>No third-party cookies</li>
+              <li>No cookie consent banners are needed</li>
+            </ul>
+          </div>
+          <div class="subsection">
+            <h4>Why We Don't Use Cookies</h4>
+            <ul>
+              <li>
+                Cookies can track users across sessions and websites, creating privacy concerns
+              </li>
+              <li>
+                Our website uses local storage for essential functionality, which is more
+                privacy-friendly
+              </li>
+              <li>People visiting our site deserve privacy without tracking</li>
+              <li>
+                Not using cookies simplifies the user experience and eliminates complex consent
+                management
+              </li>
+            </ul>
+          </div>
+          <div class="subsection">
+            <h4>Do Not Track &amp; Global Privacy Control</h4>
+            <p>
+              Since we do not track users under any circumstances, DNT and GPC signals are
+              automatically respected. We implement a universal "do not track" policy regardless of
+              browser settings.
+            </p>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Data Retention"
+          sectionNumber={9}
+          simpleSummary="We keep your info only as long as needed - donation records for tax purposes, contact form submissions until resolved. Analytics data is always anonymous."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <div class="subsection">
+            <h4>Voluntarily Provided Information</h4>
+            <p>
+              Information you provide (contact forms, newsletters, donations) is retained only as
+              long as necessary to:
+            </p>
+            <ul>
+              <li>Fulfill the purposes described in this policy</li>
+              <li>
+                Comply with legal and regulatory requirements (e.g., donation records for tax
+                purposes)
+              </li>
+              <li>Resolve disputes and enforce agreements</li>
+            </ul>
+          </div>
+          <div class="subsection">
+            <h4>Analytics Data</h4>
+            <p>
+              Plausible Analytics retains aggregated statistics for website improvement. Since
+              individual visitor data is never collected, there is nothing to delete on a per-person
+              basis.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>Local Storage</h4>
+            <p>
+              Data stored in your browser's local storage (theme preference) persists until you
+              clear your browser data. This data is under your exclusive control.
+            </p>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Your Rights"
+          sectionNumber={10}
+          simpleSummary="You can access, correct, or delete your data anytime. California residents have CCPA rights. EU residents have GDPR rights. We don't sell data."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4">
+            </circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path
+              d="M16 3.13a4 4 0 0 1 0 7.75"
+            >
+            </path>
+          </svg>
+          <p>You have the right to:</p>
+          <ul>
+            <li><strong>Access</strong> the personal information we hold about you</li>
+            <li><strong>Correct</strong> inaccurate or incomplete information</li>
+            <li>
+              <strong>Delete</strong> your personal information (subject to legal requirements)
+            </li>
+            <li><strong>Opt out</strong> of marketing communications at any time</li>
+            <li><strong>Withdraw consent</strong> where processing is based on consent</li>
+          </ul>
+          <p>To exercise these rights, please <a href="/contact">contact us</a>.</p>
+
+          <div class="subsection">
+            <h4>California Residents (CCPA/CPRA)</h4>
+            <p>
+              Under the California Consumer Privacy Act (CCPA) and California Privacy Rights Act
+              (CPRA), you have specific rights:
+            </p>
+            <ul>
+              <li>
+                <strong>Right to Know:</strong> What personal information is collected and how it's used
+              </li>
+              <li><strong>Right to Delete:</strong> Request deletion of personal information</li>
+              <li>
+                <strong>Right to Opt-Out:</strong> Opt out of the sale or sharing of personal information
+              </li>
+              <li><strong>Right to Correct:</strong> Correct inaccurate personal information</li>
+              <li>
+                <strong>Right to Non-Discrimination:</strong> We cannot discriminate against you for exercising
+                your rights
+              </li>
+            </ul>
+            <p>
+              <strong>Important:</strong> We do <strong>NOT</strong> sell personal information. We do
+              <strong>NOT</strong> share personal information with third parties for cross-context behavioral
+              advertising.
+            </p>
+          </div>
+
+          <div class="subsection">
+            <h4>European Residents (GDPR)</h4>
+            <p>
+              If you are located in the European Economic Area, United Kingdom, or Switzerland, you
+              have rights under GDPR. Our practices respect GDPR principles including data
+              minimization, purpose limitation, storage limitation, right to erasure, and data
+              portability.
+            </p>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Data Security"
+          sectionNumber={11}
+          simpleSummary="We use HTTPS encryption, secure third-party providers, and collect minimal data. Our static site architecture means no database to breach."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path
+              d="M7 11V7a5 5 0 0 1 10 0v4"
+            >
+            </path>
+          </svg>
+          <p>
+            We implement appropriate technical and organizational measures to protect information:
+          </p>
+          <ul>
+            <li><strong>HTTPS Encryption:</strong> All traffic uses TLS encryption</li>
+            <li><strong>Static Site Architecture:</strong> No server-side database to breach</li>
+            <li>
+              <strong>Secure Third-Party Providers:</strong> All service providers are vetted for security
             </li>
             <li>
-              We do
-              <strong>ZERO behavioral tracking</strong>
+              <strong>Limited Data Collection:</strong> Fewer attack vectors due to minimal data
             </li>
+            <li><strong>Cloudflare Protection:</strong> DDoS protection and security filtering</li>
+          </ul>
+          <p>
+            However, no method of transmission over the Internet is 100% secure. We cannot guarantee
+            absolute security.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Children's Privacy"
+          sectionNumber={12}
+          simpleSummary="Our site is not directed to children under 13. We don't knowingly collect info from children. Kids can safely browse our educational content."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4">
+            </circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path
+              d="M16 3.13a4 4 0 0 1 0 7.75"
+            >
+            </path>
+          </svg>
+          <p>
+            This website is compliant with the <strong>
+              Children's Online Privacy Protection Act (COPPA)
+            </strong>.
+          </p>
+          <ul>
+            <li>Our Site is not directed to children under 13</li>
+            <li>We do not knowingly collect personal information from children under 13</li>
+            <li>No registration or account creation is required</li>
             <li>
-              We sell
-              <strong>ZERO data</strong>
-              (we have minimal data to begin with)
-            </li>
-            <li>
-              Your preferences are stored
-              <strong>only on your device</strong>
+              Children can safely browse our informational content because minimal personal
+              information is collected
             </li>
           </ul>
-          <p style="margin-bottom: 0">
+          <p>
+            If you believe we have inadvertently collected information from a child under 13, please
+            <a href="/contact">contact us</a> immediately.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="External Links"
+          sectionNumber={13}
+          simpleSummary="When you click external links, you leave our site and their privacy policies apply. We're not responsible for other sites' practices."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline
+              points="15 3 21 3 21 9"
+            >
+            </polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          <p>
+            Our Site may contain links to third-party websites. When you click an external link, you
+            leave baytides.org and become subject to the privacy policy of the destination website.
+          </p>
+          <ul>
+            <li>We are not responsible for the privacy practices of external sites</li>
+            <li>We do not control or endorse the content of external websites</li>
+            <li>Different organizations have different privacy policies</li>
+            <li>
+              We recommend reviewing the privacy policy of any external site before providing
+              personal information
+            </li>
+          </ul>
+        </LegalSection>
+
+        <LegalSection
+          title="Changes to This Policy"
+          sectionNumber={14}
+          simpleSummary="If we make big changes, we'll give 30 days notice. Minor updates take effect immediately but we'll update the date."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path
+              d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+            >
+            </path>
+          </svg>
+          <div class="subsection">
+            <h4>Material Changes</h4>
+            <p>
+              If we make material changes (such as beginning to collect new types of personal
+              information), we will:
+            </p>
+            <ul>
+              <li>Update the "Last Updated" date at the top of this page</li>
+              <li>Provide prominent notice on the website for at least 30 days</li>
+              <li>Material changes will not take effect until at least 30 days after notice</li>
+            </ul>
+          </div>
+          <div class="subsection">
+            <h4>Non-Material Changes</h4>
+            <p>
+              For minor updates (clarifications, formatting, contact information), we will update
+              the "Last Updated" date. Non-material changes take effect immediately upon posting.
+            </p>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Contact Us"
+          sectionNumber={15}
+          simpleSummary="Questions? Contact us through our website. We respond to privacy inquiries within 30 days."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+            </path><polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <p>
+            If you have questions about this Privacy Policy or our privacy practices, please
+            <a href="/contact">contact us</a> through our website.
+          </p>
+          <p>
+            <strong>Response Time:</strong> We strive to respond to privacy inquiries within 30 days (or
+            as required by applicable law).
+          </p>
+          <div class="subsection">
+            <h4>Complaints</h4>
+            <p>If you believe your privacy rights have been violated, you may:</p>
+            <ul>
+              <li>Contact us through our <a href="/contact">contact form</a></li>
+              <li>File a complaint with the California Attorney General's Office (oag.ca.gov)</li>
+              <li>File a complaint with the Federal Trade Commission (ftc.gov)</li>
+              <li>For EU residents, file a complaint with your local Data Protection Authority</li>
+            </ul>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Legal Compliance Summary"
+          sectionNumber={16}
+          simpleSummary="We comply with COPPA, CCPA/CPRA, GDPR, and other privacy laws. We're committed to meeting the highest privacy standards."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="9 11 12 14 22 4"></polyline><path
+              d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+            >
+            </path>
+          </svg>
+          <p>This privacy policy and website are designed to comply with:</p>
+          <div class="subsection">
+            <h4>Federal Laws</h4>
+            <ul>
+              <li>
+                <strong>Children's Online Privacy Protection Act (COPPA):</strong> Protecting children
+                under 13
+              </li>
+              <li>
+                <strong>Federal Trade Commission Act (FTC Act):</strong> No deceptive privacy practices
+              </li>
+              <li>
+                <strong>Americans with Disabilities Act (ADA):</strong> Accessible digital content
+              </li>
+            </ul>
+          </div>
+          <div class="subsection">
+            <h4>State Laws</h4>
+            <ul>
+              <li>
+                <strong>
+                  California Consumer Privacy Act (CCPA) / California Privacy Rights Act (CPRA)
+                </strong>
+              </li>
+              <li><strong>California Online Privacy Protection Act (CalOPPA)</strong></li>
+              <li><strong>Virginia, Colorado, Connecticut, Utah, Nevada privacy laws</strong></li>
+            </ul>
+          </div>
+          <div class="subsection">
+            <h4>International Standards</h4>
+            <ul>
+              <li>
+                <strong>General Data Protection Regulation (GDPR):</strong> Principles respected for international
+                visitors
+              </li>
+              <li><strong>ePrivacy Directive (Cookie Law):</strong> No cookies used</li>
+              <li><strong>WCAG 2.2 Level AAA:</strong> Accessibility standards</li>
+            </ul>
+          </div>
+        </LegalSection>
+
+        <div class="bottom-line-box">
+          <h3>The Bottom Line</h3>
+          <p>
+            <strong>Bay Tides</strong> is a 501(c)(3) nonprofit organization designed to help you learn
+            about and support conservation efforts while <strong>respecting your privacy</strong>.
+          </p>
+          <ul>
+            <li>We use <strong>ZERO tracking cookies</strong></li>
+            <li>We do <strong>ZERO behavioral tracking</strong></li>
+            <li>We sell <strong>ZERO data</strong> (we have minimal data to begin with)</li>
+            <li>Your preferences are stored <strong>only on your device</strong></li>
+          </ul>
+          <p>
             <strong>Questions?</strong>
-            <a href="/contact">Contact us</a>
-            anytime. We will respond within 30 days with honest, transparent answers.
+            <a href="/contact">Contact us</a> anytime. We will respond within 30 days with honest, transparent
+            answers.
           </p>
         </div>
-
-        <p style="margin-top: 2rem; color: var(--text-light)">
-          <strong>Bay Tides</strong>
-          | 501(c)(3) Nonprofit Organization | Privacy Policy Version 1.0 | Effective Date: December 28,
-          2025
-        </p>
       </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .info-box {
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: var(--light-blue);
-    border-radius: 8px;
+  .legal-page {
+    padding-bottom: 4rem;
   }
 
-  .info-box p:last-child {
+  .legal-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .subsection {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--border-color, #e2e8f0);
+  }
+
+  .subsection h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-dark);
+  }
+
+  .subsection p {
+    margin: 0 0 0.75rem;
+  }
+
+  .subsection p:last-child,
+  .subsection ul:last-child {
     margin-bottom: 0;
   }
 
-  hr {
-    margin: 2rem 0;
-    border: none;
-    border-top: 1px solid var(--border-color);
+  .service-card {
+    background: var(--bg-secondary, #f8fafc);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin: 1rem 0;
+  }
+
+  .service-card h4 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+  }
+
+  .service-card p {
+    margin: 0.5rem 0;
+    font-size: 0.9375rem;
+  }
+
+  .service-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .bottom-line-box {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--light-blue) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border: 1px solid rgba(43, 108, 176, 0.2);
+    border-radius: 16px;
+  }
+
+  .bottom-line-box h3 {
+    margin: 0 0 1rem;
+    color: var(--primary-blue);
+    font-size: 1.25rem;
+  }
+
+  .bottom-line-box ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .bottom-line-box li {
+    margin-bottom: 0.5rem;
+  }
+
+  .bottom-line-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  :global([data-theme='dark']) .subsection {
+    border-left-color: rgba(255, 255, 255, 0.2);
+  }
+
+  :global([data-theme='dark']) .service-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .service-card h4 {
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .bottom-line-box {
+    background: linear-gradient(135deg, rgba(99, 179, 237, 0.15) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border-color: rgba(99, 179, 237, 0.3);
+  }
+
+  :global([data-theme='dark']) .bottom-line-box h3 {
+    color: var(--accent-blue);
   }
 </style>
+
+<script>
+  // Simple language toggle functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('simple-toggle');
+    const expandAllBtn = document.getElementById('expand-all-btn');
+    const sections = document.querySelectorAll('.legal-section');
+
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const isPressed = toggle.getAttribute('aria-pressed') === 'true';
+        toggle.setAttribute('aria-pressed', String(!isPressed));
+        document.body.classList.toggle('simple-language-mode', !isPressed);
+      });
+    }
+
+    if (expandAllBtn) {
+      let allExpanded = false;
+      expandAllBtn.addEventListener('click', () => {
+        allExpanded = !allExpanded;
+        sections.forEach((section) => {
+          const details = section.querySelector('details');
+          if (details) {
+            details.open = allExpanded;
+          }
+        });
+        const btnText = expandAllBtn.querySelector('span');
+        if (btnText) {
+          btnText.textContent = allExpanded ? 'Collapse All' : 'Expand All';
+        }
+      });
+    }
+  });
+</script>

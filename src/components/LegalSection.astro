@@ -1,0 +1,256 @@
+---
+/**
+ * LegalSection Component
+ * A collapsible section for legal documents with simple language toggle support
+ */
+
+interface Props {
+  id: string;
+  title: string;
+  icon?: string;
+  simpleText: string;
+  defaultOpen?: boolean;
+}
+
+const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
+---
+
+<div class="legal-section" id={id} data-default-open={defaultOpen}>
+  <button
+    class="legal-section-header"
+    aria-expanded={defaultOpen ? 'true' : 'false'}
+    aria-controls={`${id}-content`}
+  >
+    <div class="legal-section-title">
+      {icon && <span class="legal-section-icon" set:html={icon} />}
+      <h2>{title}</h2>
+    </div>
+    <svg
+      class="legal-section-chevron"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+
+  <div class="legal-section-content" id={`${id}-content`}>
+    <div class="simple-text" data-simple-text>
+      <p>{simpleText}</p>
+    </div>
+    <div class="full-text" data-full-text>
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style>
+  .legal-section {
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .legal-section:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .legal-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-secondary, #f8fafc);
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.2s ease;
+  }
+
+  .legal-section-header:hover {
+    background: var(--bg-tertiary, #f1f5f9);
+  }
+
+  .legal-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .legal-section-title h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-dark);
+  }
+
+  .legal-section-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--primary-blue);
+    border-radius: 8px;
+    color: white;
+  }
+
+  .legal-section-icon :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .legal-section-chevron {
+    flex-shrink: 0;
+    color: var(--text-light);
+    transition: transform 0.3s ease;
+  }
+
+  .legal-section[aria-expanded='true'] .legal-section-chevron,
+  .legal-section-header[aria-expanded='true'] .legal-section-chevron {
+    transform: rotate(180deg);
+  }
+
+  .legal-section-content {
+    display: none;
+    padding: 1.5rem;
+    background: var(--bg-primary, #fff);
+    border-top: 1px solid var(--border-color, #e2e8f0);
+  }
+
+  .legal-section.open .legal-section-content {
+    display: block;
+    animation: slideDown 0.3s ease;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .simple-text {
+    display: none;
+    padding: 1rem 1.25rem;
+    background: linear-gradient(135deg, var(--light-blue) 0%, rgba(43, 108, 176, 0.08) 100%);
+    border-radius: 10px;
+    border-left: 4px solid var(--primary-blue);
+    margin-bottom: 1rem;
+  }
+
+  .simple-text p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+  }
+
+  :global([data-simple-mode='true']) .simple-text {
+    display: block;
+  }
+
+  :global([data-simple-mode='true']) .full-text {
+    display: none;
+  }
+
+  .full-text :global(p) {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .full-text :global(ul) {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .full-text :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .full-text :global(h3) {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.75rem;
+    color: var(--text-dark);
+  }
+
+  .full-text :global(a) {
+    color: var(--primary-blue);
+    text-decoration: underline;
+  }
+
+  /* Dark mode */
+  :global([data-theme='dark']) .legal-section {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .legal-section:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  :global([data-theme='dark']) .legal-section-header {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  :global([data-theme='dark']) .legal-section-header:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  :global([data-theme='dark']) .legal-section-icon {
+    background: var(--accent-blue);
+    color: #1a365d;
+  }
+
+  :global([data-theme='dark']) .legal-section-content {
+    background: var(--bg-primary);
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .simple-text {
+    background: linear-gradient(135deg, rgba(99, 179, 237, 0.15) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border-left-color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .full-text :global(a) {
+    color: var(--accent-blue);
+  }
+
+  @media (max-width: 640px) {
+    .legal-section-header {
+      padding: 1rem 1.25rem;
+    }
+
+    .legal-section-title h2 {
+      font-size: 1rem;
+    }
+
+    .legal-section-icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    .legal-section-icon :global(svg) {
+      width: 18px;
+      height: 18px;
+    }
+
+    .legal-section-content {
+      padding: 1rem 1.25rem;
+    }
+  }
+</style>
