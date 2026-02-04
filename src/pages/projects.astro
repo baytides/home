@@ -69,53 +69,51 @@ const structuredData = [
 >
   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Projects' }]} />
 
-  <!-- Project Toggle -->
-  <div class="container">
-    <div class="project-toggle" role="tablist" aria-label="Project categories">
-      <button
-        role="tab"
-        aria-selected="true"
-        aria-controls="live-projects"
-        id="tab-live"
-        class="toggle-btn active"
-        data-tab="live"
-      >
-        Live Projects
-      </button>
-      <button
-        role="tab"
-        aria-selected="false"
-        aria-controls="in-development"
-        id="tab-dev"
-        class="toggle-btn"
-        data-tab="dev"
-      >
-        In Development
-      </button>
+  <!-- Video Hero with Toggle -->
+  <section class="hero hero-page projects-video-hero">
+    <video
+      class="projects-hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="/assets/video/projects-hero-poster.webp"
+    >
+      <source src="/assets/video/projects-hero.webm" type="video/webm" />
+    </video>
+    <div class="projects-hero-overlay"></div>
+    <div class="container">
+      <h1>Our Initiatives</h1>
+      <p>Programs and tools serving the Bay Area community</p>
+
+      <!-- Project Toggle -->
+      <div class="project-toggle" role="tablist" aria-label="Project categories">
+        <button
+          role="tab"
+          aria-selected="true"
+          aria-controls="live-projects"
+          id="tab-live"
+          class="toggle-btn active"
+          data-tab="live"
+        >
+          Live Projects
+        </button>
+        <button
+          role="tab"
+          aria-selected="false"
+          aria-controls="in-development"
+          id="tab-dev"
+          class="toggle-btn"
+          data-tab="dev"
+        >
+          In Development
+        </button>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- Live Projects Tab -->
   <div id="live-projects" role="tabpanel" aria-labelledby="tab-live" class="tab-content active">
-    <!-- Video Hero -->
-    <section class="hero hero-page projects-video-hero">
-      <video
-        class="projects-hero-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        poster="/assets/video/projects-hero-poster.webp"
-      >
-        <source src="/assets/video/projects-hero.webm" type="video/webm" />
-      </video>
-      <div class="projects-hero-overlay"></div>
-      <div class="container">
-        <h1>Our Initiatives</h1>
-        <p>Programs and tools serving the Bay Area community</p>
-      </div>
-    </section>
-
     <!-- Aegis Initiative -->
     <section class="content-section">
       <div class="container">
@@ -461,40 +459,43 @@ const structuredData = [
 </script>
 
 <style>
-  /* Project Toggle */
+  /* Project Toggle (inside hero) */
   .project-toggle {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    margin: 2rem 0;
+    margin-top: 2rem;
   }
 
   .toggle-btn {
     padding: 0.75rem 1.5rem;
-    border: 2px solid var(--primary-blue);
+    border: 2px solid rgba(255, 255, 255, 0.8);
     background: transparent;
-    color: var(--primary-blue);
+    color: #fff;
     font-size: 1rem;
     font-weight: 600;
     border-radius: 2rem;
     cursor: pointer;
     transition:
       background-color 0.2s ease,
-      color 0.2s ease;
+      color 0.2s ease,
+      border-color 0.2s ease;
   }
 
   .toggle-btn:hover {
-    background: var(--primary-blue-light, rgba(0, 105, 148, 0.1));
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
   }
 
   .toggle-btn:focus-visible {
-    outline: 3px solid var(--focus-color, #005fcc);
+    outline: 3px solid #fff;
     outline-offset: 2px;
   }
 
   .toggle-btn.active {
-    background: var(--primary-blue);
-    color: white;
+    background: #fff;
+    color: var(--primary-navy);
+    border-color: #fff;
   }
 
   .tab-content {
