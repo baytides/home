@@ -9,6 +9,7 @@ on:
 permissions:
   contents: write
   id-token: write
+  actions: write
 
 jobs:
   update-stats:
@@ -41,14 +42,24 @@ jobs:
           node scripts/fetch-carbon-stats.cjs
 
       - name: Commit updated stats
+        id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           if git diff --quiet public/data/carbon-stats.json; then
             echo "No changes to carbon stats"
+            echo "changed=false" >> $GITHUB_OUTPUT
           else
             git add public/data/carbon-stats.json
             git commit -m "Update carbon stats [automated]"
             git push
+            echo "changed=true" >> $GITHUB_OUTPUT
           fi
+
+      - name: Trigger deploy
+        if: steps.commit.outputs.changed == 'true'
+        run: |
+          gh workflow run "Deploy to Cloudflare Pages" --ref main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
