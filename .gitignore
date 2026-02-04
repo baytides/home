@@ -52,3 +52,4 @@ coverage/
 *.tmp
 *.temp
 /docs
+docs/documenso/.secrets.env
