@@ -847,6 +847,16 @@
     }
 
     function getPageContent(): string {
+      // Check if simple language mode is active
+      const isSimpleLanguage = document.documentElement.hasAttribute('data-simple-language');
+
+      // Determine which content classes to exclude (the hidden ones)
+      // If simple language is ON: standard content is hidden, so exclude it
+      // If simple language is OFF: simple content is hidden, so exclude it
+      const hiddenContentSelectors = isSimpleLanguage
+        ? ['.standard-content', '.standard-text']
+        : ['.simple-content', '.simple-text'];
+
       // Get main content, excluding navigation, footer, and accessibility panel
       const main = document.querySelector('main');
       if (!main) {
@@ -861,6 +871,7 @@
           'script',
           'style',
           'noscript',
+          ...hiddenContentSelectors,
         ];
         excludeSelectors.forEach((sel) => {
           body.querySelectorAll(sel).forEach((el) => el.remove());
@@ -872,7 +883,14 @@
       const clone = main.cloneNode(true) as HTMLElement;
 
       // Remove elements that shouldn't be read
-      const excludeSelectors = ['script', 'style', 'noscript', '.sr-only', '[aria-hidden="true"]'];
+      const excludeSelectors = [
+        'script',
+        'style',
+        'noscript',
+        '.sr-only',
+        '[aria-hidden="true"]',
+        ...hiddenContentSelectors,
+      ];
       excludeSelectors.forEach((sel) => {
         clone.querySelectorAll(sel).forEach((el) => el.remove());
       });
