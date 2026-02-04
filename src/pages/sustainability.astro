@@ -203,6 +203,7 @@ const providerStats = {
         <div class="data-sources">
           <span class="source-badge" id="source-cloudflare">Cloudflare: &mdash;</span>
           <span class="source-badge" id="source-github">GitHub: &mdash;</span>
+          <span class="source-badge" id="source-azure">Azure: &mdash;</span>
         </div>
 
         <!-- Equivalents -->
@@ -1081,6 +1082,7 @@ const providerStats = {
       // Update data source indicators
       const sourceCloudflare = document.getElementById('source-cloudflare');
       const sourceGithub = document.getElementById('source-github');
+      const sourceAzure = document.getElementById('source-azure');
 
       const getStatusClass = (status) => {
         if (status === 'live') return 'source-badge live';
@@ -1095,6 +1097,10 @@ const providerStats = {
       if (sourceGithub) {
         sourceGithub.textContent = `GitHub: ${data.dataFreshness.github}`;
         sourceGithub.className = getStatusClass(data.dataFreshness.github);
+      }
+      if (sourceAzure) {
+        sourceAzure.textContent = `Azure: ${data.dataFreshness.azure || 'unavailable'}`;
+        sourceAzure.className = getStatusClass(data.dataFreshness.azure);
       }
 
       // Update equivalents
