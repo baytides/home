@@ -32,7 +32,7 @@ const structuredData = {
   preloadImages={['/assets/video/home-hero-poster.webp']}
 >
   <!-- Hero Section -->
-  <section class="hero hero-home home-video-hero">
+  <section class="hero hero-home home-video-hero" aria-labelledby="home-hero-title">
     <video
       class="home-hero-video"
       autoplay
@@ -40,15 +40,25 @@ const structuredData = {
       loop
       playsinline
       poster="/assets/video/home-hero-poster.webp"
+      aria-hidden="true"
+      aria-label="Decorative background video showing the San Francisco Bay coastline"
     >
       <source src="/assets/video/home-hero.webm" type="video/webm" />
-    </video>
-    <div class="home-hero-overlay"></div>
-    <div class="container">
-      <h1>Protecting the San Francisco Bay</h1>
       <p>
+        Your browser does not support the video element. A decorative video of the San Francisco Bay
+        coastline plays here.
+      </p>
+    </video>
+    <div class="home-hero-overlay" aria-hidden="true"></div>
+    <div class="container">
+      <h1 id="home-hero-title">Protecting the San Francisco Bay</h1>
+      <p class="standard-content">
         Using technology to protect and preserve the San Francisco Bay's environment through
         education, community mobilization, and innovation.
+      </p>
+      <p class="simple-content">
+        We use computers and apps to help keep the Bay clean and safe. We teach people how to help,
+        and we work together as a community.
       </p>
       <div class="hero-buttons">
         <a href="/volunteer" class="btn btn-primary">Get Involved</a>
@@ -70,10 +80,14 @@ const structuredData = {
       <div class="mission-content">
         <div class="mission-text">
           <h2>Our Mission</h2>
-          <p>
+          <p class="standard-content">
             At Bay Tides, we use technology to protect the natural environment and health of the San
             Francisco Bay. Through digital tools, educational programs, and community mobilization,
             we empower residents to make a meaningful impact in their backyard.
+          </p>
+          <p class="simple-content">
+            Bay Tides helps keep the Bay healthy. We build apps and websites. We teach people about
+            nature. We help neighbors work together to protect their home.
           </p>
           <a href="/about" class="learn-more-link">Learn more about us &rarr;</a>
         </div>
@@ -146,10 +160,14 @@ const structuredData = {
   <section class="support-cta">
     <div class="container">
       <div class="support-content">
-        <p class="support-statement">
+        <p class="support-statement standard-content">
           The San Francisco Bay is a vital ecosystem that protects endangered wildlife and enriches
           our community. With your support, we can ensure a thriving Bay Area for generations to
           come.
+        </p>
+        <p class="support-statement simple-content">
+          The Bay is home to many animals. It makes our area beautiful and healthy. Your help keeps
+          the Bay safe for the future.
         </p>
         <a href="/donate" class="btn btn-primary">Support Our Mission</a>
       </div>

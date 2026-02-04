@@ -1322,18 +1322,29 @@
         const input = field as HTMLInputElement;
         const formGroup = input.closest('.form-group') || input.closest('.agreement-checkbox');
 
-        // Remove previous error
-        formGroup?.querySelector('.field-error')?.remove();
+        // Remove previous error and aria attributes
+        const prevError = formGroup?.querySelector('.field-error');
+        if (prevError) {
+          prevError.remove();
+          input.removeAttribute('aria-describedby');
+          input.removeAttribute('aria-invalid');
+        }
         input.classList.remove('error');
 
         if (!input.checkValidity()) {
           isValid = false;
           input.classList.add('error');
+          input.setAttribute('aria-invalid', 'true');
 
+          // Create unique error ID and link via aria-describedby (WCAG 3.0 error handling)
+          const errorId = `${input.id || input.name}-error`;
           const errorSpan = document.createElement('span');
           errorSpan.className = 'field-error';
+          errorSpan.id = errorId;
+          errorSpan.setAttribute('role', 'alert');
           errorSpan.textContent = input.validationMessage || 'This field is required';
           formGroup?.appendChild(errorSpan);
+          input.setAttribute('aria-describedby', errorId);
         }
       });
 
@@ -1443,18 +1454,29 @@
       const input = field as HTMLInputElement;
       const formGroup = input.closest('.form-group') || input.closest('.agreement-checkbox');
 
-      // Remove previous error
-      formGroup?.querySelector('.field-error')?.remove();
+      // Remove previous error and aria attributes
+      const prevError = formGroup?.querySelector('.field-error');
+      if (prevError) {
+        prevError.remove();
+        input.removeAttribute('aria-describedby');
+        input.removeAttribute('aria-invalid');
+      }
       input.classList.remove('error');
 
       if (!input.checkValidity()) {
         isValid = false;
         input.classList.add('error');
+        input.setAttribute('aria-invalid', 'true');
 
+        // Create unique error ID and link via aria-describedby (WCAG 3.0 error handling)
+        const errorId = `${input.id || input.name}-error`;
         const errorSpan = document.createElement('span');
         errorSpan.className = 'field-error';
+        errorSpan.id = errorId;
+        errorSpan.setAttribute('role', 'alert');
         errorSpan.textContent = input.validationMessage || 'This field is required';
         formGroup?.appendChild(errorSpan);
+        input.setAttribute('aria-describedby', errorId);
       }
     });
 

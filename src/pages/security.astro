@@ -209,7 +209,7 @@ const selfHostedServices = [
   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Security' }]} />
 
   <!-- Hero Section with Video -->
-  <section class="hero hero-page security-video-hero">
+  <section class="hero hero-page security-video-hero" aria-labelledby="security-hero-title">
     <video
       class="security-hero-video"
       autoplay
@@ -217,12 +217,18 @@ const selfHostedServices = [
       loop
       playsinline
       poster="/assets/video/security-hero-poster.jpg"
+      aria-hidden="true"
+      aria-label="Decorative background video showing digital security visualization"
     >
       <source src="/assets/video/security-hero.webm" type="video/webm" />
+      <p>
+        Your browser does not support the video element. A decorative security visualization video
+        plays here.
+      </p>
     </video>
-    <div class="security-hero-overlay"></div>
+    <div class="security-hero-overlay" aria-hidden="true"></div>
     <div class="container">
-      <h1>Security & Privacy</h1>
+      <h1 id="security-hero-title">Security & Privacy</h1>
       <p>Your trust is our foundation</p>
     </div>
   </section>

@@ -184,47 +184,48 @@ try {
       autocomplete="off"
     />
     <div class="search-results" id="search-results" role="listbox" aria-label="Search results">
-      <a href="/" class="search-result" role="option">
+      <a href="/" class="search-result" role="option" aria-selected="false">
         <strong>Home</strong>
         <span>Protecting the San Francisco Bay</span>
       </a>
-      <a href="/about" class="search-result" role="option">
+      <a href="/about" class="search-result" role="option" aria-selected="false">
         <strong>About Us</strong>
         <span>Our mission, who we are, and our approach</span>
       </a>
-      <a href="/projects" class="search-result" role="option">
+      <a href="/projects" class="search-result" role="option" aria-selected="false">
         <strong>Projects</strong>
         <span>Bay Navigator and other digital initiatives</span>
       </a>
-      <a href="/volunteer" class="search-result" role="option">
+      <a href="/volunteer" class="search-result" role="option" aria-selected="false">
         <strong>Volunteer</strong>
         <span>Tech projects, community events, environmental action</span>
       </a>
-      <a href="/donate" class="search-result" role="option">
+      <a href="/donate" class="search-result" role="option" aria-selected="false">
         <strong>Donate</strong>
         <span>Support digital tools and education programs</span>
       </a>
-      <a href="/contact" class="search-result" role="option">
+      <a href="/contact" class="search-result" role="option" aria-selected="false">
         <strong>Contact</strong>
         <span>Get in touch, send us a message</span>
       </a>
-      <a href="/privacy" class="search-result" role="option">
+      <a href="/privacy" class="search-result" role="option" aria-selected="false">
         <strong>Privacy Policy</strong>
         <span>How we protect your data and privacy</span>
       </a>
-      <a href="/terms" class="search-result" role="option">
+      <a href="/terms" class="search-result" role="option" aria-selected="false">
         <strong>Terms of Service</strong>
         <span>Terms and conditions for using our website</span>
       </a>
-      <a href="/events" class="search-result" role="option">
+      <a href="/events" class="search-result" role="option" aria-selected="false">
         <strong>Events</strong>
         <span>Volunteer events, workshops, and community gatherings</span>
       </a>
-      <a href="/accessibility" class="search-result" role="option">
+      <a href="/accessibility" class="search-result" role="option" aria-selected="false">
         <strong>Accessibility</strong>
         <span>Our commitment to web accessibility</span>
       </a>
     </div>
+    <div id="search-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
     <p class="search-hint" aria-live="polite">
       <kbd>Esc</kbd>
       to close &middot;
@@ -323,19 +324,54 @@ try {
           e.preventDefault();
           searchOverlay.classList.contains('active') ? closeSearch() : openSearch();
         }
+        // WCAG 3.0: Focus trapping in search modal
+        if (e.key === 'Tab' && searchOverlay.classList.contains('active')) {
+          const focusableElements = searchOverlay.querySelectorAll<HTMLElement>(
+            'input, button, a:not([style*="display: none"])'
+          );
+          const visibleElements = Array.from(focusableElements).filter(
+            (el) => el.offsetParent !== null && getComputedStyle(el).display !== 'none'
+          );
+          if (visibleElements.length === 0) return;
+          const firstEl = visibleElements[0];
+          const lastEl = visibleElements[visibleElements.length - 1];
+          if (e.shiftKey && document.activeElement === firstEl) {
+            e.preventDefault();
+            lastEl.focus();
+          } else if (!e.shiftKey && document.activeElement === lastEl) {
+            e.preventDefault();
+            firstEl.focus();
+          }
+        }
       });
 
-      // Filter results
+      // Filter results with WCAG 3.0 screen reader announcements
+      const searchStatus = document.getElementById('search-status');
       searchInput.addEventListener('input', (e) => {
         const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
         if (query === '') {
-          results.forEach((r) => (r.style.display = 'none'));
+          results.forEach((r) => {
+            r.style.display = 'none';
+            r.setAttribute('aria-selected', 'false');
+          });
+          if (searchStatus) searchStatus.textContent = '';
           return;
         }
+        let visibleCount = 0;
         results.forEach((r) => {
           const text = r.textContent?.toLowerCase() ?? '';
-          r.style.display = text.includes(query) ? 'block' : 'none';
+          const isMatch = text.includes(query);
+          r.style.display = isMatch ? 'block' : 'none';
+          r.setAttribute('aria-selected', 'false');
+          if (isMatch) visibleCount++;
         });
+        // Announce results count to screen readers
+        if (searchStatus) {
+          searchStatus.textContent =
+            visibleCount === 0
+              ? 'No results found'
+              : `${visibleCount} result${visibleCount === 1 ? '' : 's'} found`;
+        }
       });
     }
   }

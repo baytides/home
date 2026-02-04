@@ -211,51 +211,262 @@
 }
 
 // ==========================================================================
-// Colorblind Mode
-// Uses patterns and shapes in addition to color to convey meaning
+// Simple Language Mode
+// Shows simplified text for cognitive accessibility (WCAG 3.0)
 // ==========================================================================
 
+[data-simple-language='true'] {
+  // Hide standard content, show simple content
+  .standard-content {
+    display: none !important;
+  }
+
+  .simple-content {
+    display: block !important;
+  }
+
+  // For inline simple content spans
+  .standard-text {
+    display: none !important;
+  }
+
+  .simple-text {
+    display: inline !important;
+  }
+}
+
+// Default state: show standard, hide simple
+.simple-content {
+  display: none;
+}
+
+.simple-text {
+  display: none;
+}
+
+// ==========================================================================
+// Colorblind Mode
+// Uses Okabe-Ito colorblind-safe palette and patterns/shapes beyond color
+// Research: thenode.biologists.com, wearecolorblind.com, visme.co
+// Okabe-Ito palette: unambiguous for all forms of color vision deficiency
+// ==========================================================================
+
+// Okabe-Ito Colorblind-Safe Palette (for reference and custom properties)
+// Orange:     #E69F00 - warm, distinguishable
+// Sky Blue:   #56B4E9 - cool, high visibility
+// Blue-Green: #009E73 - teal, good separation from blue
+// Yellow:     #F0E442 - bright, high contrast
+// Blue:       #0072B2 - primary blue, good base
+// Vermillion: #D55E00 - red-orange, avoids red-green confusion
+// Red-Purple: #CC79A7 - magenta, distinguishable from all others
+// Black:      #000000 - neutral anchor
+
 [data-colorblind='true'] {
-  // Add patterns to status indicators
+  // Okabe-Ito colorblind-safe color palette
+  --cb-orange: #e69f00;
+  --cb-sky-blue: #56b4e9;
+  --cb-blue-green: #009e73;
+  --cb-yellow: #f0e442;
+  --cb-blue: #0072b2;
+  --cb-vermillion: #d55e00;
+  --cb-red-purple: #cc79a7;
+  --cb-black: #000000;
+
+  // Replace problematic red/green with colorblind-safe alternatives
+  --error: var(--cb-vermillion); // Orange-red instead of pure red
+  --error-light: #ffb366;
+  --success: var(--cb-blue-green); // Teal instead of green
+  --success-light: #66d9b8;
+
+  // Primary colors using safe palette
+  --primary-blue: var(--cb-blue);
+  --accent-blue: var(--cb-sky-blue);
+
+  // Toast notifications with safe colors
+  --toast-error-bg: var(--cb-vermillion);
+  --toast-error-text: #ffffff;
+  --toast-success-bg: var(--cb-blue-green);
+  --toast-success-text: #ffffff;
+  --toast-info-bg: var(--cb-blue);
+  --toast-info-text: #ffffff;
+
+  // Add diagonal stripe patterns to error states (visual redundancy)
   .form-status.error,
-  .toast.error {
+  .toast.error,
+  .error-message {
+    background-color: var(--cb-vermillion) !important;
     background-image: repeating-linear-gradient(
       45deg,
       transparent,
-      transparent 5px,
-      rgba(0, 0, 0, 0.1) 5px,
-      rgba(0, 0, 0, 0.1) 10px
-    );
+      transparent 8px,
+      rgba(0, 0, 0, 0.15) 8px,
+      rgba(0, 0, 0, 0.15) 16px
+    ) !important;
+    border-left: 4px solid var(--cb-black) !important;
   }
 
+  // Add crosshatch pattern to success states (visual redundancy)
   .form-status.success,
-  .toast.success {
+  .toast.success,
+  .success-message {
+    background-color: var(--cb-blue-green) !important;
+    background-image:
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 8px,
+        rgba(0, 0, 0, 0.12) 8px,
+        rgba(0, 0, 0, 0.12) 16px
+      ),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 8px,
+        rgba(0, 0, 0, 0.08) 8px,
+        rgba(0, 0, 0, 0.08) 16px
+      ) !important;
+    border-left: 4px solid var(--cb-black) !important;
+  }
+
+  // Add horizontal lines to info/warning states
+  .toast.info,
+  .info-message {
+    background-color: var(--cb-blue) !important;
     background-image: repeating-linear-gradient(
-      -45deg,
+      0deg,
       transparent,
-      transparent 5px,
-      rgba(0, 0, 0, 0.1) 5px,
-      rgba(0, 0, 0, 0.1) 10px
-    );
+      transparent 6px,
+      rgba(255, 255, 255, 0.15) 6px,
+      rgba(255, 255, 255, 0.15) 12px
+    ) !important;
+    border-left: 4px solid var(--cb-sky-blue) !important;
   }
 
-  // Add underline to links for better visibility
-  a:not(.btn) {
-    text-decoration: underline;
+  // Add underline to ALL links for better visibility (wearecolorblind.com recommendation)
+  a:not(.btn):not(.card):not(.logo) {
+    text-decoration: underline !important;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
   }
 
-  // Add border to buttons
-  .btn {
-    border: 2px solid currentColor;
+  // Add visible borders to all buttons
+  .btn,
+  button:not(.accessibility-toggle):not(.panel-close) {
+    border: 2px solid currentColor !important;
+    position: relative;
   }
 
-  // Add icons before status messages
-  .form-status.error::before {
-    content: '⚠ ';
+  // Primary buttons get distinctive styling
+  .btn-primary,
+  .btn:not(.btn-outline) {
+    border-color: var(--cb-black) !important;
   }
 
-  .form-status.success::before {
-    content: '✓ ';
+  // Add icons before status messages (text + symbol redundancy)
+  .form-status.error::before,
+  .toast.error .toast-message::before {
+    content: '⚠ Error: ';
+    font-weight: 700;
+  }
+
+  .form-status.success::before,
+  .toast.success .toast-message::before {
+    content: '✓ Success: ';
+    font-weight: 700;
+  }
+
+  .toast.info .toast-message::before {
+    content: 'ℹ Info: ';
+    font-weight: 700;
+  }
+
+  // Form validation indicators with shapes
+  input:invalid,
+  input.error,
+  textarea:invalid,
+  textarea.error {
+    border-color: var(--cb-vermillion) !important;
+    border-width: 2px !important;
+    border-style: dashed !important; // Dashed = error
+  }
+
+  input:valid:not(:placeholder-shown),
+  input.success,
+  textarea:valid:not(:placeholder-shown),
+  textarea.success {
+    border-color: var(--cb-blue-green) !important;
+    border-width: 2px !important;
+    border-style: solid !important; // Solid = success
+  }
+
+  // Focus states with safe colors
+  *:focus,
+  *:focus-visible {
+    outline: 3px solid var(--cb-sky-blue) !important;
+    outline-offset: 2px !important;
+  }
+
+  // Cards and interactive elements get visible borders
+  .card,
+  .tool-card,
+  .impact-card,
+  .team-card {
+    border: 2px solid var(--cb-black) !important;
+  }
+
+  // Charts and data visualization (if any)
+  // Use shapes/patterns in addition to color
+  .chart-legend-item::before {
+    border: 2px solid var(--cb-black);
+  }
+
+  // Navigation active states
+  .nav-link.active,
+  .nav-link[aria-current='page'] {
+    border-bottom: 3px solid var(--cb-blue) !important;
+    font-weight: 700;
+  }
+
+  // Selection/highlight states
+  ::selection {
+    background-color: var(--cb-yellow) !important;
+    color: var(--cb-black) !important;
+  }
+
+  // Required field indicators
+  .required::after,
+  label.required::after {
+    content: ' (required)';
+    font-weight: 600;
+    color: var(--cb-vermillion);
+  }
+}
+
+// Dark mode + colorblind combined
+[data-colorblind='true'][data-theme='dark'] {
+  --cb-orange: #ffb347;
+  --cb-sky-blue: #87ceeb;
+  --cb-blue-green: #40e0d0;
+  --cb-yellow: #ffeb3b;
+  --cb-blue: #4dabf7;
+  --cb-vermillion: #ff7043;
+  --cb-red-purple: #f48fb1;
+
+  --error: var(--cb-vermillion);
+  --success: var(--cb-blue-green);
+  --primary-blue: var(--cb-blue);
+  --accent-blue: var(--cb-sky-blue);
+
+  .card,
+  .tool-card,
+  .impact-card,
+  .team-card {
+    border-color: var(--cb-sky-blue) !important;
+  }
+
+  *:focus,
+  *:focus-visible {
+    outline-color: var(--cb-yellow) !important;
   }
 }
 

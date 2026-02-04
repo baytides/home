@@ -8,7 +8,8 @@ const structuredData = [
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'Accessibility Statement',
-    description: "Bay Tides' commitment to WCAG 2.2 AAA digital accessibility",
+    description:
+      "Bay Tides' commitment to WCAG 2.2 AAA and WCAG 3.0 draft digital accessibility standards",
     publisher: {
       '@type': 'NonprofitOrganization',
       name: 'Bay Tides',
@@ -137,6 +138,11 @@ const accessibilityTools = [
     icon: 'text',
   },
   {
+    name: 'Simple Language',
+    description: 'Shows easier-to-read text throughout the site',
+    icon: 'language',
+  },
+  {
     name: 'Text Spacing',
     description: 'Adjustable letter, word, and line spacing',
     icon: 'spacing',
@@ -148,8 +154,13 @@ const accessibilityTools = [
   },
   {
     name: 'Colorblind Mode',
-    description: 'Uses patterns and icons alongside color',
+    description: 'Okabe-Ito palette with patterns, shapes, and text labels',
     icon: 'color',
+  },
+  {
+    name: 'Read Aloud',
+    description: 'Text-to-speech reads page content with adjustable speed and voice',
+    icon: 'audio',
   },
 ];
 
@@ -162,12 +173,105 @@ const keyboardShortcuts = [
   { key: 'Ctrl/Cmd + K', action: 'Open search dialog' },
 ];
 
+// WCAG 3.0 Draft Standards - Future-Forward Accessibility
+const wcag3Features = {
+  cognitive: [
+    {
+      guideline: 'Clear Language',
+      description: 'Plain language with clear headings and simple sentence structure',
+      status: 'implemented',
+    },
+    {
+      guideline: 'Consistent Navigation',
+      description: 'Predictable page layouts and navigation patterns across all pages',
+      status: 'implemented',
+    },
+    {
+      guideline: 'Error Prevention',
+      description: 'Clear form labels, inline validation, and confirmation before submission',
+      status: 'implemented',
+    },
+    {
+      guideline: 'Focus Management',
+      description: 'Focus Mode reduces visual distractions for better concentration',
+      status: 'implemented',
+    },
+  ],
+  sensory: [
+    {
+      guideline: 'Vestibular & Motion',
+      description: 'Reduced Motion setting disables all non-essential animations',
+      status: 'implemented',
+    },
+    {
+      guideline: 'Color Independence',
+      description:
+        'Okabe-Ito colorblind-safe palette with patterns, shapes, and text labels for all status indicators',
+      status: 'implemented',
+    },
+    {
+      guideline: 'Visual Presentation',
+      description: 'Customizable text size (70-200%), spacing, and high contrast options',
+      status: 'implemented',
+    },
+    {
+      guideline: 'Audio Alternatives',
+      description: 'All audio/video content has text alternatives and captions',
+      status: 'implemented',
+    },
+  ],
+  interaction: [
+    {
+      guideline: 'Pointer Alternatives',
+      description: 'All functions accessible via keyboard, no pointer-only gestures required',
+      status: 'implemented',
+    },
+    {
+      guideline: 'Error Identification',
+      description: 'Form errors linked to inputs via aria-describedby with clear messages',
+      status: 'implemented',
+    },
+    {
+      guideline: 'Target Size',
+      description: 'Minimum 44x44px touch targets for all interactive elements',
+      status: 'implemented',
+    },
+    {
+      guideline: 'Timing Control',
+      description: 'No time limits; all animations pausable via Reduced Motion',
+      status: 'implemented',
+    },
+  ],
+  compatibility: [
+    {
+      guideline: 'Assistive Technology',
+      description: 'Full ARIA support tested with NVDA, JAWS, VoiceOver, TalkBack',
+      status: 'implemented',
+    },
+    {
+      guideline: 'Personalization',
+      description: 'User preferences saved and persist across sessions via localStorage',
+      status: 'implemented',
+    },
+    {
+      guideline: 'Semantic Structure',
+      description: 'Valid HTML5 with proper landmarks, headings, and ARIA roles',
+      status: 'implemented',
+    },
+    {
+      guideline: 'Browser Support',
+      description: 'Progressive enhancement ensures functionality across all browsers',
+      status: 'implemented',
+    },
+  ],
+};
+
 const lastUpdated = 'February 4, 2026';
 ---
 
 <BaseLayout
   title="Accessibility Statement"
-  description="Bay Tides' commitment to WCAG 2.2 Level AAA digital accessibility. Learn about our accessibility features, tools, and compliance status."
+  description="Bay Tides' commitment to WCAG 2.2 Level AAA and WCAG 3.0 draft digital accessibility standards. Learn about our accessibility features, tools, and compliance status."
   canonicalUrl="https://baytides.org/accessibility"
   structuredData={structuredData}
   preloadImages={['/assets/images/hero-bg.webp']}
@@ -184,16 +288,30 @@ const lastUpdated = 'February 4, 2026';
     <div class="container">
       <div class="content-centered">
         <h2 id="commitment-heading">Our Commitment</h2>
-        <p>
-          Bay Tides is committed to ensuring digital accessibility for people of all abilities. We
-          believe that the web should be accessible to everyone, regardless of disability,
-          impairment, or situational limitation.
-        </p>
-        <p>
-          We go beyond minimum requirements by targeting <strong>WCAG 2.2 Level AAA</strong>
-          conformance, the highest level of accessibility standards. This includes enhanced color contrast,
-          comprehensive keyboard navigation, and multiple ways to customize your experience.
-        </p>
+        <div class="standard-content">
+          <p>
+            Bay Tides is committed to ensuring digital accessibility for people of all abilities. We
+            believe that the web should be accessible to everyone, regardless of disability,
+            impairment, or situational limitation.
+          </p>
+          <p>
+            We go beyond minimum requirements by targeting <strong>WCAG 2.2 Level AAA</strong>
+            conformance, the highest level of accessibility standards, while also implementing features
+            from the <strong>WCAG 3.0 draft</strong> to stay ahead of evolving accessibility needs. This
+            includes enhanced color contrast, comprehensive keyboard navigation, cognitive accessibility
+            features, and multiple ways to customize your experience.
+          </p>
+        </div>
+        <div class="simple-content">
+          <p>
+            Bay Tides wants everyone to use our website. It doesn't matter if you have a disability.
+            We build our site so everyone can use it.
+          </p>
+          <p>
+            We work hard to make our site easy to use. You can change colors, text size, and more to
+            make reading easier for you.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -242,7 +360,7 @@ const lastUpdated = 'February 4, 2026';
             <span class="stat-label">Keyboard Navigable</span>
           </div>
           <div class="stat-card" role="listitem">
-            <span class="stat-value">7+</span>
+            <span class="stat-value">9+</span>
             <span class="stat-label">Accessibility Tools</span>
           </div>
         </div>
@@ -499,6 +617,253 @@ const lastUpdated = 'February 4, 2026';
     </div>
   </section>
 
+  <!-- WCAG 3.0 Draft Compliance -->
+  <section class="content-section alt-bg" aria-labelledby="wcag3-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="wcag3-heading">WCAG 3.0 Draft Standards</h2>
+        <p>Future-forward accessibility features from the upcoming WCAG 3.0 specification</p>
+      </div>
+
+      <div class="wcag3-intro">
+        <p>
+          While WCAG 3.0 is still in draft, we proactively implement its principles to provide the
+          most inclusive experience possible. These features focus on cognitive accessibility,
+          sensory needs, and personalization.
+        </p>
+      </div>
+
+      <div class="wcag3-grid">
+        <!-- Cognitive Accessibility -->
+        <div class="wcag3-category">
+          <div class="wcag3-header">
+            <span class="wcag3-icon" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 2a10 10 0 1 0 10 10H12V2Z"></path>
+                <path d="M12 12 2.1 9.1"></path>
+                <path d="m12 12 7.5 7.5"></path>
+              </svg>
+            </span>
+            <h3>Cognitive Accessibility</h3>
+          </div>
+          <ul class="wcag3-list" role="list">
+            {
+              wcag3Features.cognitive.map((item) => (
+                <li role="listitem">
+                  <span class="wcag3-status" aria-label="Implemented">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <div class="wcag3-item-content">
+                    <strong>{item.guideline}</strong>
+                    <span>{item.description}</span>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <!-- Sensory Accessibility -->
+        <div class="wcag3-category">
+          <div class="wcag3-header">
+            <span class="wcag3-icon" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </span>
+            <h3>Sensory Accessibility</h3>
+          </div>
+          <ul class="wcag3-list" role="list">
+            {
+              wcag3Features.sensory.map((item) => (
+                <li role="listitem">
+                  <span class="wcag3-status" aria-label="Implemented">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <div class="wcag3-item-content">
+                    <strong>{item.guideline}</strong>
+                    <span>{item.description}</span>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <!-- Interaction Accessibility -->
+        <div class="wcag3-category">
+          <div class="wcag3-header">
+            <span class="wcag3-icon" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"></path>
+                <path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"></path>
+                <path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"></path>
+                <path
+                  d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"
+                >
+                </path>
+              </svg>
+            </span>
+            <h3>Interaction Accessibility</h3>
+          </div>
+          <ul class="wcag3-list" role="list">
+            {
+              wcag3Features.interaction.map((item) => (
+                <li role="listitem">
+                  <span class="wcag3-status" aria-label="Implemented">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <div class="wcag3-item-content">
+                    <strong>{item.guideline}</strong>
+                    <span>{item.description}</span>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <!-- Compatibility & Personalization -->
+        <div class="wcag3-category">
+          <div class="wcag3-header">
+            <span class="wcag3-icon" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+                >
+                </path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </span>
+            <h3>Compatibility & Personalization</h3>
+          </div>
+          <ul class="wcag3-list" role="list">
+            {
+              wcag3Features.compatibility.map((item) => (
+                <li role="listitem">
+                  <span class="wcag3-status" aria-label="Implemented">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <div class="wcag3-item-content">
+                    <strong>{item.guideline}</strong>
+                    <span>{item.description}</span>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div class="wcag3-note">
+        <p>
+          <strong>Note:</strong> WCAG 3.0 is currently a Working Draft. We implement features aligned
+          with its principles while following the established WCAG 2.2 AAA criteria as our conformance
+          baseline. Learn more at <a
+            href="https://www.w3.org/WAI/standards-guidelines/wcag/wcag3-intro/"
+            target="_blank"
+            rel="noopener"
+          >
+            W3C WCAG 3.0 Introduction
+          </a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- Accessibility Tools -->
   <section class="content-section alt-bg" aria-labelledby="tools-heading">
     <div class="container">
@@ -600,6 +965,26 @@ const lastUpdated = 'February 4, 2026';
                     <path d="M12 4v16" />
                   </svg>
                 )}
+                {tool.icon === 'language' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 8l6 6" />
+                    <path d="M4 14l6-6 2-3" />
+                    <path d="M2 5h12" />
+                    <path d="M7 2h1" />
+                    <path d="M22 22l-5-10-5 10" />
+                    <path d="M14 18h6" />
+                  </svg>
+                )}
                 {tool.icon === 'spacing' && (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -656,6 +1041,23 @@ const lastUpdated = 'February 4, 2026';
                     <circle cx="19" cy="17" r="2" />
                     <circle cx="6" cy="12" r="3" />
                     <circle cx="10" cy="18" r="2" />
+                  </svg>
+                )}
+                {tool.icon === 'audio' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
                   </svg>
                 )}
               </div>
@@ -1189,6 +1591,127 @@ const lastUpdated = 'February 4, 2026';
     margin-bottom: 0.25rem;
   }
 
+  /* WCAG 3.0 Section */
+  .wcag3-intro {
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+
+  .wcag3-intro p {
+    font-size: 1.0625rem;
+    color: var(--text-light);
+  }
+
+  .wcag3-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .wcag3-category {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .wcag3-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .wcag3-icon {
+    display: flex;
+    color: var(--primary-blue);
+  }
+
+  .wcag3-header h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    color: var(--primary-navy);
+  }
+
+  .wcag3-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .wcag3-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.625rem 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .wcag3-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .wcag3-status {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--success-light);
+    color: var(--success);
+    margin-top: 0.125rem;
+  }
+
+  .wcag3-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .wcag3-item-content strong {
+    color: var(--text-dark);
+    font-size: 0.9375rem;
+  }
+
+  .wcag3-item-content span {
+    color: var(--text-light);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+  }
+
+  .wcag3-note {
+    max-width: 800px;
+    margin: 2rem auto 0;
+    padding: 1.25rem;
+    background: var(--light-blue);
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .wcag3-note p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--text-light);
+  }
+
+  .wcag3-note a {
+    color: var(--primary-blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .wcag3-note a:hover {
+    color: var(--primary-navy);
+  }
+
   /* Dark Theme */
   :global([data-theme='dark']) .compliance-badge {
     background: linear-gradient(135deg, #065f46 0%, #064e3b 100%);
@@ -1269,6 +1792,31 @@ const lastUpdated = 'February 4, 2026';
     background: var(--card-bg);
   }
 
+  :global([data-theme='dark']) .wcag3-category {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .wcag3-header {
+    border-bottom-color: var(--border-light);
+  }
+
+  :global([data-theme='dark']) .wcag3-header h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .wcag3-list li {
+    border-bottom-color: var(--border-light);
+  }
+
+  :global([data-theme='dark']) .wcag3-status {
+    background: rgba(167, 243, 208, 0.15);
+  }
+
+  :global([data-theme='dark']) .wcag3-note {
+    background: var(--card-bg);
+  }
+
   /* Mobile Responsiveness */
   @media (max-width: 768px) {
     .compliance-badge {
@@ -1312,6 +1860,10 @@ const lastUpdated = 'February 4, 2026';
 
     .keyboard-table td:first-child {
       width: auto;
+    }
+
+    .wcag3-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

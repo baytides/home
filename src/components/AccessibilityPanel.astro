@@ -83,6 +83,10 @@
         <input type="checkbox" id="high-contrast-toggle" />
         High Contrast
       </label>
+      <label>
+        <input type="checkbox" id="colorblind-toggle" />
+        Colorblind Friendly
+      </label>
       <div class="text-size-control">
         <span class="text-size-label">Text Size</span>
         <div class="text-size-adjuster">
@@ -133,15 +137,23 @@
     </div>
 
     <div class="panel-section">
-      <div class="panel-section-title">Motion</div>
+      <div class="panel-section-title">Motion & Focus</div>
       <label>
         <input type="checkbox" id="reduced-motion-toggle" />
         Reduce Motion
+      </label>
+      <label>
+        <input type="checkbox" id="focus-mode-toggle" />
+        Focus Mode
       </label>
     </div>
 
     <div class="panel-section">
       <div class="panel-section-title">Reading</div>
+      <label>
+        <input type="checkbox" id="simple-language-toggle" />
+        Simple Language
+      </label>
       <label>
         <input type="checkbox" id="text-spacing-toggle" />
         Increase Text Spacing
@@ -150,6 +162,94 @@
         <input type="checkbox" id="underline-links-toggle" />
         Underline All Links
       </label>
+    </div>
+
+    <div class="panel-section" id="read-aloud-section">
+      <div class="panel-section-title">Read Aloud</div>
+      <div class="tts-controls">
+        <div class="tts-buttons">
+          <button
+            type="button"
+            class="tts-btn"
+            id="tts-play"
+            aria-label="Read page aloud"
+            title="Read page content"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="tts-btn"
+            id="tts-pause"
+            aria-label="Pause reading"
+            title="Pause"
+            disabled
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="tts-btn"
+            id="tts-stop"
+            aria-label="Stop reading"
+            title="Stop"
+            disabled
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <rect x="4" y="4" width="16" height="16"></rect>
+            </svg>
+          </button>
+        </div>
+        <div class="tts-status" id="tts-status" aria-live="polite">Ready</div>
+      </div>
+      <div class="tts-speed-control">
+        <label for="tts-speed" class="tts-speed-label">Speed</label>
+        <input
+          type="range"
+          id="tts-speed"
+          min="0.5"
+          max="2"
+          step="0.25"
+          value="1"
+          aria-label="Speech rate"
+        />
+        <span class="tts-speed-value" id="tts-speed-value">1×</span>
+      </div>
+      <div class="tts-voice-control">
+        <label for="tts-voice" class="tts-voice-label">Voice</label>
+        <select id="tts-voice" aria-label="Select voice">
+          <option value="">Default</option>
+        </select>
+      </div>
+      <p class="tts-note" id="tts-unsupported" style="display: none;">
+        Text-to-speech not supported in this browser
+      </p>
     </div>
 
     <div class="panel-section">
@@ -259,10 +359,15 @@
     const textSizeDecrease = document.getElementById('text-size-decrease');
     const textSizeIncrease = document.getElementById('text-size-increase');
     const textSizeValue = document.getElementById('text-size-value');
+    const colorblindToggle = document.getElementById('colorblind-toggle') as HTMLInputElement;
     const reducedMotionToggle = document.getElementById(
       'reduced-motion-toggle'
     ) as HTMLInputElement;
+    const focusModeToggle = document.getElementById('focus-mode-toggle') as HTMLInputElement;
     const textSpacingToggle = document.getElementById('text-spacing-toggle') as HTMLInputElement;
+    const simpleLanguageToggle = document.getElementById(
+      'simple-language-toggle'
+    ) as HTMLInputElement;
     const underlineLinksToggle = document.getElementById(
       'underline-links-toggle'
     ) as HTMLInputElement;
@@ -280,8 +385,11 @@
 
     // Load saved preferences
     const savedHighContrast = localStorage.getItem('a11y-high-contrast') === 'true';
+    const savedColorblind = localStorage.getItem('a11y-colorblind') === 'true';
     const savedTextSize = parseInt(localStorage.getItem('a11y-text-size') || '100', 10);
     const savedReducedMotion = localStorage.getItem('a11y-reduced-motion') === 'true';
+    const savedFocusMode = localStorage.getItem('a11y-focus-mode') === 'true';
+    const savedSimpleLanguage = localStorage.getItem('a11y-simple-language') === 'true';
     const savedTextSpacing = localStorage.getItem('a11y-text-spacing') === 'true';
     const savedUnderlineLinks = localStorage.getItem('a11y-underline-links') === 'true';
     const savedPosition = localStorage.getItem('a11y-button-position') || 'bottom-left';
@@ -320,12 +428,27 @@
       if (highContrastToggle) highContrastToggle.checked = true;
     }
 
+    if (savedColorblind) {
+      document.documentElement.setAttribute('data-colorblind', 'true');
+      if (colorblindToggle) colorblindToggle.checked = true;
+    }
+
     // Apply saved text size
     applyTextSize(savedTextSize);
 
     if (savedReducedMotion) {
       document.documentElement.setAttribute('data-reduced-motion', 'true');
       if (reducedMotionToggle) reducedMotionToggle.checked = true;
+    }
+
+    if (savedFocusMode) {
+      document.documentElement.setAttribute('data-focus-mode', 'true');
+      if (focusModeToggle) focusModeToggle.checked = true;
+    }
+
+    if (savedSimpleLanguage) {
+      document.documentElement.setAttribute('data-simple-language', 'true');
+      if (simpleLanguageToggle) simpleLanguageToggle.checked = true;
     }
 
     if (savedTextSpacing) {
@@ -406,6 +529,25 @@
       if (e.key === 'Escape' && panel.classList.contains('visible')) {
         closePanel();
       }
+      // WCAG 3.0: Focus trapping in accessibility panel
+      if (e.key === 'Tab' && panel.classList.contains('visible')) {
+        const focusableElements = panel.querySelectorAll<HTMLElement>(
+          'button, input, [tabindex]:not([tabindex="-1"])'
+        );
+        const visibleElements = Array.from(focusableElements).filter(
+          (el) => el.offsetParent !== null
+        );
+        if (visibleElements.length === 0) return;
+        const firstEl = visibleElements[0];
+        const lastEl = visibleElements[visibleElements.length - 1];
+        if (e.shiftKey && document.activeElement === firstEl) {
+          e.preventDefault();
+          lastEl.focus();
+        } else if (!e.shiftKey && document.activeElement === lastEl) {
+          e.preventDefault();
+          firstEl.focus();
+        }
+      }
     });
 
     // Close panel when clicking outside
@@ -431,6 +573,17 @@
       localStorage.setItem('a11y-high-contrast', String(enabled));
     });
 
+    // Colorblind friendly toggle
+    colorblindToggle?.addEventListener('change', () => {
+      const enabled = colorblindToggle.checked;
+      if (enabled) {
+        document.documentElement.setAttribute('data-colorblind', 'true');
+      } else {
+        document.documentElement.removeAttribute('data-colorblind');
+      }
+      localStorage.setItem('a11y-colorblind', String(enabled));
+    });
+
     // Text size controls
     textSizeDecrease?.addEventListener('click', () => {
       const currentSize = getCurrentTextSize();
@@ -453,6 +606,28 @@
         document.documentElement.removeAttribute('data-reduced-motion');
       }
       localStorage.setItem('a11y-reduced-motion', String(enabled));
+    });
+
+    // Focus mode toggle (WCAG 3.0 - reduces visual distractions)
+    focusModeToggle?.addEventListener('change', () => {
+      const enabled = focusModeToggle.checked;
+      if (enabled) {
+        document.documentElement.setAttribute('data-focus-mode', 'true');
+      } else {
+        document.documentElement.removeAttribute('data-focus-mode');
+      }
+      localStorage.setItem('a11y-focus-mode', String(enabled));
+    });
+
+    // Simple language toggle (WCAG 3.0 cognitive accessibility)
+    simpleLanguageToggle?.addEventListener('change', () => {
+      const enabled = simpleLanguageToggle.checked;
+      if (enabled) {
+        document.documentElement.setAttribute('data-simple-language', 'true');
+      } else {
+        document.documentElement.removeAttribute('data-simple-language');
+      }
+      localStorage.setItem('a11y-simple-language', String(enabled));
     });
 
     // Text spacing toggle
@@ -503,15 +678,21 @@
     resetBtn?.addEventListener('click', () => {
       // Reset all settings
       document.documentElement.removeAttribute('data-high-contrast');
+      document.documentElement.removeAttribute('data-colorblind');
       document.documentElement.removeAttribute('data-font-size');
       document.documentElement.removeAttribute('data-reduced-motion');
+      document.documentElement.removeAttribute('data-focus-mode');
+      document.documentElement.removeAttribute('data-simple-language');
       document.documentElement.removeAttribute('data-text-spacing');
       document.documentElement.removeAttribute('data-underline-links');
 
       // Reset form controls
       if (highContrastToggle) highContrastToggle.checked = false;
+      if (colorblindToggle) colorblindToggle.checked = false;
       applyTextSize(TEXT_SIZE_DEFAULT); // Reset text size to 100%
       if (reducedMotionToggle) reducedMotionToggle.checked = false;
+      if (focusModeToggle) focusModeToggle.checked = false;
+      if (simpleLanguageToggle) simpleLanguageToggle.checked = false;
       if (textSpacingToggle) textSpacingToggle.checked = false;
       if (underlineLinksToggle) underlineLinksToggle.checked = false;
       if (hideButtonToggle) hideButtonToggle.checked = false;
@@ -521,15 +702,282 @@
       updatePositionButtons('bottom-left');
       toggle.classList.remove('hidden');
 
+      // Stop TTS and reset
+      if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+        updateTTSState('stopped');
+      }
+
       // Clear localStorage
       localStorage.removeItem('a11y-high-contrast');
+      localStorage.removeItem('a11y-colorblind');
       localStorage.removeItem('a11y-text-size');
       localStorage.removeItem('a11y-reduced-motion');
+      localStorage.removeItem('a11y-focus-mode');
+      localStorage.removeItem('a11y-simple-language');
       localStorage.removeItem('a11y-text-spacing');
       localStorage.removeItem('a11y-underline-links');
       localStorage.removeItem('a11y-button-position');
       localStorage.removeItem('a11y-button-hidden');
+      localStorage.removeItem('a11y-tts-speed');
+      localStorage.removeItem('a11y-tts-voice');
     });
+
+    // ==========================================================================
+    // Text-to-Speech (Read Aloud) using Web Speech API
+    // ==========================================================================
+
+    const ttsPlayBtn = document.getElementById('tts-play') as HTMLButtonElement;
+    const ttsPauseBtn = document.getElementById('tts-pause') as HTMLButtonElement;
+    const ttsStopBtn = document.getElementById('tts-stop') as HTMLButtonElement;
+    const ttsStatus = document.getElementById('tts-status');
+    const ttsSpeedSlider = document.getElementById('tts-speed') as HTMLInputElement;
+    const ttsSpeedValue = document.getElementById('tts-speed-value');
+    const ttsVoiceSelect = document.getElementById('tts-voice') as HTMLSelectElement;
+    const ttsUnsupported = document.getElementById('tts-unsupported');
+    const ttsSection = document.getElementById('read-aloud-section');
+
+    // Check for Web Speech API support
+    const speechSynthesisSupported = 'speechSynthesis' in window;
+
+    if (!speechSynthesisSupported && ttsUnsupported && ttsSection) {
+      ttsUnsupported.style.display = 'block';
+      // Hide controls if not supported
+      const controls = ttsSection.querySelectorAll(
+        '.tts-controls, .tts-speed-control, .tts-voice-control'
+      );
+      controls.forEach((el) => ((el as HTMLElement).style.display = 'none'));
+    }
+
+    let currentUtterance: SpeechSynthesisUtterance | null = null;
+    let isPaused = false;
+
+    // Load saved TTS preferences
+    const savedTTSSpeed = parseFloat(localStorage.getItem('a11y-tts-speed') || '1');
+    const savedTTSVoice = localStorage.getItem('a11y-tts-voice') || '';
+
+    if (ttsSpeedSlider) {
+      ttsSpeedSlider.value = String(savedTTSSpeed);
+      if (ttsSpeedValue) ttsSpeedValue.textContent = `${savedTTSSpeed}×`;
+    }
+
+    // Populate voice list using safe DOM methods
+    function populateVoices() {
+      if (!speechSynthesisSupported || !ttsVoiceSelect) return;
+
+      const voices = speechSynthesis.getVoices();
+
+      // Clear existing options safely
+      while (ttsVoiceSelect.options.length > 1) {
+        ttsVoiceSelect.remove(1);
+      }
+
+      // Filter for English voices and sort by name
+      const englishVoices = voices
+        .filter((v) => v.lang.startsWith('en'))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      englishVoices.forEach((voice) => {
+        const option = document.createElement('option');
+        option.value = voice.name;
+        option.textContent = `${voice.name} (${voice.lang})`;
+        if (voice.name === savedTTSVoice) {
+          option.selected = true;
+        }
+        ttsVoiceSelect.appendChild(option);
+      });
+
+      // Add other languages in a separate group if any
+      const otherVoices = voices
+        .filter((v) => !v.lang.startsWith('en'))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      if (otherVoices.length > 0) {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = 'Other Languages';
+        otherVoices.forEach((voice) => {
+          const option = document.createElement('option');
+          option.value = voice.name;
+          option.textContent = `${voice.name} (${voice.lang})`;
+          if (voice.name === savedTTSVoice) {
+            option.selected = true;
+          }
+          optgroup.appendChild(option);
+        });
+        ttsVoiceSelect.appendChild(optgroup);
+      }
+    }
+
+    // Voices may load asynchronously
+    if (speechSynthesisSupported) {
+      populateVoices();
+      speechSynthesis.onvoiceschanged = populateVoices;
+    }
+
+    function updateTTSState(state: 'playing' | 'paused' | 'stopped') {
+      if (!ttsPlayBtn || !ttsPauseBtn || !ttsStopBtn || !ttsStatus) return;
+
+      switch (state) {
+        case 'playing':
+          ttsPlayBtn.disabled = true;
+          ttsPlayBtn.classList.add('active');
+          ttsPauseBtn.disabled = false;
+          ttsStopBtn.disabled = false;
+          ttsStatus.textContent = 'Reading...';
+          isPaused = false;
+          break;
+        case 'paused':
+          ttsPlayBtn.disabled = false;
+          ttsPlayBtn.classList.remove('active');
+          ttsPauseBtn.disabled = true;
+          ttsStopBtn.disabled = false;
+          ttsStatus.textContent = 'Paused';
+          isPaused = true;
+          break;
+        case 'stopped':
+          ttsPlayBtn.disabled = false;
+          ttsPlayBtn.classList.remove('active');
+          ttsPauseBtn.disabled = true;
+          ttsStopBtn.disabled = true;
+          ttsStatus.textContent = 'Ready';
+          isPaused = false;
+          currentUtterance = null;
+          break;
+      }
+    }
+
+    function getPageContent(): string {
+      // Get main content, excluding navigation, footer, and accessibility panel
+      const main = document.querySelector('main');
+      if (!main) {
+        // Fallback: get body content excluding header/footer/nav
+        const body = document.body.cloneNode(true) as HTMLElement;
+        const excludeSelectors = [
+          'header',
+          'footer',
+          'nav',
+          '.accessibility-panel',
+          '.accessibility-toggle',
+          'script',
+          'style',
+          'noscript',
+        ];
+        excludeSelectors.forEach((sel) => {
+          body.querySelectorAll(sel).forEach((el) => el.remove());
+        });
+        return body.textContent?.trim() || '';
+      }
+
+      // Clone main to avoid modifying the DOM
+      const clone = main.cloneNode(true) as HTMLElement;
+
+      // Remove elements that shouldn't be read
+      const excludeSelectors = ['script', 'style', 'noscript', '.sr-only', '[aria-hidden="true"]'];
+      excludeSelectors.forEach((sel) => {
+        clone.querySelectorAll(sel).forEach((el) => el.remove());
+      });
+
+      // Get text content
+      let text = clone.textContent?.trim() || '';
+
+      // Clean up whitespace
+      text = text.replace(/\s+/g, ' ').trim();
+
+      return text;
+    }
+
+    function speak(text: string) {
+      if (!speechSynthesisSupported || !text) return;
+
+      // Cancel any existing speech
+      speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+
+      // Apply settings
+      utterance.rate = parseFloat(ttsSpeedSlider?.value || '1');
+      utterance.pitch = 1;
+      utterance.volume = 1;
+
+      // Set voice if selected
+      const selectedVoiceName = ttsVoiceSelect?.value;
+      if (selectedVoiceName) {
+        const voices = speechSynthesis.getVoices();
+        const voice = voices.find((v) => v.name === selectedVoiceName);
+        if (voice) utterance.voice = voice;
+      }
+
+      // Event handlers
+      utterance.onstart = () => updateTTSState('playing');
+      utterance.onend = () => updateTTSState('stopped');
+      utterance.onerror = (e) => {
+        console.error('TTS error:', e);
+        updateTTSState('stopped');
+        if (ttsStatus) ttsStatus.textContent = 'Error occurred';
+      };
+
+      currentUtterance = utterance;
+      speechSynthesis.speak(utterance);
+    }
+
+    // Play button
+    ttsPlayBtn?.addEventListener('click', () => {
+      if (isPaused) {
+        // Resume paused speech
+        speechSynthesis.resume();
+        updateTTSState('playing');
+      } else {
+        // Start new speech
+        const content = getPageContent();
+        if (content) {
+          speak(content);
+        } else {
+          if (ttsStatus) ttsStatus.textContent = 'No content to read';
+        }
+      }
+    });
+
+    // Pause button
+    ttsPauseBtn?.addEventListener('click', () => {
+      if (speechSynthesisSupported && speechSynthesis.speaking) {
+        speechSynthesis.pause();
+        updateTTSState('paused');
+      }
+    });
+
+    // Stop button
+    ttsStopBtn?.addEventListener('click', () => {
+      if (speechSynthesisSupported) {
+        speechSynthesis.cancel();
+        updateTTSState('stopped');
+      }
+    });
+
+    // Speed slider
+    ttsSpeedSlider?.addEventListener('input', () => {
+      const speed = ttsSpeedSlider.value;
+      if (ttsSpeedValue) ttsSpeedValue.textContent = `${speed}×`;
+      localStorage.setItem('a11y-tts-speed', speed);
+    });
+
+    // Voice select
+    ttsVoiceSelect?.addEventListener('change', () => {
+      localStorage.setItem('a11y-tts-voice', ttsVoiceSelect.value);
+    });
+
+    // Stop speech when navigating away
+    window.addEventListener('beforeunload', () => {
+      if (speechSynthesisSupported) {
+        speechSynthesis.cancel();
+      }
+    });
+
+    // Stop speech when panel closes
+    const originalClosePanel = closePanel;
+    closePanel = function () {
+      // Don't stop speech when closing panel - let it continue
+      originalClosePanel();
+    };
   }
 
   // Initialize when DOM is ready
