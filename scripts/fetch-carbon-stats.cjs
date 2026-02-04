@@ -216,9 +216,37 @@ async function getAzureStats() {
       console.error('Failed to fetch VM metrics:', err.message);
     }
 
+    // Get Snowflake proxy connection stats from the VM
+    let snowflakeStats = null;
+    if (vmRunning) {
+      try {
+        // Use Azure Run Command to get Snowflake metrics from the VM
+        // The snowflake proxy logs connection stats which we can parse
+        const runCmdResult = execSync(
+          `az vm run-command invoke --resource-group "${resourceGroup}" --name "${vmName}" --command-id RunShellScript --scripts "cat /var/log/snowflake-stats.json 2>/dev/null || echo '{}'" -o json`,
+          { stdio: 'pipe', timeout: 60000 }
+        ).toString();
+
+        const cmdOutput = JSON.parse(runCmdResult);
+        const stdoutMessage = cmdOutput?.value?.[0]?.message || '';
+
+        // Extract JSON from the output (it's in [stdout] section)
+        const stdoutMatch = stdoutMessage.match(/\[stdout\]\n([\s\S]*?)(?:\[stderr\]|$)/);
+        if (stdoutMatch && stdoutMatch[1]) {
+          const statsJson = stdoutMatch[1].trim();
+          if (statsJson && statsJson !== '{}') {
+            snowflakeStats = JSON.parse(statsJson);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch Snowflake stats from VM:', err.message);
+      }
+    }
+
     return {
       vmRunning,
       avgCpuPercent: parseFloat(avgCpuPercent),
+      snowflake: snowflakeStats,
       source: 'azure_monitor',
     };
   } catch (error) {
@@ -268,6 +296,9 @@ async function main() {
   const equivalentMilesDriven = (totalGrossGrams / 400).toFixed(2);
   const equivalentPaperPages = Math.round(totalGrossGrams / 10);
 
+  // Snowflake proxy stats from Azure VM
+  const snowflakeData = azureStats?.snowflake || null;
+
   const stats = {
     generatedAt: new Date().toISOString(),
     period: 'last30days',
@@ -280,6 +311,17 @@ async function main() {
       greenRating: 'A+',
       carbonNeutral: true,
     },
+
+    // Tor Snowflake proxy statistics
+    snowflake: snowflakeData
+      ? {
+          totalUsersHelped: snowflakeData.totalConnections || 0,
+          last24Hours: snowflakeData.last24Hours || 0,
+          last7Days: snowflakeData.last7Days || 0,
+          uptime: snowflakeData.uptimeHours || 0,
+          lastUpdated: snowflakeData.lastUpdated || new Date().toISOString(),
+        }
+      : null,
 
     usage,
 

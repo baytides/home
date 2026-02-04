@@ -1,5 +1,14 @@
 ---
 const currentYear = new Date().getFullYear();
+
+// Import Snowflake stats for server-side rendering
+let snowflakeStats = { totalUsersHelped: 0, vmStatus: 'unknown' };
+try {
+  const statsModule = await import('../../public/data/snowflake-stats.json');
+  snowflakeStats = statsModule.default || statsModule;
+} catch {
+  // Stats file not yet available
+}
 ---
 
 <!-- Footer -->
@@ -90,7 +99,15 @@ const currentYear = new Date().getFullYear();
           >
             <span class="toggle-label" id="snowflake-status">Enable</span>
           </button>
-          <span class="snowflake-stats" id="snowflake-stats"></span>
+          <span class="snowflake-stats" id="snowflake-stats">
+            {
+              snowflakeStats.totalUsersHelped > 0 && (
+                <span class="global-count" id="snowflake-global-count">
+                  · {snowflakeStats.totalUsersHelped.toLocaleString()} helped globally
+                </span>
+              )
+            }
+          </span>
         </span>
       </div>
     </div>
@@ -116,24 +133,38 @@ const currentYear = new Date().getFullYear();
     const toggleBtn = document.getElementById('snowflake-toggle');
     const statusLabel = document.getElementById('snowflake-status');
     const statsEl = document.getElementById('snowflake-stats');
+    const globalCountEl = document.getElementById('snowflake-global-count');
     const iframe = document.getElementById('snowflake-iframe');
 
     let isEnabled = localStorage.getItem(STORAGE_KEY) === 'true';
     let sessionConnections = 0;
     let pollInterval = null;
 
+    // Store global count from server-rendered value
+    const globalCountMatch = globalCountEl?.textContent?.match(/(\d[\d,]*)/);
+    const globalCount = globalCountMatch ? globalCountMatch[1] : '0';
+
     function updateUI() {
       toggleBtn.setAttribute('aria-pressed', String(isEnabled));
       toggleBtn.classList.toggle('active', isEnabled);
       statusLabel.textContent = isEnabled ? 'Active' : 'Enable';
 
-      if (isEnabled && sessionConnections > 0) {
-        statsEl.textContent = `· ${sessionConnections} user${sessionConnections !== 1 ? 's' : ''} helped this session`;
-      } else if (isEnabled) {
-        statsEl.textContent = '· Listening for connections...';
-      } else {
-        statsEl.textContent = '';
+      // Build stats display
+      let statsText = '';
+
+      // Always show global count if we have it
+      if (globalCount && globalCount !== '0') {
+        statsText = `· ${globalCount} helped globally`;
       }
+
+      // Add session stats when proxy is enabled
+      if (isEnabled && sessionConnections > 0) {
+        statsText += ` · ${sessionConnections} this session`;
+      } else if (isEnabled && !statsText) {
+        statsText = '· Listening for connections...';
+      }
+
+      statsEl.textContent = statsText;
     }
 
     function startProxy() {

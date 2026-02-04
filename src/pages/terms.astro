@@ -887,37 +887,3 @@ const structuredData = [
     border-left-color: rgba(255, 255, 255, 0.2);
   }
 </style>
-
-<script>
-  // Simple language toggle functionality
-  document.addEventListener('DOMContentLoaded', () => {
-    const toggle = document.getElementById('simple-toggle');
-    const expandAllBtn = document.getElementById('expand-all-btn');
-    const sections = document.querySelectorAll('.legal-section');
-
-    if (toggle) {
-      toggle.addEventListener('click', () => {
-        const isPressed = toggle.getAttribute('aria-pressed') === 'true';
-        toggle.setAttribute('aria-pressed', String(!isPressed));
-        document.body.classList.toggle('simple-language-mode', !isPressed);
-      });
-    }
-
-    if (expandAllBtn) {
-      let allExpanded = false;
-      expandAllBtn.addEventListener('click', () => {
-        allExpanded = !allExpanded;
-        sections.forEach((section) => {
-          const details = section.querySelector('details');
-          if (details) {
-            details.open = allExpanded;
-          }
-        });
-        const btnText = expandAllBtn.querySelector('span');
-        if (btnText) {
-          btnText.textContent = allExpanded ? 'Collapse All' : 'Expand All';
-        }
-      });
-    }
-  });
-</script>
