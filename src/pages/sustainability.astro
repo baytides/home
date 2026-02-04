@@ -504,7 +504,7 @@ const providerStats = {
             <div class="tip-number" aria-hidden="true">4</div>
             <h3>Use Wi-Fi Over Cellular</h3>
             <p>Wi-Fi connections use significantly less energy than cellular data.</p>
-            <span class="tip-info">
+            <span class="tip-info" id="network-status">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -516,13 +516,33 @@ const providerStats = {
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 aria-hidden="true"
+                class="wifi-icon"
               >
                 <path d="M5 13a10 10 0 0 1 14 0"></path>
                 <path d="M8.5 16.5a5 5 0 0 1 7 0"></path>
                 <path d="M2 8.82a15 15 0 0 1 20 0"></path>
                 <line x1="12" x2="12.01" y1="20" y2="20"></line>
               </svg>
-              <span>Check your device settings</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                class="cellular-icon"
+                style="display: none;"
+              >
+                <rect x="1" y="14" width="4" height="6" rx="1"></rect>
+                <rect x="7" y="10" width="4" height="10" rx="1"></rect>
+                <rect x="13" y="6" width="4" height="14" rx="1"></rect>
+                <rect x="19" y="2" width="4" height="18" rx="1"></rect>
+              </svg>
+              <span id="network-status-text">Check your device settings</span>
             </span>
           </div>
         </div>
@@ -1043,6 +1063,30 @@ const providerStats = {
     color: var(--text-light);
   }
 
+  /* Network status indicator */
+  .tip-info.wifi-connected {
+    background: rgba(34, 197, 94, 0.15);
+    color: #16a34a;
+  }
+
+  .tip-info.wifi-connected svg {
+    opacity: 1;
+  }
+
+  .tip-info.cellular-detected {
+    background: rgba(234, 179, 8, 0.15);
+    color: #ca8a04;
+  }
+
+  .tip-info.cellular-detected .wifi-icon {
+    display: none !important;
+  }
+
+  .tip-info.cellular-detected .cellular-icon {
+    display: block !important;
+    opacity: 1;
+  }
+
   /* CTA Buttons */
   .cta-buttons {
     display: flex;
@@ -1402,14 +1446,61 @@ const providerStats = {
     });
   }
 
+  // Network connection detection
+  function initNetworkDetection() {
+    const networkStatus = document.getElementById('network-status');
+    const networkStatusText = document.getElementById('network-status-text');
+
+    if (!networkStatus || !networkStatusText) return;
+
+    // Check if Network Information API is available (Chrome, Edge, Opera, Android browsers)
+    const connection =
+      navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+
+    if (!connection) {
+      // API not available - show generic message
+      return;
+    }
+
+    const updateNetworkStatus = () => {
+      const type = connection.effectiveType || connection.type;
+
+      // Remove existing classes
+      networkStatus.classList.remove('wifi-connected', 'cellular-detected');
+
+      if (connection.type === 'wifi' || connection.type === 'ethernet') {
+        // User is on Wi-Fi or wired
+        networkStatus.classList.add('wifi-connected');
+        networkStatusText.textContent = "You're on Wi-Fi — great choice!";
+      } else if (connection.type === 'cellular' || ['2g', '3g', '4g', 'slow-2g'].includes(type)) {
+        // User is on cellular
+        networkStatus.classList.add('cellular-detected');
+        networkStatusText.textContent = 'Consider switching to Wi-Fi to save energy';
+      } else if (type === '4g') {
+        // Fast connection but might be cellular
+        networkStatusText.textContent = 'Fast connection detected';
+      } else {
+        networkStatusText.textContent = 'Check your device settings';
+      }
+    };
+
+    // Initial check
+    updateNetworkStatus();
+
+    // Listen for connection changes
+    connection.addEventListener('change', updateNetworkStatus);
+  }
+
   // Initialize tip buttons when ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       initDarkModeToggle();
       initBookmarkButton();
+      initNetworkDetection();
     });
   } else {
     initDarkModeToggle();
     initBookmarkButton();
+    initNetworkDetection();
   }
 </script>
