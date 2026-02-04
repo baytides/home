@@ -3,12 +3,18 @@
   "last24Hours": 0,
   "last7Days": 0,
   "uptimeHours": 0,
-  "lastUpdated": "2026-02-04T00:00:00.000Z",
-  "vmStatus": "pending",
+  "lastUpdated": "2026-02-04T21:14:48.524Z",
+  "vmStatus": "offline",
   "source": "azure_vm",
-  "history": [],
+  "history": [
+    {
+      "timestamp": "2026-02-04T21:14:48.524Z",
+      "connections": 0,
+      "total": 0
+    }
+  ],
   "summary": {
-    "message": "Snowflake proxy stats will be available after the first hourly update.",
+    "message": "Snowflake proxy stats temporarily unavailable.",
     "lastHelpedRecently": false
   }
 }
