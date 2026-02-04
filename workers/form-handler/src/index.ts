@@ -19,6 +19,7 @@ interface Env {
   TURNSTILE_SECRET_KEY?: string;
   MAILERLITE_API_KEY?: string;
   MAILERLITE_GROUP_ID?: string;
+  RESEND_API_KEY: string;
 }
 
 interface RateLimitRecord {
@@ -249,85 +250,69 @@ async function sendEmail(
 ): Promise<Response> {
   const toEmail = env.TO_EMAIL || 'admin@baytides.org';
 
-  const emailRequest = new Request('https://api.mailchannels.net/tx/v1/send', {
+  const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      personalizations: [
-        {
-          to: [{ email: toEmail, name: 'Bay Tides' }],
-        },
-      ],
-      from: {
-        email: 'noreply@baytides.org',
-        name: 'Bay Tides Website',
-      },
-      reply_to: replyTo ? { email: replyTo } : undefined,
+      from: 'Bay Tides Website <noreply@baytides.org>',
+      to: [toEmail],
+      reply_to: replyTo || undefined,
       subject: subject,
-      content: [
-        {
-          type: 'text/plain',
-          value: body,
-        },
-      ],
+      text: body,
     }),
   });
 
-  const response = await fetch(emailRequest);
-
   if (!response.ok) {
     const errorText = await response.text();
-    console.error('MailChannels error:', errorText);
+    console.error('Resend error:', errorText);
     throw new Error(`Failed to send email: ${response.status}`);
   }
 
   return response;
 }
 
-async function sendEmailAdvanced(options: EmailOptions): Promise<Response> {
-  interface Personalization {
-    to: Array<{ email: string; name?: string }>;
-    bcc?: Array<{ email: string }>;
+async function sendEmailAdvanced(env: Env, options: EmailOptions): Promise<Response> {
+  interface ResendEmailPayload {
+    from: string;
+    to: string[];
+    bcc?: string[];
+    reply_to?: string;
+    subject: string;
+    text: string;
+    html?: string;
   }
 
-  const personalization: Personalization = {
-    to: [{ email: options.to, name: options.toName }],
+  const payload: ResendEmailPayload = {
+    from: 'Bay Tides <noreply@baytides.org>',
+    to: [options.toName ? `${options.toName} <${options.to}>` : options.to],
+    reply_to: options.replyTo || undefined,
+    subject: options.subject,
+    text: options.body,
   };
 
   if (options.bcc) {
-    personalization.bcc = [{ email: options.bcc }];
+    payload.bcc = [options.bcc];
   }
-
-  const content: Array<{ type: string; value: string }> = [
-    { type: 'text/plain', value: options.body },
-  ];
 
   if (options.htmlBody) {
-    content.push({ type: 'text/html', value: options.htmlBody });
+    payload.html = options.htmlBody;
   }
 
-  const emailRequest = new Request('https://api.mailchannels.net/tx/v1/send', {
+  const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      personalizations: [personalization],
-      from: {
-        email: 'noreply@baytides.org',
-        name: 'Bay Tides',
-      },
-      reply_to: options.replyTo ? { email: options.replyTo } : undefined,
-      subject: options.subject,
-      content: content,
-    }),
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
   });
-
-  const response = await fetch(emailRequest);
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error('MailChannels error:', errorText);
+    console.error('Resend error:', errorText);
     throw new Error(`Failed to send email: ${response.status}`);
   }
 
@@ -636,7 +621,7 @@ Waiver Status: Pending - volunteer directed to complete online
 Submitted: ${submittedDate}
         `.trim();
 
-        await sendEmailAdvanced({
+        await sendEmailAdvanced(env, {
           to: env.TO_EMAIL || 'volunteer@baytides.org',
           toName: 'Bay Tides Volunteer Coordinator',
           bcc: env.LEGAL_EMAIL || 'legal@baytides.org',
@@ -719,7 +704,7 @@ Bay Tides
 https://baytides.org
         `.trim();
 
-        await sendEmailAdvanced({
+        await sendEmailAdvanced(env, {
           to: email,
           toName: `${firstName} ${lastName}`,
           subject: volunteerSubject,
@@ -783,7 +768,7 @@ IP Address: ${request.headers.get('CF-Connecting-IP') || 'Unknown'}
 Submitted: ${submittedDate}
         `.trim();
 
-        await sendEmailAdvanced({
+        await sendEmailAdvanced(env, {
           to: env.TO_EMAIL || 'volunteer@baytides.org',
           toName: 'Bay Tides Volunteer Coordinator',
           bcc: env.LEGAL_EMAIL || 'legal@baytides.org',
@@ -842,7 +827,7 @@ https://baytides.org
 This email serves as your official confirmation. Please save it for your records.
         `.trim();
 
-        await sendEmailAdvanced({
+        await sendEmailAdvanced(env, {
           to: email,
           toName: `${firstName} ${lastName}`,
           subject: waiverConfirmSubject,
