@@ -41,8 +41,8 @@ const structuredData = [
       href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer>
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer
+    ></script>
   </Fragment>
 
   <Breadcrumb
@@ -153,6 +153,7 @@ const structuredData = [
                   <span class="sr-only">(required)</span>
                 </label>
                 <input type="date" id="waiver-dob" name="date_of_birth" required />
+                <span id="dob-hint" class="field-hint"></span>
               </div>
 
               <div class="form-group">
@@ -164,6 +165,91 @@ const structuredData = [
                   autocomplete="street-address"
                 />
               </div>
+            </div>
+
+            <!-- Hidden field for minor status -->
+            <input type="hidden" name="is_minor" id="is-minor" value="false" />
+          </fieldset>
+
+          <!-- Parent/Guardian Information (shown for minors) -->
+          <fieldset
+            class="form-fieldset parent-guardian-fieldset"
+            id="parent-guardian-section"
+            hidden
+          >
+            <legend>Parent/Guardian Information</legend>
+            <p class="fieldset-description">
+              Since the participant is under 18, a parent or legal guardian must complete this
+              waiver.
+            </p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="guardian-first-name">
+                  Parent/Guardian First Name
+                  <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input
+                  type="text"
+                  id="guardian-first-name"
+                  name="guardian_first_name"
+                  autocomplete="given-name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="guardian-last-name">
+                  Parent/Guardian Last Name
+                  <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input
+                  type="text"
+                  id="guardian-last-name"
+                  name="guardian_last_name"
+                  autocomplete="family-name"
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="guardian-email">
+                  Parent/Guardian Email
+                  <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input
+                  type="email"
+                  id="guardian-email"
+                  name="guardian_email"
+                  autocomplete="email"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="guardian-phone">
+                  Parent/Guardian Phone
+                  <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input type="tel" id="guardian-phone" name="guardian_phone" autocomplete="tel" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="guardian-relationship">
+                Relationship to Participant
+                <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </label>
+              <input
+                type="text"
+                id="guardian-relationship"
+                name="guardian_relationship"
+                placeholder="e.g., Parent, Legal Guardian"
+              />
             </div>
           </fieldset>
 
@@ -368,14 +454,10 @@ const structuredData = [
               </span>
             </label>
 
-            <label class="checkbox-label agreement-checkbox">
+            <label class="checkbox-label agreement-checkbox" id="agree-age-label">
               <input type="checkbox" name="agree_age" id="agree-age" required />
-              <span>
-                I am 18 years of age or older. <strong>
-                  If I am signing on behalf of a minor,
-                </strong>
-                I am the parent or legal guardian of the minor participant and have the authority to bind
-                the minor to this waiver.
+              <span id="agree-age-text">
+                I am 18 years of age or older.
                 <span aria-hidden="true">*</span>
                 <span class="sr-only">(required)</span>
               </span>
@@ -519,25 +601,6 @@ const structuredData = [
                 <span class="sr-only">(required)</span>
               </label>
               <input type="date" id="waiver-date" name="signature_date" required />
-            </div>
-
-            <!-- Minor Information (if applicable) -->
-            <div class="minor-section">
-              <p class="minor-note">
-                <strong>If signing for a minor:</strong> Please also provide the minor's information.
-              </p>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="minor-name">Minor's Full Name</label>
-                  <input type="text" id="minor-name" name="minor_name" />
-                </div>
-
-                <div class="form-group">
-                  <label for="minor-dob">Minor's Date of Birth</label>
-                  <input type="date" id="minor-dob" name="minor_dob" />
-                </div>
-              </div>
             </div>
           </fieldset>
 
@@ -708,10 +771,11 @@ const structuredData = [
       y += 4;
     }
 
-    // Participant Information
+    // For minor waivers, show participant (minor) info, then guardian info
+    // For adult waivers, just show participant info
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
-    doc.text(data.minorName ? 'Parent/Guardian Information' : 'Participant Information', margin, y);
+    doc.text('Participant Information', margin, y);
     y += 6;
 
     doc.setFontSize(10);
@@ -719,12 +783,38 @@ const structuredData = [
     doc.text(`Name: ${data.firstName} ${data.lastName}`, margin, y);
     doc.text(`Date of Birth: ${formatDate(data.dob)}`, margin + 90, y);
     y += 5;
-    doc.text(`Email: ${data.email}`, margin, y);
-    doc.text(`Phone: ${data.phone}`, margin + 90, y);
-    y += 5;
-    if (data.address && data.address !== 'Not provided') {
-      doc.text(`Address: ${data.address}`, margin, y);
+
+    if (data.isMinor && data.guardianFirstName) {
+      // Minor waiver - show guardian info separately
+      doc.text(`Email: ${data.email}`, margin, y);
+      doc.text(`Phone: ${data.phone}`, margin + 90, y);
       y += 5;
+      if (data.address && data.address !== 'Not provided') {
+        doc.text(`Address: ${data.address}`, margin, y);
+        y += 5;
+      }
+      y += 3;
+
+      // Guardian section
+      doc.setFont('helvetica', 'bold');
+      doc.text('Parent/Guardian (Signing Party)', margin, y);
+      y += 5;
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Name: ${data.guardianFirstName} ${data.guardianLastName}`, margin, y);
+      doc.text(`Relationship: ${data.guardianRelationship || 'Parent/Guardian'}`, margin + 90, y);
+      y += 5;
+      doc.text(`Email: ${data.guardianEmail}`, margin, y);
+      doc.text(`Phone: ${data.guardianPhone}`, margin + 90, y);
+      y += 5;
+    } else {
+      // Adult waiver
+      doc.text(`Email: ${data.email}`, margin, y);
+      doc.text(`Phone: ${data.phone}`, margin + 90, y);
+      y += 5;
+      if (data.address && data.address !== 'Not provided') {
+        doc.text(`Address: ${data.address}`, margin, y);
+        y += 5;
+      }
     }
     y += 3;
 
@@ -931,11 +1021,17 @@ const structuredData = [
         this.ctx.scale(dpr, dpr);
       }
 
-      // Set drawing styles
-      this.ctx.strokeStyle = '#1a365d';
+      // Set drawing styles - use light color for dark mode
+      const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+      this.ctx.strokeStyle = isDarkMode ? '#63b3ed' : '#1a365d';
       this.ctx.lineWidth = 2.5;
       this.ctx.lineCap = 'round';
       this.ctx.lineJoin = 'round';
+    }
+
+    updateStrokeColor() {
+      const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+      this.ctx.strokeStyle = isDarkMode ? '#63b3ed' : '#1a365d';
     }
 
     private bindEvents() {
@@ -972,6 +1068,16 @@ const structuredData = [
           img.src = imageData;
         }
       });
+
+      // Theme change observer - update stroke color when theme changes
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.attributeName === 'data-theme') {
+            this.updateStrokeColor();
+          }
+        });
+      });
+      observer.observe(document.documentElement, { attributes: true });
     }
 
     private getPosition(e: MouseEvent | Touch): { x: number; y: number } {
@@ -1057,10 +1163,34 @@ const structuredData = [
 
   let signatureCanvas: SignatureCanvas | null = null;
 
+  function calculateAge(birthDate: Date): number {
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
+
   function initWaiverForm() {
     const form = document.getElementById('waiver-form') as HTMLFormElement;
     const statusDiv = document.getElementById('waiver-form-status');
     const dateInput = document.getElementById('waiver-date') as HTMLInputElement;
+    const dobInput = document.getElementById('waiver-dob') as HTMLInputElement;
+    const dobHint = document.getElementById('dob-hint');
+    const isMinorInput = document.getElementById('is-minor') as HTMLInputElement;
+    const parentGuardianSection = document.getElementById('parent-guardian-section');
+    const agreeAgeText = document.getElementById('agree-age-text');
+
+    // Parent/guardian fields for dynamic required attribute
+    const guardianFirstName = document.getElementById('guardian-first-name') as HTMLInputElement;
+    const guardianLastName = document.getElementById('guardian-last-name') as HTMLInputElement;
+    const guardianEmail = document.getElementById('guardian-email') as HTMLInputElement;
+    const guardianPhone = document.getElementById('guardian-phone') as HTMLInputElement;
+    const guardianRelationship = document.getElementById(
+      'guardian-relationship'
+    ) as HTMLInputElement;
 
     if (!form) return;
 
@@ -1068,6 +1198,109 @@ const structuredData = [
     if (dateInput) {
       const today = new Date().toISOString().split('T')[0];
       dateInput.value = today;
+    }
+
+    // Date of birth change handler - detect minor status
+    if (dobInput) {
+      dobInput.addEventListener('change', () => {
+        const dobValue = dobInput.value;
+        if (!dobValue) {
+          if (dobHint) {
+            dobHint.textContent = '';
+            dobHint.className = 'field-hint';
+          }
+          if (isMinorInput) isMinorInput.value = 'false';
+          toggleParentGuardianSection(false);
+          return;
+        }
+
+        const dob = new Date(dobValue + 'T00:00:00');
+        const age = calculateAge(dob);
+        const isMinor = age < 18;
+
+        if (isMinorInput) isMinorInput.value = isMinor ? 'true' : 'false';
+
+        if (isMinor) {
+          // Calculate 18th birthday
+          const eighteenthBirthday = new Date(dob);
+          eighteenthBirthday.setFullYear(dob.getFullYear() + 18);
+          const expirationDate = eighteenthBirthday.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          });
+
+          if (dobHint) {
+            // Build hint content safely with DOM methods
+            dobHint.textContent = '';
+            const strong = document.createElement('strong');
+            strong.textContent = `Minor participant (${age} years old)`;
+            dobHint.appendChild(strong);
+            dobHint.appendChild(
+              document.createTextNode(
+                ` — Parent/guardian must sign. Waiver expires: ${expirationDate}`
+              )
+            );
+            dobHint.className = 'field-hint minor-hint';
+          }
+
+          toggleParentGuardianSection(true);
+        } else {
+          if (dobHint) {
+            dobHint.textContent = '';
+            dobHint.className = 'field-hint';
+          }
+          toggleParentGuardianSection(false);
+        }
+      });
+    }
+
+    function toggleParentGuardianSection(show: boolean) {
+      if (parentGuardianSection) {
+        parentGuardianSection.hidden = !show;
+      }
+
+      // Toggle required attribute on parent/guardian fields
+      const guardianFields = [
+        guardianFirstName,
+        guardianLastName,
+        guardianEmail,
+        guardianPhone,
+        guardianRelationship,
+      ];
+
+      guardianFields.forEach((field) => {
+        if (field) {
+          if (show) {
+            field.required = true;
+          } else {
+            field.required = false;
+            field.value = ''; // Clear values when hiding
+          }
+        }
+      });
+
+      // Update the age agreement checkbox text
+      if (agreeAgeText) {
+        agreeAgeText.textContent = '';
+        if (show) {
+          agreeAgeText.appendChild(
+            document.createTextNode(
+              'I am the parent or legal guardian of the minor participant named above and have the authority to bind the minor to this waiver. '
+            )
+          );
+        } else {
+          agreeAgeText.appendChild(document.createTextNode('I am 18 years of age or older. '));
+        }
+        const asterisk = document.createElement('span');
+        asterisk.setAttribute('aria-hidden', 'true');
+        asterisk.textContent = '*';
+        agreeAgeText.appendChild(asterisk);
+        const srOnly = document.createElement('span');
+        srOnly.className = 'sr-only';
+        srOnly.textContent = '(required)';
+        agreeAgeText.appendChild(srOnly);
+      }
     }
 
     // Initialize signature mode toggle
@@ -1177,7 +1410,11 @@ const structuredData = [
         const signatureImage = formData.get('signature_image') as string;
         const signature = typedSignature || 'Drawn Signature';
 
+        const isMinorWaiver = formData.get('is_minor') === 'true';
+
         const waiverData = {
+          // For minors: these are the PARTICIPANT (minor) fields
+          // For adults: these are the SIGNER fields
           firstName: formData.get('first_name') as string,
           lastName: formData.get('last_name') as string,
           email: formData.get('email') as string,
@@ -1190,9 +1427,19 @@ const structuredData = [
           signature: signature,
           signatureImage: signatureImage,
           signatureDate: formData.get('signature_date') as string,
-          // Minor participant info
-          minorName: formData.get('minor_name') as string,
-          minorDob: formData.get('minor_dob') as string,
+          // Minor waiver info - if minor, store participant as minor and guardian as signer
+          isMinor: isMinorWaiver,
+          // For backward compatibility with PDF generation
+          minorName: isMinorWaiver
+            ? `${formData.get('first_name')} ${formData.get('last_name')}`
+            : '',
+          minorDob: isMinorWaiver ? (formData.get('date_of_birth') as string) : '',
+          // Guardian info for minor waivers
+          guardianFirstName: formData.get('guardian_first_name') as string,
+          guardianLastName: formData.get('guardian_last_name') as string,
+          guardianEmail: formData.get('guardian_email') as string,
+          guardianPhone: formData.get('guardian_phone') as string,
+          guardianRelationship: formData.get('guardian_relationship') as string,
           documentId: generateDocumentId(),
         };
         sessionStorage.setItem('waiverData', JSON.stringify(waiverData));
@@ -1406,6 +1653,33 @@ const structuredData = [
     margin-bottom: 0;
   }
 
+  /* Minor hint styling */
+  .field-hint.minor-hint {
+    display: block;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 6px;
+    color: #92400e;
+    font-size: 0.875rem;
+  }
+
+  /* Parent/Guardian Section */
+  .parent-guardian-fieldset {
+    background: #fef3c7;
+    border: 2px solid #f59e0b;
+  }
+
+  .parent-guardian-fieldset legend {
+    color: #92400e;
+  }
+
+  .parent-guardian-fieldset .fieldset-description {
+    color: #92400e;
+    font-weight: 500;
+  }
+
   /* Signature Section */
   .signature-fieldset {
     background: var(--light-blue);
@@ -1542,6 +1816,10 @@ const structuredData = [
     text-align: center;
   }
 
+  #signature-label {
+    color: var(--text-dark);
+  }
+
   /* Minor Section */
   .minor-section {
     margin-top: 2rem;
@@ -1599,6 +1877,25 @@ const structuredData = [
   :global([data-theme='dark']) .scroll-instruction {
     background: rgba(245, 158, 11, 0.2);
     border-color: #f59e0b;
+    color: #fbbf24;
+  }
+
+  :global([data-theme='dark']) .field-hint.minor-hint {
+    background: rgba(245, 158, 11, 0.2);
+    border-color: #f59e0b;
+    color: #fbbf24;
+  }
+
+  :global([data-theme='dark']) .parent-guardian-fieldset {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: #f59e0b;
+  }
+
+  :global([data-theme='dark']) .parent-guardian-fieldset legend {
+    color: #fbbf24;
+  }
+
+  :global([data-theme='dark']) .parent-guardian-fieldset .fieldset-description {
     color: #fbbf24;
   }
 
@@ -1673,6 +1970,14 @@ const structuredData = [
     background: var(--bg-primary);
     color: #fc8181;
     border-color: #fc8181;
+  }
+
+  :global([data-theme='dark']) #signature-label {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .signature-note {
+    color: var(--text-light);
   }
 
   :global([data-theme='dark']) .minor-section {

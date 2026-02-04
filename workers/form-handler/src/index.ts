@@ -539,14 +539,34 @@ Submitted: ${new Date().toISOString()}
                 .map((i) => (i === 'other' && otherInterest ? `Other: ${otherInterest}` : i))
                 .join(', ')
             : 'None selected';
+        // Combine desktop and mobile availability (only one will be submitted based on screen size)
         const availabilityRaw = formData.getAll('availability[]');
-        const availability = formatAvailability(availabilityRaw as string[]);
+        const availabilityMobileRaw = formData.getAll('availability_mobile[]');
+        const combinedAvailability = [...availabilityRaw, ...availabilityMobileRaw];
+        const availability = formatAvailability(combinedAvailability as string[]);
         const frequency = (formData.get('frequency') as string | null) || 'Not specified';
         const experience = (formData.get('experience') as string | null) || 'Not provided';
         const referral = (formData.get('referral') as string | null) || 'Not specified';
         const message = (formData.get('message') as string | null) || '';
         const needsAccommodations = formData.get('needs_accommodations') === 'on';
         const accommodations = (formData.get('accommodations') as string | null) || '';
+
+        // Volunteer hours tracking
+        const needsHours = formData.get('needs_hours') === 'yes';
+        const hoursCategory = (formData.get('hours_category') as string | null) || '';
+        const hoursSubcategory = (formData.get('hours_subcategory') as string | null) || '';
+        const hoursCategoryOther = (formData.get('hours_category_other') as string | null) || '';
+        const legalNature = (formData.get('legal_nature') as string | null) || '';
+        const hoursOrganization = (formData.get('hours_organization') as string | null) || '';
+        const hoursContactName = (formData.get('hours_contact_name') as string | null) || '';
+        const hoursContactEmail = (formData.get('hours_contact_email') as string | null) || '';
+        const hoursContactPhone = (formData.get('hours_contact_phone') as string | null) || '';
+        const hoursRequired = (formData.get('hours_required') as string | null) || '';
+        const hoursDeadline = (formData.get('hours_deadline') as string | null) || '';
+        const hoursNotes = (formData.get('hours_notes') as string | null) || '';
+
+        // Check if it's a legal/court requirement
+        const isLegalRequirement = ['legal_court', 'rehabilitation'].includes(hoursCategory);
 
         const fullAddress = [address, city, state, zip].filter(Boolean).join(', ');
         const submittedDate = new Date().toISOString();
@@ -591,7 +611,21 @@ ${accommodations}
 Please contact them to discuss and confirm arrangements.
 `
     : ''
-}
+}${
+          needsHours
+            ? `
+=== VOLUNTEER HOURS TRACKING ===
+${isLegalRequirement ? '⚠️ LEGAL/COURT REQUIREMENT - Review placement carefully\n' : ''}
+Category: ${hoursCategory}${hoursSubcategory ? ` - ${hoursSubcategory}` : ''}${hoursCategoryOther ? ` (${hoursCategoryOther})` : ''}
+${isLegalRequirement && legalNature ? `Nature of Requirement: ${legalNature}\n` : ''}
+Organization: ${hoursOrganization || 'Not provided'}
+Contact: ${hoursContactName || 'Not provided'}${hoursContactEmail ? ` (${hoursContactEmail})` : ''}${hoursContactPhone ? ` - ${hoursContactPhone}` : ''}
+Hours Required: ${hoursRequired || 'Not specified'}
+Deadline: ${hoursDeadline || 'Not specified'}
+${hoursNotes ? `Notes: ${hoursNotes}` : ''}
+`
+            : ''
+        }
 === AGREEMENTS ===
 Terms & Conditions: Accepted
 Privacy Policy: Accepted
@@ -640,7 +674,21 @@ Your request:
 ${accommodations}
 `
     : ''
-}
+}${
+          needsHours
+            ? `
+=== VOLUNTEER HOURS TRACKING ===
+
+We've recorded your volunteer hours requirement. We'll provide verification letters upon request after you complete volunteer activities.
+
+Organization: ${hoursOrganization || 'Not specified'}
+Hours Required: ${hoursRequired || 'Not specified'}
+Deadline: ${hoursDeadline || 'Not specified'}
+
+Please allow 5-7 business days for processing verification requests.
+`
+            : ''
+        }
 === NEXT STEP: SIGN YOUR LIABILITY WAIVER ===
 
 A liability waiver is required before you can participate in any volunteer activities.

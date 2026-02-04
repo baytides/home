@@ -887,13 +887,68 @@ textarea[aria-invalid='true'] {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-// Availability grid (days across top, times down left)
+// Availability grid base styles
 .availability-grid {
   background: var(--white);
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   overflow: hidden;
-  overflow-x: auto;
+}
+
+// Desktop grid (days across top, times down left) - 8 columns
+.availability-desktop {
+  display: block;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+}
+
+// Mobile grid (times across top, days down left) - 4 columns
+.availability-mobile {
+  display: none;
+
+  @media (max-width: 600px) {
+    display: block;
+  }
+
+  .availability-header {
+    display: grid;
+    grid-template-columns: 55px repeat(3, 1fr);
+    min-width: 0;
+  }
+
+  .availability-row {
+    display: grid;
+    grid-template-columns: 55px repeat(3, 1fr);
+    min-width: 0;
+  }
+
+  .availability-day {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  .availability-time-label {
+    padding: 0.625rem 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--text-dark);
+  }
+
+  .availability-cell {
+    padding: 0.5rem 0.25rem;
+
+    input[type='checkbox'] {
+      width: 28px;
+      height: 28px;
+    }
+  }
 }
 
 .availability-header {
@@ -931,6 +986,11 @@ textarea[aria-invalid='true'] {
   &:nth-child(even) {
     background: rgba(0, 0, 0, 0.02);
   }
+}
+
+// Scroll hint - no longer needed with mobile layout
+.availability-scroll-hint {
+  display: none;
 }
 
 .availability-time {
@@ -1144,6 +1204,10 @@ textarea[aria-invalid='true'] {
   .availability-cell:hover {
     background: rgba(99, 179, 237, 0.15);
   }
+
+  .availability-day {
+    color: var(--text-dark);
+  }
 }
 
 // Tablet adjustments (768px - 1024px)
@@ -1202,37 +1266,6 @@ textarea[aria-invalid='true'] {
     input[type='checkbox'] {
       width: 22px;
       height: 22px;
-    }
-  }
-
-  .availability-grid {
-    margin: 0 -0.5rem;
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-  }
-
-  .availability-header,
-  .availability-row {
-    grid-template-columns: 70px repeat(7, 1fr);
-  }
-
-  .availability-header .availability-day-label {
-    font-size: 0.75rem;
-    padding: 0.5rem 0.125rem;
-  }
-
-  .availability-time {
-    font-size: 0.75rem;
-    padding: 0.5rem 0.5rem;
-  }
-
-  .availability-cell {
-    padding: 0.5rem 0.125rem;
-
-    input[type='checkbox'] {
-      width: 20px;
-      height: 20px;
     }
   }
 
@@ -1298,26 +1331,6 @@ textarea[aria-invalid='true'] {
     font-size: 0.875rem;
   }
 
-  .availability-header,
-  .availability-row {
-    grid-template-columns: 60px repeat(7, 1fr);
-    min-width: 360px;
-  }
-
-  .availability-time {
-    font-size: 0.6875rem;
-    padding: 0.5rem 0.375rem;
-  }
-
-  .availability-header .availability-day-label {
-    font-size: 0.6875rem;
-  }
-
-  .availability-cell input[type='checkbox'] {
-    width: 18px;
-    height: 18px;
-  }
-
   .agreement-checkbox span {
     font-size: 0.9375rem;
     line-height: 1.5;
@@ -1326,5 +1339,33 @@ textarea[aria-invalid='true'] {
   .waiver-option {
     padding-top: 1rem;
     margin-top: 1rem;
+  }
+}
+
+// Extra small mobile (up to 360px)
+@media (max-width: 360px) {
+  // Mobile availability grid adjustments
+  .availability-mobile {
+    .availability-header {
+      grid-template-columns: 45px repeat(3, 1fr);
+    }
+
+    .availability-row {
+      grid-template-columns: 45px repeat(3, 1fr);
+    }
+
+    .availability-day {
+      font-size: 0.75rem;
+      padding: 0.5rem 0.5rem;
+    }
+
+    .availability-time-label {
+      font-size: 0.6875rem;
+    }
+
+    .availability-cell input[type='checkbox'] {
+      width: 20px;
+      height: 20px;
+    }
   }
 }

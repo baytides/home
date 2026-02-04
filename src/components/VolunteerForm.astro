@@ -1,6 +1,6 @@
 ---
 // Volunteer Registration Form Component
-// Extended fields with Cloudflare Workers backend
+// Multi-step wizard with Cloudflare Workers backend
 ---
 
 <div class="volunteer-form-container" id="volunteer-form-section">
@@ -8,6 +8,34 @@
   <p>Fill out the form below to join our volunteer community.</p>
 
   <div id="volunteer-form-status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Progress Steps -->
+  <div class="form-progress" id="form-progress">
+    <div class="progress-step active" data-step="1">
+      <span class="step-number">1</span>
+      <span class="step-label">Personal Info</span>
+    </div>
+    <div class="progress-connector"></div>
+    <div class="progress-step" data-step="2">
+      <span class="step-number">2</span>
+      <span class="step-label">Contact & Interests</span>
+    </div>
+    <div class="progress-connector"></div>
+    <div class="progress-step" data-step="3">
+      <span class="step-number">3</span>
+      <span class="step-label">Availability</span>
+    </div>
+    <div class="progress-connector"></div>
+    <div class="progress-step" data-step="4">
+      <span class="step-number">4</span>
+      <span class="step-label">Hours & Credits</span>
+    </div>
+    <div class="progress-connector"></div>
+    <div class="progress-step" data-step="5">
+      <span class="step-number">5</span>
+      <span class="step-label">Review & Submit</span>
+    </div>
+  </div>
 
   <form action="https://forms.baytides.org" method="POST" id="volunteer-form" novalidate>
     <input type="hidden" name="form_type" value="volunteer" />
@@ -24,361 +52,143 @@
       aria-hidden="true"
       tabindex="-1"
     />
+    <!-- Hidden field for minor status -->
+    <input type="hidden" name="is_minor" id="is-minor" value="false" />
 
-    <!-- Personal Information -->
-    <fieldset class="form-fieldset">
-      <legend>Personal Information</legend>
+    <!-- Step 1: Personal Information -->
+    <div class="form-step active" data-step="1">
+      <fieldset class="form-fieldset">
+        <legend>Personal Information</legend>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label for="vol-first-name">
-            First Name
-            <span aria-hidden="true">*</span>
-            <span class="sr-only">(required)</span>
-          </label>
-          <input
-            type="text"
-            id="vol-first-name"
-            name="first_name"
-            required
-            autocomplete="given-name"
-          />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="vol-first-name">
+              First Name
+              <span aria-hidden="true">*</span>
+              <span class="sr-only">(required)</span>
+            </label>
+            <input
+              type="text"
+              id="vol-first-name"
+              name="first_name"
+              required
+              autocomplete="given-name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="vol-last-name">
+              Last Name
+              <span aria-hidden="true">*</span>
+              <span class="sr-only">(required)</span>
+            </label>
+            <input
+              type="text"
+              id="vol-last-name"
+              name="last_name"
+              required
+              autocomplete="family-name"
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="vol-email">
+              Email
+              <span aria-hidden="true">*</span>
+              <span class="sr-only">(required)</span>
+            </label>
+            <input type="email" id="vol-email" name="email" required autocomplete="email" />
+          </div>
+
+          <div class="form-group">
+            <label for="vol-phone">
+              Phone
+              <span aria-hidden="true">*</span>
+              <span class="sr-only">(required)</span>
+            </label>
+            <input type="tel" id="vol-phone" name="phone" required autocomplete="tel" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="vol-dob">
+              Date of Birth
+              <span aria-hidden="true">*</span>
+              <span class="sr-only">(required)</span>
+            </label>
+            <input type="date" id="vol-dob" name="date_of_birth" required />
+            <span class="field-hint" id="dob-hint"></span>
+          </div>
+        </div>
+
+        <!-- Minor Alert Box -->
+        <div class="minor-alert" id="minor-alert" hidden>
+          <div class="minor-alert-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12">
+              </line><line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <div class="minor-alert-content">
+            <h4>Parent or Guardian Required</h4>
+            <p>
+              Since the volunteer is under 18, a <strong>parent or legal guardian</strong> should complete
+              this registration form on their behalf. The liability waiver will also need to be signed
+              by a parent or guardian.
+            </p>
+          </div>
         </div>
 
         <div class="form-group">
-          <label for="vol-last-name">
-            Last Name
-            <span aria-hidden="true">*</span>
-            <span class="sr-only">(required)</span>
-          </label>
-          <input
-            type="text"
-            id="vol-last-name"
-            name="last_name"
-            required
-            autocomplete="family-name"
-          />
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="vol-email">
-            Email
-            <span aria-hidden="true">*</span>
-            <span class="sr-only">(required)</span>
-          </label>
-          <input type="email" id="vol-email" name="email" required autocomplete="email" />
+          <label for="vol-address">Street Address</label>
+          <input type="text" id="vol-address" name="address" autocomplete="street-address" />
         </div>
 
-        <div class="form-group">
-          <label for="vol-phone">
-            Phone
-            <span aria-hidden="true">*</span>
-            <span class="sr-only">(required)</span>
-          </label>
-          <input type="tel" id="vol-phone" name="phone" required autocomplete="tel" />
+        <div class="form-row form-row-3">
+          <div class="form-group">
+            <label for="vol-city">City</label>
+            <input type="text" id="vol-city" name="city" autocomplete="address-level2" />
+          </div>
+
+          <div class="form-group">
+            <label for="vol-state">State</label>
+            <input
+              type="text"
+              id="vol-state"
+              name="state"
+              value="CA"
+              autocomplete="address-level1"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="vol-zip">ZIP Code</label>
+            <input type="text" id="vol-zip" name="zip" autocomplete="postal-code" />
+          </div>
         </div>
-      </div>
+      </fieldset>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label for="vol-dob">
-            Date of Birth
-            <span aria-hidden="true">*</span>
-            <span class="sr-only">(required)</span>
-          </label>
-          <input type="date" id="vol-dob" name="date_of_birth" required />
-          <span class="field-hint" id="dob-hint"></span>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="vol-address">Street Address</label>
-        <input type="text" id="vol-address" name="address" autocomplete="street-address" />
-      </div>
-
-      <div class="form-row form-row-3">
-        <div class="form-group">
-          <label for="vol-city">City</label>
-          <input type="text" id="vol-city" name="city" autocomplete="address-level2" />
-        </div>
-
-        <div class="form-group">
-          <label for="vol-state">State</label>
-          <input type="text" id="vol-state" name="state" value="CA" autocomplete="address-level1" />
-        </div>
-
-        <div class="form-group">
-          <label for="vol-zip">ZIP Code</label>
-          <input type="text" id="vol-zip" name="zip" autocomplete="postal-code" />
-        </div>
-      </div>
-    </fieldset>
-
-    <!-- Emergency Contact -->
-    <fieldset class="form-fieldset">
-      <legend>Emergency Contact</legend>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="vol-emergency-name">
-            Contact Name
-            <span aria-hidden="true">*</span>
-            <span class="sr-only">(required)</span>
-          </label>
-          <input type="text" id="vol-emergency-name" name="emergency_name" required />
-        </div>
-
-        <div class="form-group">
-          <label for="vol-emergency-phone">
-            Contact Phone
-            <span aria-hidden="true">*</span>
-            <span class="sr-only">(required)</span>
-          </label>
-          <input type="tel" id="vol-emergency-phone" name="emergency_phone" required />
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="vol-emergency-relationship">Relationship</label>
-        <input
-          type="text"
-          id="vol-emergency-relationship"
-          name="emergency_relationship"
-          placeholder="e.g., Spouse, Parent, Friend"
-        />
-      </div>
-    </fieldset>
-
-    <!-- Volunteer Interests -->
-    <fieldset class="form-fieldset">
-      <legend>Volunteer Interests</legend>
-      <p class="fieldset-description">Select all areas you're interested in:</p>
-
-      <div class="checkbox-grid">
-        <label class="checkbox-label">
-          <input type="checkbox" name="interests[]" value="shoreline_cleanups" />
-          <span>Shoreline Cleanups</span>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="interests[]" value="habitat_restoration" />
-          <span>Habitat Restoration</span>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="interests[]" value="native_planting" />
-          <span>Native Plant Installation</span>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="interests[]" value="invasive_removal" />
-          <span>Invasive Species Removal</span>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="interests[]" value="community_outreach" />
-          <span>Community Outreach</span>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="interests[]" value="education" />
-          <span>Education Programs</span>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="interests[]" value="tech_development" />
-          <span>Tech/Development</span>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="interests[]" value="design" />
-          <span>UI/UX Design</span>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="interests[]" value="data_research" />
-          <span>Data Research</span>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="interests[]" value="writing" />
-          <span>Technical Writing</span>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="interests[]" value="photography" />
-          <span>Photography/Video</span>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="interests[]" value="admin" />
-          <span>Administrative Support</span>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="interests[]" value="other" id="interest-other-checkbox" />
-          <span>Other</span>
-        </label>
-      </div>
-
-      <div class="form-group other-interest-group" id="other-interest-group" hidden>
-        <label for="vol-other-interest">Please describe your other interest(s)</label>
-        <input
-          type="text"
-          id="vol-other-interest"
-          name="other_interest"
-          placeholder="e.g., Grant writing, Event planning, etc."
-        />
-      </div>
-    </fieldset>
-
-    <!-- Availability -->
-    <fieldset class="form-fieldset">
-      <legend>Availability</legend>
-      <p class="fieldset-description">Check all times you're typically available:</p>
-
-      <div class="availability-grid">
-        <div class="availability-header">
-          <div class="availability-time-label"></div>
-          <div class="availability-day-label">Mon</div>
-          <div class="availability-day-label">Tue</div>
-          <div class="availability-day-label">Wed</div>
-          <div class="availability-day-label">Thu</div>
-          <div class="availability-day-label">Fri</div>
-          <div class="availability-day-label">Sat</div>
-          <div class="availability-day-label">Sun</div>
-        </div>
-
-        <div class="availability-row">
-          <div class="availability-time">Morning</div>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="mon_morning" />
-            <span class="sr-only">Monday Morning</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="tue_morning" />
-            <span class="sr-only">Tuesday Morning</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="wed_morning" />
-            <span class="sr-only">Wednesday Morning</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="thu_morning" />
-            <span class="sr-only">Thursday Morning</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="fri_morning" />
-            <span class="sr-only">Friday Morning</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="sat_morning" />
-            <span class="sr-only">Saturday Morning</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="sun_morning" />
-            <span class="sr-only">Sunday Morning</span>
-          </label>
-        </div>
-
-        <div class="availability-row">
-          <div class="availability-time">Afternoon</div>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="mon_afternoon" />
-            <span class="sr-only">Monday Afternoon</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="tue_afternoon" />
-            <span class="sr-only">Tuesday Afternoon</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="wed_afternoon" />
-            <span class="sr-only">Wednesday Afternoon</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="thu_afternoon" />
-            <span class="sr-only">Thursday Afternoon</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="fri_afternoon" />
-            <span class="sr-only">Friday Afternoon</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="sat_afternoon" />
-            <span class="sr-only">Saturday Afternoon</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="sun_afternoon" />
-            <span class="sr-only">Sunday Afternoon</span>
-          </label>
-        </div>
-
-        <div class="availability-row">
-          <div class="availability-time">Evening</div>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="mon_evening" />
-            <span class="sr-only">Monday Evening</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="tue_evening" />
-            <span class="sr-only">Tuesday Evening</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="wed_evening" />
-            <span class="sr-only">Wednesday Evening</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="thu_evening" />
-            <span class="sr-only">Thursday Evening</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="fri_evening" />
-            <span class="sr-only">Friday Evening</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="sat_evening" />
-            <span class="sr-only">Saturday Evening</span>
-          </label>
-          <label class="availability-cell">
-            <input type="checkbox" name="availability[]" value="sun_evening" />
-            <span class="sr-only">Sunday Evening</span>
-          </label>
-        </div>
-      </div>
-
-      <div class="form-group" style="margin-top: 1.5rem;">
-        <label for="vol-frequency">How often would you like to volunteer?</label>
-        <select id="vol-frequency" name="frequency">
-          <option value="">Select frequency...</option>
-          <option value="weekly">Weekly</option>
-          <option value="biweekly">Every 2 Weeks</option>
-          <option value="monthly">Monthly</option>
-          <option value="quarterly">A Few Times a Year</option>
-          <option value="oneoff">One-time Events Only</option>
-        </select>
-      </div>
-    </fieldset>
-
-    <!-- Accommodations -->
-    <fieldset class="form-fieldset accommodations-fieldset">
-      <legend>Accommodations</legend>
-      <p class="fieldset-description">
-        Bay Tides is committed to providing an inclusive volunteer experience. If you require any
-        accommodations to participate, please let us know below.
-      </p>
-
-      <label class="checkbox-label">
-        <input type="checkbox" name="needs_accommodations" id="needs-accommodations" />
-        <span>I would like to request accommodations</span>
-      </label>
-
-      <div class="accommodations-details" id="accommodations-details" hidden>
-        <div class="form-group">
-          <label for="vol-accommodations">Please describe the accommodations you need</label>
-          <textarea
-            id="vol-accommodations"
-            name="accommodations"
-            rows="3"
-            placeholder="Examples: wheelchair accessibility, large print materials, translated written materials, sensory considerations, dietary restrictions, etc."
-          >
-          </textarea>
-        </div>
-
-        <div class="accommodations-notice">
+      <div class="form-navigation">
+        <div></div>
+        <button type="button" class="btn btn-primary btn-next" data-next="2">
+          Continue
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
+            width="18"
+            height="18"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -386,77 +196,434 @@
             stroke-linecap="round"
             stroke-linejoin="round"
           >
-            <circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01">
-            </path>
+            <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
           </svg>
-          <p>
-            <strong>Please note:</strong> We require at least 5 business days' notice to arrange accommodations.
-            While we strive to meet all requests, we cannot guarantee that every accommodation can be
-            provided. We will contact you to discuss your needs and confirm arrangements.
-          </p>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: Emergency Contact & Interests -->
+    <div class="form-step" data-step="2">
+      <fieldset class="form-fieldset">
+        <legend>Emergency Contact</legend>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="vol-emergency-name">
+              Contact Name
+              <span aria-hidden="true">*</span>
+              <span class="sr-only">(required)</span>
+            </label>
+            <input type="text" id="vol-emergency-name" name="emergency_name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="vol-emergency-phone">
+              Contact Phone
+              <span aria-hidden="true">*</span>
+              <span class="sr-only">(required)</span>
+            </label>
+            <input type="tel" id="vol-emergency-phone" name="emergency_phone" required />
+          </div>
         </div>
+
+        <div class="form-group">
+          <label for="vol-emergency-relationship">Relationship</label>
+          <input
+            type="text"
+            id="vol-emergency-relationship"
+            name="emergency_relationship"
+            placeholder="e.g., Spouse, Parent, Friend"
+          />
+        </div>
+      </fieldset>
+
+      <fieldset class="form-fieldset">
+        <legend>Volunteer Interests</legend>
+        <p class="fieldset-description">Select all areas you're interested in:</p>
+
+        <div class="checkbox-grid">
+          <label class="checkbox-label">
+            <input type="checkbox" name="interests[]" value="shoreline_cleanups" />
+            <span>Shoreline Cleanups</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="interests[]" value="habitat_restoration" />
+            <span>Habitat Restoration</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="interests[]" value="native_planting" />
+            <span>Native Plant Installation</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="interests[]" value="invasive_removal" />
+            <span>Invasive Species Removal</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="interests[]" value="community_outreach" />
+            <span>Community Outreach</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="interests[]" value="education" />
+            <span>Education Programs</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="interests[]" value="tech_development" />
+            <span>Tech/Development</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="interests[]" value="design" />
+            <span>UI/UX Design</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="interests[]" value="data_research" />
+            <span>Data Research</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="interests[]" value="writing" />
+            <span>Technical Writing</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="interests[]" value="photography" />
+            <span>Photography/Video</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="interests[]" value="admin" />
+            <span>Administrative Support</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="interests[]" value="other" id="interest-other-checkbox" />
+            <span>Other</span>
+          </label>
+        </div>
+
+        <div class="form-group other-interest-group" id="other-interest-group" hidden>
+          <label for="vol-other-interest">Please describe your other interest(s)</label>
+          <input
+            type="text"
+            id="vol-other-interest"
+            name="other_interest"
+            placeholder="e.g., Grant writing, Event planning, etc."
+          />
+        </div>
+      </fieldset>
+
+      <div class="form-navigation">
+        <button type="button" class="btn btn-secondary btn-prev" data-prev="1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path>
+          </svg>
+          Back
+        </button>
+        <button type="button" class="btn btn-primary btn-next" data-next="3">
+          Continue
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </button>
       </div>
-    </fieldset>
+    </div>
 
-    <!-- Experience & Skills -->
-    <fieldset class="form-fieldset">
-      <legend>Experience & Skills</legend>
+    <!-- Step 3: Availability & Accommodations -->
+    <div class="form-step" data-step="3">
+      <fieldset class="form-fieldset">
+        <legend>Availability</legend>
+        <p class="fieldset-description">Check all times you're typically available:</p>
 
-      <div class="form-group">
-        <label for="vol-experience">
-          Describe any relevant experience or skills you'd like to share
+        <!-- Desktop layout: Days across top, times down left -->
+        <div class="availability-grid availability-desktop">
+          <div class="availability-header">
+            <div class="availability-time-label"></div>
+            <div class="availability-day-label">Mon</div>
+            <div class="availability-day-label">Tue</div>
+            <div class="availability-day-label">Wed</div>
+            <div class="availability-day-label">Thu</div>
+            <div class="availability-day-label">Fri</div>
+            <div class="availability-day-label">Sat</div>
+            <div class="availability-day-label">Sun</div>
+          </div>
+
+          <div class="availability-row">
+            <div class="availability-time">Morning</div>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="mon_morning" />
+              <span class="sr-only">Monday Morning</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="tue_morning" />
+              <span class="sr-only">Tuesday Morning</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="wed_morning" />
+              <span class="sr-only">Wednesday Morning</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="thu_morning" />
+              <span class="sr-only">Thursday Morning</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="fri_morning" />
+              <span class="sr-only">Friday Morning</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="sat_morning" />
+              <span class="sr-only">Saturday Morning</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="sun_morning" />
+              <span class="sr-only">Sunday Morning</span>
+            </label>
+          </div>
+
+          <div class="availability-row">
+            <div class="availability-time">Afternoon</div>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="mon_afternoon" />
+              <span class="sr-only">Monday Afternoon</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="tue_afternoon" />
+              <span class="sr-only">Tuesday Afternoon</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="wed_afternoon" />
+              <span class="sr-only">Wednesday Afternoon</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="thu_afternoon" />
+              <span class="sr-only">Thursday Afternoon</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="fri_afternoon" />
+              <span class="sr-only">Friday Afternoon</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="sat_afternoon" />
+              <span class="sr-only">Saturday Afternoon</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="sun_afternoon" />
+              <span class="sr-only">Sunday Afternoon</span>
+            </label>
+          </div>
+
+          <div class="availability-row">
+            <div class="availability-time">Evening</div>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="mon_evening" />
+              <span class="sr-only">Monday Evening</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="tue_evening" />
+              <span class="sr-only">Tuesday Evening</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="wed_evening" />
+              <span class="sr-only">Wednesday Evening</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="thu_evening" />
+              <span class="sr-only">Thursday Evening</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="fri_evening" />
+              <span class="sr-only">Friday Evening</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="sat_evening" />
+              <span class="sr-only">Saturday Evening</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability[]" value="sun_evening" />
+              <span class="sr-only">Sunday Evening</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Mobile layout: Times across top, days down left (3 columns) -->
+        <div class="availability-grid availability-mobile">
+          <div class="availability-header">
+            <div class="availability-day-label"></div>
+            <div class="availability-time-label">Morn</div>
+            <div class="availability-time-label">Aftn</div>
+            <div class="availability-time-label">Eve</div>
+          </div>
+
+          <div class="availability-row">
+            <div class="availability-day">Mon</div>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="mon_morning" />
+              <span class="sr-only">Monday Morning</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="mon_afternoon" />
+              <span class="sr-only">Monday Afternoon</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="mon_evening" />
+              <span class="sr-only">Monday Evening</span>
+            </label>
+          </div>
+
+          <div class="availability-row">
+            <div class="availability-day">Tue</div>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="tue_morning" />
+              <span class="sr-only">Tuesday Morning</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="tue_afternoon" />
+              <span class="sr-only">Tuesday Afternoon</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="tue_evening" />
+              <span class="sr-only">Tuesday Evening</span>
+            </label>
+          </div>
+
+          <div class="availability-row">
+            <div class="availability-day">Wed</div>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="wed_morning" />
+              <span class="sr-only">Wednesday Morning</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="wed_afternoon" />
+              <span class="sr-only">Wednesday Afternoon</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="wed_evening" />
+              <span class="sr-only">Wednesday Evening</span>
+            </label>
+          </div>
+
+          <div class="availability-row">
+            <div class="availability-day">Thu</div>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="thu_morning" />
+              <span class="sr-only">Thursday Morning</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="thu_afternoon" />
+              <span class="sr-only">Thursday Afternoon</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="thu_evening" />
+              <span class="sr-only">Thursday Evening</span>
+            </label>
+          </div>
+
+          <div class="availability-row">
+            <div class="availability-day">Fri</div>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="fri_morning" />
+              <span class="sr-only">Friday Morning</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="fri_afternoon" />
+              <span class="sr-only">Friday Afternoon</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="fri_evening" />
+              <span class="sr-only">Friday Evening</span>
+            </label>
+          </div>
+
+          <div class="availability-row">
+            <div class="availability-day">Sat</div>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="sat_morning" />
+              <span class="sr-only">Saturday Morning</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="sat_afternoon" />
+              <span class="sr-only">Saturday Afternoon</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="sat_evening" />
+              <span class="sr-only">Saturday Evening</span>
+            </label>
+          </div>
+
+          <div class="availability-row">
+            <div class="availability-day">Sun</div>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="sun_morning" />
+              <span class="sr-only">Sunday Morning</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="sun_afternoon" />
+              <span class="sr-only">Sunday Afternoon</span>
+            </label>
+            <label class="availability-cell">
+              <input type="checkbox" name="availability_mobile[]" value="sun_evening" />
+              <span class="sr-only">Sunday Evening</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 1.5rem;">
+          <label for="vol-frequency">How often would you like to volunteer?</label>
+          <select id="vol-frequency" name="frequency">
+            <option value="">Select frequency...</option>
+            <option value="weekly">Weekly</option>
+            <option value="biweekly">Every 2 Weeks</option>
+            <option value="monthly">Monthly</option>
+            <option value="quarterly">A Few Times a Year</option>
+            <option value="oneoff">One-time Events Only</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-fieldset accommodations-fieldset">
+        <legend>Accommodations</legend>
+        <p class="fieldset-description">
+          Bay Tides is committed to providing an inclusive volunteer experience. If you require any
+          accommodations to participate, please let us know below.
+        </p>
+
+        <label class="checkbox-label">
+          <input type="checkbox" name="needs_accommodations" id="needs-accommodations" />
+          <span>I would like to request accommodations</span>
         </label>
-        <textarea
-          id="vol-experience"
-          name="experience"
-          rows="4"
-          placeholder="Tell us about your background, relevant skills, certifications, or prior volunteer experience..."
-        >
-        </textarea>
-      </div>
 
-      <div class="form-group">
-        <label for="vol-referral">How did you hear about Bay Tides?</label>
-        <select id="vol-referral" name="referral">
-          <option value="">Select one...</option>
-          <option value="search">Online Search</option>
-          <option value="social_media">Social Media</option>
-          <option value="friend">Friend or Family</option>
-          <option value="event">Attended an Event</option>
-          <option value="partner">Partner Organization</option>
-          <option value="news">News/Media</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
+        <div class="accommodations-details" id="accommodations-details" hidden>
+          <div class="form-group">
+            <label for="vol-accommodations">Please describe the accommodations you need</label>
+            <textarea
+              id="vol-accommodations"
+              name="accommodations"
+              rows="3"
+              placeholder="Examples: wheelchair accessibility, large print materials, translated written materials, sensory considerations, dietary restrictions, etc."
+            >
+            </textarea>
+          </div>
 
-      <div class="form-group">
-        <label for="vol-message">Additional Comments</label>
-        <textarea
-          id="vol-message"
-          name="message"
-          rows="3"
-          placeholder="Anything else you'd like us to know?"
-        >
-        </textarea>
-      </div>
-    </fieldset>
-
-    <!-- Agreements -->
-    <fieldset class="form-fieldset agreements-fieldset">
-      <legend>Agreements</legend>
-
-      <p class="agreements-instruction">Please click and read each document before agreeing:</p>
-
-      <label class="checkbox-label agreement-checkbox" id="agree-terms-label">
-        <input type="checkbox" name="agree_terms" id="agree-terms" required disabled />
-        <span>
-          I have read and agree to the
-          <a href="/volunteer/terms" target="_blank" id="terms-link" class="agreement-link">
-            Volunteer Terms & Conditions
+          <div class="accommodations-notice">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -464,27 +631,253 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline
-                points="15 3 21 3 21 9"
+              <circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path
+                d="M12 8h.01"
               >
-              </polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+              </path>
             </svg>
-          </a>
-          <span aria-hidden="true">*</span>
-          <span class="sr-only">(required)</span>
-        </span>
-      </label>
+            <p>
+              <strong>Please note:</strong> We require at least 5 business days' notice to arrange accommodations.
+              While we strive to meet all requests, we cannot guarantee that every accommodation can be
+              provided. We will contact you to discuss your needs and confirm arrangements.
+            </p>
+          </div>
+        </div>
+      </fieldset>
 
-      <label class="checkbox-label agreement-checkbox" id="agree-privacy-label">
-        <input type="checkbox" name="agree_privacy" id="agree-privacy" required disabled />
-        <span>
-          I have read and agree to the
-          <a href="/volunteer/privacy" target="_blank" id="privacy-link" class="agreement-link">
-            Volunteer Privacy Policy
+      <div class="form-navigation">
+        <button type="button" class="btn btn-secondary btn-prev" data-prev="2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path>
+          </svg>
+          Back
+        </button>
+        <button type="button" class="btn btn-primary btn-next" data-next="4">
+          Continue
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 4: Volunteer Hours & Credits -->
+    <div class="form-step" data-step="4">
+      <fieldset class="form-fieldset">
+        <legend>Volunteer Hours & Credits</legend>
+        <p class="fieldset-description">
+          Do you need to track volunteer hours or earn service credits for school, work, court, or
+          another organization?
+        </p>
+
+        <div class="hours-toggle">
+          <label class="radio-label">
+            <input type="radio" name="needs_hours" value="no" id="hours-no" checked />
+            <span>No, I'm volunteering without hour requirements</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="needs_hours" value="yes" id="hours-yes" />
+            <span>Yes, I need to track hours or earn credits</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Hours Details Section (hidden by default) -->
+      <div class="hours-details-section" id="hours-details-section" hidden>
+        <fieldset class="form-fieldset">
+          <legend>Hours Requirement Details</legend>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="hours-category">
+                Requirement Category
+                <span aria-hidden="true">*</span>
+                <span class="sr-only">(required when tracking hours)</span>
+              </label>
+              <select id="hours-category" name="hours_category">
+                <option value="">Select a category...</option>
+                <option value="education">Education</option>
+                <option value="youth_organization">Youth Organization</option>
+                <option value="legal_court">Legal or Court-Mandated</option>
+                <option value="college_career">College & Career Development</option>
+                <option value="awards_recognition">Awards & Recognition Programs</option>
+                <option value="civic_immigration">Civic & Immigration Purposes</option>
+                <option value="rehabilitation">Rehabilitation & Personal Development</option>
+                <option value="faith_community">Faith-Based & Community</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="hours-subcategory">
+                Specific Requirement
+                <span aria-hidden="true">*</span>
+              </label>
+              <select id="hours-subcategory" name="hours_subcategory" disabled>
+                <option value="">First select a category...</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group other-category-group" id="other-category-group" hidden>
+            <label for="hours-category-other">
+              Please describe your requirement
+              <span aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              id="hours-category-other"
+              name="hours_category_other"
+              placeholder="e.g., Company volunteer program, Professional association requirement"
+            />
+          </div>
+
+          <!-- Legal/Court-Mandated Warning -->
+          <div class="legal-warning" id="legal-warning" hidden>
+            <div class="legal-warning-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z">
+                </path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <div class="legal-warning-content">
+              <h4>Additional Information Required</h4>
+              <p>
+                For court-mandated or legal requirements, we need some additional details to ensure
+                we can place you in appropriate volunteer activities.
+              </p>
+            </div>
+          </div>
+
+          <div class="legal-details" id="legal-details" hidden>
+            <div class="form-group">
+              <label for="legal-nature">
+                Please briefly describe the nature of your requirement
+                <span aria-hidden="true">*</span>
+              </label>
+              <textarea
+                id="legal-nature"
+                name="legal_nature"
+                rows="3"
+                placeholder="This information helps us ensure appropriate volunteer placement. All information is kept confidential."
+              >
+              </textarea>
+              <span class="field-hint">
+                Note: Certain volunteer activities involve working with vulnerable populations. This
+                information helps us make appropriate placements.
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="hours-organization">
+              Organization or Institution Name
+              <span aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              id="hours-organization"
+              name="hours_organization"
+              placeholder="e.g., Lincoln High School, Superior Court of California"
+            />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="hours-contact-name">Point of Contact Name</label>
+              <input
+                type="text"
+                id="hours-contact-name"
+                name="hours_contact_name"
+                placeholder="e.g., Ms. Johnson, Probation Officer Smith"
+              />
+            </div>
+            <div class="form-group">
+              <label for="hours-contact-email">Point of Contact Email</label>
+              <input
+                type="email"
+                id="hours-contact-email"
+                name="hours_contact_email"
+                placeholder="contact@organization.org"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="hours-contact-phone">Point of Contact Phone</label>
+            <input
+              type="tel"
+              id="hours-contact-phone"
+              name="hours_contact_phone"
+              placeholder="(555) 555-5555"
+            />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="hours-required">Total Hours Required</label>
+              <input
+                type="number"
+                id="hours-required"
+                name="hours_required"
+                min="1"
+                placeholder="e.g., 40"
+              />
+            </div>
+            <div class="form-group">
+              <label for="hours-deadline">Deadline to Complete Hours</label>
+              <input type="date" id="hours-deadline" name="hours_deadline" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="hours-notes">Additional Notes</label>
+            <textarea
+              id="hours-notes"
+              name="hours_notes"
+              rows="2"
+              placeholder="Any special requirements, documentation needed, or other information we should know..."
+            >
+            </textarea>
+          </div>
+
+          <div class="hours-info-notice">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -492,28 +885,205 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline
-                points="15 3 21 3 21 9"
-              >
-              </polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 16v-4"></path>
+              <path d="M12 8h.01"></path>
             </svg>
-          </a>, including consent to be photographed/recorded
-          <span aria-hidden="true">*</span>
-          <span class="sr-only">(required)</span>
-        </span>
-      </label>
+            <p>
+              Bay Tides will provide hour verification letters upon request after completing
+              volunteer activities. Please allow 5-7 business days for processing verification
+              requests.
+            </p>
+          </div>
+        </fieldset>
+      </div>
 
-      <!-- Hidden field for minor status -->
-      <input type="hidden" name="is_minor" id="is-minor" value="false" />
-    </fieldset>
+      <div class="form-navigation">
+        <button type="button" class="btn btn-secondary btn-prev" data-prev="3">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path>
+          </svg>
+          Back
+        </button>
+        <button type="button" class="btn btn-primary btn-next" data-next="5">
+          Continue
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
 
-    <!-- Turnstile CAPTCHA -->
-    <fieldset class="turnstile-fieldset" style="border: none; padding: 0; margin: 0 0 1rem">
-      <legend class="sr-only">Security verification</legend>
-      <div class="cf-turnstile" data-sitekey="0x4AAAAAACJ4PUuzOaD_Xf63" data-theme="auto"></div>
-    </fieldset>
+    <!-- Step 5: Experience, Skills & Agreements -->
+    <div class="form-step" data-step="5">
+      <fieldset class="form-fieldset">
+        <legend>Experience & Skills</legend>
 
-    <button type="submit" class="btn btn-primary btn-large">Submit Registration</button>
+        <div class="form-group">
+          <label for="vol-experience">
+            Describe any relevant experience or skills you'd like to share
+          </label>
+          <textarea
+            id="vol-experience"
+            name="experience"
+            rows="4"
+            placeholder="Tell us about your background, relevant skills, certifications, or prior volunteer experience..."
+          >
+          </textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="vol-referral">How did you hear about Bay Tides?</label>
+          <select id="vol-referral" name="referral">
+            <option value="">Select one...</option>
+            <option value="search">Online Search</option>
+            <option value="social_media">Social Media</option>
+            <option value="friend">Friend or Family</option>
+            <option value="event">Attended an Event</option>
+            <option value="partner">Partner Organization</option>
+            <option value="news">News/Media</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="vol-message">Additional Comments</label>
+          <textarea
+            id="vol-message"
+            name="message"
+            rows="3"
+            placeholder="Anything else you'd like us to know?"
+          >
+          </textarea>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-fieldset agreements-fieldset">
+        <legend>Agreements</legend>
+
+        <p class="agreements-instruction">Please click and read each document before agreeing:</p>
+
+        <label class="checkbox-label agreement-checkbox" id="agree-terms-label">
+          <input type="checkbox" name="agree_terms" id="agree-terms" required disabled />
+          <span>
+            I have read and agree to the
+            <a href="/volunteer/terms" target="_blank" id="terms-link" class="agreement-link">
+              Volunteer Terms & Conditions
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline
+                  points="15 3 21 3 21 9"
+                >
+                </polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+            <span aria-hidden="true">*</span>
+            <span class="sr-only">(required)</span>
+          </span>
+        </label>
+
+        <label class="checkbox-label agreement-checkbox" id="agree-privacy-label">
+          <input type="checkbox" name="agree_privacy" id="agree-privacy" required disabled />
+          <span>
+            I have read and agree to the
+            <a href="/volunteer/privacy" target="_blank" id="privacy-link" class="agreement-link">
+              Volunteer Privacy Policy
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline
+                  points="15 3 21 3 21 9"
+                >
+                </polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>, including consent to be photographed/recorded
+            <span aria-hidden="true">*</span>
+            <span class="sr-only">(required)</span>
+          </span>
+        </label>
+      </fieldset>
+
+      <!-- Turnstile CAPTCHA -->
+      <fieldset class="turnstile-fieldset" style="border: none; padding: 0; margin: 0 0 1rem">
+        <legend class="sr-only">Security verification</legend>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAACJ4PUuzOaD_Xf63" data-theme="auto"></div>
+      </fieldset>
+
+      <div class="form-navigation">
+        <button type="button" class="btn btn-secondary btn-prev" data-prev="4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path>
+          </svg>
+          Back
+        </button>
+        <button type="submit" class="btn btn-primary btn-large">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline
+              points="22 4 12 14.01 9 11.01"
+            >
+            </polyline>
+          </svg>
+          Submit Registration
+        </button>
+      </div>
+    </div>
   </form>
 </div>
 
@@ -567,12 +1137,22 @@
       const waiverText = document.createElement('p');
       waiverText.className = 'waiver-requirement-text';
       if (isMinor) {
-        waiverText.innerHTML =
-          'Before you can participate in any volunteer activities, we need a signed liability waiver on file. ' +
-          '<strong>Since you are under 18, a parent or guardian must sign the waiver on your behalf.</strong>';
+        const textNode = document.createTextNode(
+          'Before you can participate in any volunteer activities, we need a signed liability waiver on file. '
+        );
+        const strong = document.createElement('strong');
+        strong.textContent =
+          'Since the volunteer is under 18, a parent or guardian must sign the waiver.';
+        waiverText.appendChild(textNode);
+        waiverText.appendChild(strong);
       } else {
-        waiverText.innerHTML =
-          'Before you can participate in any volunteer activities, <strong>we need a signed liability waiver on file.</strong>';
+        const textNode = document.createTextNode(
+          'Before you can participate in any volunteer activities, '
+        );
+        const strong = document.createElement('strong');
+        strong.textContent = 'we need a signed liability waiver on file.';
+        waiverText.appendChild(textNode);
+        waiverText.appendChild(strong);
       }
       waiverBox.appendChild(waiverText);
 
@@ -599,8 +1179,10 @@
       // Note text
       const noteText = document.createElement('p');
       noteText.className = 'waiver-note';
-      noteText.innerHTML =
-        '<small>You can also complete the waiver at your first event if you prefer to do it in person.</small>';
+      const small = document.createElement('small');
+      small.textContent =
+        'You can also complete the waiver at your first event if you prefer to do it in person.';
+      noteText.appendChild(small);
       waiverBox.appendChild(noteText);
 
       div.appendChild(waiverBox);
@@ -622,24 +1204,13 @@
     return age;
   }
 
-  function calculate18thBirthday(dobStr: string): string {
-    if (!dobStr) return '';
-    const dob = new Date(dobStr + 'T00:00:00');
-    const eighteenthBirthday = new Date(dob);
-    eighteenthBirthday.setFullYear(dob.getFullYear() + 18);
-    return eighteenthBirthday.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  }
-
   function initVolunteerForm() {
     const form = document.getElementById('volunteer-form') as HTMLFormElement;
     const statusDiv = document.getElementById('volunteer-form-status');
     const dobInput = document.getElementById('vol-dob') as HTMLInputElement;
     const dobHint = document.getElementById('dob-hint');
     const isMinorInput = document.getElementById('is-minor') as HTMLInputElement;
+    const minorAlert = document.getElementById('minor-alert');
     const accommodationsCheckbox = document.getElementById(
       'needs-accommodations'
     ) as HTMLInputElement;
@@ -648,8 +1219,12 @@
       'interest-other-checkbox'
     ) as HTMLInputElement;
     const otherInterestGroup = document.getElementById('other-interest-group');
+    const progressSteps = document.querySelectorAll('.progress-step');
 
     if (!form) return;
+
+    // Initialize multi-step navigation
+    initMultiStepNavigation();
 
     // Date of birth change handler - detect minor status
     if (dobInput) {
@@ -658,6 +1233,7 @@
         if (!dobValue) {
           if (dobHint) dobHint.textContent = '';
           if (isMinorInput) isMinorInput.value = 'false';
+          if (minorAlert) minorAlert.hidden = true;
           return;
         }
 
@@ -669,14 +1245,16 @@
 
         if (isMinor) {
           if (dobHint) {
-            dobHint.textContent = `You are ${age} years old. Parent/guardian signature required for waiver.`;
+            dobHint.textContent = `Volunteer is ${age} years old.`;
             dobHint.className = 'field-hint minor-hint';
           }
+          if (minorAlert) minorAlert.hidden = false;
         } else {
           if (dobHint) {
             dobHint.textContent = '';
             dobHint.className = 'field-hint';
           }
+          if (minorAlert) minorAlert.hidden = true;
         }
       });
     }
@@ -687,6 +1265,9 @@
         otherInterestGroup.hidden = !otherInterestCheckbox.checked;
       });
     }
+
+    // Initialize hours/credits section
+    initHoursSection();
 
     // Track Terms and Privacy link clicks to enable checkboxes
     initAgreementLinkTracking();
@@ -708,8 +1289,10 @@
 
       showVolunteerFormStatus(statusDiv, message, 'success', isMinor);
 
-      // Hide the form after successful submission
+      // Hide the form and progress after successful submission
       form.style.display = 'none';
+      const progressEl = document.getElementById('form-progress');
+      if (progressEl) progressEl.style.display = 'none';
 
       // Scroll to status
       statusDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -727,12 +1310,15 @@
       );
     }
 
-    // Form validation
+    // Form validation on submit
     form.addEventListener('submit', (e) => {
-      const requiredFields = form.querySelectorAll('[required]');
+      const currentStep = form.querySelector('.form-step.active');
+      const requiredFields = currentStep?.querySelectorAll('[required]') || [];
       let isValid = true;
 
-      requiredFields.forEach((field) => {
+      // Validate all required fields across all steps
+      const allRequiredFields = form.querySelectorAll('[required]');
+      allRequiredFields.forEach((field) => {
         const input = field as HTMLInputElement;
         const formGroup = input.closest('.form-group') || input.closest('.agreement-checkbox');
 
@@ -753,7 +1339,13 @@
 
       if (!isValid) {
         e.preventDefault();
+        // Navigate to the step with the first error
         const firstError = form.querySelector('.error') as HTMLElement;
+        const errorStep = firstError?.closest('.form-step');
+        if (errorStep) {
+          const stepNum = errorStep.getAttribute('data-step');
+          if (stepNum) goToStep(parseInt(stepNum));
+        }
         firstError?.focus();
         return;
       }
@@ -766,6 +1358,268 @@
           'https://baytides.org/volunteer/registration?submitted=true&minor=true';
       }
     });
+  }
+
+  function initMultiStepNavigation() {
+    const form = document.getElementById('volunteer-form') as HTMLFormElement;
+    const steps = form?.querySelectorAll('.form-step');
+    const progressSteps = document.querySelectorAll('.progress-step');
+    const nextBtns = form?.querySelectorAll('.btn-next');
+    const prevBtns = form?.querySelectorAll('.btn-prev');
+
+    if (!form || !steps) return;
+
+    // Next button handlers
+    nextBtns?.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const nextStep = parseInt(btn.getAttribute('data-next') || '1');
+        const currentStep = btn.closest('.form-step');
+
+        // Validate current step before proceeding
+        if (currentStep && validateStep(currentStep as HTMLElement)) {
+          goToStep(nextStep);
+        }
+      });
+    });
+
+    // Previous button handlers
+    prevBtns?.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const prevStep = parseInt(btn.getAttribute('data-prev') || '1');
+        goToStep(prevStep);
+      });
+    });
+
+    // Progress step click handlers
+    progressSteps?.forEach((step) => {
+      step.addEventListener('click', () => {
+        const stepNum = parseInt(step.getAttribute('data-step') || '1');
+        const currentStepNum = getCurrentStep();
+
+        // Only allow going back or to completed steps
+        if (stepNum < currentStepNum) {
+          goToStep(stepNum);
+        }
+      });
+    });
+  }
+
+  function getCurrentStep(): number {
+    const activeStep = document.querySelector('.form-step.active');
+    return parseInt(activeStep?.getAttribute('data-step') || '1');
+  }
+
+  function goToStep(stepNum: number) {
+    const steps = document.querySelectorAll('.form-step');
+    const progressSteps = document.querySelectorAll('.progress-step');
+    const formSection = document.getElementById('volunteer-form-section');
+
+    // Update form steps
+    steps.forEach((step) => {
+      const num = parseInt(step.getAttribute('data-step') || '0');
+      step.classList.toggle('active', num === stepNum);
+    });
+
+    // Update progress indicators
+    progressSteps.forEach((step) => {
+      const num = parseInt(step.getAttribute('data-step') || '0');
+      step.classList.remove('active', 'completed');
+      if (num === stepNum) {
+        step.classList.add('active');
+      } else if (num < stepNum) {
+        step.classList.add('completed');
+      }
+    });
+
+    // Scroll to top of form
+    formSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function validateStep(step: HTMLElement): boolean {
+    const requiredFields = step.querySelectorAll('[required]');
+    let isValid = true;
+
+    requiredFields.forEach((field) => {
+      const input = field as HTMLInputElement;
+      const formGroup = input.closest('.form-group') || input.closest('.agreement-checkbox');
+
+      // Remove previous error
+      formGroup?.querySelector('.field-error')?.remove();
+      input.classList.remove('error');
+
+      if (!input.checkValidity()) {
+        isValid = false;
+        input.classList.add('error');
+
+        const errorSpan = document.createElement('span');
+        errorSpan.className = 'field-error';
+        errorSpan.textContent = input.validationMessage || 'This field is required';
+        formGroup?.appendChild(errorSpan);
+      }
+    });
+
+    if (!isValid) {
+      const firstError = step.querySelector('.error') as HTMLElement;
+      firstError?.focus();
+    }
+
+    return isValid;
+  }
+
+  function initHoursSection() {
+    const hoursYes = document.getElementById('hours-yes') as HTMLInputElement;
+    const hoursNo = document.getElementById('hours-no') as HTMLInputElement;
+    const hoursDetailsSection = document.getElementById('hours-details-section');
+    const categorySelect = document.getElementById('hours-category') as HTMLSelectElement;
+    const subcategorySelect = document.getElementById('hours-subcategory') as HTMLSelectElement;
+    const otherCategoryGroup = document.getElementById('other-category-group');
+    const legalWarning = document.getElementById('legal-warning');
+    const legalDetails = document.getElementById('legal-details');
+
+    // Subcategory options for each category
+    const subcategoryOptions: Record<string, Array<{ value: string; label: string }>> = {
+      education: [
+        { value: 'graduation_requirement', label: 'Graduation or admission requirement' },
+        { value: 'scholarship', label: 'Scholarship eligibility' },
+        { value: 'honors_program', label: 'Honors or academic program' },
+        { value: 'credit_recovery', label: 'Alternative education or credit recovery' },
+        { value: 'other', label: 'Other education requirement' },
+      ],
+      youth_organization: [
+        { value: 'scouting', label: 'Scouting program rank advancement' },
+        { value: 'youth_leadership', label: 'Youth leadership program' },
+        { value: 'civic_engagement', label: 'Youth civic engagement initiative' },
+        { value: 'faith_youth', label: 'Faith-based youth group' },
+        { value: 'afterschool', label: 'After-school enrichment program' },
+        { value: 'other', label: 'Other youth organization' },
+      ],
+      legal_court: [
+        { value: 'criminal_sentencing', label: 'Criminal sentencing requirement' },
+        { value: 'diversion_probation', label: 'Diversion or probation program' },
+        { value: 'juvenile_justice', label: 'Juvenile justice disposition' },
+        { value: 'traffic_misdemeanor', label: 'Traffic or misdemeanor alternative' },
+        { value: 'restorative_justice', label: 'Restorative justice agreement' },
+        { value: 'other', label: 'Other legal/court requirement' },
+      ],
+      college_career: [
+        { value: 'internship_practicum', label: 'Internship or practicum requirement' },
+        { value: 'resume_building', label: 'Resume building and experience hours' },
+        { value: 'pre_professional', label: 'Pre-professional program prerequisite' },
+        { value: 'licensure_certification', label: 'Professional licensure or certification' },
+        { value: 'work_study', label: 'Work-study or service-based scholarship' },
+        { value: 'other', label: 'Other college/career requirement' },
+      ],
+      awards_recognition: [
+        { value: 'community_service_award', label: 'Community service award' },
+        { value: 'presidential_award', label: 'Presidential or national service award' },
+        { value: 'local_government', label: 'Local government recognition program' },
+        { value: 'corporate_youth_award', label: 'Corporate-sponsored youth achievement award' },
+        { value: 'other', label: 'Other award/recognition program' },
+      ],
+      civic_immigration: [
+        { value: 'good_moral_character', label: 'Demonstrating good moral character' },
+        { value: 'naturalization', label: 'Supporting naturalization or immigration application' },
+        { value: 'community_involvement', label: 'Community involvement documentation' },
+        { value: 'other', label: 'Other civic/immigration purpose' },
+      ],
+      rehabilitation: [
+        { value: 'substance_abuse_recovery', label: 'Substance abuse recovery program' },
+        { value: 'anger_management', label: 'Anger management or behavioral program' },
+        { value: 'life_skills', label: 'Life-skills training initiative' },
+        { value: 'reentry_program', label: 'Reentry program after incarceration' },
+        { value: 'other', label: 'Other rehabilitation program' },
+      ],
+      faith_community: [
+        { value: 'religious_service', label: 'Religious organization service expectations' },
+        { value: 'mission_trip', label: 'Mission trip preparation' },
+        { value: 'confirmation', label: 'Confirmation or coming-of-age requirement' },
+        { value: 'other', label: 'Other faith-based requirement' },
+      ],
+      other: [{ value: 'other', label: 'Other (please specify below)' }],
+    };
+
+    // Legal categories that require additional information
+    const legalCategories = ['legal_court', 'rehabilitation'];
+
+    // Toggle hours details section visibility
+    if (hoursYes && hoursNo && hoursDetailsSection) {
+      const toggleHoursDetails = () => {
+        const showDetails = hoursYes.checked;
+        hoursDetailsSection.hidden = !showDetails;
+
+        // Toggle required attributes on hours fields
+        const hoursOrg = document.getElementById('hours-organization') as HTMLInputElement;
+        const hoursSubcat = document.getElementById('hours-subcategory') as HTMLSelectElement;
+
+        if (hoursOrg) hoursOrg.required = showDetails;
+        if (hoursSubcat) hoursSubcat.required = showDetails;
+      };
+
+      hoursYes.addEventListener('change', toggleHoursDetails);
+      hoursNo.addEventListener('change', toggleHoursDetails);
+    }
+
+    // Handle category change - update subcategory options
+    if (categorySelect && subcategorySelect) {
+      categorySelect.addEventListener('change', () => {
+        const category = categorySelect.value;
+
+        // Clear and populate subcategory options
+        subcategorySelect.textContent = '';
+
+        if (!category) {
+          subcategorySelect.disabled = true;
+          const defaultOption = document.createElement('option');
+          defaultOption.value = '';
+          defaultOption.textContent = 'First select a category...';
+          subcategorySelect.appendChild(defaultOption);
+        } else {
+          subcategorySelect.disabled = false;
+          const defaultOption = document.createElement('option');
+          defaultOption.value = '';
+          defaultOption.textContent = 'Select specific requirement...';
+          subcategorySelect.appendChild(defaultOption);
+
+          const options = subcategoryOptions[category] || [];
+          options.forEach((opt) => {
+            const option = document.createElement('option');
+            option.value = opt.value;
+            option.textContent = opt.label;
+            subcategorySelect.appendChild(option);
+          });
+        }
+
+        // Show/hide legal warning and details
+        const isLegal = legalCategories.includes(category);
+        if (legalWarning) legalWarning.hidden = !isLegal;
+        if (legalDetails) {
+          legalDetails.hidden = !isLegal;
+          const legalNature = document.getElementById('legal-nature') as HTMLTextAreaElement;
+          if (legalNature) legalNature.required = isLegal;
+        }
+
+        // Show other category input for "other" main category
+        if (otherCategoryGroup) {
+          otherCategoryGroup.hidden = category !== 'other';
+        }
+      });
+
+      // Handle subcategory change - show "other" input if needed
+      subcategorySelect.addEventListener('change', () => {
+        const category = categorySelect.value;
+        const subcategory = subcategorySelect.value;
+
+        if (otherCategoryGroup) {
+          // Show other input if subcategory is "other" or main category is "other"
+          const showOther = subcategory === 'other' || category === 'other';
+          otherCategoryGroup.hidden = !showOther;
+
+          // Make the other field required when visible
+          const otherInput = document.getElementById('hours-category-other') as HTMLInputElement;
+          if (otherInput) otherInput.required = showOther;
+        }
+      });
+    }
   }
 
   function initAgreementLinkTracking() {
@@ -803,3 +1657,431 @@
 
   document.addEventListener('astro:page-load', initVolunteerForm);
 </script>
+
+<style>
+  /* Multi-step Progress Indicator */
+  .form-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 2rem;
+    padding: 1.5rem 1rem;
+    background: var(--light-blue);
+    border-radius: 12px;
+  }
+
+  .progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .progress-step:hover {
+    opacity: 0.8;
+  }
+
+  .step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid #cbd5e1;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: all 0.2s ease;
+  }
+
+  .step-label {
+    font-size: 0.8125rem;
+    color: #64748b;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .progress-connector {
+    flex: 1;
+    height: 2px;
+    background: #cbd5e1;
+    margin: 0 0.5rem;
+    margin-bottom: 1.5rem;
+    max-width: 60px;
+    transition: background 0.2s ease;
+  }
+
+  .progress-step.active .step-number {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+    color: var(--white);
+  }
+
+  .progress-step.active .step-label {
+    color: var(--primary-blue);
+  }
+
+  .progress-step.completed .step-number {
+    background: #10b981;
+    border-color: #10b981;
+    color: var(--white);
+  }
+
+  .progress-step.completed .step-label {
+    color: #10b981;
+  }
+
+  .progress-step.completed + .progress-connector {
+    background: #10b981;
+  }
+
+  /* Form Steps */
+  .form-step {
+    display: none;
+  }
+
+  .form-step.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Form Navigation */
+  .form-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .form-navigation .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .form-navigation .btn-prev {
+    background: transparent;
+    border: 1px solid #cbd5e1;
+    color: var(--text-dark);
+  }
+
+  .form-navigation .btn-prev:hover {
+    background: var(--light-blue);
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+  }
+
+  /* Minor Alert Box */
+  .minor-alert {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: #fef3c7;
+    border: 2px solid #f59e0b;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+  }
+
+  .minor-alert-icon {
+    flex-shrink: 0;
+    color: #d97706;
+  }
+
+  .minor-alert-content h4 {
+    margin: 0 0 0.5rem;
+    color: #92400e;
+    font-size: 1rem;
+  }
+
+  .minor-alert-content p {
+    margin: 0;
+    color: #92400e;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  /* Dark mode */
+  :global([data-theme='dark']) .form-progress {
+    background: rgba(43, 108, 176, 0.15);
+  }
+
+  :global([data-theme='dark']) .step-number {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-light);
+  }
+
+  :global([data-theme='dark']) .step-label {
+    color: var(--text-light);
+  }
+
+  :global([data-theme='dark']) .progress-connector {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  :global([data-theme='dark']) .progress-step.active .step-number {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: var(--primary-navy);
+  }
+
+  :global([data-theme='dark']) .progress-step.active .step-label {
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .progress-step.completed .step-number {
+    background: #10b981;
+    border-color: #10b981;
+  }
+
+  :global([data-theme='dark']) .progress-step.completed .step-label {
+    color: #34d399;
+  }
+
+  :global([data-theme='dark']) .form-navigation {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .form-navigation .btn-prev {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .form-navigation .btn-prev:hover {
+    background: rgba(99, 179, 237, 0.1);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .minor-alert {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: #f59e0b;
+  }
+
+  :global([data-theme='dark']) .minor-alert-icon {
+    color: #fbbf24;
+  }
+
+  :global([data-theme='dark']) .minor-alert-content h4 {
+    color: #fbbf24;
+  }
+
+  :global([data-theme='dark']) .minor-alert-content p {
+    color: #fcd34d;
+  }
+
+  /* Hours/Credits Section */
+  .hours-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: var(--white);
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .radio-label:hover {
+    border-color: var(--primary-blue);
+    background: var(--light-blue);
+  }
+
+  .radio-label input[type='radio'] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary-blue);
+  }
+
+  .radio-label input[type='radio']:checked + span {
+    color: var(--primary-blue);
+    font-weight: 500;
+  }
+
+  .hours-details-section {
+    animation: fadeIn 0.3s ease;
+  }
+
+  .legal-warning {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: #fef2f2;
+    border: 2px solid #ef4444;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+  }
+
+  .legal-warning-icon {
+    flex-shrink: 0;
+    color: #dc2626;
+  }
+
+  .legal-warning-content h4 {
+    margin: 0 0 0.5rem;
+    color: #991b1b;
+    font-size: 1rem;
+  }
+
+  .legal-warning-content p {
+    margin: 0;
+    color: #991b1b;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .legal-details {
+    animation: fadeIn 0.3s ease;
+  }
+
+  .hours-info-notice {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: var(--light-blue);
+    border-radius: 10px;
+    margin-top: 1.5rem;
+  }
+
+  .hours-info-notice svg {
+    flex-shrink: 0;
+    color: var(--primary-blue);
+  }
+
+  .hours-info-notice p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  :global([data-theme='dark']) .radio-label {
+    background: var(--bg-primary);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  :global([data-theme='dark']) .radio-label:hover {
+    border-color: var(--accent-blue);
+    background: rgba(99, 179, 237, 0.1);
+  }
+
+  :global([data-theme='dark']) .radio-label input[type='radio']:checked + span {
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .legal-warning {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: #ef4444;
+  }
+
+  :global([data-theme='dark']) .legal-warning-icon {
+    color: #f87171;
+  }
+
+  :global([data-theme='dark']) .legal-warning-content h4 {
+    color: #fca5a5;
+  }
+
+  :global([data-theme='dark']) .legal-warning-content p {
+    color: #fecaca;
+  }
+
+  :global([data-theme='dark']) .hours-info-notice {
+    background: rgba(43, 108, 176, 0.15);
+  }
+
+  :global([data-theme='dark']) .hours-info-notice svg {
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .hours-info-notice p {
+    color: var(--text-light);
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .form-progress {
+      padding: 1rem 0.5rem;
+      gap: 0;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      font-size: 0.875rem;
+    }
+
+    .step-label {
+      font-size: 0.6875rem;
+      max-width: 60px;
+      white-space: normal;
+      line-height: 1.2;
+    }
+
+    .progress-connector {
+      max-width: 30px;
+      margin: 0 0.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-navigation {
+      flex-direction: column-reverse;
+      gap: 1rem;
+    }
+
+    .form-navigation .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .minor-alert {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .minor-alert-icon {
+      align-self: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .step-label {
+      display: none;
+    }
+
+    .progress-connector {
+      margin-bottom: 0;
+    }
+
+    .form-progress {
+      justify-content: space-around;
+    }
+  }
+</style>
