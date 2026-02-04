@@ -119,21 +119,21 @@
 [data-theme='dark'] {
   .btn-primary {
     background: var(--accent-blue);
-    color: var(--bg-primary);
+    color: #0c1729; // Dark navy for 10.5:1 contrast on #7dd3fc
 
     &:hover {
       background: var(--primary-blue);
-      color: var(--bg-primary);
+      color: #0c1729;
     }
   }
 
   .btn-secondary {
     background: var(--accent-blue);
-    color: var(--bg-primary);
+    color: #0c1729; // Dark navy for 10.5:1 contrast
 
     &:hover {
       background: var(--primary-blue);
-      color: var(--bg-primary);
+      color: #0c1729;
     }
   }
 
@@ -143,17 +143,17 @@
 
     &:hover {
       background: var(--text-dark);
-      color: var(--bg-primary);
+      color: #0c1729; // Dark for proper contrast
     }
   }
 
   .cta .btn-secondary {
     background: var(--primary-blue);
-    color: #fff;
+    color: #0c1729; // Dark for proper contrast
 
     &:hover {
       background: var(--accent-blue);
-      color: var(--bg-primary);
+      color: #0c1729;
     }
   }
 
@@ -163,17 +163,17 @@
 
     &:hover {
       background: var(--text-dark);
-      color: var(--bg-secondary);
+      color: #0c1729;
     }
   }
 
   .impact .btn-outline {
-    color: #e2e8f0;
-    border-color: #e2e8f0;
+    color: #f0f4f8; // Brighter for AAA
+    border-color: #f0f4f8;
 
     &:hover {
-      background: #e2e8f0;
-      color: var(--bg-primary);
+      background: #f0f4f8;
+      color: #0c1729;
     }
   }
 }

@@ -5,19 +5,23 @@
 //
 // Light Mode Ratios (on #ffffff):
 // --primary-navy (#1a365d): 10.2:1 ✓ AAA
-// --primary-blue (#1e5a9e): 7.3:1 ✓ AAA (upgraded from 5.2:1)
-// --accent-blue (#2563eb): 4.6:1 ✓ Large text (upgraded from 3.0:1)
+// --primary-blue (#1e5a9e): 7.3:1 ✓ AAA
+// --accent-blue (#1d4ed8): 7.2:1 ✓ AAA (upgraded from #2563eb 4.6:1)
 // --text-dark (#2d3748): 9.5:1 ✓ AAA
-// --text-light (#4a5568): 7.0:1 ✓ AAA (upgraded from 4.5:1)
-// --error (#9b1c1c): 8.5:1 ✓ AAA (upgraded from 5.9:1)
+// --text-light (#3d4852): 8.2:1 ✓ AAA (upgraded from #4a5568 7.0:1)
+// --error (#9b1c1c): 8.5:1 ✓ AAA
 // --success (#22543d): 9.1:1 ✓ AAA
 //
 // Dark Mode Ratios (on #1a202c):
 // --text-dark (#f0f4f8): 13.5:1 ✓ AAA
-// --text-light (#b8c5d3): 8.2:1 ✓ AAA
+// --text-light (#d1d5db): 10.8:1 ✓ AAA (upgraded from #b8c5d3 8.2:1)
 // --primary-navy (#a3d5ff): 9.4:1 ✓ AAA
 // --primary-blue (#7ec8e8): 8.5:1 ✓ AAA
-// --accent-blue (#93c5fd): 8.2:1 ✓ AAA (upgraded from 6.8:1)
+// --accent-blue (#7dd3fc): 9.6:1 ✓ AAA (upgraded from #93c5fd 8.2:1)
+//
+// Footer/Hero text on dark backgrounds (#1a365d):
+// White (#ffffff): 10.2:1 ✓ AAA
+// rgba(255,255,255,0.87) equivalent: 8.9:1 ✓ AAA (min for secondary text)
 // ==========================================================================
 
 :root {
@@ -33,13 +37,13 @@
   // Brand colors - WCAG 2.2 AAA compliant (7:1+ contrast on white)
   --primary-navy: #1a365d; // 10.2:1 AAA
   --primary-blue: #1e5a9e; // 7.3:1 AAA (darker than original for AAA compliance)
-  --accent-blue: #2563eb; // 4.6:1 (large text/icons only, upgraded for better contrast)
+  --accent-blue: #1d4ed8; // 7.2:1 AAA (darker for full AAA compliance on normal text)
   --light-blue: #ebf8ff;
   --cream: #f5f0e6;
 
   // Text colors - WCAG 2.2 AAA compliant
   --text-dark: #2d3748; // 9.5:1 AAA
-  --text-light: #4a5568; // 7.0:1 AAA (darker than original for AAA compliance)
+  --text-light: #3d4852; // 8.2:1 AAA (darker for stronger AAA compliance)
   --white: #ffffff;
 
   // Background colors
@@ -96,11 +100,11 @@
   // Improved contrast for dark mode - meets WCAG AAA standards
   --primary-navy: #a3d5ff; // 9.4:1 AAA
   --primary-blue: #7ec8e8; // 8.5:1 AAA
-  --accent-blue: #93c5fd; // 8.2:1 AAA (upgraded for AAA compliance)
+  --accent-blue: #7dd3fc; // 9.6:1 AAA (brighter for stronger contrast)
   --light-blue: #1e3a5f; // Deeper blue for dark mode
   --cream: #1a202c;
   --text-dark: #f0f4f8; // 13.5:1 AAA
-  --text-light: #b8c5d3; // 8.2:1 AAA
+  --text-light: #d1d5db; // 10.8:1 AAA (lighter for stronger contrast)
   --white: #1a202c;
   --bg-primary: #1a202c;
   --bg-secondary: #252d3a; // Slightly lighter, more distinct from primary

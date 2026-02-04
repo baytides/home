@@ -79,7 +79,7 @@
       content: '✓';
       position: absolute;
       left: 0;
-      color: var(--accent-blue);
+      color: var(--primary-blue); // Use primary-blue for AAA contrast
       font-weight: 700;
     }
   }

@@ -206,12 +206,13 @@ textarea[aria-invalid='true'] {
     background: transparent;
     cursor: pointer;
     font-weight: 600;
-    color: var(--text-light);
+    color: var(--text-dark); // Use text-dark for AAA contrast
     border-radius: 6px;
     transition: all 0.2s ease;
 
     &:hover {
-      color: var(--text-dark);
+      color: var(--primary-navy);
+      background: rgba(30, 90, 158, 0.08);
     }
 
     &.active {
@@ -369,22 +370,23 @@ textarea[aria-invalid='true'] {
     background: var(--bg-primary);
 
     .toggle-btn {
-      color: var(--text-light);
+      color: var(--text-dark); // Use text-dark for AAA
 
       &:hover {
-        color: var(--text-dark);
+        color: #fff;
+        background: rgba(125, 211, 252, 0.1);
       }
 
       &.active {
         background: var(--accent-blue);
-        color: #1a202c;
+        color: #0c1729; // Dark for 10.5:1 contrast
       }
     }
   }
 
   .donation-amounts .amount-btn {
     background: var(--bg-primary);
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
     color: var(--text-dark);
 
     &:hover {
@@ -395,22 +397,23 @@ textarea[aria-invalid='true'] {
     &.active {
       border-color: var(--accent-blue);
       background: var(--accent-blue);
-      color: #1a202c;
+      color: #0c1729; // Dark for proper contrast
     }
   }
 
   .custom-amount-input {
     background: var(--bg-primary);
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
 
     .currency-symbol {
       background: var(--bg-secondary);
+      color: var(--text-dark); // Ensure currency symbol is visible
     }
   }
 
   .fund-designation select {
     background: var(--bg-primary);
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
     color: var(--text-dark);
   }
 }

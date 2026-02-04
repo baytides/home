@@ -5,25 +5,31 @@
  */
 
 interface Props {
-  id: string;
   title: string;
-  icon?: string;
-  simpleText: string;
+  sectionNumber?: number;
+  simpleSummary?: string;
   defaultOpen?: boolean;
 }
 
-const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
+const { title, sectionNumber, simpleSummary, defaultOpen = false } = Astro.props;
+const sectionId = `section-${sectionNumber || title.toLowerCase().replace(/\s+/g, '-')}`;
 ---
 
-<div class="legal-section" id={id} data-default-open={defaultOpen}>
+<div class="legal-section" id={sectionId} data-default-open={defaultOpen ? 'true' : 'false'}>
   <button
     class="legal-section-header"
     aria-expanded={defaultOpen ? 'true' : 'false'}
-    aria-controls={`${id}-content`}
+    aria-controls={`${sectionId}-content`}
+    type="button"
   >
     <div class="legal-section-title">
-      {icon && <span class="legal-section-icon" set:html={icon} />}
-      <h2>{title}</h2>
+      <span class="legal-section-icon">
+        <slot name="icon" />
+      </span>
+      <h2>
+        {sectionNumber && <span class="section-number">{sectionNumber}.</span>}
+        {title}
+      </h2>
     </div>
     <svg
       class="legal-section-chevron"
@@ -35,15 +41,20 @@ const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
+      aria-hidden="true"
     >
       <polyline points="6 9 12 15 18 9"></polyline>
     </svg>
   </button>
 
-  <div class="legal-section-content" id={`${id}-content`}>
-    <div class="simple-text" data-simple-text>
-      <p>{simpleText}</p>
-    </div>
+  <div class="legal-section-content" id={`${sectionId}-content`} aria-hidden={!defaultOpen}>
+    {
+      simpleSummary && (
+        <div class="simple-text" data-simple-text>
+          <p>{simpleSummary}</p>
+        </div>
+      )
+    }
     <div class="full-text" data-full-text>
       <slot />
     </div>
@@ -74,10 +85,16 @@ const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
     cursor: pointer;
     text-align: left;
     transition: background-color 0.2s ease;
+    font-family: inherit;
   }
 
   .legal-section-header:hover {
-    background: var(--bg-tertiary, #f1f5f9);
+    background: var(--hover-bg, #f1f5f9);
+  }
+
+  .legal-section-header:focus-visible {
+    outline: 3px solid var(--focus-ring-color, #005fcc);
+    outline-offset: -3px;
   }
 
   .legal-section-title {
@@ -93,15 +110,25 @@ const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
     color: var(--text-dark);
   }
 
+  .section-number {
+    color: var(--primary-blue);
+    margin-right: 0.25rem;
+  }
+
   .legal-section-icon {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 36px;
     height: 36px;
+    min-width: 36px;
     background: var(--primary-blue);
     border-radius: 8px;
     color: white;
+  }
+
+  .legal-section-icon:empty {
+    display: none;
   }
 
   .legal-section-icon :global(svg) {
@@ -115,7 +142,6 @@ const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
     transition: transform 0.3s ease;
   }
 
-  .legal-section[aria-expanded='true'] .legal-section-chevron,
   .legal-section-header[aria-expanded='true'] .legal-section-chevron {
     transform: rotate(180deg);
   }
@@ -127,7 +153,7 @@ const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
     border-top: 1px solid var(--border-color, #e2e8f0);
   }
 
-  .legal-section.open .legal-section-content {
+  .legal-section-content[aria-hidden='false'] {
     display: block;
     animation: slideDown 0.3s ease;
   }
@@ -143,6 +169,7 @@ const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
     }
   }
 
+  /* Simple language summary box */
   .simple-text {
     display: none;
     padding: 1rem 1.25rem;
@@ -159,17 +186,24 @@ const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
     color: var(--text-dark);
   }
 
-  :global([data-simple-mode='true']) .simple-text {
+  /* Show simple text when simple language mode is enabled */
+  :global(.simple-language-mode) .simple-text {
     display: block;
   }
 
-  :global([data-simple-mode='true']) .full-text {
+  :global(.simple-language-mode) .full-text {
     display: none;
   }
 
+  /* Full text styling */
   .full-text :global(p) {
     margin-bottom: 1rem;
     line-height: 1.7;
+    color: var(--text-dark);
+  }
+
+  .full-text :global(p:last-child) {
+    margin-bottom: 0;
   }
 
   .full-text :global(ul) {
@@ -180,9 +214,11 @@ const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
   .full-text :global(li) {
     margin-bottom: 0.5rem;
     line-height: 1.6;
+    color: var(--text-dark);
   }
 
-  .full-text :global(h3) {
+  .full-text :global(h3),
+  .full-text :global(h4) {
     font-size: 1rem;
     font-weight: 600;
     margin: 1.5rem 0 0.75rem;
@@ -192,6 +228,11 @@ const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
   .full-text :global(a) {
     color: var(--primary-blue);
     text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .full-text :global(a:hover) {
+    color: var(--primary-navy);
   }
 
   /* Dark mode */
@@ -213,7 +254,11 @@ const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
 
   :global([data-theme='dark']) .legal-section-icon {
     background: var(--accent-blue);
-    color: #1a365d;
+    color: #0c1729;
+  }
+
+  :global([data-theme='dark']) .section-number {
+    color: var(--accent-blue);
   }
 
   :global([data-theme='dark']) .legal-section-content {
@@ -222,12 +267,16 @@ const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
   }
 
   :global([data-theme='dark']) .simple-text {
-    background: linear-gradient(135deg, rgba(99, 179, 237, 0.15) 0%, rgba(43, 108, 176, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(125, 211, 252, 0.15) 0%, rgba(43, 108, 176, 0.1) 100%);
     border-left-color: var(--accent-blue);
   }
 
   :global([data-theme='dark']) .full-text :global(a) {
     color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .full-text :global(a:hover) {
+    color: #a5f3fc;
   }
 
   @media (max-width: 640px) {
@@ -242,6 +291,7 @@ const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
     .legal-section-icon {
       width: 32px;
       height: 32px;
+      min-width: 32px;
     }
 
     .legal-section-icon :global(svg) {
@@ -254,3 +304,42 @@ const { id, title, icon, simpleText, defaultOpen = false } = Astro.props;
     }
   }
 </style>
+
+<script>
+  // Accordion toggle functionality for individual sections
+  function initLegalSections() {
+    const sections = document.querySelectorAll('.legal-section');
+
+    sections.forEach((section) => {
+      const header = section.querySelector('.legal-section-header') as HTMLButtonElement;
+      const content = section.querySelector('.legal-section-content') as HTMLElement;
+      const defaultOpen = section.getAttribute('data-default-open') === 'true';
+
+      if (!header || !content) return;
+
+      // Set initial state
+      if (defaultOpen) {
+        header.setAttribute('aria-expanded', 'true');
+        content.setAttribute('aria-hidden', 'false');
+      }
+
+      header.addEventListener('click', () => {
+        const isExpanded = header.getAttribute('aria-expanded') === 'true';
+
+        // Toggle state
+        header.setAttribute('aria-expanded', String(!isExpanded));
+        content.setAttribute('aria-hidden', String(isExpanded));
+      });
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLegalSections);
+  } else {
+    initLegalSections();
+  }
+
+  // Re-initialize on Astro page transitions
+  document.addEventListener('astro:page-load', initLegalSections);
+</script>

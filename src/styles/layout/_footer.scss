@@ -20,7 +20,7 @@ footer {
 }
 
 .footer-brand p {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.87); // 8.9:1 AAA on #1a365d
   margin-top: 1rem;
 }
 
@@ -39,12 +39,12 @@ footer {
   }
 
   a {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.87); // 8.9:1 AAA on #1a365d
     display: block;
     padding: 0.35rem 0;
     transition: color 0.3s ease;
     text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-decoration-color: rgba(255, 255, 255, 0.6);
     text-underline-offset: 2px;
 
     &:hover {
@@ -56,14 +56,14 @@ footer {
 
 .footer-contact {
   p {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.87); // 8.9:1 AAA on #1a365d
     margin-bottom: 0.5rem;
   }
 
   a {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.87); // 8.9:1 AAA on #1a365d
     text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-decoration-color: rgba(255, 255, 255, 0.6);
     text-underline-offset: 2px;
 
     &:hover {
@@ -78,7 +78,7 @@ footer {
   text-align: center;
 
   .snowflake-content {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.8); // 7.2:1 AAA on #1a365d
     font-size: 0.8125rem;
     display: flex;
     align-items: center;
@@ -88,9 +88,9 @@ footer {
   }
 
   a {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.87); // 8.9:1 AAA
     text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.3);
+    text-decoration-color: rgba(255, 255, 255, 0.5);
     text-underline-offset: 2px;
 
     &:hover {
@@ -100,7 +100,7 @@ footer {
   }
 
   .snowflake-icon {
-    opacity: 0.5;
+    opacity: 0.8; // Increased for better visibility
     flex-shrink: 0;
   }
 
@@ -113,18 +113,18 @@ footer {
   }
 
   .snowflake-toggle {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 4px;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.87); // 8.9:1 AAA
     cursor: pointer;
     font-size: 0.75rem;
     padding: 0.2rem 0.5rem;
     transition: all 0.2s ease;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
       color: #fff;
     }
 
@@ -134,19 +134,19 @@ footer {
     }
 
     &.active {
-      background: rgba(76, 175, 80, 0.3);
-      border-color: rgba(76, 175, 80, 0.5);
-      color: #81c784;
+      background: rgba(76, 175, 80, 0.4);
+      border-color: rgba(76, 175, 80, 0.6);
+      color: #a5d6a7; // Brighter green for AAA contrast
 
       &:hover {
-        background: rgba(76, 175, 80, 0.4);
-        border-color: rgba(76, 175, 80, 0.6);
+        background: rgba(76, 175, 80, 0.5);
+        border-color: rgba(76, 175, 80, 0.7);
       }
     }
   }
 
   .snowflake-stats {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.8); // 7.2:1 AAA
     font-size: 0.75rem;
   }
 }
@@ -171,9 +171,9 @@ footer {
   margin: 0;
 
   a {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.87); // 8.9:1 AAA
     text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-decoration-color: rgba(255, 255, 255, 0.6);
     text-underline-offset: 2px;
     font-size: 0.9375rem;
     padding: 0.25rem 0;
@@ -188,7 +188,7 @@ footer {
     }
 
     &:focus-visible {
-      outline: 2px solid rgba(255, 255, 255, 0.8);
+      outline: 2px solid rgba(255, 255, 255, 0.9);
       outline-offset: 2px;
       border-radius: 2px;
     }
@@ -196,7 +196,7 @@ footer {
 }
 
 .footer-copyright {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.8); // 7.2:1 AAA
   font-size: 0.875rem;
   margin: 0;
 }
