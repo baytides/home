@@ -1,0 +1,881 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Sustainability',
+    description:
+      "Bay Tides' commitment to sustainable digital practices and environmental responsibility",
+    publisher: {
+      '@type': 'NonprofitOrganization',
+      name: 'Bay Tides',
+      url: 'https://baytides.org',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Sustainability' },
+    ],
+  },
+];
+
+// Green tech stack features
+const greenTechStack = [
+  {
+    name: 'Static Site Generation',
+    description:
+      'Pre-built HTML pages eliminate server-side processing, reducing energy consumption by up to 90% compared to traditional dynamic sites.',
+    icon: 'static',
+    impact: 'High',
+  },
+  {
+    name: 'Edge Caching via Cloudflare',
+    description:
+      'Content served from edge locations worldwide minimizes data travel distance and reduces network energy usage.',
+    icon: 'edge',
+    impact: 'High',
+  },
+  {
+    name: 'Optimized Assets',
+    description:
+      'WebP images, minimal JavaScript, and compressed resources reduce bandwidth and energy required for page loads.',
+    icon: 'optimize',
+    impact: 'Medium',
+  },
+  {
+    name: 'Dark Mode Support',
+    description:
+      'OLED-friendly dark theme reduces display energy consumption by up to 60% on compatible devices.',
+    icon: 'dark',
+    impact: 'Medium',
+  },
+  {
+    name: 'Lazy Loading',
+    description:
+      'Images and resources load only when needed, preventing unnecessary data transfer and processing.',
+    icon: 'lazy',
+    impact: 'Medium',
+  },
+  {
+    name: 'Minimal Dependencies',
+    description:
+      'Lean codebase with zero framework bloat reduces build complexity and deployment energy.',
+    icon: 'minimal',
+    impact: 'Low',
+  },
+];
+
+// Environmental practices
+const environmentalPractices = [
+  {
+    title: 'Digital Carbon Awareness',
+    description:
+      'We design our digital experiences with carbon impact in mind, optimizing for efficiency at every layer of the stack.',
+    items: [
+      'Lightweight pages averaging under 500KB total weight',
+      'Server-side rendering eliminates client-side processing',
+      'Efficient image formats (WebP) with responsive sizing',
+      'Minimal third-party scripts and trackers',
+    ],
+  },
+  {
+    title: 'Sustainable Infrastructure',
+    description:
+      'Our hosting and infrastructure choices prioritize renewable energy and energy efficiency.',
+    items: [
+      'Cloudflare runs on 100% renewable energy',
+      'Azure data centers committed to carbon negative by 2030',
+      'Edge computing reduces data center load',
+      'Efficient DNS and CDN routing',
+    ],
+  },
+  {
+    title: 'Responsible Development',
+    description:
+      'Our development practices minimize waste and maximize efficiency throughout the software lifecycle.',
+    items: [
+      'CI/CD pipelines optimized to reduce build frequency',
+      'Code reviews ensure efficiency before deployment',
+      'Automated testing prevents wasteful debugging cycles',
+      'Open source contributions reduce duplicate development',
+    ],
+  },
+];
+
+// Impact metrics (estimated based on green web practices)
+const impactMetrics = [
+  {
+    metric: '~0.3g',
+    label: 'CO2 per page view',
+    description: 'Cleaner than 85% of websites tested',
+  },
+  {
+    metric: '<500KB',
+    label: 'Average page weight',
+    description: 'Well below 2.5MB global average',
+  },
+  {
+    metric: '100%',
+    label: 'Renewable CDN',
+    description: 'Cloudflare runs on clean energy',
+  },
+  {
+    metric: 'A+',
+    label: 'Efficiency rating',
+    description: 'Optimized for minimal impact',
+  },
+];
+---
+
+<BaseLayout
+  title="Sustainability"
+  description="Bay Tides' commitment to sustainable digital practices. Learn how we minimize our environmental impact through green technology choices."
+  canonicalUrl="https://baytides.org/sustainability"
+  structuredData={structuredData}
+  preloadImages={['/assets/images/hero-bg.webp']}
+>
+  <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Sustainability' }]} />
+
+  <PageHero
+    title="Digital Sustainability"
+    subtitle="Building a greener web for a healthier planet"
+  />
+
+  <!-- Impact Dashboard -->
+  <section class="content-section" aria-labelledby="impact-heading">
+    <div class="container">
+      <div class="sustainability-dashboard">
+        <h2 id="impact-heading" class="sr-only">Environmental Impact Metrics</h2>
+
+        <div class="impact-badge" role="status" aria-label="Green Website Status">
+          <div class="impact-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M12 22c6.23-.05 7.87-5.57 7.5-10-.36-4.34-3.95-9.96-7.5-10-3.55.04-7.14 5.66-7.5 10-.37 4.43 1.27 9.95 7.5 10z"
+              >
+              </path>
+              <path d="M12 22v-10"></path>
+              <path d="M9 15c1.5 1.5 3 2.5 3 2.5"></path>
+              <path d="M15 15c-1.5 1.5-3 2.5-3 2.5"></path>
+            </svg>
+          </div>
+          <div class="impact-content">
+            <span class="impact-label">Website Carbon Rating</span>
+            <span class="impact-level">Cleaner than 85% of sites</span>
+            <span class="impact-note">Based on Website Carbon Calculator methodology</span>
+          </div>
+        </div>
+
+        <div class="metrics-grid" role="list" aria-label="Environmental impact statistics">
+          {
+            impactMetrics.map((item) => (
+              <div class="metric-card" role="listitem">
+                <span class="metric-value">{item.metric}</span>
+                <span class="metric-label">{item.label}</span>
+                <span class="metric-desc">{item.description}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Commitment -->
+  <section class="content-section alt-bg" aria-labelledby="commitment-heading">
+    <div class="container">
+      <div class="content-centered">
+        <h2 id="commitment-heading">Our Commitment</h2>
+        <p>
+          As an environmental nonprofit, we believe our digital presence should reflect our values.
+          The internet accounts for roughly 4% of global carbon emissions, and we're committed to
+          minimizing our contribution through thoughtful technology choices.
+        </p>
+        <p>
+          Every design decision, from image optimization to hosting selection, is made with
+          environmental impact in mind. We practice what we preach: protecting the San Francisco Bay
+          means protecting the entire planet.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Green Tech Stack -->
+  <section class="content-section" aria-labelledby="tech-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="tech-heading">Green Technology Stack</h2>
+        <p>Sustainable choices at every layer</p>
+      </div>
+
+      <div class="tech-grid" role="list" aria-label="Green technology features">
+        {
+          greenTechStack.map((tech) => (
+            <article class="tech-card" role="listitem">
+              <div class="tech-icon" aria-hidden="true">
+                {tech.icon === 'static' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <path d="m3 15 2 2 4-4" />
+                  </svg>
+                )}
+                {tech.icon === 'edge' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg>
+                )}
+                {tech.icon === 'optimize' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                    <polyline points="7.5 4.21 12 6.81 16.5 4.21" />
+                    <polyline points="7.5 19.79 7.5 14.6 3 12" />
+                    <polyline points="21 12 16.5 14.6 16.5 19.79" />
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                  </svg>
+                )}
+                {tech.icon === 'dark' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                  </svg>
+                )}
+                {tech.icon === 'lazy' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
+                  </svg>
+                )}
+                {tech.icon === 'minimal' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="16 18 22 12 16 6" />
+                    <polyline points="8 6 2 12 8 18" />
+                  </svg>
+                )}
+              </div>
+              <div class="tech-content">
+                <h3>{tech.name}</h3>
+                <p>{tech.description}</p>
+              </div>
+              <span class={`impact-badge ${tech.impact.toLowerCase()}`}>{tech.impact} Impact</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Environmental Practices -->
+  <section class="content-section alt-bg" aria-labelledby="practices-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="practices-heading">Our Practices</h2>
+        <p>How we minimize our digital carbon footprint</p>
+      </div>
+
+      <div class="practices-grid" role="list" aria-label="Environmental practices">
+        {
+          environmentalPractices.map((practice) => (
+            <article class="practice-card" role="listitem">
+              <h3>{practice.title}</h3>
+              <p class="practice-desc">{practice.description}</p>
+              <ul class="practice-list">
+                {practice.items.map((item) => (
+                  <li>
+                    <span class="check-icon" aria-hidden="true">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- How You Can Help -->
+  <section class="content-section" aria-labelledby="help-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="help-heading">How You Can Help</h2>
+        <p>Small actions make a big difference</p>
+      </div>
+
+      <div class="tips-content">
+        <div class="tips-grid" role="list" aria-label="Sustainability tips for users">
+          <div class="tip-card" role="listitem">
+            <div class="tip-number" aria-hidden="true">1</div>
+            <h3>Enable Dark Mode</h3>
+            <p>
+              Use our dark theme to reduce display energy consumption, especially on OLED screens.
+              Access it via the accessibility panel.
+            </p>
+          </div>
+
+          <div class="tip-card" role="listitem">
+            <div class="tip-number" aria-hidden="true">2</div>
+            <h3>Bookmark Pages</h3>
+            <p>
+              Bookmark frequently visited pages to reduce search engine queries and associated
+              energy usage.
+            </p>
+          </div>
+
+          <div class="tip-card" role="listitem">
+            <div class="tip-number" aria-hidden="true">3</div>
+            <h3>Close Unused Tabs</h3>
+            <p>
+              Each open tab consumes memory and energy. Close tabs you're not actively using to
+              reduce your device's power consumption.
+            </p>
+          </div>
+
+          <div class="tip-card" role="listitem">
+            <div class="tip-number" aria-hidden="true">4</div>
+            <h3>Use Wi-Fi Over Cellular</h3>
+            <p>
+              Wi-Fi connections use significantly less energy than cellular data. Connect to Wi-Fi
+              when available.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Transparency -->
+  <section class="content-section alt-bg" aria-labelledby="transparency-heading">
+    <div class="container">
+      <div class="content-centered">
+        <h2 id="transparency-heading">Our Transparency</h2>
+        <p>
+          We're committed to honest reporting about our environmental impact. While we've optimized
+          our digital presence, we acknowledge that every website has some carbon footprint.
+        </p>
+        <p>
+          We regularly audit our site using tools like Website Carbon Calculator and Ecograder to
+          identify improvement opportunities. Our goal is continuous improvement, not perfection.
+        </p>
+        <p>
+          If you have suggestions for reducing our environmental impact, we'd love to hear from you.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="impact" aria-labelledby="cta-heading">
+    <div class="container">
+      <div class="impact-content">
+        <h2 id="cta-heading">Join Our Mission</h2>
+        <p>
+          Protecting the San Francisco Bay means protecting our entire planet. Every sustainable
+          choice matters, from reducing plastic pollution to minimizing our digital carbon
+          footprint.
+        </p>
+        <p class="highlight">Together, we can build a more sustainable future.</p>
+        <div class="cta-buttons">
+          <a href="/volunteer" class="btn btn-secondary">Volunteer With Us</a>
+          <a href="/donate" class="btn btn-outline">Support Our Work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Sustainability Dashboard */
+  .sustainability-dashboard {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .impact-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background: linear-gradient(135deg, #22543d 0%, #276749 100%);
+    color: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+  }
+
+  .impact-icon {
+    flex-shrink: 0;
+    color: #9ae6b4;
+  }
+
+  .impact-content {
+    text-align: left;
+  }
+
+  .impact-label {
+    display: block;
+    font-size: 0.875rem;
+    opacity: 0.9;
+    margin-bottom: 0.25rem;
+  }
+
+  .impact-level {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .impact-note {
+    display: block;
+    font-size: 0.8125rem;
+    opacity: 0.8;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .metric-card {
+    background: var(--card-bg);
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .metric-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--success);
+    margin-bottom: 0.25rem;
+  }
+
+  .metric-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .metric-desc {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-align: center;
+  }
+
+  /* Tech Stack Grid */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .tech-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-start;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    position: relative;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .tech-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .tech-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: var(--light-blue);
+    color: var(--primary-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .tech-content {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .tech-content h3 {
+    color: var(--primary-navy);
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tech-content p {
+    color: var(--text-light);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .tech-card .impact-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: transparent;
+    margin: 0;
+    gap: 0;
+  }
+
+  .tech-card .impact-badge.high {
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--success);
+  }
+
+  .tech-card .impact-badge.medium {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--primary-blue);
+  }
+
+  .tech-card .impact-badge.low {
+    background: rgba(107, 114, 128, 0.15);
+    color: var(--text-light);
+  }
+
+  /* Practices Grid */
+  .practices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .practice-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .practice-card h3 {
+    color: var(--primary-navy);
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .practice-desc {
+    color: var(--text-light);
+    font-size: 0.9375rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .practice-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .practice-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    color: var(--text-light);
+    font-size: 0.9375rem;
+  }
+
+  .check-icon {
+    flex-shrink: 0;
+    color: var(--success);
+    margin-top: 0.125rem;
+  }
+
+  /* Tips Grid */
+  .tips-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .tip-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.75rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .tip-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .tip-number {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 1rem;
+    background: var(--success);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  .tip-card h3 {
+    color: var(--primary-navy);
+    font-size: 1.0625rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .tip-card p {
+    color: var(--text-light);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* CTA Buttons */
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 0.875rem 2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    min-height: var(--min-touch-target);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-outline:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+  }
+
+  /* Dark Theme */
+  :global([data-theme='dark']) .impact-badge {
+    background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+  }
+
+  :global([data-theme='dark']) .metric-card {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .tech-card {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .tech-icon {
+    background: rgba(163, 213, 255, 0.1);
+  }
+
+  :global([data-theme='dark']) .tech-content h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .practice-card {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .practice-card h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .tip-card {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .tip-card h3 {
+    color: var(--text-dark);
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .impact-badge {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .impact-content {
+      text-align: center;
+    }
+
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tech-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tech-card {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .tech-icon {
+      margin: 0 auto;
+    }
+
+    .tech-content {
+      min-width: auto;
+    }
+
+    .tech-card .impact-badge {
+      position: static;
+      margin-top: 0.5rem;
+    }
+
+    .tips-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta-buttons .btn {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+</style>

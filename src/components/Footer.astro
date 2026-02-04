@@ -52,11 +52,17 @@ const currentYear = new Date().getFullYear();
         |
         <a href="/terms">Terms of Service</a>
         |
+        <a href="/accessibility">Accessibility</a>
+        |
+        <a href="/sustainability">Sustainability</a>
+        |
+        <a href="/credits">Credits</a>
+        |
         <a href="/sitemap">Sitemap</a>
       </p>
     </div>
-    <div class="footer-snowflake" id="snowflake-stats">
-      <p>
+    <div class="footer-snowflake" id="snowflake-section">
+      <div class="snowflake-content">
         <svg
           class="snowflake-icon"
           xmlns="http://www.w3.org/2000/svg"
@@ -71,29 +77,126 @@ const currentYear = new Date().getFullYear();
           >
           </path>
         </svg>
-        This site supports internet freedom through a
-        <a href="https://snowflake.torproject.org/" target="_blank" rel="noopener">Tor Snowflake</a> proxy.
-        <span class="snowflake-count" id="snowflake-count"></span>
-      </p>
+        <span class="snowflake-text">
+          <a href="https://snowflake.torproject.org/" target="_blank" rel="noopener">
+            Tor Snowflake
+          </a>
+          proxy:
+          <button
+            type="button"
+            id="snowflake-toggle"
+            class="snowflake-toggle"
+            aria-pressed="false"
+            aria-label="Toggle Snowflake proxy"
+          >
+            <span class="toggle-label" id="snowflake-status">Enable</span>
+          </button>
+          <span class="snowflake-stats" id="snowflake-stats"></span>
+        </span>
+      </div>
     </div>
   </div>
 </footer>
 
+<!-- Hidden iframe for Snowflake proxy - only loaded when enabled -->
+<iframe
+  id="snowflake-iframe"
+  src=""
+  width="0"
+  height="0"
+  style="display: none; border: none;"
+  title="Tor Snowflake Proxy"
+>
+</iframe>
+
 <script>
-  async function loadSnowflakeStats() {
-    try {
-      const res = await fetch(
-        'https://baytidesstorage.blob.core.windows.net/snowflake-stats/stats.json'
-      );
-      if (!res.ok) return;
-      const data = await res.json();
-      const el = document.getElementById('snowflake-count');
-      if (el && data.totalConnections > 0) {
-        el.textContent = `Users helped: ${data.totalConnections.toLocaleString()}`;
+  (function () {
+    const STORAGE_KEY = 'snowflake-enabled';
+    const SNOWFLAKE_URL = 'https://snowflake.torproject.org/embed.html';
+
+    const toggleBtn = document.getElementById('snowflake-toggle');
+    const statusLabel = document.getElementById('snowflake-status');
+    const statsEl = document.getElementById('snowflake-stats');
+    const iframe = document.getElementById('snowflake-iframe');
+
+    let isEnabled = localStorage.getItem(STORAGE_KEY) === 'true';
+    let sessionConnections = 0;
+    let pollInterval = null;
+
+    function updateUI() {
+      toggleBtn.setAttribute('aria-pressed', String(isEnabled));
+      toggleBtn.classList.toggle('active', isEnabled);
+      statusLabel.textContent = isEnabled ? 'Active' : 'Enable';
+
+      if (isEnabled && sessionConnections > 0) {
+        statsEl.textContent = `· ${sessionConnections} user${sessionConnections !== 1 ? 's' : ''} helped this session`;
+      } else if (isEnabled) {
+        statsEl.textContent = '· Listening for connections...';
+      } else {
+        statsEl.textContent = '';
       }
-    } catch {
-      // Stats are non-critical; fail silently
     }
-  }
-  loadSnowflakeStats();
+
+    function startProxy() {
+      iframe.src = SNOWFLAKE_URL;
+      iframe.style.display = 'block';
+      startPolling();
+    }
+
+    function stopProxy() {
+      iframe.src = '';
+      iframe.style.display = 'none';
+      stopPolling();
+    }
+
+    function startPolling() {
+      // Poll the iframe for connection stats via postMessage
+      stopPolling();
+      pollInterval = setInterval(() => {
+        try {
+          iframe.contentWindow?.postMessage({ type: 'getStats' }, '*');
+        } catch {
+          // Cross-origin restrictions may prevent this
+        }
+      }, 5000);
+    }
+
+    function stopPolling() {
+      if (pollInterval) {
+        clearInterval(pollInterval);
+        pollInterval = null;
+      }
+    }
+
+    // Listen for stats messages from the iframe
+    window.addEventListener('message', (event) => {
+      if (event.origin !== 'https://snowflake.torproject.org') return;
+
+      if (event.data && typeof event.data.clients === 'number') {
+        sessionConnections = event.data.clients;
+        updateUI();
+      }
+    });
+
+    // Handle toggle click
+    toggleBtn.addEventListener('click', () => {
+      isEnabled = !isEnabled;
+      localStorage.setItem(STORAGE_KEY, String(isEnabled));
+
+      if (isEnabled) {
+        startProxy();
+      } else {
+        stopProxy();
+        sessionConnections = 0;
+      }
+
+      updateUI();
+    });
+
+    // Initialize on page load
+    updateUI();
+    if (isEnabled) {
+      startProxy();
+    }
+  })();
 </script>

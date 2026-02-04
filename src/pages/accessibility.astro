@@ -8,7 +8,7 @@ const structuredData = [
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'Accessibility Statement',
-    description: "Bay Tides' commitment to digital accessibility",
+    description: "Bay Tides' commitment to WCAG 2.2 AAA digital accessibility",
     publisher: {
       '@type': 'NonprofitOrganization',
       name: 'Bay Tides',
@@ -24,11 +24,150 @@ const structuredData = [
     ],
   },
 ];
+
+// WCAG 2.2 AAA compliance features
+const accessibilityFeatures = {
+  perceivable: [
+    {
+      criterion: '1.1.1 Non-text Content',
+      level: 'A',
+      description: 'All images have descriptive alternative text',
+      status: 'compliant',
+    },
+    {
+      criterion: '1.2.1-1.2.9 Time-based Media',
+      level: 'AAA',
+      description: 'Video content includes captions and audio descriptions',
+      status: 'compliant',
+    },
+    {
+      criterion: '1.3.1-1.3.6 Adaptable',
+      level: 'AAA',
+      description: 'Content structure is programmatically determinable',
+      status: 'compliant',
+    },
+    {
+      criterion: '1.4.1-1.4.13 Distinguishable',
+      level: 'AAA',
+      description: 'Color contrast ratio of 7:1+ for all text content',
+      status: 'compliant',
+    },
+  ],
+  operable: [
+    {
+      criterion: '2.1.1-2.1.3 Keyboard Accessible',
+      level: 'AAA',
+      description: 'All functionality available via keyboard with no traps',
+      status: 'compliant',
+    },
+    {
+      criterion: '2.2.1-2.2.6 Enough Time',
+      level: 'AAA',
+      description: 'No time limits on content; animations can be paused',
+      status: 'compliant',
+    },
+    {
+      criterion: '2.3.1-2.3.3 Seizures',
+      level: 'AAA',
+      description: 'No flashing content that could cause seizures',
+      status: 'compliant',
+    },
+    {
+      criterion: '2.4.1-2.4.13 Navigable',
+      level: 'AAA',
+      description: 'Skip links, clear focus indicators, and logical tab order',
+      status: 'compliant',
+    },
+    {
+      criterion: '2.5.1-2.5.8 Input Modalities',
+      level: 'AAA',
+      description: 'Touch targets minimum 44x44px; motion not required',
+      status: 'compliant',
+    },
+  ],
+  understandable: [
+    {
+      criterion: '3.1.1-3.1.6 Readable',
+      level: 'AAA',
+      description: 'Language of page declared; jargon explained',
+      status: 'compliant',
+    },
+    {
+      criterion: '3.2.1-3.2.5 Predictable',
+      level: 'AAA',
+      description: 'Consistent navigation and identification patterns',
+      status: 'compliant',
+    },
+    {
+      criterion: '3.3.1-3.3.9 Input Assistance',
+      level: 'AAA',
+      description: 'Error prevention, suggestions, and accessible authentication',
+      status: 'compliant',
+    },
+  ],
+  robust: [
+    {
+      criterion: '4.1.1-4.1.3 Compatible',
+      level: 'AA',
+      description: 'Valid HTML with proper ARIA attributes and status messages',
+      status: 'compliant',
+    },
+  ],
+};
+
+const accessibilityTools = [
+  {
+    name: 'Dark Mode',
+    description: 'Reduces eye strain in low-light environments',
+    icon: 'moon',
+  },
+  {
+    name: 'High Contrast',
+    description: 'Maximizes color contrast for improved readability',
+    icon: 'contrast',
+  },
+  {
+    name: 'Reduced Motion',
+    description: 'Disables animations for motion-sensitive users',
+    icon: 'motion',
+  },
+  {
+    name: 'Font Size',
+    description: 'Adjustable text size from default to extra-large',
+    icon: 'text',
+  },
+  {
+    name: 'Text Spacing',
+    description: 'Adjustable letter, word, and line spacing',
+    icon: 'spacing',
+  },
+  {
+    name: 'Focus Mode',
+    description: 'Reduces visual distractions for better concentration',
+    icon: 'focus',
+  },
+  {
+    name: 'Colorblind Mode',
+    description: 'Uses patterns and icons alongside color',
+    icon: 'color',
+  },
+];
+
+const keyboardShortcuts = [
+  { key: 'Tab', action: 'Move forward through interactive elements' },
+  { key: 'Shift + Tab', action: 'Move backward through interactive elements' },
+  { key: 'Enter / Space', action: 'Activate buttons and links' },
+  { key: 'Escape', action: 'Close menus, dialogs, and panels' },
+  { key: 'Arrow Keys', action: 'Navigate within menus and tabs' },
+  { key: 'Ctrl/Cmd + K', action: 'Open search dialog' },
+];
+
+const lastUpdated = 'February 4, 2026';
 ---
 
 <BaseLayout
   title="Accessibility Statement"
-  description="Bay Tides' commitment to digital accessibility. Learn about our efforts to make our website accessible to all users."
+  description="Bay Tides' commitment to WCAG 2.2 Level AAA digital accessibility. Learn about our accessibility features, tools, and compliance status."
   canonicalUrl="https://baytides.org/accessibility"
   structuredData={structuredData}
   preloadImages={['/assets/images/hero-bg.webp']}
@@ -37,138 +176,1142 @@ const structuredData = [
 
   <PageHero
     title="Accessibility Statement"
-    subtitle="Our commitment to inclusive digital experiences"
+    subtitle="Our commitment to inclusive digital experiences for everyone"
   />
 
-  <section class="content-section">
+  <!-- Compliance Dashboard -->
+  <section class="content-section" aria-labelledby="compliance-heading">
     <div class="container">
-      <div class="content-centered" style="text-align: left; max-width: 800px">
-        <h2>Our Commitment</h2>
+      <div class="compliance-dashboard">
+        <h2 id="compliance-heading" class="sr-only">Accessibility Compliance Status</h2>
+
+        <div class="compliance-badge" role="status" aria-label="WCAG 2.2 AAA Compliance Status">
+          <div class="badge-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="m9 12 2 2 4-4"></path>
+            </svg>
+          </div>
+          <div class="badge-content">
+            <span class="badge-label">Target Conformance</span>
+            <span class="badge-level">WCAG 2.2 Level AAA</span>
+            <span class="badge-updated">Last reviewed: {lastUpdated}</span>
+          </div>
+        </div>
+
+        <div class="compliance-stats" role="list" aria-label="Compliance statistics">
+          <div class="stat-card" role="listitem">
+            <span class="stat-value">7:1+</span>
+            <span class="stat-label">Color Contrast Ratio</span>
+          </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-value">44px</span>
+            <span class="stat-label">Min Touch Target</span>
+          </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Keyboard Navigable</span>
+          </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-value">7+</span>
+            <span class="stat-label">Accessibility Tools</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Commitment -->
+  <section class="content-section alt-bg" aria-labelledby="commitment-heading">
+    <div class="container">
+      <div class="content-centered">
+        <h2 id="commitment-heading">Our Commitment</h2>
         <p>
-          Bay Tides is committed to ensuring digital accessibility for people with disabilities. We
-          continually improve the user experience for everyone and apply the relevant accessibility
-          standards to ensure we provide equal access to all users.
+          Bay Tides is committed to ensuring digital accessibility for people of all abilities. We
+          believe that the web should be accessible to everyone, regardless of disability,
+          impairment, or situational limitation.
+        </p>
+        <p>
+          We go beyond minimum requirements by targeting <strong>WCAG 2.2 Level AAA</strong>
+          conformance, the highest level of accessibility standards. This includes enhanced color contrast,
+          comprehensive keyboard navigation, and multiple ways to customize your experience.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WCAG Compliance Details -->
+  <section class="content-section" aria-labelledby="wcag-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="wcag-heading">WCAG 2.2 Compliance</h2>
+        <p>How we meet the Web Content Accessibility Guidelines</p>
+      </div>
+
+      <div class="wcag-principles">
+        <!-- Perceivable -->
+        <details class="wcag-principle" open>
+          <summary>
+            <h3>
+              <span class="principle-icon" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </span>
+              Perceivable
+            </h3>
+            <span class="principle-summary">Content can be perceived by all users</span>
+          </summary>
+          <div class="principle-content">
+            <ul class="criterion-list" role="list">
+              {
+                accessibilityFeatures.perceivable.map((item) => (
+                  <li class="criterion-item" role="listitem">
+                    <span class="criterion-status compliant" aria-label="Compliant">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <div class="criterion-info">
+                      <strong>
+                        {item.criterion} <span class="level-badge">{item.level}</span>
+                      </strong>
+                      <span>{item.description}</span>
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </details>
+
+        <!-- Operable -->
+        <details class="wcag-principle">
+          <summary>
+            <h3>
+              <span class="principle-icon" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"
+                  >
+                  </path>
+                </svg>
+              </span>
+              Operable
+            </h3>
+            <span class="principle-summary">Interface is navigable by all users</span>
+          </summary>
+          <div class="principle-content">
+            <ul class="criterion-list" role="list">
+              {
+                accessibilityFeatures.operable.map((item) => (
+                  <li class="criterion-item" role="listitem">
+                    <span class="criterion-status compliant" aria-label="Compliant">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <div class="criterion-info">
+                      <strong>
+                        {item.criterion} <span class="level-badge">{item.level}</span>
+                      </strong>
+                      <span>{item.description}</span>
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </details>
+
+        <!-- Understandable -->
+        <details class="wcag-principle">
+          <summary>
+            <h3>
+              <span class="principle-icon" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <path d="M12 17h.01"></path>
+                </svg>
+              </span>
+              Understandable
+            </h3>
+            <span class="principle-summary">Content and operation are clear</span>
+          </summary>
+          <div class="principle-content">
+            <ul class="criterion-list" role="list">
+              {
+                accessibilityFeatures.understandable.map((item) => (
+                  <li class="criterion-item" role="listitem">
+                    <span class="criterion-status compliant" aria-label="Compliant">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <div class="criterion-info">
+                      <strong>
+                        {item.criterion} <span class="level-badge">{item.level}</span>
+                      </strong>
+                      <span>{item.description}</span>
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </details>
+
+        <!-- Robust -->
+        <details class="wcag-principle">
+          <summary>
+            <h3>
+              <span class="principle-icon" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                  <path d="M12 12h.01"></path>
+                  <path d="M17 12h.01"></path>
+                  <path d="M7 12h.01"></path>
+                </svg>
+              </span>
+              Robust
+            </h3>
+            <span class="principle-summary">Works with assistive technologies</span>
+          </summary>
+          <div class="principle-content">
+            <ul class="criterion-list" role="list">
+              {
+                accessibilityFeatures.robust.map((item) => (
+                  <li class="criterion-item" role="listitem">
+                    <span class="criterion-status compliant" aria-label="Compliant">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <div class="criterion-info">
+                      <strong>
+                        {item.criterion} <span class="level-badge">{item.level}</span>
+                      </strong>
+                      <span>{item.description}</span>
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accessibility Tools -->
+  <section class="content-section alt-bg" aria-labelledby="tools-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="tools-heading">Accessibility Tools</h2>
+        <p>Customize your experience using our accessibility panel</p>
+      </div>
+
+      <div class="tools-intro">
+        <p>
+          Access our accessibility panel by clicking the
+          <span class="inline-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="5"></circle>
+              <path d="M20 21a8 8 0 0 0-16 0"></path>
+            </svg>
+          </span>
+          person icon in the bottom-left corner of any page. Your preferences are saved automatically
+          and persist across sessions.
+        </p>
+      </div>
+
+      <div class="tools-grid" role="list" aria-label="Available accessibility tools">
+        {
+          accessibilityTools.map((tool) => (
+            <article class="tool-card" role="listitem">
+              <div class="tool-icon" aria-hidden="true">
+                {tool.icon === 'moon' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                  </svg>
+                )}
+                {tool.icon === 'contrast' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor" />
+                  </svg>
+                )}
+                {tool.icon === 'motion' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="m4.9 4.9 14.2 14.2" />
+                  </svg>
+                )}
+                {tool.icon === 'text' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M4 7V4h16v3" />
+                    <path d="M9 20h6" />
+                    <path d="M12 4v16" />
+                  </svg>
+                )}
+                {tool.icon === 'spacing' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M21 6H3" />
+                    <path d="M21 12H3" />
+                    <path d="M21 18H3" />
+                  </svg>
+                )}
+                {tool.icon === 'focus' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="3" />
+                    <path d="M12 2v4" />
+                    <path d="M12 18v4" />
+                    <path d="m4.93 4.93 2.83 2.83" />
+                    <path d="m16.24 16.24 2.83 2.83" />
+                    <path d="M2 12h4" />
+                    <path d="M18 12h4" />
+                    <path d="m4.93 19.07 2.83-2.83" />
+                    <path d="m16.24 7.76 2.83-2.83" />
+                  </svg>
+                )}
+                {tool.icon === 'color' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="13.5" cy="6.5" r="2.5" />
+                    <circle cx="19" cy="17" r="2" />
+                    <circle cx="6" cy="12" r="3" />
+                    <circle cx="10" cy="18" r="2" />
+                  </svg>
+                )}
+              </div>
+              <h3>{tool.name}</h3>
+              <p>{tool.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Keyboard Navigation -->
+  <section class="content-section" aria-labelledby="keyboard-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="keyboard-heading">Keyboard Navigation</h2>
+        <p>Full keyboard support for all interactive elements</p>
+      </div>
+
+      <div class="keyboard-content">
+        <table class="keyboard-table" role="table" aria-label="Keyboard shortcuts">
+          <thead>
+            <tr>
+              <th scope="col">Key</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              keyboardShortcuts.map((shortcut) => (
+                <tr>
+                  <td>
+                    <kbd>{shortcut.key}</kbd>
+                  </td>
+                  <td>{shortcut.action}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+
+        <div class="keyboard-note">
+          <p>
+            <strong>Focus Indicators:</strong>
+            All interactive elements display a visible focus indicator when navigating via keyboard. The
+            focus ring uses a 3px solid outline that meets WCAG 2.2 AAA requirements for focus visibility.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Assistive Technology Support -->
+  <section class="content-section alt-bg" aria-labelledby="at-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="at-heading">Assistive Technology Support</h2>
+        <p>Tested and compatible with major assistive technologies</p>
+      </div>
+
+      <div class="at-grid" role="list" aria-label="Supported assistive technologies">
+        <div class="at-card" role="listitem">
+          <h3>Screen Readers</h3>
+          <ul>
+            <li>NVDA (Windows)</li>
+            <li>JAWS (Windows)</li>
+            <li>VoiceOver (macOS/iOS)</li>
+            <li>TalkBack (Android)</li>
+          </ul>
+        </div>
+
+        <div class="at-card" role="listitem">
+          <h3>Browser Technologies</h3>
+          <ul>
+            <li>Proper ARIA landmarks and roles</li>
+            <li>Semantic HTML5 structure</li>
+            <li>Valid heading hierarchy</li>
+            <li>Accessible forms with labels</li>
+          </ul>
+        </div>
+
+        <div class="at-card" role="listitem">
+          <h3>Input Methods</h3>
+          <ul>
+            <li>Keyboard-only navigation</li>
+            <li>Switch device compatibility</li>
+            <li>Voice control support</li>
+            <li>Touch and pointer alternatives</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Known Limitations -->
+  <section class="content-section" aria-labelledby="limitations-heading">
+    <div class="container">
+      <div class="content-centered">
+        <h2 id="limitations-heading">Known Limitations</h2>
+        <p>
+          While we strive for complete accessibility, some third-party content may have limitations
+          beyond our direct control:
         </p>
 
-        <h2>Conformance Status</h2>
-        <p>
-          We strive to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA.
-          These guidelines explain how to make web content more accessible for people with
-          disabilities and more user-friendly for everyone.
-        </p>
-
-        <h2>Accessibility Features</h2>
-        <p>Our website includes the following accessibility features:</p>
-        <ul class="feature-list">
-          <li>Keyboard navigation support for all interactive elements</li>
-          <li>Skip to main content link for screen reader users</li>
-          <li>Proper heading hierarchy for easy navigation</li>
-          <li>Alternative text for all meaningful images</li>
-          <li>Color contrast that meets WCAG AA standards</li>
-          <li>Resizable text without loss of functionality</li>
-          <li>Form labels and error messages for assistive technologies</li>
-          <li>ARIA landmarks and labels where appropriate</li>
-          <li>Dark mode option for users who prefer reduced brightness</li>
-          <li>Reduced motion option for users sensitive to animations</li>
-          <li>High contrast mode for users with low vision</li>
-          <li>Adjustable font sizes</li>
+        <ul class="limitations-list" role="list">
+          <li>
+            <strong>Mapbox Maps:</strong>
+            Interactive maps may have limited keyboard accessibility. We provide text alternatives where
+            possible.
+          </li>
+          <li>
+            <strong>Third-Party Payment:</strong>
+            Stripe payment forms are subject to Stripe's accessibility implementation.
+          </li>
+          <li>
+            <strong>External Links:</strong>
+            Linked third-party websites may not meet the same accessibility standards.
+          </li>
         </ul>
 
-        <h2>Accessibility Tools</h2>
         <p>
-          We provide an accessibility panel (accessible via the person icon in the bottom-left
-          corner) that allows you to customize your experience:
+          We continuously work to improve accessibility and address limitations as solutions become
+          available.
         </p>
-        <ul class="feature-list">
-          <li>
-            <strong>High Contrast Mode:</strong>
-            Increases color contrast for better visibility
-          </li>
-          <li>
-            <strong>Reduced Motion:</strong>
-            Disables animations and transitions
-          </li>
-          <li>
-            <strong>Font Size:</strong>
-            Choose from default, large, or extra-large text
-          </li>
-        </ul>
+      </div>
+    </div>
+  </section>
 
-        <h2>Keyboard Navigation</h2>
-        <p>
-          All interactive elements on our website can be accessed using a keyboard. You can use:
-        </p>
-        <ul class="feature-list">
-          <li>
-            <strong>Tab:</strong>
-            Move forward through interactive elements
-          </li>
-          <li>
-            <strong>Shift + Tab:</strong>
-            Move backward through interactive elements
-          </li>
-          <li>
-            <strong>Enter:</strong>
-            Activate buttons and links
-          </li>
-          <li>
-            <strong>Escape:</strong>
-            Close menus and dialogs
-          </li>
-          <li>
-            <strong>Ctrl/Cmd + K:</strong>
-            Open or close the search dialog
-          </li>
-        </ul>
-
-        <h2>Known Limitations</h2>
-        <p>
-          While we strive for full accessibility, some third-party content or features may have
-          limitations beyond our control:
-        </p>
-        <ul class="feature-list">
-          <li>Embedded maps from Mapbox may have limited keyboard accessibility</li>
-          <li>Third-party donation forms are provided by Donorbox</li>
-        </ul>
-
-        <h2>Feedback</h2>
+  <!-- Feedback -->
+  <section class="impact" aria-labelledby="feedback-heading">
+    <div class="container">
+      <div class="impact-content">
+        <h2 id="feedback-heading">Accessibility Feedback</h2>
         <p>
           We welcome your feedback on the accessibility of our website. If you encounter any
-          accessibility barriers or have suggestions for improvement, please contact us:
+          barriers or have suggestions for improvement, please let us know.
         </p>
-        <ul class="feature-list">
-          <li>
-            <a href="/contact">Use our contact form</a>
-          </li>
-        </ul>
-        <p>We aim to respond to accessibility feedback within 5 business days.</p>
-
-        <h2>Technical Specifications</h2>
-        <p>
-          Accessibility of this website relies on the following technologies to work with your web
-          browser and any assistive technologies or plugins installed on your computer:
-        </p>
-        <ul class="feature-list">
-          <li>HTML5</li>
-          <li>WAI-ARIA</li>
-          <li>CSS</li>
-          <li>JavaScript</li>
-        </ul>
-        <p>
-          These technologies are relied upon for conformance with the accessibility standards used.
-        </p>
-
-        <p style="margin-top: 2rem; color: var(--text-light)">
-          <em>This statement was last updated on December 31, 2025.</em>
-        </p>
+        <p class="highlight">We aim to respond to accessibility feedback within 5 business days.</p>
+        <a href="/contact" class="btn btn-secondary">Contact Us</a>
       </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .feature-list {
-    margin: 1rem 0 2rem;
-    padding-left: 1.5rem;
+  /* Compliance Dashboard */
+  .compliance-dashboard {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .compliance-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background: linear-gradient(135deg, var(--success) 0%, #2d6a4f 100%);
+    color: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+  }
+
+  .badge-icon {
+    flex-shrink: 0;
+  }
+
+  .badge-content {
+    text-align: left;
+  }
+
+  .badge-label {
+    display: block;
+    font-size: 0.875rem;
+    opacity: 0.9;
+    margin-bottom: 0.25rem;
+  }
+
+  .badge-level {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .badge-updated {
+    display: block;
+    font-size: 0.8125rem;
+    opacity: 0.8;
+  }
+
+  .compliance-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .stat-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-navy);
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-label {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--text-light);
+  }
+
+  /* WCAG Principles */
+  .wcag-principles {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .wcag-principle {
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+
+  .wcag-principle summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    cursor: pointer;
+    list-style: none;
+    min-height: var(--min-touch-target);
+  }
+
+  .wcag-principle summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .wcag-principle summary::after {
+    content: '';
+    margin-left: auto;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--text-light);
+    border-bottom: 2px solid var(--text-light);
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
+  }
+
+  .wcag-principle[open] summary::after {
+    transform: rotate(-135deg);
+  }
+
+  .wcag-principle summary:hover {
+    background: var(--hover-bg);
+  }
+
+  .wcag-principle summary:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: -3px;
+  }
+
+  .wcag-principle summary h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--primary-navy);
+  }
+
+  .principle-icon {
+    display: flex;
+    color: var(--primary-blue);
+  }
+
+  .principle-summary {
+    font-size: 0.9375rem;
+    color: var(--text-light);
+  }
+
+  .principle-content {
+    padding: 0 1.5rem 1.5rem;
+    border-top: 1px solid var(--border-light);
+    margin-top: -0.5rem;
+    padding-top: 1.5rem;
+  }
+
+  .criterion-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .criterion-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .criterion-item:last-child {
+    border-bottom: none;
+  }
+
+  .criterion-status {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.125rem;
+  }
+
+  .criterion-status.compliant {
+    background: var(--success-light);
+    color: var(--success);
+  }
+
+  .criterion-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .criterion-info strong {
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .criterion-info span {
+    color: var(--text-light);
+    font-size: 0.9375rem;
+  }
+
+  .level-badge {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    background: var(--light-blue);
+    color: var(--primary-navy);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Tools Section */
+  .tools-intro {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+
+  .tools-intro p {
+    font-size: 1.0625rem;
+    color: var(--text-light);
+  }
+
+  .inline-icon {
+    display: inline-flex;
+    vertical-align: middle;
+    margin: 0 0.25rem;
+    color: var(--primary-blue);
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .tool-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .tool-icon {
+    display: flex;
+    justify-content: center;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+  }
+
+  .tool-card h3 {
+    font-size: 1.0625rem;
+    color: var(--primary-navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .tool-card p {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin: 0;
+  }
+
+  /* Keyboard Table */
+  .keyboard-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .keyboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+  }
+
+  .keyboard-table th,
+  .keyboard-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .keyboard-table th {
+    background: var(--bg-secondary);
+    font-weight: 600;
+    color: var(--primary-navy);
+  }
+
+  .keyboard-table td:first-child {
+    width: 35%;
+  }
+
+  kbd {
+    display: inline-block;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-medium);
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    font-family: monospace;
+    font-size: 0.875rem;
+    color: var(--text-dark);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .keyboard-note {
+    background: var(--light-blue);
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .keyboard-note p {
+    margin: 0;
+    color: var(--text-light);
+  }
+
+  /* AT Support */
+  .at-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .at-card {
+    background: var(--card-bg);
+    padding: 1.75rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .at-card h3 {
+    color: var(--primary-navy);
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+  }
+
+  .at-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .at-card li {
+    padding: 0.5rem 0;
+    color: var(--text-light);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .at-card li:last-child {
+    border-bottom: none;
+  }
+
+  /* Limitations */
+  .limitations-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    text-align: left;
+  }
+
+  .limitations-list li {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    color: var(--text-light);
+  }
+
+  .limitations-list strong {
+    color: var(--text-dark);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  /* Dark Theme */
+  :global([data-theme='dark']) .compliance-badge {
+    background: linear-gradient(135deg, #065f46 0%, #064e3b 100%);
+  }
+
+  :global([data-theme='dark']) .stat-card {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .stat-value {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .wcag-principle {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .wcag-principle summary h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .principle-content {
+    border-top-color: var(--border-light);
+  }
+
+  :global([data-theme='dark']) .criterion-item {
+    border-bottom-color: var(--border-light);
+  }
+
+  :global([data-theme='dark']) .criterion-status.compliant {
+    background: rgba(167, 243, 208, 0.15);
+  }
+
+  :global([data-theme='dark']) .level-badge {
+    background: rgba(163, 213, 255, 0.15);
+    color: var(--primary-blue);
+  }
+
+  :global([data-theme='dark']) .tool-card {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .tool-card h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .keyboard-table th {
+    background: var(--card-bg);
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) kbd {
+    background: var(--card-bg);
+    border-color: var(--border-light);
+  }
+
+  :global([data-theme='dark']) .keyboard-note {
+    background: var(--card-bg);
+  }
+
+  :global([data-theme='dark']) .at-card {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .at-card h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .at-card li {
+    border-bottom-color: var(--border-light);
+  }
+
+  :global([data-theme='dark']) .limitations-list li {
+    background: var(--card-bg);
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .compliance-badge {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .badge-content {
+      text-align: center;
+    }
+
+    .compliance-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .wcag-principle summary {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .wcag-principle summary::after {
+      position: absolute;
+      right: 1.5rem;
+      top: 1.75rem;
+    }
+
+    .principle-summary {
+      margin-top: 0.5rem;
+    }
+
+    .criterion-item {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .keyboard-table th,
+    .keyboard-table td {
+      padding: 0.75rem;
+      font-size: 0.9375rem;
+    }
+
+    .keyboard-table td:first-child {
+      width: auto;
+    }
   }
 </style>

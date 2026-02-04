@@ -1,0 +1,679 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Credits & Acknowledgments',
+    description: 'Recognition of sponsors, partners, and technology that powers Bay Tides',
+    publisher: {
+      '@type': 'NonprofitOrganization',
+      name: 'Bay Tides',
+      url: 'https://baytides.org',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Credits' },
+    ],
+  },
+];
+
+// Technology stack with details
+const infrastructure = [
+  {
+    name: 'Cloudflare',
+    description: 'Global CDN, DDoS protection, and edge computing',
+    url: 'https://cloudflare.com',
+    category: 'Infrastructure',
+  },
+  {
+    name: 'Azure',
+    description: 'Cloud computing and virtual machine hosting',
+    url: 'https://azure.microsoft.com',
+    category: 'Infrastructure',
+  },
+  {
+    name: 'Resend',
+    description: 'Transactional email delivery',
+    url: 'https://resend.com',
+    category: 'Infrastructure',
+  },
+];
+
+const frameworks = [
+  {
+    name: 'Astro',
+    description: 'Static site generator with zero JavaScript by default',
+    url: 'https://astro.build',
+    category: 'Framework',
+  },
+  {
+    name: 'Sass/SCSS',
+    description: 'CSS preprocessor for maintainable stylesheets',
+    url: 'https://sass-lang.com',
+    category: 'Framework',
+  },
+  {
+    name: 'TypeScript',
+    description: 'Type-safe JavaScript for reliable code',
+    url: 'https://typescriptlang.org',
+    category: 'Framework',
+  },
+];
+
+const services = [
+  {
+    name: 'Stripe',
+    description: 'Secure payment processing for donations',
+    url: 'https://stripe.com',
+    category: 'Service',
+  },
+  {
+    name: 'Mapbox',
+    description: 'Interactive mapping for location features',
+    url: 'https://mapbox.com',
+    category: 'Service',
+  },
+  {
+    name: 'Tor Project',
+    description: 'Snowflake proxy for internet freedom',
+    url: 'https://torproject.org',
+    category: 'Service',
+  },
+];
+
+const openSource = [
+  {
+    name: 'Font Awesome',
+    description: 'Icon library used throughout the site',
+    url: 'https://fontawesome.com',
+    license: 'CC BY 4.0 / MIT',
+  },
+  {
+    name: 'Lucide Icons',
+    description: 'Beautiful, consistent icon set',
+    url: 'https://lucide.dev',
+    license: 'ISC',
+  },
+  {
+    name: 'Normalize.css',
+    description: 'CSS reset for cross-browser consistency',
+    url: 'https://necolas.github.io/normalize.css/',
+    license: 'MIT',
+  },
+];
+---
+
+<BaseLayout
+  title="Credits & Acknowledgments"
+  description="Recognition of the sponsors, partners, open-source projects, and technology that power Bay Tides' mission to protect the San Francisco Bay."
+  canonicalUrl="https://baytides.org/credits"
+  structuredData={structuredData}
+  preloadImages={['/assets/images/hero-bg.webp']}
+>
+  <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Credits' }]} />
+
+  <PageHero
+    title="Credits & Acknowledgments"
+    subtitle="The people and technology behind our mission"
+  />
+
+  <!-- Introduction -->
+  <section class="content-section" aria-labelledby="intro-heading">
+    <div class="container">
+      <div class="credits-intro">
+        <h2 id="intro-heading" class="sr-only">Introduction</h2>
+        <p class="intro-text">
+          Bay Tides is made possible by the generous support of our sponsors, the dedication of our
+          volunteers, and the power of open-source technology. This page recognizes everyone who
+          contributes to our mission of protecting the San Francisco Bay.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Infrastructure Partners -->
+  <section class="content-section alt-bg" aria-labelledby="infrastructure-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="infrastructure-heading">Infrastructure Partners</h2>
+        <p>The foundation that keeps our digital presence running</p>
+      </div>
+
+      <div class="credits-grid" role="list" aria-label="Infrastructure partners">
+        {
+          infrastructure.map((item) => (
+            <article class="credit-card" role="listitem">
+              <div class="credit-card-content">
+                <h3>{item.name}</h3>
+                <p>{item.description}</p>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="credit-link"
+                  aria-label={`Visit ${item.name} website (opens in new tab)`}
+                >
+                  Visit Website
+                  <span aria-hidden="true">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+              <span class="credit-badge">{item.category}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Frameworks & Languages -->
+  <section class="content-section" aria-labelledby="frameworks-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="frameworks-heading">Frameworks & Languages</h2>
+        <p>Modern tools for building fast, accessible experiences</p>
+      </div>
+
+      <div class="credits-grid" role="list" aria-label="Frameworks and languages">
+        {
+          frameworks.map((item) => (
+            <article class="credit-card" role="listitem">
+              <div class="credit-card-content">
+                <h3>{item.name}</h3>
+                <p>{item.description}</p>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="credit-link"
+                  aria-label={`Visit ${item.name} website (opens in new tab)`}
+                >
+                  Visit Website
+                  <span aria-hidden="true">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+              <span class="credit-badge">{item.category}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Third-Party Services -->
+  <section class="content-section alt-bg" aria-labelledby="services-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="services-heading">Third-Party Services</h2>
+        <p>Trusted partners that enhance our capabilities</p>
+      </div>
+
+      <div class="credits-grid" role="list" aria-label="Third-party services">
+        {
+          services.map((item) => (
+            <article class="credit-card" role="listitem">
+              <div class="credit-card-content">
+                <h3>{item.name}</h3>
+                <p>{item.description}</p>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="credit-link"
+                  aria-label={`Visit ${item.name} website (opens in new tab)`}
+                >
+                  Visit Website
+                  <span aria-hidden="true">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+              <span class="credit-badge">{item.category}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Open Source -->
+  <section class="content-section" aria-labelledby="opensource-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="opensource-heading">Open Source</h2>
+        <p>Community-driven projects that make our work possible</p>
+      </div>
+
+      <div class="credits-grid" role="list" aria-label="Open source projects">
+        {
+          openSource.map((item) => (
+            <article class="credit-card" role="listitem">
+              <div class="credit-card-content">
+                <h3>{item.name}</h3>
+                <p>{item.description}</p>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="credit-link"
+                  aria-label={`Visit ${item.name} website (opens in new tab)`}
+                >
+                  Visit Website
+                  <span aria-hidden="true">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+              <span class="credit-badge license">{item.license}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Contributors -->
+  <section class="content-section alt-bg" aria-labelledby="contributors-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="contributors-heading">Community Contributors</h2>
+        <p>Volunteers who donate their time and expertise</p>
+      </div>
+
+      <div class="contributors-content">
+        <p>
+          Bay Tides is built by a community of dedicated volunteers who believe in our mission. From
+          software developers and designers to environmental scientists and educators, our
+          contributors bring diverse skills to protect the San Francisco Bay.
+        </p>
+
+        <div class="contributor-cta">
+          <h3>Join Our Community</h3>
+          <p>
+            Interested in contributing? We welcome volunteers of all skill levels. Whether you can
+            help with code, design, outreach, or fieldwork, there's a place for you.
+          </p>
+          <a href="/volunteer" class="btn btn-primary">Become a Volunteer</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Credits -->
+  <section class="content-section" aria-labelledby="images-heading">
+    <div class="container">
+      <div class="section-title">
+        <h2 id="images-heading">Photography & Media</h2>
+        <p>Visual content that tells our story</p>
+      </div>
+
+      <div class="image-credits-content">
+        <p>
+          The photography on this website showcases the beauty of the San Francisco Bay and the
+          importance of our conservation work. We thank the following sources for their
+          contributions:
+        </p>
+
+        <ul class="image-credits-list" role="list">
+          <li>
+            <strong>Hero imagery:</strong>
+            Original photography by Bay Tides volunteers
+          </li>
+          <li>
+            <strong>Wildlife photos:</strong>
+            Licensed under Creative Commons from various contributors
+          </li>
+          <li>
+            <strong>Event photography:</strong>
+            Captured by community members at Bay Tides events
+          </li>
+          <li>
+            <strong>Iconography:</strong>
+            Lucide Icons and Font Awesome (licensed under MIT/CC BY 4.0)
+          </li>
+        </ul>
+
+        <p class="image-note">
+          All photographs are used with permission. If you believe any image has been used without
+          proper attribution, please <a href="/contact">contact us</a> immediately.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Special Thanks -->
+  <section class="impact" aria-labelledby="thanks-heading">
+    <div class="container">
+      <div class="impact-content">
+        <h2 id="thanks-heading">Special Thanks</h2>
+        <p>
+          To everyone who has supported Bay Tides, whether through donations, volunteering, or
+          simply spreading the word about our mission: thank you.
+        </p>
+        <p class="highlight">
+          Together, we are protecting the San Francisco Bay for future generations.
+        </p>
+        <a href="/donate" class="btn btn-secondary">Support Our Mission</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Credits Introduction */
+  .credits-intro {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .intro-text {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-light);
+  }
+
+  /* Credits Grid */
+  .credits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  /* Credit Card */
+  .credit-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.75rem;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 180px;
+  }
+
+  .credit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .credit-card:focus-within {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .credit-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .credit-card h3 {
+    color: var(--primary-navy);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .credit-card p {
+    color: var(--text-light);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 1rem;
+  }
+
+  .credit-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-blue);
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    transition: all 0.2s ease;
+    min-height: var(--min-touch-target);
+    padding: 0.5rem 0;
+  }
+
+  .credit-link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .credit-link:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+    border-radius: 4px;
+  }
+
+  .credit-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--light-blue);
+    color: var(--primary-navy);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .credit-badge.license {
+    background: var(--success-light);
+    color: var(--success);
+  }
+
+  /* Contributors Section */
+  .contributors-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contributors-content > p {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+
+  .contributor-cta {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .contributor-cta h3 {
+    color: var(--primary-navy);
+    margin-bottom: 0.75rem;
+  }
+
+  .contributor-cta p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Image Credits Section */
+  .image-credits-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .image-credits-content > p {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+  }
+
+  .image-credits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+  }
+
+  .image-credits-list li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-light);
+  }
+
+  .image-credits-list li:last-child {
+    border-bottom: none;
+  }
+
+  .image-credits-list strong {
+    color: var(--text-dark);
+  }
+
+  .image-note {
+    font-size: 0.9375rem;
+    color: var(--text-light);
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+  }
+
+  .image-note a {
+    color: var(--primary-blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .image-note a:hover {
+    color: var(--primary-navy);
+  }
+
+  .image-note a:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+    border-radius: 2px;
+  }
+
+  /* Dark Theme */
+  :global([data-theme='dark']) .credit-card {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .credit-card h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .credit-badge {
+    background: rgba(163, 213, 255, 0.15);
+    color: var(--primary-blue);
+  }
+
+  :global([data-theme='dark']) .credit-badge.license {
+    background: rgba(167, 243, 208, 0.15);
+    color: var(--success);
+  }
+
+  :global([data-theme='dark']) .contributor-cta {
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .contributor-cta h3 {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .image-credits-list li {
+    border-bottom-color: var(--border-light);
+  }
+
+  :global([data-theme='dark']) .image-note {
+    background: var(--card-bg);
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .credits-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .credit-card {
+      min-height: auto;
+    }
+
+    .contributor-cta {
+      padding: 1.5rem;
+    }
+  }
+</style>
