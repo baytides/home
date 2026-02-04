@@ -15,52 +15,102 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const rootDir = join(__dirname, '..');
 
-// Pages to index (excluding 404 and sitemap-page)
+// Pages to index (excluding 404, checkout, and legal sub-pages)
 const pages = [
   { file: 'index.html', url: '/', keywords: ['home', 'bay tides', 'environment', 'conservation'] },
   {
     file: 'about.html',
-    url: '/about.html',
+    url: '/about',
     keywords: ['about', 'mission', 'team', 'history', 'nonprofit'],
   },
   {
     file: 'projects.html',
-    url: '/projects.html',
+    url: '/projects',
     keywords: ['projects', 'initiatives', 'bay navigator', 'programs'],
   },
   {
-    file: 'volunteer.html',
-    url: '/volunteer.html',
-    keywords: ['volunteer', 'help', 'join', 'community', 'events'],
-  },
-  {
-    file: 'donate.html',
-    url: '/donate.html',
-    keywords: ['donate', 'support', 'give', 'contribution', 'funding'],
-  },
-  {
-    file: 'contact.html',
-    url: '/contact.html',
-    keywords: ['contact', 'email', 'reach', 'message', 'get in touch'],
-  },
-  {
     file: 'events.html',
-    url: '/events.html',
+    url: '/events',
     keywords: ['events', 'calendar', 'activities', 'workshops', 'cleanup'],
   },
   {
+    file: 'volunteer/index.html',
+    url: '/volunteer',
+    keywords: ['volunteer', 'help', 'join', 'community', 'events'],
+  },
+  {
+    file: 'volunteer/registration.html',
+    url: '/volunteer/registration',
+    keywords: ['volunteer', 'sign up', 'register', 'application'],
+  },
+  {
+    file: 'donate/index.html',
+    url: '/donate',
+    keywords: ['donate', 'support', 'give', 'contribution', 'funding'],
+  },
+  {
+    file: 'donate/corporate-partnerships.html',
+    url: '/donate/corporate-partnerships',
+    keywords: ['corporate', 'partnership', 'sponsor', 'business', 'company'],
+  },
+  {
+    file: 'donate/daf.html',
+    url: '/donate/daf',
+    keywords: ['daf', 'donor advised fund', 'charitable', 'giving'],
+  },
+  {
+    file: 'donate/in-kind.html',
+    url: '/donate/in-kind',
+    keywords: ['in-kind', 'goods', 'services', 'equipment', 'supplies'],
+  },
+  {
+    file: 'donate/ira.html',
+    url: '/donate/ira',
+    keywords: ['ira', 'retirement', 'rollover', 'qcd', 'charitable distribution'],
+  },
+  {
+    file: 'donate/matching.html',
+    url: '/donate/matching',
+    keywords: ['matching', 'employer', 'double', 'gift match'],
+  },
+  {
+    file: 'donate/planned-giving.html',
+    url: '/donate/planned-giving',
+    keywords: ['planned giving', 'legacy', 'estate', 'bequest', 'will'],
+  },
+  {
+    file: 'donate/stocks.html',
+    url: '/donate/stocks',
+    keywords: ['stocks', 'securities', 'shares', 'appreciated assets'],
+  },
+  {
+    file: 'contact.html',
+    url: '/contact',
+    keywords: ['contact', 'email', 'reach', 'message', 'get in touch'],
+  },
+  {
+    file: 'aegis/index.html',
+    url: '/aegis',
+    keywords: ['aegis', 'digital', 'nonprofit', 'technology', 'resilience'],
+  },
+  {
+    file: 'aegis/interest.html',
+    url: '/aegis/interest',
+    keywords: ['aegis', 'interest', 'form', 'apply', 'services'],
+  },
+  {
     file: 'privacy.html',
-    url: '/privacy.html',
+    url: '/privacy',
     keywords: ['privacy', 'policy', 'data', 'information', 'cookies'],
   },
   {
     file: 'terms.html',
-    url: '/terms.html',
+    url: '/terms',
     keywords: ['terms', 'service', 'conditions', 'legal', 'agreement'],
   },
   {
     file: 'accessibility.html',
-    url: '/accessibility.html',
+    url: '/accessibility',
     keywords: ['accessibility', 'a11y', 'wcag', 'screen reader', 'keyboard'],
   },
 ];
