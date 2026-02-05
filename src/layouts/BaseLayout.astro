@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import AccessibilityPanel from '../components/AccessibilityPanel.astro';
+import PWAInstallPrompt from '../components/PWAInstallPrompt.astro';
 import '../styles/global.scss';
 
 interface Props {
@@ -50,7 +51,20 @@ const fullTitle = title.includes('Bay Tides') ? title : `${title} | Bay Tides`;
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
-    <link rel="apple-touch-icon" href="/assets/images/logo.png" />
+    <link rel="apple-touch-icon" href="/assets/images/pwa/icon-192x192.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/pwa/icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/assets/images/pwa/icon-192x192.png" />
+
+    <!-- PWA Manifest & Theme -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#1a365d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Bay Tides" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Bay Tides" />
+    <meta name="msapplication-TileColor" content="#1a365d" />
+    <meta name="msapplication-TileImage" content="/assets/images/pwa/icon-144x144.png" />
 
     <!-- Preload critical assets -->
     {
@@ -89,6 +103,7 @@ const fullTitle = title.includes('Bay Tides') ? title : `${title} | Bay Tides`;
     <Footer />
 
     <AccessibilityPanel />
+    <PWAInstallPrompt />
 
     <script>
       // Service worker registration

@@ -25,6 +25,9 @@ const structuredData = [
     ],
   },
 ];
+
+// EventSchedule embed URL - update 'baytides' with your actual schedule name after creation
+const eventScheduleUrl = 'https://events.baytides.org/baytides/embed';
 ---
 
 <BaseLayout
@@ -38,44 +41,83 @@ const structuredData = [
 
   <PageHero title="Upcoming Events" subtitle="Join us in protecting the San Francisco Bay" />
 
-  <!-- Events Grid -->
+  <!-- Events Calendar -->
   <section class="content-section">
     <div class="container">
       <div class="section-title">
-        <h2>Calendar</h2>
+        <h2>Event Calendar</h2>
         <p>Find volunteer opportunities and community events near you</p>
       </div>
 
-      <div class="cards-grid">
-        <Card title="Monthly Shoreline Cleanup" icon="🌊">
-          <p><strong>Coming Soon</strong></p>
-          <p>
-            Join fellow volunteers for our regular shoreline cleanup along the Bay. All supplies
-            provided.
+      <div class="calendar-embed" id="calendar-container">
+        <div class="calendar-wrapper">
+          <iframe
+            src={eventScheduleUrl}
+            title="Bay Tides Events Calendar"
+            loading="lazy"
+            allowfullscreen
+          >
+          </iframe>
+        </div>
+        <noscript>
+          <p class="calendar-fallback">
+            <a href="https://events.baytides.org" target="_blank" rel="noopener noreferrer">
+              View our event calendar at events.baytides.org
+            </a>
           </p>
-          <a href="/volunteer" class="btn btn-secondary">Sign Up</a>
-        </Card>
-
-        <Card title="Native Plant Workshop" icon="🌿">
-          <p><strong>Coming Soon</strong><br />Date TBD</p>
-          <p>
-            Learn about native plants of the Bay Area and how to incorporate them into your garden.
-            Hands-on planting demonstration included.
-          </p>
-          <a href="/contact" class="btn btn-secondary">Get Notified</a>
-        </Card>
-
-        <Card title="Community Fair Outreach" icon="👥">
-          <p><strong>Coming Soon</strong><br />Date TBD</p>
-          <p>
-            Help us spread the word about Bay conservation at local community fairs. Great for those
-            who love talking with people about environmental issues.
-          </p>
-          <a href="/contact" class="btn btn-secondary">Get Notified</a>
-        </Card>
+        </noscript>
       </div>
 
-      <div class="content-centered" style="margin-top: 3rem">
+      <div class="calendar-actions">
+        <a
+          href="https://events.baytides.org"
+          class="btn btn-outline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View Full Calendar
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Event Types -->
+  <section class="content-section alt-bg">
+    <div class="container">
+      <div class="section-title">
+        <h2>Types of Events</h2>
+        <p>Join us for a variety of conservation activities</p>
+      </div>
+
+      <div class="cards-grid">
+        <Card title="Shoreline Cleanups" icon="🌊">
+          <p>
+            Join fellow volunteers for regular shoreline cleanups along the Bay. All supplies
+            provided. Great for individuals, families, and groups.
+          </p>
+        </Card>
+
+        <Card title="Native Plant Workshops" icon="🌿">
+          <p>
+            Learn about native plants of the Bay Area and how to incorporate them into your garden.
+            Hands-on planting demonstrations included.
+          </p>
+        </Card>
+
+        <Card title="Community Outreach" icon="👥">
+          <p>
+            Help spread the word about Bay conservation at local community fairs and events. Perfect
+            for those who enjoy connecting with others.
+          </p>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter & Updates -->
+  <section class="content-section">
+    <div class="container">
+      <div class="content-centered">
         <h2>Stay Updated</h2>
         <p>
           Want to be the first to know about new events? Subscribe to our newsletter for event
@@ -100,17 +142,89 @@ const structuredData = [
       </div>
     </div>
   </section>
-
-  <!-- Past Events -->
-  <section class="content-section">
-    <div class="container">
-      <div class="content-centered">
-        <h2>Past Events</h2>
-        <p>
-          Bay Tides was founded in 2023 and is actively building our event calendar. Check back soon
-          for updates on our upcoming volunteer opportunities and community events.
-        </p>
-      </div>
-    </div>
-  </section>
 </BaseLayout>
+
+<style>
+  .calendar-embed {
+    margin: 2rem 0;
+    background: var(--card-bg, #fff);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+  }
+
+  .calendar-wrapper {
+    position: relative;
+    padding-bottom: 75%;
+    height: 0;
+    overflow: hidden;
+    min-height: 600px;
+  }
+
+  @media (min-width: 768px) {
+    .calendar-wrapper {
+      padding-bottom: 56.25%;
+      min-height: 700px;
+    }
+  }
+
+  .calendar-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .calendar-fallback {
+    padding: 2rem;
+    text-align: center;
+    color: var(--body-text);
+  }
+
+  .calendar-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  [data-theme='dark'] .calendar-embed {
+    background: var(--dark-card-bg, #1e293b);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+</style>
+
+<script>
+  // Handle iframe theme sync with page theme
+  function updateCalendarTheme() {
+    const iframe = document.querySelector('.calendar-wrapper iframe') as HTMLIFrameElement;
+    if (iframe) {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const currentSrc = iframe.src;
+      const url = new URL(currentSrc);
+      url.searchParams.set('theme', isDark ? 'dark' : 'light');
+
+      // Only update if theme changed
+      if (iframe.src !== url.toString()) {
+        iframe.src = url.toString();
+      }
+    }
+  }
+
+  // Watch for theme changes
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'data-theme') {
+        updateCalendarTheme();
+      }
+    });
+  });
+
+  observer.observe(document.documentElement, { attributes: true });
+
+  // Initial theme sync
+  document.addEventListener('DOMContentLoaded', updateCalendarTheme);
+</script>

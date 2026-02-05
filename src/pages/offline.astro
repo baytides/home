@@ -1,0 +1,344 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="You're Offline"
+  description="You appear to be offline. Some features may be limited until you reconnect."
+  canonicalUrl="https://baytides.org/offline"
+>
+  <!-- Offline Content -->
+  <section class="hero offline-hero" style="min-height: 50vh">
+    <div class="container">
+      <div class="offline-icon" aria-hidden="true">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="80"
+          height="80"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+          <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+          <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+          <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+          <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+          <line x1="12" y1="20" x2="12.01" y2="20"></line>
+        </svg>
+      </div>
+      <h1>You're Offline</h1>
+      <p>
+        It looks like you've lost your internet connection. Don't worry - many features are still
+        available!
+      </p>
+    </div>
+  </section>
+
+  <!-- Offline Info -->
+  <section class="content-section">
+    <div class="container">
+      <div class="offline-status" id="offline-status">
+        <div class="status-indicator offline">
+          <span class="status-dot"></span>
+          <span class="status-text">Currently offline</span>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <h2>What You Can Still Do</h2>
+        <p>These pages are available offline</p>
+      </div>
+
+      <div class="cards-grid">
+        <a href="/" class="card card-link">
+          <div class="card-icon" aria-hidden="true">&#127968;</div>
+          <h3>Home</h3>
+          <p>Return to the Bay Tides homepage.</p>
+        </a>
+        <a href="/about" class="card card-link">
+          <div class="card-icon" aria-hidden="true">&#128220;</div>
+          <h3>About Us</h3>
+          <p>Learn about our mission.</p>
+        </a>
+        <a href="/projects" class="card card-link">
+          <div class="card-icon" aria-hidden="true">&#128640;</div>
+          <h3>Projects</h3>
+          <p>View our initiatives.</p>
+        </a>
+        <a href="/events" class="card card-link">
+          <div class="card-icon" aria-hidden="true">&#128197;</div>
+          <h3>Events</h3>
+          <p>See upcoming activities.</p>
+        </a>
+      </div>
+
+      <div class="offline-forms-section" id="queued-forms-section" style="display: none;">
+        <div class="section-title">
+          <h2>Pending Submissions</h2>
+          <p>These will be sent automatically when you're back online</p>
+        </div>
+        <div class="queued-forms-list" id="queued-forms-list">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <div class="offline-tip">
+        <h3>Forms Work Offline!</h3>
+        <p>
+          If you submit a form while offline, your information will be saved locally and
+          automatically sent when your connection is restored. You'll see a confirmation when your
+          submission has been successfully synced.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .offline-hero {
+    text-align: center;
+  }
+
+  .offline-icon {
+    color: var(--accent-teal);
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+  }
+
+  .offline-status {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .status-indicator.offline {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+
+  .status-indicator.online {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .card-link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .offline-tip {
+    margin-top: 3rem;
+    padding: 1.5rem;
+    background: var(--light-navy);
+    border-radius: 0.5rem;
+    text-align: center;
+  }
+
+  .offline-tip h3 {
+    color: var(--accent-teal);
+    margin-bottom: 0.5rem;
+  }
+
+  .offline-tip p {
+    color: var(--body-text);
+    margin: 0;
+  }
+
+  .offline-forms-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .queued-forms-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .queued-form-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: var(--card-bg);
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+  }
+
+  .queued-form-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .queued-form-type {
+    font-weight: 600;
+    color: var(--heading-color);
+  }
+
+  .queued-form-time {
+    font-size: 0.875rem;
+    color: var(--body-text);
+    opacity: 0.7;
+  }
+
+  .queued-form-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(251, 191, 36, 0.1);
+    color: #f59e0b;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  [data-theme='dark'] .offline-tip {
+    background: rgba(255, 255, 255, 0.05);
+  }
+</style>
+
+<script>
+  // Check online status and update UI
+  function updateOnlineStatus() {
+    const statusIndicator = document.querySelector('.status-indicator');
+    const statusText = document.querySelector('.status-text');
+
+    if (navigator.onLine) {
+      statusIndicator?.classList.remove('offline');
+      statusIndicator?.classList.add('online');
+      if (statusText) statusText.textContent = 'Back online!';
+
+      // Redirect to home after brief delay
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1500);
+    } else {
+      statusIndicator?.classList.remove('online');
+      statusIndicator?.classList.add('offline');
+      if (statusText) statusText.textContent = 'Currently offline';
+    }
+  }
+
+  // Display queued forms using safe DOM methods
+  function displayQueuedForms() {
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage('getQueuedForms');
+    }
+  }
+
+  function createQueuedFormItem(form: { url: string; timestamp: string }): HTMLElement {
+    const formType = getFormType(form.url);
+    const time = new Date(form.timestamp).toLocaleString();
+
+    const item = document.createElement('div');
+    item.className = 'queued-form-item';
+
+    const info = document.createElement('div');
+    info.className = 'queued-form-info';
+
+    const typeSpan = document.createElement('span');
+    typeSpan.className = 'queued-form-type';
+    typeSpan.textContent = formType;
+
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'queued-form-time';
+    timeSpan.textContent = `Saved ${time}`;
+
+    info.appendChild(typeSpan);
+    info.appendChild(timeSpan);
+
+    const status = document.createElement('span');
+    status.className = 'queued-form-status';
+    status.textContent = 'Pending';
+
+    item.appendChild(info);
+    item.appendChild(status);
+
+    return item;
+  }
+
+  function getFormType(url: string): string {
+    if (url.includes('volunteer')) return 'Volunteer Registration';
+    if (url.includes('contact')) return 'Contact Form';
+    if (url.includes('donate')) return 'Donation';
+    if (url.includes('newsletter')) return 'Newsletter Signup';
+    return 'Form Submission';
+  }
+
+  // Handle messages from service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data.type === 'QUEUED_FORMS') {
+        const forms = event.data.forms as Array<{ url: string; timestamp: string }>;
+        const section = document.getElementById('queued-forms-section');
+        const list = document.getElementById('queued-forms-list');
+
+        if (forms.length > 0 && section && list) {
+          section.style.display = 'block';
+          // Clear existing items safely
+          while (list.firstChild) {
+            list.removeChild(list.firstChild);
+          }
+          // Add new items using safe DOM methods
+          forms.forEach((form) => {
+            list.appendChild(createQueuedFormItem(form));
+          });
+        }
+      }
+
+      if (event.data.type === 'FORM_SYNCED') {
+        displayQueuedForms(); // Refresh the list
+      }
+    });
+  }
+
+  // Initialize
+  window.addEventListener('online', updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+  updateOnlineStatus();
+  displayQueuedForms();
+</script>

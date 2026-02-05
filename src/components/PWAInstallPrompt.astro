@@ -1,0 +1,340 @@
+---
+/**
+ * PWA Install Prompt Component
+ * Shows a non-intrusive banner when the app can be installed
+ */
+---
+
+<div
+  class="pwa-install-prompt"
+  id="pwa-install-prompt"
+  role="dialog"
+  aria-labelledby="pwa-install-title"
+  aria-hidden="true"
+>
+  <div class="pwa-install-content">
+    <div class="pwa-install-icon">
+      <img src="/assets/images/pwa/icon-96x96.png" alt="" width="48" height="48" />
+    </div>
+    <div class="pwa-install-text">
+      <strong id="pwa-install-title">Install Bay Tides</strong>
+      <p>Add to your home screen for quick access and offline support</p>
+    </div>
+    <div class="pwa-install-actions">
+      <button class="pwa-install-btn" id="pwa-install-btn" type="button">Install</button>
+      <button
+        class="pwa-dismiss-btn"
+        id="pwa-dismiss-btn"
+        type="button"
+        aria-label="Dismiss install prompt"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notification for offline form sync -->
+<div class="pwa-toast" id="pwa-toast" role="status" aria-live="polite" aria-hidden="true">
+  <span class="pwa-toast-icon" aria-hidden="true"></span>
+  <span class="pwa-toast-message" id="pwa-toast-message"></span>
+</div>
+
+<style>
+  .pwa-install-prompt {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(150%);
+    z-index: 9998;
+    width: calc(100% - 2rem);
+    max-width: 420px;
+    background: var(--card-bg, #fff);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease-out;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .pwa-install-prompt[aria-hidden='false'] {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .pwa-install-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .pwa-install-icon {
+    flex-shrink: 0;
+  }
+
+  .pwa-install-icon img {
+    border-radius: 8px;
+    display: block;
+  }
+
+  .pwa-install-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .pwa-install-text strong {
+    display: block;
+    color: var(--heading-color, #1a365d);
+    font-size: 1rem;
+    margin-bottom: 0.125rem;
+  }
+
+  .pwa-install-text p {
+    color: var(--body-text, #64748b);
+    font-size: 0.8125rem;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .pwa-install-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .pwa-install-btn {
+    background: var(--primary-navy, #1a365d);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .pwa-install-btn:hover {
+    background: var(--dark-navy, #0f172a);
+  }
+
+  .pwa-install-btn:focus-visible {
+    outline: 2px solid var(--accent-teal, #14b8a6);
+    outline-offset: 2px;
+  }
+
+  .pwa-dismiss-btn {
+    background: transparent;
+    border: none;
+    padding: 0.375rem;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--body-text, #64748b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .pwa-dismiss-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--heading-color, #1a365d);
+  }
+
+  .pwa-dismiss-btn:focus-visible {
+    outline: 2px solid var(--accent-teal, #14b8a6);
+    outline-offset: 2px;
+  }
+
+  /* Toast notification */
+  .pwa-toast {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(150%);
+    z-index: 9999;
+    background: var(--primary-navy, #1a365d);
+    color: #fff;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    transition: transform 0.3s ease-out;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .pwa-toast[aria-hidden='false'] {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  .pwa-toast-icon::before {
+    content: '✓';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: var(--accent-teal, #14b8a6);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+  }
+
+  /* Dark theme */
+  [data-theme='dark'] .pwa-install-prompt {
+    background: var(--dark-card-bg, #1e293b);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  [data-theme='dark'] .pwa-install-text strong {
+    color: #fff;
+  }
+
+  [data-theme='dark'] .pwa-install-text p {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  [data-theme='dark'] .pwa-dismiss-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 480px) {
+    .pwa-install-prompt {
+      bottom: 0.5rem;
+      width: calc(100% - 1rem);
+    }
+
+    .pwa-install-content {
+      padding: 0.875rem;
+    }
+
+    .pwa-install-icon img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .pwa-install-text p {
+      font-size: 0.75rem;
+    }
+  }
+</style>
+
+<script>
+  // PWA Install Prompt Logic
+  let deferredPrompt: BeforeInstallPromptEvent | null = null;
+
+  interface BeforeInstallPromptEvent extends Event {
+    prompt(): Promise<void>;
+    userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+  }
+
+  const installPrompt = document.getElementById('pwa-install-prompt');
+  const installBtn = document.getElementById('pwa-install-btn');
+  const dismissBtn = document.getElementById('pwa-dismiss-btn');
+  const toast = document.getElementById('pwa-toast');
+  const toastMessage = document.getElementById('pwa-toast-message');
+
+  // Check if user has dismissed the prompt recently
+  const DISMISS_KEY = 'pwa-install-dismissed';
+  const DISMISS_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+  function shouldShowPrompt(): boolean {
+    const dismissed = localStorage.getItem(DISMISS_KEY);
+    if (!dismissed) return true;
+    const dismissedTime = parseInt(dismissed, 10);
+    return Date.now() - dismissedTime > DISMISS_DURATION;
+  }
+
+  function showInstallPrompt() {
+    if (installPrompt && shouldShowPrompt()) {
+      installPrompt.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  function hideInstallPrompt() {
+    if (installPrompt) {
+      installPrompt.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  function showToast(message: string, duration = 4000) {
+    if (toast && toastMessage) {
+      toastMessage.textContent = message;
+      toast.setAttribute('aria-hidden', 'false');
+      setTimeout(() => {
+        toast.setAttribute('aria-hidden', 'true');
+      }, duration);
+    }
+  }
+
+  // Listen for beforeinstallprompt event
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e as BeforeInstallPromptEvent;
+    // Show the install prompt after a short delay
+    setTimeout(showInstallPrompt, 3000);
+  });
+
+  // Handle install button click
+  installBtn?.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+
+    hideInstallPrompt();
+    await deferredPrompt.prompt();
+
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      showToast('Bay Tides has been installed!');
+    }
+    deferredPrompt = null;
+  });
+
+  // Handle dismiss button click
+  dismissBtn?.addEventListener('click', () => {
+    hideInstallPrompt();
+    localStorage.setItem(DISMISS_KEY, Date.now().toString());
+  });
+
+  // Listen for app installed event
+  window.addEventListener('appinstalled', () => {
+    hideInstallPrompt();
+    deferredPrompt = null;
+    showToast('Bay Tides has been installed!');
+  });
+
+  // Listen for service worker messages about form sync
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data.type === 'FORM_QUEUED') {
+        showToast('Your form has been saved and will be submitted when online', 5000);
+      }
+      if (event.data.type === 'FORM_SYNCED') {
+        showToast('Your form has been submitted successfully!');
+      }
+    });
+  }
+</script>
