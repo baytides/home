@@ -27,7 +27,8 @@ const structuredData = [
 ];
 
 // EventSchedule embed URL - uses /c/[name] pattern for calendars
-const eventScheduleUrl = 'https://events.baytides.org/c/calendar?embed=true';
+// seamless=true removes the app background for cleaner embedding
+const eventScheduleUrl = 'https://events.baytides.org/c/calendar?embed=true&seamless=true';
 ---
 
 <BaseLayout
@@ -147,11 +148,7 @@ const eventScheduleUrl = 'https://events.baytides.org/c/calendar?embed=true';
 <style>
   .calendar-embed {
     margin: 2rem 0;
-    background: var(--card-bg, #fff);
-    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
   }
 
   .calendar-wrapper {
@@ -189,11 +186,6 @@ const eventScheduleUrl = 'https://events.baytides.org/c/calendar?embed=true';
     justify-content: center;
     gap: 1rem;
     margin-top: 1.5rem;
-  }
-
-  [data-theme='dark'] .calendar-embed {
-    background: var(--dark-card-bg, #1e293b);
-    border-color: rgba(255, 255, 255, 0.1);
   }
 </style>
 
