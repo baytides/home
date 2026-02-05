@@ -493,15 +493,68 @@
     display: none;
   }
 
-  // Simplify shadows
+  // Simplify shadows and visual noise
   .card,
   .donation-form-container {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
-  // Mute sponsor carousel
-  .sponsors-wrapper {
-    opacity: 0.7;
+  // Mute non-main content areas
+  header,
+  footer,
+  aside,
+  .sponsors-wrapper,
+  .cta,
+  .footer-snowflake {
+    opacity: 0.6;
+    filter: grayscale(30%);
+  }
+
+  // Keep main content fully visible
+  main {
+    opacity: 1;
+    filter: none;
+  }
+
+  // Restore opacity on hover/focus for interactive elements
+  header:hover,
+  header:focus-within,
+  footer:hover,
+  footer:focus-within {
+    opacity: 1;
+    filter: none;
+  }
+
+  // Hide purely decorative images
+  img[role='presentation'],
+  img.decorative,
+  .background-decoration {
+    opacity: 0.3;
+  }
+
+  // Simplify gradients
+  .hero,
+  .hero-donate {
+    background-image: none !important;
+  }
+
+  // Remove floating/animated elements
+  .floating-element,
+  .animated-bg {
+    display: none;
+  }
+
+  // Cleaner borders for cards
+  .card,
+  .tool-card,
+  .impact-card {
+    border: 1px solid var(--text-light);
+  }
+
+  // Add focus indicator for current reading position
+  :target {
+    outline: 3px solid var(--primary-blue);
+    outline-offset: 4px;
   }
 }
 

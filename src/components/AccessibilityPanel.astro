@@ -77,24 +77,312 @@
   </div>
 
   <div class="panel-content">
-    <div class="panel-section">
-      <div class="panel-section-title">Vision</div>
-      <label>
-        <input type="checkbox" id="high-contrast-toggle" />
-        High Contrast
-      </label>
-      <label>
-        <input type="checkbox" id="colorblind-toggle" />
-        Colorblind Friendly
-      </label>
-      <div class="text-size-control">
-        <span class="text-size-label">Text Size</span>
-        <div class="text-size-adjuster">
+    <div class="panel-section" data-section="vision">
+      <button
+        type="button"
+        class="panel-section-toggle"
+        aria-expanded="true"
+        aria-controls="section-vision"
+      >
+        <span class="panel-section-title">Vision</span>
+        <svg
+          class="toggle-chevron"
+          xmlns="http://www.w3.org/2000/svg"
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="panel-section-content" id="section-vision">
+        <label>
+          <input type="checkbox" id="high-contrast-toggle" />
+          High Contrast
+        </label>
+        <label>
+          <input type="checkbox" id="colorblind-toggle" />
+          Colorblind Friendly
+        </label>
+        <div class="text-size-control">
+          <span class="text-size-label">Text Size</span>
+          <div class="text-size-adjuster">
+            <button
+              type="button"
+              class="size-btn"
+              id="text-size-decrease"
+              aria-label="Decrease text size"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+            <span class="text-size-value" id="text-size-value" aria-live="polite">100%</span>
+            <button
+              type="button"
+              class="size-btn"
+              id="text-size-increase"
+              aria-label="Increase text size"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-section collapsed" data-section="motion">
+      <button
+        type="button"
+        class="panel-section-toggle"
+        aria-expanded="false"
+        aria-controls="section-motion"
+      >
+        <span class="panel-section-title">Motion & Focus</span>
+        <svg
+          class="toggle-chevron"
+          xmlns="http://www.w3.org/2000/svg"
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="panel-section-content" id="section-motion" hidden>
+        <label>
+          <input type="checkbox" id="reduced-motion-toggle" />
+          Reduce Motion
+        </label>
+        <label>
+          <input type="checkbox" id="focus-mode-toggle" />
+          Focus Mode
+        </label>
+      </div>
+    </div>
+
+    <div class="panel-section collapsed" data-section="reading">
+      <button
+        type="button"
+        class="panel-section-toggle"
+        aria-expanded="false"
+        aria-controls="section-reading"
+      >
+        <span class="panel-section-title">Reading</span>
+        <svg
+          class="toggle-chevron"
+          xmlns="http://www.w3.org/2000/svg"
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="panel-section-content" id="section-reading" hidden>
+        <label>
+          <input type="checkbox" id="simple-language-toggle" />
+          Simple Language
+        </label>
+        <label>
+          <input type="checkbox" id="text-spacing-toggle" />
+          Increase Text Spacing
+        </label>
+        <label>
+          <input type="checkbox" id="underline-links-toggle" />
+          Underline All Links
+        </label>
+      </div>
+    </div>
+
+    <div class="panel-section collapsed" id="read-aloud-section" data-section="tts">
+      <button
+        type="button"
+        class="panel-section-toggle"
+        aria-expanded="false"
+        aria-controls="section-tts"
+      >
+        <span class="panel-section-title">Read Aloud</span>
+        <svg
+          class="toggle-chevron"
+          xmlns="http://www.w3.org/2000/svg"
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="panel-section-content" id="section-tts" hidden>
+        <div class="tts-controls">
+          <div class="tts-buttons">
+            <button
+              type="button"
+              class="tts-btn"
+              id="tts-play"
+              aria-label="Read page aloud"
+              title="Read page content"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="tts-btn"
+              id="tts-pause"
+              aria-label="Pause reading"
+              title="Pause"
+              disabled
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="tts-btn"
+              id="tts-stop"
+              aria-label="Stop reading"
+              title="Stop"
+              disabled
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <rect x="4" y="4" width="16" height="16"></rect>
+              </svg>
+            </button>
+          </div>
+          <div class="tts-status" id="tts-status" aria-live="polite">Ready</div>
+        </div>
+        <div class="tts-speed-control">
+          <label for="tts-speed" class="tts-speed-label">Speed</label>
+          <input
+            type="range"
+            id="tts-speed"
+            min="0.5"
+            max="2"
+            step="0.25"
+            value="1"
+            aria-label="Speech rate"
+          />
+          <span class="tts-speed-value" id="tts-speed-value">1×</span>
+        </div>
+        <div class="tts-voice-control">
+          <label for="tts-voice" class="tts-voice-label">Voice</label>
+          <select id="tts-voice" aria-label="Select voice">
+            <option value="">Default</option>
+          </select>
+        </div>
+        <div class="tts-pause-control">
+          <label for="tts-pause-duration" class="tts-pause-label">Pause</label>
+          <input
+            type="range"
+            id="tts-pause-duration"
+            min="0"
+            max="2"
+            step="0.5"
+            value="0.5"
+            aria-label="Pause duration between sections"
+          />
+          <span class="tts-pause-value" id="tts-pause-value">0.5s</span>
+        </div>
+        <p class="tts-note" id="tts-unsupported" style="display: none;">
+          Text-to-speech not supported in this browser
+        </p>
+      </div>
+    </div>
+
+    <div class="panel-section collapsed" data-section="position">
+      <button
+        type="button"
+        class="panel-section-toggle"
+        aria-expanded="false"
+        aria-controls="section-position"
+      >
+        <span class="panel-section-title">Button Position</span>
+        <svg
+          class="toggle-chevron"
+          xmlns="http://www.w3.org/2000/svg"
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="panel-section-content" id="section-position" hidden>
+        <div class="position-buttons">
           <button
             type="button"
-            class="size-btn"
-            id="text-size-decrease"
-            aria-label="Decrease text size"
+            class="position-btn"
+            data-position="bottom-left"
+            aria-label="Bottom left"
+            title="Bottom left"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -103,19 +391,18 @@
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              stroke-width="2"
             >
-              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+              <circle cx="7" cy="17" r="2" fill="currentColor"></circle>
             </svg>
           </button>
-          <span class="text-size-value" id="text-size-value" aria-live="polite">100%</span>
           <button
             type="button"
-            class="size-btn"
-            id="text-size-increase"
-            aria-label="Increase text size"
+            class="position-btn"
+            data-position="bottom-right"
+            aria-label="Bottom right"
+            title="Bottom right"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -124,222 +411,58 @@
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              stroke-width="2"
             >
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+              <circle cx="17" cy="17" r="2" fill="currentColor"></circle>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="position-btn"
+            data-position="top-left"
+            aria-label="Top left"
+            title="Top left"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+              <circle cx="7" cy="7" r="2" fill="currentColor"></circle>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="position-btn"
+            data-position="top-right"
+            aria-label="Top right"
+            title="Top right"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+              <circle cx="17" cy="7" r="2" fill="currentColor"></circle>
             </svg>
           </button>
         </div>
+        <label class="hide-button-label">
+          <input type="checkbox" id="hide-button-toggle" />
+          Hide button (<kbd>Alt</kbd>+<kbd>A</kbd> to show)
+        </label>
       </div>
-    </div>
-
-    <div class="panel-section">
-      <div class="panel-section-title">Motion & Focus</div>
-      <label>
-        <input type="checkbox" id="reduced-motion-toggle" />
-        Reduce Motion
-      </label>
-      <label>
-        <input type="checkbox" id="focus-mode-toggle" />
-        Focus Mode
-      </label>
-    </div>
-
-    <div class="panel-section">
-      <div class="panel-section-title">Reading</div>
-      <label>
-        <input type="checkbox" id="simple-language-toggle" />
-        Simple Language
-      </label>
-      <label>
-        <input type="checkbox" id="text-spacing-toggle" />
-        Increase Text Spacing
-      </label>
-      <label>
-        <input type="checkbox" id="underline-links-toggle" />
-        Underline All Links
-      </label>
-    </div>
-
-    <div class="panel-section" id="read-aloud-section">
-      <div class="panel-section-title">Read Aloud</div>
-      <div class="tts-controls">
-        <div class="tts-buttons">
-          <button
-            type="button"
-            class="tts-btn"
-            id="tts-play"
-            aria-label="Read page aloud"
-            title="Read page content"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-          </button>
-          <button
-            type="button"
-            class="tts-btn"
-            id="tts-pause"
-            aria-label="Pause reading"
-            title="Pause"
-            disabled
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <rect x="6" y="4" width="4" height="16"></rect>
-              <rect x="14" y="4" width="4" height="16"></rect>
-            </svg>
-          </button>
-          <button
-            type="button"
-            class="tts-btn"
-            id="tts-stop"
-            aria-label="Stop reading"
-            title="Stop"
-            disabled
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <rect x="4" y="4" width="16" height="16"></rect>
-            </svg>
-          </button>
-        </div>
-        <div class="tts-status" id="tts-status" aria-live="polite">Ready</div>
-      </div>
-      <div class="tts-speed-control">
-        <label for="tts-speed" class="tts-speed-label">Speed</label>
-        <input
-          type="range"
-          id="tts-speed"
-          min="0.5"
-          max="2"
-          step="0.25"
-          value="1"
-          aria-label="Speech rate"
-        />
-        <span class="tts-speed-value" id="tts-speed-value">1×</span>
-      </div>
-      <div class="tts-voice-control">
-        <label for="tts-voice" class="tts-voice-label">Voice</label>
-        <select id="tts-voice" aria-label="Select voice">
-          <option value="">Default</option>
-        </select>
-      </div>
-      <p class="tts-note" id="tts-unsupported" style="display: none;">
-        Text-to-speech not supported in this browser
-      </p>
-    </div>
-
-    <div class="panel-section">
-      <div class="panel-section-title">Button Position</div>
-      <div class="position-buttons">
-        <button
-          type="button"
-          class="position-btn"
-          data-position="bottom-left"
-          aria-label="Bottom left"
-          title="Bottom left"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-            <circle cx="7" cy="17" r="2" fill="currentColor"></circle>
-          </svg>
-        </button>
-        <button
-          type="button"
-          class="position-btn"
-          data-position="bottom-right"
-          aria-label="Bottom right"
-          title="Bottom right"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-            <circle cx="17" cy="17" r="2" fill="currentColor"></circle>
-          </svg>
-        </button>
-        <button
-          type="button"
-          class="position-btn"
-          data-position="top-left"
-          aria-label="Top left"
-          title="Top left"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-            <circle cx="7" cy="7" r="2" fill="currentColor"></circle>
-          </svg>
-        </button>
-        <button
-          type="button"
-          class="position-btn"
-          data-position="top-right"
-          aria-label="Top right"
-          title="Top right"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-            <circle cx="17" cy="7" r="2" fill="currentColor"></circle>
-          </svg>
-        </button>
-      </div>
-      <label class="hide-button-label">
-        <input type="checkbox" id="hide-button-toggle" />
-        Hide button (<kbd>Alt</kbd>+<kbd>A</kbd> to show)
-      </label>
     </div>
   </div>
 
@@ -374,8 +497,33 @@
     const hideButtonToggle = document.getElementById('hide-button-toggle') as HTMLInputElement;
     const positionBtns = document.querySelectorAll('.position-btn');
     const resetBtn = document.getElementById('reset-accessibility');
+    const sectionToggles = document.querySelectorAll('.panel-section-toggle');
 
     if (!toggle || !panel) return;
+
+    // ==========================================================================
+    // Collapsible Sections
+    // ==========================================================================
+
+    sectionToggles.forEach((toggleBtn) => {
+      toggleBtn.addEventListener('click', () => {
+        const section = toggleBtn.closest('.panel-section');
+        const content = section?.querySelector('.panel-section-content') as HTMLElement;
+        const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+
+        if (isExpanded) {
+          // Collapse
+          toggleBtn.setAttribute('aria-expanded', 'false');
+          section?.classList.add('collapsed');
+          if (content) content.hidden = true;
+        } else {
+          // Expand
+          toggleBtn.setAttribute('aria-expanded', 'true');
+          section?.classList.remove('collapsed');
+          if (content) content.hidden = false;
+        }
+      });
+    });
 
     // Text size constants
     const TEXT_SIZE_MIN = 70;
@@ -704,8 +852,20 @@
 
       // Stop TTS and reset
       if ('speechSynthesis' in window) {
-        speechSynthesis.cancel();
-        updateTTSState('stopped');
+        stopSpeaking();
+      }
+
+      // Reset TTS controls to defaults
+      if (ttsSpeedSlider) {
+        ttsSpeedSlider.value = '1';
+        if (ttsSpeedValue) ttsSpeedValue.textContent = '1×';
+      }
+      if (ttsPauseDurationSlider) {
+        ttsPauseDurationSlider.value = '0.5';
+        if (ttsPauseDurationValue) ttsPauseDurationValue.textContent = '0.5s';
+      }
+      if (ttsVoiceSelect) {
+        ttsVoiceSelect.value = '';
       }
 
       // Clear localStorage
@@ -721,6 +881,7 @@
       localStorage.removeItem('a11y-button-hidden');
       localStorage.removeItem('a11y-tts-speed');
       localStorage.removeItem('a11y-tts-voice');
+      localStorage.removeItem('a11y-tts-pause');
     });
 
     // ==========================================================================
@@ -734,6 +895,10 @@
     const ttsSpeedSlider = document.getElementById('tts-speed') as HTMLInputElement;
     const ttsSpeedValue = document.getElementById('tts-speed-value');
     const ttsVoiceSelect = document.getElementById('tts-voice') as HTMLSelectElement;
+    const ttsPauseDurationSlider = document.getElementById(
+      'tts-pause-duration'
+    ) as HTMLInputElement;
+    const ttsPauseDurationValue = document.getElementById('tts-pause-value');
     const ttsUnsupported = document.getElementById('tts-unsupported');
     const ttsSection = document.getElementById('read-aloud-section');
 
@@ -744,21 +909,30 @@
       ttsUnsupported.style.display = 'block';
       // Hide controls if not supported
       const controls = ttsSection.querySelectorAll(
-        '.tts-controls, .tts-speed-control, .tts-voice-control'
+        '.tts-controls, .tts-speed-control, .tts-voice-control, .tts-pause-control'
       );
       controls.forEach((el) => ((el as HTMLElement).style.display = 'none'));
     }
 
     let currentUtterance: SpeechSynthesisUtterance | null = null;
     let isPaused = false;
+    let contentQueue: string[] = [];
+    let currentIndex = 0;
+    let isStopped = false;
 
     // Load saved TTS preferences
     const savedTTSSpeed = parseFloat(localStorage.getItem('a11y-tts-speed') || '1');
     const savedTTSVoice = localStorage.getItem('a11y-tts-voice') || '';
+    const savedTTSPause = parseFloat(localStorage.getItem('a11y-tts-pause') || '0.5');
 
     if (ttsSpeedSlider) {
       ttsSpeedSlider.value = String(savedTTSSpeed);
       if (ttsSpeedValue) ttsSpeedValue.textContent = `${savedTTSSpeed}×`;
+    }
+
+    if (ttsPauseDurationSlider) {
+      ttsPauseDurationSlider.value = String(savedTTSPause);
+      if (ttsPauseDurationValue) ttsPauseDurationValue.textContent = `${savedTTSPause}s`;
     }
 
     // Populate voice list using safe DOM methods
@@ -846,7 +1020,7 @@
       }
     }
 
-    function getPageContent(): string {
+    function getPageContentBlocks(): string[] {
       // Check if simple language mode is active
       const isSimpleLanguage = document.documentElement.hasAttribute('data-simple-language');
 
@@ -857,98 +1031,162 @@
         ? ['.standard-content', '.standard-text']
         : ['.simple-content', '.simple-text'];
 
-      // Get main content, excluding navigation, footer, and accessibility panel
-      const main = document.querySelector('main');
-      if (!main) {
-        // Fallback: get body content excluding header/footer/nav
-        const body = document.body.cloneNode(true) as HTMLElement;
-        const excludeSelectors = [
-          'header',
-          'footer',
-          'nav',
-          '.accessibility-panel',
-          '.accessibility-toggle',
-          'script',
-          'style',
-          'noscript',
-          ...hiddenContentSelectors,
-        ];
-        excludeSelectors.forEach((sel) => {
-          body.querySelectorAll(sel).forEach((el) => el.remove());
-        });
-        return body.textContent?.trim() || '';
-      }
-
-      // Clone main to avoid modifying the DOM
-      const clone = main.cloneNode(true) as HTMLElement;
-
-      // Remove elements that shouldn't be read
+      // Elements to exclude from reading
       const excludeSelectors = [
         'script',
         'style',
         'noscript',
         '.sr-only',
         '[aria-hidden="true"]',
+        'header',
+        'footer',
+        'nav',
+        '.accessibility-panel',
+        '.accessibility-toggle',
         ...hiddenContentSelectors,
       ];
+
+      // Elements that create natural reading breaks
+      const blockElements = 'h1, h2, h3, h4, h5, h6, p, li, blockquote, figcaption, dt, dd, th, td';
+
+      // Get main content area
+      const main = document.querySelector('main') || document.body;
+      const clone = main.cloneNode(true) as HTMLElement;
+
+      // Remove elements that shouldn't be read
       excludeSelectors.forEach((sel) => {
         clone.querySelectorAll(sel).forEach((el) => el.remove());
       });
 
-      // Get text content
-      let text = clone.textContent?.trim() || '';
+      // Collect content blocks in reading order
+      const blocks: string[] = [];
+      const blockEls = clone.querySelectorAll(blockElements);
 
-      // Clean up whitespace
-      text = text.replace(/\s+/g, ' ').trim();
+      blockEls.forEach((el) => {
+        // Skip if element is inside an excluded selector (double-check after removal)
+        if (el.closest('[aria-hidden="true"]')) return;
 
-      return text;
-    }
+        let text = el.textContent?.trim() || '';
+        // Clean up whitespace
+        text = text.replace(/\s+/g, ' ').trim();
 
-    function speak(text: string) {
-      if (!speechSynthesisSupported || !text) return;
+        if (text) {
+          // Add label for headings to provide context
+          const tagName = el.tagName.toLowerCase();
+          if (tagName.match(/^h[1-6]$/)) {
+            blocks.push(text);
+          } else {
+            blocks.push(text);
+          }
+        }
+      });
 
-      // Cancel any existing speech
-      speechSynthesis.cancel();
-
-      const utterance = new SpeechSynthesisUtterance(text);
-
-      // Apply settings
-      utterance.rate = parseFloat(ttsSpeedSlider?.value || '1');
-      utterance.pitch = 1;
-      utterance.volume = 1;
-
-      // Set voice if selected
-      const selectedVoiceName = ttsVoiceSelect?.value;
-      if (selectedVoiceName) {
-        const voices = speechSynthesis.getVoices();
-        const voice = voices.find((v) => v.name === selectedVoiceName);
-        if (voice) utterance.voice = voice;
+      // If no blocks found, fall back to full text
+      if (blocks.length === 0) {
+        const fullText = clone.textContent?.replace(/\s+/g, ' ').trim() || '';
+        if (fullText) blocks.push(fullText);
       }
 
-      // Event handlers
-      utterance.onstart = () => updateTTSState('playing');
-      utterance.onend = () => updateTTSState('stopped');
-      utterance.onerror = (e) => {
-        console.error('TTS error:', e);
-        updateTTSState('stopped');
-        if (ttsStatus) ttsStatus.textContent = 'Error occurred';
-      };
+      return blocks;
+    }
 
-      currentUtterance = utterance;
-      speechSynthesis.speak(utterance);
+    function speakBlock(text: string): Promise<void> {
+      return new Promise((resolve, reject) => {
+        if (!speechSynthesisSupported || !text || isStopped) {
+          resolve();
+          return;
+        }
+
+        const utterance = new SpeechSynthesisUtterance(text);
+
+        // Apply settings
+        utterance.rate = parseFloat(ttsSpeedSlider?.value || '1');
+        utterance.pitch = 1;
+        utterance.volume = 1;
+
+        // Set voice if selected
+        const selectedVoiceName = ttsVoiceSelect?.value;
+        if (selectedVoiceName) {
+          const voices = speechSynthesis.getVoices();
+          const voice = voices.find((v) => v.name === selectedVoiceName);
+          if (voice) utterance.voice = voice;
+        }
+
+        utterance.onend = () => resolve();
+        utterance.onerror = (e) => {
+          if (e.error !== 'canceled') {
+            console.error('TTS error:', e);
+          }
+          resolve();
+        };
+
+        currentUtterance = utterance;
+        speechSynthesis.speak(utterance);
+      });
+    }
+
+    async function speakSequentially() {
+      if (!speechSynthesisSupported) return;
+
+      isStopped = false;
+      updateTTSState('playing');
+
+      const pauseDuration = parseFloat(ttsPauseDurationSlider?.value || '0.5') * 1000;
+      const totalBlocks = contentQueue.length;
+
+      while (currentIndex < contentQueue.length && !isStopped) {
+        // Wait if paused
+        while (isPaused && !isStopped) {
+          await new Promise((r) => setTimeout(r, 100));
+        }
+
+        if (isStopped) break;
+
+        const block = contentQueue[currentIndex];
+        if (ttsStatus) {
+          ttsStatus.textContent = `Reading ${currentIndex + 1}/${totalBlocks}...`;
+        }
+
+        await speakBlock(block);
+
+        if (isStopped) break;
+
+        currentIndex++;
+
+        // Add pause between blocks (if not the last one)
+        if (currentIndex < contentQueue.length && pauseDuration > 0 && !isStopped) {
+          await new Promise((r) => setTimeout(r, pauseDuration));
+        }
+      }
+
+      if (!isStopped) {
+        updateTTSState('stopped');
+      }
+    }
+
+    function stopSpeaking() {
+      isStopped = true;
+      isPaused = false;
+      speechSynthesis.cancel();
+      contentQueue = [];
+      currentIndex = 0;
+      updateTTSState('stopped');
     }
 
     // Play button
     ttsPlayBtn?.addEventListener('click', () => {
       if (isPaused) {
         // Resume paused speech
+        isPaused = false;
         speechSynthesis.resume();
         updateTTSState('playing');
       } else {
         // Start new speech
-        const content = getPageContent();
-        if (content) {
-          speak(content);
+        contentQueue = getPageContentBlocks();
+        currentIndex = 0;
+
+        if (contentQueue.length > 0) {
+          speakSequentially();
         } else {
           if (ttsStatus) ttsStatus.textContent = 'No content to read';
         }
@@ -958,6 +1196,7 @@
     // Pause button
     ttsPauseBtn?.addEventListener('click', () => {
       if (speechSynthesisSupported && speechSynthesis.speaking) {
+        isPaused = true;
         speechSynthesis.pause();
         updateTTSState('paused');
       }
@@ -965,10 +1204,7 @@
 
     // Stop button
     ttsStopBtn?.addEventListener('click', () => {
-      if (speechSynthesisSupported) {
-        speechSynthesis.cancel();
-        updateTTSState('stopped');
-      }
+      stopSpeaking();
     });
 
     // Speed slider
@@ -976,6 +1212,13 @@
       const speed = ttsSpeedSlider.value;
       if (ttsSpeedValue) ttsSpeedValue.textContent = `${speed}×`;
       localStorage.setItem('a11y-tts-speed', speed);
+    });
+
+    // Pause duration slider
+    ttsPauseDurationSlider?.addEventListener('input', () => {
+      const pause = ttsPauseDurationSlider.value;
+      if (ttsPauseDurationValue) ttsPauseDurationValue.textContent = `${pause}s`;
+      localStorage.setItem('a11y-tts-pause', pause);
     });
 
     // Voice select
@@ -986,7 +1229,7 @@
     // Stop speech when navigating away
     window.addEventListener('beforeunload', () => {
       if (speechSynthesisSupported) {
-        speechSynthesis.cancel();
+        stopSpeaking();
       }
     });
 

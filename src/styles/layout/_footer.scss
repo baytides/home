@@ -17,6 +17,10 @@ footer {
 
 .footer-logo {
   height: 60px;
+  // Light mode: white circle behind logo on navy footer
+  background: #fff;
+  border-radius: 50%;
+  padding: 6px;
 }
 
 .footer-brand p {
@@ -219,7 +223,7 @@ footer {
     // Use cream color matching logo's internal background for natural look
     background: #f5f0e6;
     border-radius: 50%;
-    padding: 2px;
+    padding: 6px;
   }
 }
 
