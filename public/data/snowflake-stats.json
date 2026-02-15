@@ -3,10 +3,15 @@
   "last24Hours": 0,
   "last7Days": 0,
   "uptimeHours": 0,
-  "lastUpdated": "2026-02-15T15:09:33.996Z",
+  "lastUpdated": "2026-02-15T16:10:17.277Z",
   "vmStatus": "offline",
   "source": "azure_vm",
   "history": [
+    {
+      "timestamp": "2026-02-15T16:10:17.277Z",
+      "connections": 0,
+      "total": 0
+    },
     {
       "timestamp": "2026-02-15T15:09:33.996Z",
       "connections": 0,
@@ -839,11 +844,6 @@
     },
     {
       "timestamp": "2026-02-08T10:09:19.394Z",
-      "connections": 0,
-      "total": 0
-    },
-    {
-      "timestamp": "2026-02-08T09:12:11.674Z",
       "connections": 0,
       "total": 0
     }
