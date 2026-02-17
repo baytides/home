@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-16T06:25:23.041Z",
+  "generatedAt": "2026-02-17T06:22:17.361Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -7,7 +7,7 @@
     "azure": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.399",
+    "totalGrossEmissionsKg": "0.402",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
@@ -15,22 +15,17 @@
   },
   "snowflake": null,
   "usage": {
-    "cdnRequests": 168852,
-    "pageViews": 15085,
-    "cdnBytesTransferred": 8544507147,
-    "cdnCacheHitRate": "3.9",
+    "cdnRequests": 169266,
+    "pageViews": 15248,
+    "cdnBytesTransferred": 8634040244,
+    "cdnCacheHitRate": "2.9",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
       "Update Carbon Stats": 2,
-      "Deploy to Cloudflare Pages": 31,
-      "Push on main": 31,
-      "Update Snowflake Stats": 30,
-      "Lighthouse CI": 2,
-      "npm_and_yarn in / for eslint - Update #1244478384": 1,
-      "npm_and_yarn in / for @playwright/test - Update #1244478387": 1,
-      "github_actions in /. - Update #1244478355": 1,
-      "Scheduled": 1
+      "Deploy to Cloudflare Pages": 33,
+      "Push on main": 33,
+      "Update Snowflake Stats": 32
     }
   },
   "emissionsBySource": {
@@ -41,14 +36,14 @@
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "301.7",
-      "percent": "75.7",
+      "grams": "305.0",
+      "percent": "75.9",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "20.1",
+      "percent": "19.9",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
