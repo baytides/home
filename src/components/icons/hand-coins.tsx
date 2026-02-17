@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import type { Variants } from "motion/react";
-import { motion, useAnimation } from "motion/react";
-import type { HTMLAttributes } from "react";
-import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+import type { Variants } from 'motion/react';
+import { motion, useAnimation } from 'motion/react';
+import type { HTMLAttributes } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
 
-import { cn } from "../../lib/utils";
+import { cn } from '../../lib/utils';
 
 export interface HandCoinsIconHandle {
   startAnimation: () => void;
@@ -22,7 +22,7 @@ const CIRCLE_VARIANTS: Variants = {
     opacity: 1,
     transition: {
       opacity: { duration: 0.2 },
-      type: "spring",
+      type: 'spring',
       stiffness: 150,
       damping: 15,
       bounce: 0.8,
@@ -33,7 +33,7 @@ const CIRCLE_VARIANTS: Variants = {
     translateY: [-20, 0],
     transition: {
       opacity: { duration: 0.2 },
-      type: "spring",
+      type: 'spring',
       stiffness: 150,
       damping: 15,
       bounce: 0.8,
@@ -48,7 +48,7 @@ const SECOND_CIRCLE_VARIANTS: Variants = {
     transition: {
       opacity: { duration: 0.2 },
       delay: 0.15,
-      type: "spring",
+      type: 'spring',
       stiffness: 150,
       damping: 15,
       bounce: 0.8,
@@ -60,7 +60,7 @@ const SECOND_CIRCLE_VARIANTS: Variants = {
     transition: {
       opacity: { duration: 0.2 },
       delay: 0.15,
-      type: "spring",
+      type: 'spring',
       stiffness: 150,
       damping: 15,
       bounce: 0.8,
@@ -77,8 +77,8 @@ const HandCoinsIcon = forwardRef<HandCoinsIconHandle, HandCoinsIconProps>(
       isControlledRef.current = true;
 
       return {
-        startAnimation: () => controls.start("animate"),
-        stopAnimation: () => controls.start("normal"),
+        startAnimation: () => controls.start('animate'),
+        stopAnimation: () => controls.start('normal'),
       };
     });
 
@@ -87,7 +87,7 @@ const HandCoinsIcon = forwardRef<HandCoinsIconHandle, HandCoinsIconProps>(
         if (isControlledRef.current) {
           onMouseEnter?.(e);
         } else {
-          controls.start("animate");
+          controls.start('animate');
         }
       },
       [controls, onMouseEnter]
@@ -98,7 +98,7 @@ const HandCoinsIcon = forwardRef<HandCoinsIconHandle, HandCoinsIconProps>(
         if (isControlledRef.current) {
           onMouseLeave?.(e);
         } else {
-          controls.start("normal");
+          controls.start('normal');
         }
       },
       [controls, onMouseLeave]
@@ -125,26 +125,14 @@ const HandCoinsIcon = forwardRef<HandCoinsIconHandle, HandCoinsIconProps>(
           <path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
           <path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
           <path d="m2 16 6 6" />
-          <motion.circle
-            animate={controls}
-            cx="16"
-            cy="9"
-            r="2.9"
-            variants={CIRCLE_VARIANTS}
-          />
-          <motion.circle
-            animate={controls}
-            cx="6"
-            cy="5"
-            r="3"
-            variants={SECOND_CIRCLE_VARIANTS}
-          />
+          <motion.circle animate={controls} cx="16" cy="9" r="2.9" variants={CIRCLE_VARIANTS} />
+          <motion.circle animate={controls} cx="6" cy="5" r="3" variants={SECOND_CIRCLE_VARIANTS} />
         </svg>
       </div>
     );
   }
 );
 
-HandCoinsIcon.displayName = "HandCoinsIcon";
+HandCoinsIcon.displayName = 'HandCoinsIcon';
 
 export { HandCoinsIcon };

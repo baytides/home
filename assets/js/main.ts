@@ -3,8 +3,8 @@
  * Handles theme, navigation, search, accessibility features, form validation, and more
  */
 
-import { validateEmail, type EmailValidationResult } from './email-verifier';
-import { validatePhone, type PhoneValidationResult } from './phone-verifier';
+import { validateEmail } from './email-verifier';
+import { validatePhone } from './phone-verifier';
 
 // ==========================================================================
 // API Constants
@@ -774,8 +774,8 @@ function showToast(message: string, type: ToastType = 'info'): void {
 
   container.appendChild(toast);
 
-  const closeBtn = toast.querySelector('.toast-close');
-  closeBtn?.addEventListener('click', () => dismissToast(toast));
+  const closeButton = toast.querySelector('.toast-close');
+  closeButton?.addEventListener('click', () => dismissToast(toast));
 
   // Auto-dismiss after 5 seconds
   setTimeout(() => dismissToast(toast), 5000);
@@ -1145,7 +1145,24 @@ declare const Stripe: (key: string) => {
   };
   confirmPayment: (options: {
     elements: ReturnType<ReturnType<ReturnType<typeof Stripe>['elements']>['create']>;
-    confirmParams: { return_url: string; receipt_email?: string };
+    confirmParams: {
+      return_url: string;
+      receipt_email?: string;
+      payment_method_data?: {
+        billing_details?: {
+          name?: string;
+          email?: string;
+          phone?: string;
+          address?: {
+            line1?: string;
+            city?: string;
+            state?: string;
+            postal_code?: string;
+            country?: string;
+          };
+        };
+      };
+    };
     redirect?: 'if_required';
   }) => Promise<{ error?: { message: string }; paymentIntent?: { status: string } }>;
 };
@@ -1153,6 +1170,7 @@ declare const Stripe: (key: string) => {
 function initDonationForm(): void {
   const donationForm = document.getElementById('donation-form');
   if (!donationForm) return;
+  const donationFormEl = donationForm;
 
   // Check if Stripe is available
   if (typeof Stripe === 'undefined') {
@@ -1161,8 +1179,8 @@ function initDonationForm(): void {
   }
 
   // Elements
-  const typeButtons = donationForm.querySelectorAll<HTMLButtonElement>('.toggle-btn');
-  const amountButtons = donationForm.querySelectorAll<HTMLButtonElement>('.amount-btn');
+  const typeButtons = donationFormEl.querySelectorAll<HTMLButtonElement>('.toggle-btn');
+  const amountButtons = donationFormEl.querySelectorAll<HTMLButtonElement>('.amount-btn');
   const customAmountWrapper = document.getElementById('custom-amount-wrapper');
   const customAmountInput = document.getElementById('custom-amount') as HTMLInputElement | null;
   const fundSelect = document.getElementById('fund-select') as HTMLSelectElement | null;
@@ -1200,7 +1218,6 @@ function initDonationForm(): void {
   // State
   let donationType: 'one-time' | 'monthly' = 'one-time';
   let selectedAmount = 100;
-  let isCustomAmount = false;
   let isSubmitting = false;
 
   // Stripe state
@@ -1369,7 +1386,7 @@ function initDonationForm(): void {
       createDonationSummary();
 
       // Collapse amount selection
-      donationForm.classList.add('amount-selection-collapsed');
+      donationFormEl.classList.add('amount-selection-collapsed');
 
       // Focus email input
       donorEmailInput?.focus();
@@ -1406,7 +1423,7 @@ function initDonationForm(): void {
   // Create donation summary
   function createDonationSummary(): void {
     // Remove existing summary if any
-    const existingSummary = donationForm.querySelector('.donation-summary');
+    const existingSummary = donationFormEl.querySelector('.donation-summary');
     if (existingSummary) existingSummary.remove();
 
     const summary = document.createElement('div');
@@ -1440,7 +1457,7 @@ function initDonationForm(): void {
   // Handle Edit Amount button
   function handleEditAmount(): void {
     // Show amount section, hide payment section
-    donationForm.classList.remove('amount-selection-collapsed');
+    donationFormEl.classList.remove('amount-selection-collapsed');
     if (paymentSection) paymentSection.style.display = 'none';
     if (amountSectionActions) amountSectionActions.style.display = 'block';
 
@@ -1451,7 +1468,7 @@ function initDonationForm(): void {
     }
 
     // Remove summary
-    const summary = donationForm.querySelector('.donation-summary');
+    const summary = donationFormEl.querySelector('.donation-summary');
     if (summary) summary.remove();
 
     // Clear payment element
@@ -1645,12 +1662,12 @@ function initDonationForm(): void {
 
         // Hide payment section, show success
         if (paymentSection) paymentSection.style.display = 'none';
-        donationForm.classList.remove('amount-selection-collapsed');
+        donationFormEl.classList.remove('amount-selection-collapsed');
 
         // Reset form
         resetForm();
       }
-    } catch (err) {
+    } catch {
       showPaymentError('An unexpected error occurred. Please try again.');
       isSubmitting = false;
       if (submitPaymentBtn) {
@@ -1664,8 +1681,6 @@ function initDonationForm(): void {
   function resetForm(): void {
     donationType = 'one-time';
     selectedAmount = 100;
-    isCustomAmount = false;
-
     // Reset buttons
     typeButtons.forEach((b) => b.classList.remove('active'));
     typeButtons[0]?.classList.add('active');
@@ -1715,14 +1730,12 @@ function initDonationForm(): void {
 
       const amount = btn.dataset.amount;
       if (amount === 'other') {
-        isCustomAmount = true;
         if (customAmountWrapper) {
           customAmountWrapper.style.display = 'block';
           customAmountInput?.focus();
         }
         selectedAmount = customAmountInput ? parseInt(customAmountInput.value) || 0 : 0;
       } else {
-        isCustomAmount = false;
         if (customAmountWrapper) customAmountWrapper.style.display = 'none';
         selectedAmount = parseInt(amount || '0');
       }

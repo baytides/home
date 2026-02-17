@@ -184,44 +184,44 @@ try {
       aria-labelledby="search-heading"
       autocomplete="off"
     />
-    <div class="search-results" id="search-results" role="listbox" aria-label="Search results">
-      <a href="/" class="search-result" role="option" aria-selected="false">
+    <div class="search-results" id="search-results" aria-label="Search results">
+      <a href="/" class="search-result">
         <strong>Home</strong>
         <span>Protecting the San Francisco Bay</span>
       </a>
-      <a href="/about" class="search-result" role="option" aria-selected="false">
+      <a href="/about" class="search-result">
         <strong>About Us</strong>
         <span>Our mission, who we are, and our approach</span>
       </a>
-      <a href="/projects" class="search-result" role="option" aria-selected="false">
+      <a href="/projects" class="search-result">
         <strong>Projects</strong>
         <span>Bay Navigator and other digital initiatives</span>
       </a>
-      <a href="/volunteer" class="search-result" role="option" aria-selected="false">
+      <a href="/volunteer" class="search-result">
         <strong>Volunteer</strong>
         <span>Tech projects, community events, environmental action</span>
       </a>
-      <a href="/donate" class="search-result" role="option" aria-selected="false">
+      <a href="/donate" class="search-result">
         <strong>Donate</strong>
         <span>Support digital tools and education programs</span>
       </a>
-      <a href="/contact" class="search-result" role="option" aria-selected="false">
+      <a href="/contact" class="search-result">
         <strong>Contact</strong>
         <span>Get in touch, send us a message</span>
       </a>
-      <a href="/privacy" class="search-result" role="option" aria-selected="false">
+      <a href="/privacy" class="search-result">
         <strong>Privacy Policy</strong>
         <span>How we protect your data and privacy</span>
       </a>
-      <a href="/terms" class="search-result" role="option" aria-selected="false">
+      <a href="/terms" class="search-result">
         <strong>Terms of Service</strong>
         <span>Terms and conditions for using our website</span>
       </a>
-      <a href="/events" class="search-result" role="option" aria-selected="false">
+      <a href="/events" class="search-result">
         <strong>Events</strong>
         <span>Volunteer events, workshops, and community gatherings</span>
       </a>
-      <a href="/accessibility" class="search-result" role="option" aria-selected="false">
+      <a href="/accessibility" class="search-result">
         <strong>Accessibility</strong>
         <span>Our commitment to web accessibility</span>
       </a>
@@ -353,7 +353,6 @@ try {
         if (query === '') {
           results.forEach((r) => {
             r.style.display = 'none';
-            r.setAttribute('aria-selected', 'false');
           });
           if (searchStatus) searchStatus.textContent = '';
           return;
@@ -363,7 +362,6 @@ try {
           const text = r.textContent?.toLowerCase() ?? '';
           const isMatch = text.includes(query);
           r.style.display = isMatch ? 'block' : 'none';
-          r.setAttribute('aria-selected', 'false');
           if (isMatch) visibleCount++;
         });
         // Announce results count to screen readers

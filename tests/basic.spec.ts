@@ -8,7 +8,7 @@ test.describe('Homepage', () => {
 
   test('should display header navigation', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('nav')).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Main navigation' })).toBeVisible();
   });
 
   test('should have skip link for accessibility', async ({ page }) => {
@@ -36,15 +36,15 @@ test.describe('Homepage', () => {
 test.describe('Navigation', () => {
   test('should navigate to about page', async ({ page }) => {
     await page.goto('/');
-    await page.click('nav a[href="about.html"]');
-    await expect(page).toHaveURL(/about\.html/);
+    await page.click('nav a[href="/about"]');
+    await expect(page).toHaveURL(/\/about/);
     await expect(page).toHaveTitle(/About/);
   });
 
   test('should navigate to contact page', async ({ page }) => {
     await page.goto('/');
-    await page.click('nav a[href="contact.html"]');
-    await expect(page).toHaveURL(/contact\.html/);
+    await page.click('nav a[href="/contact"]');
+    await expect(page).toHaveURL(/\/contact/);
     await expect(page).toHaveTitle(/Contact/);
   });
 });
@@ -85,8 +85,6 @@ test.describe('Accessibility', () => {
 test.describe('Search', () => {
   test('should open search with keyboard shortcut', async ({ page }) => {
     await page.goto('/');
-    await page.waitForSelector('#search-overlay');
-
     await page.keyboard.press('Control+k');
     await expect(page.locator('#search-overlay.active')).toBeVisible();
   });
@@ -105,23 +103,23 @@ test.describe('Search', () => {
 
 test.describe('Contact Form', () => {
   test('should show validation errors for empty form', async ({ page }) => {
-    await page.goto('/contact.html');
+    await page.goto('/contact');
     await page.waitForSelector('#contact-form');
 
     await page.click('#contact-form button[type="submit"]');
 
-    const errorMessages = await page.locator('.field-error').count();
-    expect(errorMessages).toBeGreaterThan(0);
+    const invalidInputs = await page.locator('#contact-form :invalid').count();
+    expect(invalidInputs).toBeGreaterThan(0);
   });
 
   test('should validate email format', async ({ page }) => {
-    await page.goto('/contact.html');
+    await page.goto('/contact');
     await page.waitForSelector('#contact-form');
 
-    await page.fill('input[name="email"]', 'invalid-email');
-    await page.locator('input[name="email"]').blur();
-
-    await expect(page.locator('.field-error')).toBeVisible();
+    const emailInput = page.locator('#contact-form input[name="email"]');
+    await emailInput.fill('invalid-email');
+    await emailInput.blur();
+    await expect(emailInput).toHaveJSProperty('validity.valid', false);
   });
 });
 

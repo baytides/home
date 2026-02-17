@@ -20,8 +20,8 @@
     "format:check": "prettier --check .",
     "validate": "npm run typecheck:all && npm run lint && npm run format:check",
     "prepare": "husky",
-    "test": "playwright test",
-    "test:ui": "playwright test --ui"
+    "test": "NO_COLOR= FORCE_COLOR=0 playwright test",
+    "test:ui": "NO_COLOR= FORCE_COLOR=0 playwright test --ui"
   },
   "repository": {
     "type": "git",

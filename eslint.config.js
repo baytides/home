@@ -1,6 +1,17 @@
 import js from '@eslint/js';
 
 export default [
+  {
+    ignores: [
+      'node_modules/**',
+      'dist/**',
+      '.astro/**',
+      'assets/css/**',
+      'assets/js/main.js',
+      '**/*.ts',
+      '**/*.json',
+    ],
+  },
   js.configs.recommended,
   {
     files: ['**/*.js'],
@@ -25,6 +36,11 @@ export default [
         URL: 'readonly',
         Promise: 'readonly',
         process: 'readonly',
+        alert: 'readonly',
+        URLSearchParams: 'readonly',
+        MutationObserver: 'readonly',
+        FormData: 'readonly',
+        indexedDB: 'readonly',
       },
     },
     rules: {
@@ -33,6 +49,15 @@ export default [
     },
   },
   {
-    ignores: ['node_modules/', 'assets/js/main.js', 'assets/css/', '**/*.ts', '**/*.json'],
+    files: ['scripts/**/*.cjs'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: {
+        process: 'readonly',
+        console: 'readonly',
+        __dirname: 'readonly',
+        fetch: 'readonly',
+      },
+    },
   },
 ];

@@ -73,7 +73,7 @@
 .hero-home {
   background:
     linear-gradient(rgba(26, 54, 93, 0.75), rgba(43, 108, 176, 0.8)),
-    url('../images/hero-bg.webp') center/cover no-repeat;
+    url('/assets/video/home-hero-poster.webp') center/cover no-repeat;
   padding: 12rem 0 8rem;
 }
 
@@ -747,7 +747,7 @@
   .hero-home {
     background:
       linear-gradient(rgba(13, 17, 23, 0.8), rgba(26, 54, 93, 0.85)),
-      url('../images/hero-bg.webp') center/cover no-repeat;
+      url('/assets/video/home-hero-poster.webp') center/cover no-repeat;
   }
 
   .home-hero-overlay,

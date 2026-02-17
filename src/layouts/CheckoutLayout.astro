@@ -44,6 +44,8 @@ const currentYear = new Date().getFullYear();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Minimal Header -->
     <header class="checkout-header">
       <div class="container">
@@ -67,7 +69,7 @@ const currentYear = new Date().getFullYear();
       </div>
     </header>
 
-    <main class="checkout-main">
+    <main id="main-content" class="checkout-main">
       <slot />
     </main>
 

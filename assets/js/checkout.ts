@@ -3,7 +3,29 @@
  * Handles donation flow with Stripe Payment Element and PDF receipt generation
  */
 
-declare const jspdf: { jsPDF: typeof import('jspdf').jsPDF };
+declare const jspdf: { jsPDF: new () => any };
+
+interface StripePaymentElement {
+  mount(selector: string): void;
+  on(event: 'ready', handler: () => void): void;
+  on(event: 'change', handler: (event: { error?: { message?: string } }) => void): void;
+}
+
+interface StripeElements {
+  create(type: 'payment', options?: object): StripePaymentElement;
+}
+
+interface StripeConfirmResult {
+  error?: { message?: string };
+  paymentIntent?: { id: string; status: string };
+}
+
+interface StripeInstance {
+  elements(options: { clientSecret: string; appearance?: object }): StripeElements;
+  confirmPayment(options: object): Promise<StripeConfirmResult>;
+}
+
+declare const Stripe: (publishableKey: string) => StripeInstance;
 
 // ==========================================================================
 // Types
@@ -51,11 +73,9 @@ interface ReceiptData {
 // State
 // ==========================================================================
 
-let currentStep = 1;
-let stripe: ReturnType<typeof Stripe> | null = null;
-let elements: ReturnType<ReturnType<typeof Stripe>['elements']> | null = null;
-let paymentElement: ReturnType<ReturnType<ReturnType<typeof Stripe>['elements']>['create']> | null =
-  null;
+let stripe: StripeInstance | null = null;
+let elements: StripeElements | null = null;
+let paymentElement: StripePaymentElement | null = null;
 
 const donationData: DonationData = {
   amount: 100,
@@ -113,21 +133,41 @@ function goToStep(step: number): void {
   $$('.stepper-step').forEach((el) => {
     const stepNum = parseInt(el.dataset.step || '0');
     el.classList.remove('active', 'completed');
+    el.removeAttribute('aria-current');
     if (stepNum < step) {
       el.classList.add('completed');
     } else if (stepNum === step) {
       el.classList.add('active');
+      el.setAttribute('aria-current', 'step');
     }
   });
 
-  currentStep = step;
+  const progressStatus = $('#checkout-progress-status');
+  if (progressStatus) {
+    const label =
+      { 1: 'Amount', 2: 'Your Information', 3: 'Payment', 4: 'Complete' }[step] || 'Step';
+    progressStatus.textContent = `Step ${step} of 4: ${label}`;
+  }
+
+  const formStatus = $('#checkout-form-status');
+  if (formStatus) {
+    formStatus.textContent = '';
+  }
 
   // Scroll to top
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
 
   // Initialize payment element when entering step 3
   if (step === 3 && !paymentElement) {
     initializePayment();
+  }
+}
+
+function setFormStatus(message: string): void {
+  const formStatus = $('#checkout-form-status');
+  if (formStatus) {
+    formStatus.textContent = message;
   }
 }
 
@@ -235,7 +275,8 @@ function initStep1(): void {
     if (otherBtn?.classList.contains('active')) {
       const customValue = parseInt((customInput as HTMLInputElement)?.value || '0');
       if (!customValue || customValue < 1) {
-        alert('Please enter a valid donation amount.');
+        setFormStatus('Please enter a valid donation amount.');
+        customInput?.focus();
         return;
       }
       donationData.amount = customValue;
@@ -283,14 +324,14 @@ function initStep2(): void {
     const required = ['firstName', 'lastName', 'email', 'address', 'city', 'state', 'zip'];
     for (const key of required) {
       if (!donorInfo[key as keyof DonorInfo]) {
-        alert('Please fill in all required fields.');
+        setFormStatus('Please fill in all required fields.');
         return;
       }
     }
 
     // Basic email validation
     if (!donorInfo.email.includes('@')) {
-      alert('Please enter a valid email address.');
+      setFormStatus('Please enter a valid email address.');
       return;
     }
 
@@ -365,7 +406,7 @@ async function initializePayment(): Promise<void> {
       if (submitBtn) submitBtn.disabled = false;
     });
 
-    paymentElement.on('change', (event) => {
+    paymentElement.on('change', (event: { error?: { message?: string } }) => {
       if (errorsEl) {
         errorsEl.textContent = event.error?.message || '';
       }

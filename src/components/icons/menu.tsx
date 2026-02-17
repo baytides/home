@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import type { Variants } from "motion/react";
-import { motion, useAnimation } from "motion/react";
-import type { HTMLAttributes } from "react";
-import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+import type { Variants } from 'motion/react';
+import { motion, useAnimation } from 'motion/react';
+import type { HTMLAttributes } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
 
-import { cn } from "../../lib/utils";
+import { cn } from '../../lib/utils';
 
 export interface MenuIconHandle {
   startAnimation: () => void;
@@ -27,7 +27,7 @@ const LINE_VARIANTS: Variants = {
     y: custom === 1 ? 6 : custom === 3 ? -6 : 0,
     opacity: custom === 2 ? 0 : 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 260,
       damping: 20,
     },
@@ -43,8 +43,8 @@ const MenuIcon = forwardRef<MenuIconHandle, MenuIconProps>(
       isControlledRef.current = true;
 
       return {
-        startAnimation: () => controls.start("animate"),
-        stopAnimation: () => controls.start("normal"),
+        startAnimation: () => controls.start('animate'),
+        stopAnimation: () => controls.start('normal'),
       };
     });
 
@@ -53,7 +53,7 @@ const MenuIcon = forwardRef<MenuIconHandle, MenuIconProps>(
         if (isControlledRef.current) {
           onMouseEnter?.(e);
         } else {
-          controls.start("animate");
+          controls.start('animate');
         }
       },
       [controls, onMouseEnter]
@@ -64,7 +64,7 @@ const MenuIcon = forwardRef<MenuIconHandle, MenuIconProps>(
         if (isControlledRef.current) {
           onMouseLeave?.(e);
         } else {
-          controls.start("normal");
+          controls.start('normal');
         }
       },
       [controls, onMouseLeave]
@@ -120,6 +120,6 @@ const MenuIcon = forwardRef<MenuIconHandle, MenuIconProps>(
   }
 );
 
-MenuIcon.displayName = "MenuIcon";
+MenuIcon.displayName = 'MenuIcon';
 
 export { MenuIcon };

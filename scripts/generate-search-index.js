@@ -140,7 +140,6 @@ function generateSearchIndex() {
     const filePath = join(rootDir, page.file);
 
     if (!existsSync(filePath)) {
-      console.warn(`Warning: ${page.file} not found, skipping...`);
       continue;
     }
 
@@ -160,7 +159,7 @@ function generateSearchIndex() {
 
   // Write to public directory for client-side access
   const outputPath = join(rootDir, 'public', 'search-index.json');
-  writeFileSync(outputPath, JSON.stringify(searchIndex, null, 2));
+  writeFileSync(outputPath, `${JSON.stringify(searchIndex, null, 2)}\n`);
   console.log(`\nSearch index written to: ${outputPath}`);
   console.log(`Total pages indexed: ${searchIndex.length}`);
 }

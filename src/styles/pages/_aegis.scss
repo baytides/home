@@ -2,6 +2,8 @@
 // Aegis Initiative Page Styles
 // ==========================================================================
 
+@use 'sass:color';
+
 // Aegis brand colors - military green meets Bay environment
 // Forest green with AAA contrast (7.1:1 on white)
 $aegis-green: #2d5a3d;
@@ -138,8 +140,8 @@ $aegis-green-light: #e8f5e9;
       border-color: $aegis-green;
 
       &:hover {
-        background: darken($aegis-green, 8%);
-        border-color: darken($aegis-green, 8%);
+        background: color.adjust($aegis-green, $lightness: -8%);
+        border-color: color.adjust($aegis-green, $lightness: -8%);
       }
     }
   }
@@ -488,8 +490,8 @@ $aegis-green-light: #e8f5e9;
   border-color: $aegis-green;
 
   &:hover {
-    background: darken($aegis-green, 8%);
-    border-color: darken($aegis-green, 8%);
+    background: color.adjust($aegis-green, $lightness: -8%);
+    border-color: color.adjust($aegis-green, $lightness: -8%);
   }
 }
 

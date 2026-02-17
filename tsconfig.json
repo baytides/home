@@ -19,6 +19,6 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react"
   },
-  "include": ["src/**/*.ts", "assets/js/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "assets/js/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

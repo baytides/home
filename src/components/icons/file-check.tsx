@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import type { Variants } from "motion/react";
-import { motion, useAnimation } from "motion/react";
-import type { HTMLAttributes } from "react";
-import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+import type { Variants } from 'motion/react';
+import { motion, useAnimation } from 'motion/react';
+import type { HTMLAttributes } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
 
-import { cn } from "../../lib/utils";
+import { cn } from '../../lib/utils';
 
 export interface FileCheckIconHandle {
   startAnimation: () => void;
@@ -28,8 +28,8 @@ const CHECK_VARIANTS: Variants = {
     pathLength: [0, 1],
     opacity: [0, 1],
     transition: {
-      pathLength: { duration: 0.4, ease: "easeInOut" },
-      opacity: { duration: 0.4, ease: "easeInOut" },
+      pathLength: { duration: 0.4, ease: 'easeInOut' },
+      opacity: { duration: 0.4, ease: 'easeInOut' },
     },
   },
 };
@@ -43,8 +43,8 @@ const FileCheckIcon = forwardRef<FileCheckIconHandle, FileCheckIconProps>(
       isControlledRef.current = true;
 
       return {
-        startAnimation: () => controls.start("animate"),
-        stopAnimation: () => controls.start("normal"),
+        startAnimation: () => controls.start('animate'),
+        stopAnimation: () => controls.start('normal'),
       };
     });
 
@@ -53,7 +53,7 @@ const FileCheckIcon = forwardRef<FileCheckIconHandle, FileCheckIconProps>(
         if (isControlledRef.current) {
           onMouseEnter?.(e);
         } else {
-          controls.start("animate");
+          controls.start('animate');
         }
       },
       [controls, onMouseEnter]
@@ -64,7 +64,7 @@ const FileCheckIcon = forwardRef<FileCheckIconHandle, FileCheckIconProps>(
         if (isControlledRef.current) {
           onMouseLeave?.(e);
         } else {
-          controls.start("normal");
+          controls.start('normal');
         }
       },
       [controls, onMouseLeave]
@@ -94,7 +94,7 @@ const FileCheckIcon = forwardRef<FileCheckIconHandle, FileCheckIconProps>(
             animate={controls}
             d="m9 15 2 2 4-4"
             initial="normal"
-            style={{ transformOrigin: "center" }}
+            style={{ transformOrigin: 'center' }}
             variants={CHECK_VARIANTS}
           />
         </svg>
@@ -103,6 +103,6 @@ const FileCheckIcon = forwardRef<FileCheckIconHandle, FileCheckIconProps>(
   }
 );
 
-FileCheckIcon.displayName = "FileCheckIcon";
+FileCheckIcon.displayName = 'FileCheckIcon';
 
 export { FileCheckIcon };

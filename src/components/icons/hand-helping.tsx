@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { motion, useAnimation } from "motion/react";
-import type { HTMLAttributes } from "react";
-import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+import { motion, useAnimation } from 'motion/react';
+import type { HTMLAttributes } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
 
-import { cn } from "../../lib/utils";
+import { cn } from '../../lib/utils';
 
 export interface HandHelpingIconHandle {
   startAnimation: () => void;
@@ -23,8 +23,8 @@ const HandHelpingIcon = forwardRef<HandHelpingIconHandle, HandHelpingIconProps>(
     useImperativeHandle(ref, () => {
       isControlledRef.current = true;
       return {
-        startAnimation: () => controls.start("animate"),
-        stopAnimation: () => controls.start("normal"),
+        startAnimation: () => controls.start('animate'),
+        stopAnimation: () => controls.start('normal'),
       };
     });
 
@@ -33,7 +33,7 @@ const HandHelpingIcon = forwardRef<HandHelpingIconHandle, HandHelpingIconProps>(
         if (isControlledRef.current) {
           onMouseEnter?.(e);
         } else {
-          controls.start("animate");
+          controls.start('animate');
         }
       },
       [controls, onMouseEnter]
@@ -44,7 +44,7 @@ const HandHelpingIcon = forwardRef<HandHelpingIconHandle, HandHelpingIconProps>(
         if (isControlledRef.current) {
           onMouseLeave?.(e);
         } else {
-          controls.start("normal");
+          controls.start('normal');
         }
       },
       [controls, onMouseLeave]
@@ -73,7 +73,7 @@ const HandHelpingIcon = forwardRef<HandHelpingIconHandle, HandHelpingIconProps>(
               y: [0, -2, 0],
               transition: {
                 duration: 0.5,
-                ease: "easeInOut",
+                ease: 'easeInOut',
               },
             },
           }}
@@ -90,6 +90,6 @@ const HandHelpingIcon = forwardRef<HandHelpingIconHandle, HandHelpingIconProps>(
   }
 );
 
-HandHelpingIcon.displayName = "HandHelpingIcon";
+HandHelpingIcon.displayName = 'HandHelpingIcon';
 
 export { HandHelpingIcon };

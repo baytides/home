@@ -94,6 +94,19 @@
   padding: 0 1rem;
 }
 
+.checkout-inline-status {
+  margin: 0 auto 1.25rem;
+  max-width: 600px;
+  min-height: 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #7f1d1d;
+
+  &:empty {
+    display: none;
+  }
+}
+
 .stepper-step {
   display: flex;
   flex-direction: column;
@@ -122,6 +135,11 @@
   &.completed .stepper-label {
     color: #48bb78;
   }
+}
+
+.stepper-step[aria-current='step'] .stepper-label {
+  color: var(--primary-navy);
+  font-weight: 700;
 }
 
 .stepper-number {
@@ -480,7 +498,8 @@
 }
 
 .payment-errors {
-  color: #e53e3e;
+  color: #7f1d1d;
+  font-weight: 600;
   font-size: 0.875rem;
   margin-top: 0.75rem;
   min-height: 1.25rem;

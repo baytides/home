@@ -236,7 +236,6 @@ function renderEmailResults(results: ApiResponse, container: HTMLElement): void 
     return;
   }
 
-  const withWarnings = results.emails.filter((r) => r.warnings.length > 0 && r.isValid).length;
   const noMxRecord = results.emails.filter((r) => r.hasMxRecord === false).length;
 
   // Create summary

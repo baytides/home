@@ -1,5 +1,9 @@
 node_modules
+.astro
+playwright-report
+test-results
 assets/css/style.css
 assets/js/main.js
 *.min.js
 *.min.css
+src/pages/volunteer/waiver.astro

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { motion, useAnimation } from "motion/react";
-import type { HTMLAttributes } from "react";
-import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+import { motion, useAnimation } from 'motion/react';
+import type { HTMLAttributes } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
 
-import { cn } from "../../lib/utils";
+import { cn } from '../../lib/utils';
 
 export interface LockIconHandle {
   startAnimation: () => void;
@@ -24,8 +24,8 @@ const LockIcon = forwardRef<LockIconHandle, LockIconProps>(
       isControlledRef.current = true;
 
       return {
-        startAnimation: () => controls.start("animate"),
-        stopAnimation: () => controls.start("normal"),
+        startAnimation: () => controls.start('animate'),
+        stopAnimation: () => controls.start('normal'),
       };
     });
 
@@ -34,7 +34,7 @@ const LockIcon = forwardRef<LockIconHandle, LockIconProps>(
         if (isControlledRef.current) {
           onMouseEnter?.(e);
         } else {
-          controls.start("animate");
+          controls.start('animate');
         }
       },
       [controls, onMouseEnter]
@@ -45,7 +45,7 @@ const LockIcon = forwardRef<LockIconHandle, LockIconProps>(
         if (isControlledRef.current) {
           onMouseLeave?.(e);
         } else {
-          controls.start("normal");
+          controls.start('normal');
         }
       },
       [controls, onMouseLeave]
@@ -109,6 +109,6 @@ const LockIcon = forwardRef<LockIconHandle, LockIconProps>(
   }
 );
 
-LockIcon.displayName = "LockIcon";
+LockIcon.displayName = 'LockIcon';
 
 export { LockIcon };

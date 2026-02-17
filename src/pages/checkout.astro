@@ -8,8 +8,11 @@ import CheckoutLayout from '../layouts/CheckoutLayout.astro';
 >
   <div class="checkout-container">
     <!-- Progress Stepper -->
-    <div class="checkout-stepper">
-      <div class="stepper-step active" data-step="1">
+    <p id="checkout-progress-status" class="sr-only" role="status" aria-live="polite">
+      Step 1 of 4: Amount
+    </p>
+    <div class="checkout-stepper" aria-label="Checkout progress">
+      <div class="stepper-step active" data-step="1" aria-current="step">
         <div class="stepper-number">1</div>
         <span class="stepper-label">Amount</span>
       </div>
@@ -28,6 +31,13 @@ import CheckoutLayout from '../layouts/CheckoutLayout.astro';
         <div class="stepper-number">4</div>
         <span class="stepper-label">Complete</span>
       </div>
+    </div>
+    <div
+      id="checkout-form-status"
+      class="checkout-inline-status"
+      role="alert"
+      aria-live="assertive"
+    >
     </div>
 
     <!-- Step 1: Amount -->
