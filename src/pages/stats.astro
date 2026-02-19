@@ -1,0 +1,1496 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Live Stats',
+    description:
+      'Real-time transparency dashboard showing Bay Tides infrastructure metrics, Tor Snowflake proxy stats, carbon footprint data, and site analytics.',
+    publisher: {
+      '@type': 'NonprofitOrganization',
+      name: 'Bay Tides',
+      url: 'https://baytides.org',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Stats' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Live Stats"
+  description="Real-time transparency dashboard showing Bay Tides infrastructure metrics, Tor Snowflake proxy stats, carbon footprint, and site analytics."
+  canonicalUrl="https://baytides.org/stats"
+  structuredData={structuredData}
+>
+  <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Stats' }]} />
+
+  <PageHero
+    title="Live Stats"
+    subtitle="Real-time transparency into our infrastructure and impact"
+  />
+
+  <!-- Dashboard Status Bar -->
+  <section class="content-section" aria-labelledby="stats-heading">
+    <div class="container">
+      <h2 class="sr-only" id="stats-heading">Infrastructure Statistics</h2>
+
+      <div class="stats-status-bar" role="status" aria-live="polite">
+        <div class="status-pulse" id="global-pulse"></div>
+        <span class="status-text" id="global-status">Connecting to data sources...</span>
+        <span class="status-timestamp" id="global-timestamp"></span>
+      </div>
+
+      <!-- Snowflake Proxy Panel -->
+      <div class="stats-panel snowflake-panel" aria-labelledby="snowflake-heading">
+        <div class="panel-header">
+          <div class="panel-icon snowflake-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+              width="24"
+              height="24"
+              fill="currentColor"
+            >
+              <path
+                d="M280 24c0-13.3-10.7-24-24-24s-24 10.7-24 24v80.4l-44.7-44.7c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l78.6 78.6v66.3l-57.4-33.2-23.8-88.8c-3.4-12.8-16.6-20.4-29.4-17s-20.4 16.6-17 29.4l13 48.5-69.8-40.3c-11.5-6.6-26.2-2.7-32.8 8.8s-2.7 26.2 8.8 32.8l69.8 40.3-48.5 13c-12.8 3.4-20.4 16.6-17 29.4 3.4 12.8 16.6 20.4 29.4 17l88.8-23.8 57.4 33.2-57.4 33.2-88.8-23.8c-12.8-3.4-26 4.2-29.4 17s4.2 26 17 29.4l48.5 13-69.8 40.3c-11.5 6.6-15.4 21.3-8.8 32.8s21.3 15.4 32.8 8.8l69.8-40.3-13 48.5c-3.4 12.8 4.2 26 17 29.4s26-4.2 29.4-17l23.8-88.8 57.4-33.2v66.3l-78.6 78.6c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l44.7-44.7V488c0 13.3 10.7 24 24 24s24-10.7 24-24v-80.4l44.7 44.7c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-78.6-78.6v-66.3l57.4 33.2 23.8 88.8c3.4 12.8 16.6 20.4 29.4 17s20.4-16.6 17-29.4l-13-48.5 69.8 40.3c11.5 6.6 26.2 2.7 32.8-8.8s2.7-26.2-8.8-32.8l-69.8-40.3 48.5-13c12.8-3.4 20.4-16.6 17-29.4s-16.6-20.4-29.4-17l-88.8 23.8-57.4-33.2 57.4-33.2 88.8 23.8c12.8 3.4 26-4.2 29.4-17s-4.2-26-17-29.4l-48.5-13 69.8-40.3c11.5-6.6 15.4-21.3 8.8-32.8s-21.3-15.4-32.8-8.8l-69.8 40.3 13-48.5c3.4-12.8-4.2-26-17-29.4s-26 4.2-29.4 17l-23.8 88.8-57.4 33.2v-66.3l78.6-78.6c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L280 104.4V24z"
+              >
+              </path>
+            </svg>
+          </div>
+          <div class="panel-title-group">
+            <h2 id="snowflake-heading">Tor Snowflake Proxy</h2>
+            <p class="panel-subtitle">Helping censored users access the free internet</p>
+          </div>
+          <div class="panel-badge" id="snowflake-badge">
+            <span class="badge-dot"></span>
+            <span class="badge-text">Loading</span>
+          </div>
+        </div>
+
+        <div class="stats-grid stats-grid-4" role="list" aria-label="Snowflake proxy statistics">
+          <div class="stat-card" role="listitem">
+            <span class="stat-value counter" id="sf-total" data-target="0">&mdash;</span>
+            <span class="stat-label">People Helped</span>
+            <span class="stat-detail">All time</span>
+          </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-value" id="sf-24h">&mdash;</span>
+            <span class="stat-label">Last 24 Hours</span>
+            <span class="stat-detail">Connections relayed</span>
+          </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-value" id="sf-7d">&mdash;</span>
+            <span class="stat-label">Last 7 Days</span>
+            <span class="stat-detail">Connections relayed</span>
+          </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-value" id="sf-uptime">&mdash;</span>
+            <span class="stat-label">Uptime</span>
+            <span class="stat-detail">System hours</span>
+          </div>
+        </div>
+
+        <!-- Snowflake History Sparkline -->
+        <div class="sparkline-container" id="sf-sparkline-container" aria-hidden="true">
+          <canvas id="sf-sparkline" width="800" height="100"></canvas>
+          <div class="sparkline-labels">
+            <span>7 days ago</span>
+            <span>Now</span>
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <a
+            href="https://snowflake.torproject.org/"
+            target="_blank"
+            rel="noopener"
+            class="panel-link"
+          >
+            Learn about Snowflake
+            <span class="sr-only">(opens in new tab)</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M7 7h10v10"></path>
+              <path d="M7 17 17 7"></path>
+            </svg>
+          </a>
+          <span class="panel-source" id="sf-source">Source: Cloudflare KV</span>
+        </div>
+      </div>
+
+      <!-- Carbon Footprint Panel -->
+      <div class="stats-panel carbon-panel" aria-labelledby="carbon-heading">
+        <div class="panel-header">
+          <div class="panel-icon carbon-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M17 8c.7-1 1-2.2 1-3.5 0-2.5-2-4.5-4.5-4.5S9 2 9 4.5c0 1.3.3 2.5 1 3.5">
+              </path>
+              <path d="M14 16c3.3-1.8 5.5-5.3 5.5-9.5 0-1-.2-2-.5-3"></path>
+              <path d="M9 16c-3.3-1.8-5.5-5.3-5.5-9.5 0-1 .2-2 .5-3"></path>
+              <path d="M12 18a6 6 0 0 0 0-12 6 6 0 0 0 0 12z"></path>
+              <path d="M12 18v4"></path>
+              <path d="M8 22h8"></path>
+            </svg>
+          </div>
+          <div class="panel-title-group">
+            <h2 id="carbon-heading">Carbon Footprint</h2>
+            <p class="panel-subtitle">Environmental impact of our digital infrastructure</p>
+          </div>
+          <div class="panel-badge carbon-badge" id="carbon-badge">
+            <span class="badge-dot"></span>
+            <span class="badge-text">Loading</span>
+          </div>
+        </div>
+
+        <div class="stats-grid stats-grid-4" role="list" aria-label="Carbon footprint statistics">
+          <div class="stat-card" role="listitem">
+            <span class="stat-value carbon-highlight" id="cb-net">&mdash;</span>
+            <span class="stat-label">Net CO&#8322;e</span>
+            <span class="stat-detail">kg this month</span>
+          </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-value" id="cb-gross">&mdash;</span>
+            <span class="stat-label">Gross CO&#8322;e</span>
+            <span class="stat-detail">kg before offset</span>
+          </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-value carbon-highlight" id="cb-renewable">&mdash;</span>
+            <span class="stat-label">Renewable</span>
+            <span class="stat-detail">Energy sources</span>
+          </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-value" id="cb-rating">&mdash;</span>
+            <span class="stat-label">Green Rating</span>
+            <span class="stat-detail">Overall score</span>
+          </div>
+        </div>
+
+        <!-- Emissions Breakdown Bar -->
+        <div class="emissions-bar-container">
+          <h3 class="bar-label">Emissions by Source</h3>
+          <div class="emissions-bar" role="img" aria-label="Emissions breakdown by source">
+            <div class="bar-segment bar-cdn" id="bar-cdn" style="width: 0%">
+              <span class="bar-tooltip">CDN</span>
+            </div>
+            <div class="bar-segment bar-hosting" id="bar-hosting" style="width: 0%">
+              <span class="bar-tooltip">Hosting</span>
+            </div>
+            <div class="bar-segment bar-ci" id="bar-ci" style="width: 0%">
+              <span class="bar-tooltip">CI/CD</span>
+            </div>
+          </div>
+          <div class="bar-legend">
+            <span class="legend-item">
+              <span class="legend-dot legend-cdn"></span>
+              CDN <span id="legend-cdn-val"></span>
+            </span>
+            <span class="legend-item">
+              <span class="legend-dot legend-hosting"></span>
+              Hosting <span id="legend-hosting-val"></span>
+            </span>
+            <span class="legend-item">
+              <span class="legend-dot legend-ci"></span>
+              CI/CD <span id="legend-ci-val"></span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Provider Cards -->
+        <div class="provider-grid" role="list" aria-label="Infrastructure providers">
+          <div class="provider-card" role="listitem">
+            <span class="provider-name">Cloudflare</span>
+            <span class="provider-detail">CDN &amp; Edge Hosting</span>
+            <span class="provider-badge provider-green">100% Renewable</span>
+          </div>
+          <div class="provider-card" role="listitem">
+            <span class="provider-name">GitHub</span>
+            <span class="provider-detail">Code &amp; CI/CD</span>
+            <span class="provider-badge provider-green">Carbon Neutral</span>
+          </div>
+          <div class="provider-card" role="listitem">
+            <span class="provider-name">Self-Hosted</span>
+            <span class="provider-detail">Tor Snowflake Proxy</span>
+            <span class="provider-badge provider-neutral">Mac Mini (Local)</span>
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <a href="/sustainability" class="panel-link">
+            Full sustainability report
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
+          <span class="panel-source" id="cb-source">Source: Cloudflare &amp; GitHub APIs</span>
+        </div>
+      </div>
+
+      <!-- Site Analytics Panel -->
+      <div class="stats-panel analytics-panel" aria-labelledby="analytics-heading">
+        <div class="panel-header">
+          <div class="panel-icon analytics-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 3v18h18"></path>
+              <path d="m19 9-5 5-4-4-3 3"></path>
+            </svg>
+          </div>
+          <div class="panel-title-group">
+            <h2 id="analytics-heading">Site Analytics</h2>
+            <p class="panel-subtitle">Traffic and infrastructure performance (last 30 days)</p>
+          </div>
+          <div class="panel-badge analytics-badge" id="analytics-badge">
+            <span class="badge-dot"></span>
+            <span class="badge-text">Loading</span>
+          </div>
+        </div>
+
+        <div class="stats-grid stats-grid-4" role="list" aria-label="Site analytics">
+          <div class="stat-card" role="listitem">
+            <span class="stat-value" id="an-views">&mdash;</span>
+            <span class="stat-label">Page Views</span>
+            <span class="stat-detail">Last 30 days</span>
+          </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-value" id="an-requests">&mdash;</span>
+            <span class="stat-label">CDN Requests</span>
+            <span class="stat-detail">Cloudflare edge</span>
+          </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-value" id="an-bandwidth">&mdash;</span>
+            <span class="stat-label">Bandwidth</span>
+            <span class="stat-detail">Data transferred</span>
+          </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-value" id="an-ci">&mdash;</span>
+            <span class="stat-label">CI/CD Runs</span>
+            <span class="stat-detail">Build &amp; deploy</span>
+          </div>
+        </div>
+
+        <!-- CI Workflow Breakdown -->
+        <div
+          class="workflow-grid"
+          id="workflow-grid"
+          role="list"
+          aria-label="CI/CD workflow breakdown"
+        >
+        </div>
+
+        <div class="panel-footer">
+          <a href="https://stats.baytides.org" target="_blank" rel="noopener" class="panel-link">
+            Plausible Analytics
+            <span class="sr-only">(opens in new tab)</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M7 7h10v10"></path>
+              <path d="M7 17 17 7"></path>
+            </svg>
+          </a>
+          <span class="panel-source" id="an-source">Source: Cloudflare Analytics API</span>
+        </div>
+      </div>
+
+      <!-- Transparency Note -->
+      <div class="transparency-note">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4"></path>
+          <path d="M12 8h.01"></path>
+        </svg>
+        <p>
+          All data is fetched live from our infrastructure APIs. Snowflake stats update every 5
+          minutes via a local collector. Carbon and analytics data updates daily via GitHub Actions.
+          We believe in full transparency about how our resources are used.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="impact" aria-labelledby="cta-heading">
+    <div class="container">
+      <div class="impact-content">
+        <h2 id="cta-heading">Help Us Make a Difference</h2>
+        <p>
+          Every connection relayed, every page optimized, and every watt saved contributes to a
+          freer, greener internet. Join our mission.
+        </p>
+        <div class="cta-buttons">
+          <a href="/volunteer" class="btn btn-secondary">Volunteer With Us</a>
+          <a href="/donate" class="btn btn-outline-white">Support Our Work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ── Status Bar ─────────────────────────────────────────────── */
+  .stats-status-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, rgba(30, 90, 158, 0.06) 0%, rgba(29, 78, 216, 0.06) 100%);
+    border: 1px solid rgba(30, 90, 158, 0.15);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .status-pulse {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border-medium);
+    flex-shrink: 0;
+    transition: background 0.3s ease;
+  }
+
+  .status-pulse.live {
+    background: #16a34a;
+    box-shadow: 0 0 0 0 rgba(22, 163, 106, 0.4);
+    animation: status-ping 2s ease-in-out infinite;
+  }
+
+  .status-pulse.partial {
+    background: #ca8a04;
+    animation: status-ping 2s ease-in-out infinite;
+  }
+
+  .status-pulse.offline {
+    background: var(--error);
+  }
+
+  @keyframes status-ping {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(22, 163, 106, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 0 6px rgba(22, 163, 106, 0);
+    }
+  }
+
+  .status-text {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  .status-timestamp {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-left: auto;
+  }
+
+  /* ── Panel Base ─────────────────────────────────────────────── */
+  .stats-panel {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .stats-panel:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  }
+
+  /* ── Panel Header ───────────────────────────────────────────── */
+  .panel-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+  }
+
+  .panel-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* WCAG AAA: icon colors are decorative (aria-hidden), container bg is subtle */
+  .snowflake-icon {
+    background: rgba(109, 40, 217, 0.1);
+    color: #6d28d9;
+  }
+
+  .carbon-icon {
+    background: rgba(22, 101, 52, 0.1);
+    color: var(--success);
+  }
+
+  .analytics-icon {
+    background: rgba(30, 90, 158, 0.1);
+    color: var(--primary-blue);
+  }
+
+  .panel-title-group {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .panel-title-group h2 {
+    font-size: 1.375rem;
+    color: var(--text-dark);
+    margin: 0 0 0.25rem 0;
+    line-height: 1.3;
+  }
+
+  .panel-subtitle {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin: 0;
+  }
+
+  /* ── Badge ──────────────────────────────────────────────────── */
+  .panel-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(107, 114, 128, 0.1);
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+
+  .badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* WCAG AAA: badge text uses --success (#22543d) = 9.1:1 on white */
+  .panel-badge.online {
+    background: rgba(34, 84, 61, 0.12);
+    color: var(--success);
+  }
+
+  .panel-badge.online .badge-dot {
+    animation: dot-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes dot-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+
+  /* WCAG AAA: error color (#9b1c1c) = 8.5:1 on white */
+  .panel-badge.offline {
+    background: rgba(155, 28, 28, 0.1);
+    color: var(--error);
+  }
+
+  .panel-badge.live {
+    background: rgba(34, 84, 61, 0.12);
+    color: var(--success);
+  }
+
+  /* ── Stats Grid ─────────────────────────────────────────────── */
+  .stats-grid {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stats-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--hover-bg) 100%);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-medium);
+  }
+
+  /* WCAG AAA: stat values use --primary-navy (#1a365d) = 10.2:1 on white */
+  .stat-value {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--primary-navy);
+    line-height: 1.2;
+    margin-bottom: 0.375rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.125rem;
+  }
+
+  .stat-detail {
+    display: block;
+    font-size: 0.6875rem;
+    color: var(--text-light);
+  }
+
+  /* Snowflake accent colors — all AAA on white */
+  .snowflake-panel .stat-card:nth-child(1) .stat-value {
+    color: #6d28d9;
+  } /* 9.4:1 */
+  .snowflake-panel .stat-card:nth-child(2) .stat-value {
+    color: #6d28d9;
+  } /* 9.4:1 */
+  .snowflake-panel .stat-card:nth-child(3) .stat-value {
+    color: var(--primary-navy);
+  } /* 10.2:1 */
+  .snowflake-panel .stat-card:nth-child(4) .stat-value {
+    color: #6d28d9;
+  } /* 9.4:1 */
+
+  /* Carbon accent colors — all AAA on white */
+  .carbon-highlight {
+    color: var(--success) !important;
+  } /* 9.1:1 */
+  .carbon-panel .stat-card:nth-child(2) .stat-value {
+    color: var(--text-light);
+  } /* 8.2:1 */
+  .carbon-panel .stat-card:nth-child(4) .stat-value {
+    color: var(--success);
+  } /* 9.1:1 */
+
+  /* Analytics accent colors — all AAA on white */
+  .analytics-panel .stat-card:nth-child(1) .stat-value {
+    color: var(--primary-blue);
+  } /* 7.3:1 */
+  .analytics-panel .stat-card:nth-child(2) .stat-value {
+    color: var(--accent-blue);
+  } /* 7.2:1 */
+  .analytics-panel .stat-card:nth-child(3) .stat-value {
+    color: var(--primary-blue);
+  } /* 7.3:1 */
+  .analytics-panel .stat-card:nth-child(4) .stat-value {
+    color: #9a3412;
+  } /* 7.6:1 */
+
+  /* ── Sparkline ──────────────────────────────────────────────── */
+  .sparkline-container {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, rgba(109, 40, 217, 0.04) 0%, rgba(109, 40, 217, 0.04) 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(109, 40, 217, 0.1);
+  }
+
+  .sparkline-container canvas {
+    width: 100%;
+    height: 80px;
+    display: block;
+  }
+
+  .sparkline-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.6875rem;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+  }
+
+  /* ── Emissions Bar ──────────────────────────────────────────── */
+  .emissions-bar-container {
+    margin-bottom: 1.5rem;
+  }
+
+  .bar-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.75rem;
+  }
+
+  .emissions-bar {
+    display: flex;
+    height: 28px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--hover-bg);
+    margin-bottom: 0.75rem;
+  }
+
+  .bar-segment {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 0;
+  }
+
+  /* Bar colors are decorative; labels in legend provide text equivalent */
+  .bar-cdn {
+    background: #059669;
+  }
+  .bar-hosting {
+    background: var(--success);
+  }
+  .bar-ci {
+    background: #b45309;
+  }
+
+  .bar-tooltip {
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .bar-segment:hover .bar-tooltip {
+    opacity: 1;
+  }
+
+  .bar-legend {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .legend-cdn {
+    background: #059669;
+  }
+  .legend-hosting {
+    background: var(--success);
+  }
+  .legend-ci {
+    background: #b45309;
+  }
+
+  /* ── Provider Grid ──────────────────────────────────────────── */
+  .provider-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .provider-card {
+    padding: 1rem;
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+
+  .provider-card:hover {
+    border-color: var(--border-medium);
+  }
+
+  .provider-name {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+  }
+
+  .provider-detail {
+    display: block;
+    font-size: 0.6875rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .provider-badge {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 600;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  /* WCAG AAA: --success (#22543d) = 9.1:1 on white */
+  .provider-green {
+    background: rgba(34, 84, 61, 0.1);
+    color: var(--success);
+  }
+
+  .provider-neutral {
+    background: rgba(107, 114, 128, 0.1);
+    color: var(--text-light);
+  }
+
+  /* ── Workflow Grid ──────────────────────────────────────────── */
+  .workflow-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .workflow-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    background: rgba(30, 90, 158, 0.06);
+    border: 1px solid rgba(30, 90, 158, 0.12);
+    border-radius: 8px;
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+
+  /* WCAG AAA: --primary-blue (#1e5a9e) = 7.3:1 on white */
+  .workflow-chip .chip-count {
+    font-weight: 700;
+    color: var(--primary-blue);
+  }
+
+  /* ── Panel Footer ───────────────────────────────────────────── */
+  .panel-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-light);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .panel-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+    text-decoration: none;
+    transition: color 0.2s;
+    min-height: var(--min-touch-target);
+  }
+
+  .panel-link:hover {
+    color: var(--accent-blue);
+  }
+
+  .panel-link:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+    border-radius: 4px;
+  }
+
+  .panel-source {
+    font-size: 0.6875rem;
+    color: var(--text-light);
+  }
+
+  /* ── Transparency Note ──────────────────────────────────────── */
+  .transparency-note {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    margin-top: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .transparency-note svg {
+    flex-shrink: 0;
+    color: var(--text-light);
+    margin-top: 0.125rem;
+  }
+
+  .transparency-note p {
+    font-size: 0.8125rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── CTA ────────────────────────────────────────────────────── */
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .btn-outline-white {
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 0.875rem 2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    min-height: var(--min-touch-target);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-outline-white:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-outline-white:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+  }
+
+  /* ── Dark Theme ─────────────────────────────────────────────── */
+  :global([data-theme='dark']) .stats-status-bar {
+    background: linear-gradient(
+      135deg,
+      rgba(163, 213, 255, 0.06) 0%,
+      rgba(125, 211, 252, 0.06) 100%
+    );
+    border-color: rgba(163, 213, 255, 0.15);
+  }
+
+  :global([data-theme='dark']) .stats-panel {
+    background: var(--card-bg);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  :global([data-theme='dark']) .stats-panel:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme='dark']) .stat-card {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.04) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  :global([data-theme='dark']) .panel-title-group h2,
+  :global([data-theme='dark']) .stat-value {
+    color: var(--text-dark);
+  }
+
+  :global([data-theme='dark']) .snowflake-icon {
+    background: rgba(167, 139, 250, 0.15);
+    color: #a78bfa;
+  }
+
+  :global([data-theme='dark']) .carbon-icon {
+    background: rgba(74, 222, 128, 0.15);
+    color: #4ade80;
+  }
+
+  :global([data-theme='dark']) .analytics-icon {
+    background: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+  }
+
+  :global([data-theme='dark']) .sparkline-container {
+    background: linear-gradient(
+      135deg,
+      rgba(167, 139, 250, 0.06) 0%,
+      rgba(139, 92, 246, 0.06) 100%
+    );
+    border-color: rgba(167, 139, 250, 0.12);
+  }
+
+  :global([data-theme='dark']) .emissions-bar {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  :global([data-theme='dark']) .provider-card {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  :global([data-theme='dark']) .workflow-chip {
+    background: rgba(96, 165, 250, 0.08);
+    border-color: rgba(96, 165, 250, 0.15);
+  }
+
+  :global([data-theme='dark']) .transparency-note {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  /* WCAG AAA dark mode: badge colors use high-contrast dark theme values */
+  :global([data-theme='dark']) .panel-badge.online,
+  :global([data-theme='dark']) .panel-badge.live {
+    background: rgba(34, 84, 61, 0.2);
+    color: #86efac;
+  }
+
+  :global([data-theme='dark']) .panel-badge.offline {
+    background: rgba(155, 28, 28, 0.2);
+    color: #fca5a5;
+  }
+
+  :global([data-theme='dark']) .carbon-highlight {
+    color: #86efac !important;
+  }
+
+  /* Dark mode stat value colors — AAA on #1a202c background */
+  :global([data-theme='dark']) .snowflake-panel .stat-card .stat-value {
+    color: #c4b5fd;
+  } /* ~10:1 */
+
+  :global([data-theme='dark']) .analytics-panel .stat-card:nth-child(1) .stat-value {
+    color: var(--text-dark);
+  }
+  :global([data-theme='dark']) .analytics-panel .stat-card:nth-child(2) .stat-value {
+    color: var(--text-dark);
+  }
+  :global([data-theme='dark']) .analytics-panel .stat-card:nth-child(3) .stat-value {
+    color: var(--text-dark);
+  }
+  :global([data-theme='dark']) .analytics-panel .stat-card:nth-child(4) .stat-value {
+    color: #fdba74;
+  } /* ~10:1 */
+
+  :global([data-theme='dark']) .provider-green {
+    background: rgba(34, 84, 61, 0.2);
+    color: #86efac;
+  }
+
+  :global([data-theme='dark']) .workflow-chip .chip-count {
+    color: #93c5fd;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .stats-panel {
+      padding: 1.5rem;
+    }
+
+    .stats-grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .provider-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-value {
+      font-size: 1.375rem;
+    }
+
+    .panel-header {
+      gap: 0.75rem;
+    }
+
+    .panel-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+    }
+
+    .panel-title-group h2 {
+      font-size: 1.125rem;
+    }
+
+    .panel-badge {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .panel-footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .bar-legend {
+      gap: 0.75rem;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta-buttons .btn,
+    .cta-buttons .btn-outline-white {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid-4 {
+      grid-template-columns: 1fr;
+    }
+
+    .sparkline-container canvas {
+      height: 60px;
+    }
+  }
+</style>
+
+<script>
+  // ── Utility Functions ──────────────────────────────────────────
+  function formatNumber(num) {
+    if (num === null || num === undefined || num === 0) return '0';
+    if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + 'M';
+    if (num >= 1_000) return (num / 1_000).toFixed(1) + 'K';
+    return num.toLocaleString();
+  }
+
+  function formatBytes(bytes) {
+    if (!bytes || bytes === 0) return '0 B';
+    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+    return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + units[i];
+  }
+
+  function animateCounter(el, target) {
+    if (!el || isNaN(target) || target === 0) return;
+    const duration = 1200;
+    const start = performance.now();
+
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(target * eased);
+      el.textContent = current.toLocaleString();
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  function setBadge(id, status, text) {
+    const badge = document.getElementById(id);
+    if (!badge) return;
+    badge.className = 'panel-badge ' + status;
+    const textEl = badge.querySelector('.badge-text');
+    if (textEl) textEl.textContent = text;
+  }
+
+  function getTimeAgo(date) {
+    const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
+    if (seconds < 60) return 'just now';
+    if (seconds < 3600) return Math.floor(seconds / 60) + 'm ago';
+    if (seconds < 86400) return Math.floor(seconds / 3600) + 'h ago';
+    return Math.floor(seconds / 86400) + 'd ago';
+  }
+
+  // ── Draw Sparkline ─────────────────────────────────────────────
+  function drawSparkline(canvasId, data, color) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas || !data || data.length === 0) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+
+    const w = rect.width;
+    const h = rect.height;
+    const padding = 4;
+
+    const values = data.map((d) => d.total || d.connections || 0);
+    const max = Math.max(...values, 1);
+    const min = Math.min(...values, 0);
+    const range = max - min || 1;
+
+    // Fill gradient
+    const gradient = ctx.createLinearGradient(0, 0, 0, h);
+    gradient.addColorStop(0, color + '20');
+    gradient.addColorStop(1, color + '02');
+
+    ctx.beginPath();
+    ctx.moveTo(padding, h - padding);
+
+    for (let i = 0; i < values.length; i++) {
+      const x = padding + (i / (values.length - 1)) * (w - 2 * padding);
+      const y = h - padding - ((values[i] - min) / range) * (h - 2 * padding);
+      ctx.lineTo(x, y);
+    }
+
+    ctx.lineTo(w - padding, h - padding);
+    ctx.closePath();
+    ctx.fillStyle = gradient;
+    ctx.fill();
+
+    // Line stroke
+    ctx.beginPath();
+    for (let i = 0; i < values.length; i++) {
+      const x = padding + (i / (values.length - 1)) * (w - 2 * padding);
+      const y = h - padding - ((values[i] - min) / range) * (h - 2 * padding);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+
+    // End dot
+    if (values.length > 0) {
+      const lastX = w - padding;
+      const lastY = h - padding - ((values[values.length - 1] - min) / range) * (h - 2 * padding);
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 3, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    }
+  }
+
+  // ── Build Workflow Chips (DOM-safe, no innerHTML) ──────────────
+  function buildWorkflowChips(workflows) {
+    const grid = document.getElementById('workflow-grid');
+    if (!grid || !workflows) return;
+
+    // Clear existing children
+    while (grid.firstChild) {
+      grid.removeChild(grid.firstChild);
+    }
+
+    const entries = Object.entries(workflows)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 6);
+
+    for (const [name, count] of entries) {
+      const chip = document.createElement('span');
+      chip.className = 'workflow-chip';
+      chip.setAttribute('role', 'listitem');
+
+      const countSpan = document.createElement('span');
+      countSpan.className = 'chip-count';
+      countSpan.textContent = count + '\u00d7';
+
+      const nameText = document.createTextNode(
+        ' ' + (name.length > 30 ? name.substring(0, 27) + '...' : name)
+      );
+
+      chip.appendChild(countSpan);
+      chip.appendChild(nameText);
+      grid.appendChild(chip);
+    }
+  }
+
+  // ── Load Snowflake Stats ───────────────────────────────────────
+  let snowflakeLoaded = false;
+  let carbonLoaded = false;
+
+  async function loadSnowflakeStats() {
+    const SNOWFLAKE_API = 'https://snowflake-stats.baytides.org/stats';
+
+    try {
+      const response = await fetch(SNOWFLAKE_API);
+      if (!response.ok) throw new Error('Snowflake stats unavailable');
+
+      const data = await response.json();
+      snowflakeLoaded = true;
+
+      // Update badge
+      const status = data.vmStatus === 'online' ? 'online' : 'offline';
+      setBadge('snowflake-badge', status, data.vmStatus === 'online' ? 'Online' : 'Offline');
+
+      // Animate total counter
+      const sfTotal = document.getElementById('sf-total');
+      if (sfTotal && data.totalUsersHelped) {
+        animateCounter(sfTotal, data.totalUsersHelped);
+      }
+
+      const sf24h = document.getElementById('sf-24h');
+      if (sf24h) sf24h.textContent = formatNumber(data.last24Hours || 0);
+
+      const sf7d = document.getElementById('sf-7d');
+      if (sf7d) sf7d.textContent = formatNumber(data.last7Days || 0);
+
+      const sfUptime = document.getElementById('sf-uptime');
+      if (sfUptime && data.uptimeHours) {
+        const days = Math.floor(data.uptimeHours / 24);
+        const hours = data.uptimeHours % 24;
+        sfUptime.textContent = days > 0 ? days + 'd ' + hours + 'h' : hours + 'h';
+      }
+
+      // Draw sparkline from history
+      if (data.history && data.history.length > 1) {
+        const container = document.getElementById('sf-sparkline-container');
+        if (container) container.style.display = 'block';
+        // Reverse so oldest is first (left)
+        drawSparkline('sf-sparkline', [...data.history].reverse(), '#6d28d9');
+      }
+
+      // Update source timestamp
+      const sfSource = document.getElementById('sf-source');
+      if (sfSource && data.lastUpdated) {
+        const ago = getTimeAgo(new Date(data.lastUpdated));
+        sfSource.textContent = 'Updated ' + ago + ' \u00b7 Cloudflare KV';
+      }
+
+      updateGlobalStatus();
+    } catch (error) {
+      console.log('Snowflake stats unavailable:', error.message);
+      setBadge('snowflake-badge', 'offline', 'Unavailable');
+      updateGlobalStatus();
+    }
+  }
+
+  // ── Load Carbon & Analytics Stats ──────────────────────────────
+  async function loadCarbonStats() {
+    try {
+      const response = await fetch('/data/carbon-stats.json');
+      if (!response.ok) throw new Error('Carbon stats unavailable');
+
+      const data = await response.json();
+      carbonLoaded = true;
+
+      // Carbon badge
+      const anyLive = Object.values(data.dataFreshness).some((v) => v === 'live');
+      setBadge('carbon-badge', anyLive ? 'live' : '', anyLive ? 'Live Data' : 'Estimated');
+
+      // Carbon values
+      const cbNet = document.getElementById('cb-net');
+      if (cbNet) cbNet.textContent = data.summary.netEmissionsKg;
+
+      const cbGross = document.getElementById('cb-gross');
+      if (cbGross) cbGross.textContent = data.summary.totalGrossEmissionsKg;
+
+      const cbRenewable = document.getElementById('cb-renewable');
+      if (cbRenewable) cbRenewable.textContent = data.summary.renewableEnergyPercent + '%';
+
+      const cbRating = document.getElementById('cb-rating');
+      if (cbRating) cbRating.textContent = data.summary.greenRating;
+
+      // Emissions bar animation
+      const emissions = data.emissionsBySource;
+      if (emissions) {
+        const cdnPct = parseFloat(emissions.cdn.percent) || 0;
+        const hostingPct = parseFloat(emissions.hosting.percent) || 0;
+        const ciPct = parseFloat(emissions.ci.percent) || 0;
+
+        setTimeout(function () {
+          const barCdn = document.getElementById('bar-cdn');
+          const barHosting = document.getElementById('bar-hosting');
+          const barCi = document.getElementById('bar-ci');
+
+          if (barCdn) barCdn.style.width = cdnPct + '%';
+          if (barHosting) barHosting.style.width = hostingPct + '%';
+          if (barCi) barCi.style.width = ciPct + '%';
+        }, 300);
+
+        const legendCdn = document.getElementById('legend-cdn-val');
+        const legendHosting = document.getElementById('legend-hosting-val');
+        const legendCi = document.getElementById('legend-ci-val');
+
+        if (legendCdn)
+          legendCdn.textContent = '(' + emissions.cdn.grams + 'g \u00b7 ' + cdnPct + '%)';
+        if (legendHosting)
+          legendHosting.textContent =
+            '(' + emissions.hosting.grams + 'g \u00b7 ' + hostingPct + '%)';
+        if (legendCi) legendCi.textContent = '(' + emissions.ci.grams + 'g \u00b7 ' + ciPct + '%)';
+      }
+
+      // Analytics panel
+      setBadge('analytics-badge', anyLive ? 'live' : '', anyLive ? 'Live Data' : 'Estimated');
+
+      const anViews = document.getElementById('an-views');
+      if (anViews) animateCounter(anViews, data.usage.pageViews);
+
+      const anRequests = document.getElementById('an-requests');
+      if (anRequests) anRequests.textContent = formatNumber(data.usage.cdnRequests);
+
+      const anBandwidth = document.getElementById('an-bandwidth');
+      if (anBandwidth) anBandwidth.textContent = formatBytes(data.usage.cdnBytesTransferred);
+
+      const anCi = document.getElementById('an-ci');
+      if (anCi) anCi.textContent = formatNumber(data.usage.ciRuns);
+
+      // Build workflow chips using safe DOM methods
+      if (data.usage.ciWorkflows) {
+        buildWorkflowChips(data.usage.ciWorkflows);
+      }
+
+      // Source timestamps
+      const cbSource = document.getElementById('cb-source');
+      if (cbSource && data.generatedAt) {
+        const ago = getTimeAgo(new Date(data.generatedAt));
+        cbSource.textContent = 'Updated ' + ago + ' \u00b7 Cloudflare & GitHub APIs';
+      }
+
+      const anSource = document.getElementById('an-source');
+      if (anSource && data.generatedAt) {
+        const ago = getTimeAgo(new Date(data.generatedAt));
+        anSource.textContent = 'Updated ' + ago + ' \u00b7 Cloudflare Analytics';
+      }
+
+      updateGlobalStatus();
+    } catch (error) {
+      console.log('Carbon stats unavailable:', error.message);
+      setBadge('carbon-badge', 'offline', 'Unavailable');
+      setBadge('analytics-badge', 'offline', 'Unavailable');
+      updateGlobalStatus();
+    }
+  }
+
+  // ── Global Status ──────────────────────────────────────────────
+  function updateGlobalStatus() {
+    const pulse = document.getElementById('global-pulse');
+    const statusText = document.getElementById('global-status');
+    const timestamp = document.getElementById('global-timestamp');
+
+    if (!pulse || !statusText) return;
+
+    const allLoaded = snowflakeLoaded && carbonLoaded;
+    const anyLoaded = snowflakeLoaded || carbonLoaded;
+
+    if (allLoaded) {
+      pulse.className = 'status-pulse live';
+      statusText.textContent = 'All systems operational';
+    } else if (anyLoaded) {
+      pulse.className = 'status-pulse partial';
+      statusText.textContent = 'Partial data available';
+    } else {
+      pulse.className = 'status-pulse offline';
+      statusText.textContent = 'Unable to reach data sources';
+    }
+
+    if (timestamp) {
+      const now = new Date();
+      timestamp.textContent =
+        'Last checked: ' +
+        now.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+    }
+  }
+
+  // ── Initialize ─────────────────────────────────────────────────
+  function init() {
+    // Hide sparkline container until data arrives
+    const sparkContainer = document.getElementById('sf-sparkline-container');
+    if (sparkContainer) sparkContainer.style.display = 'none';
+
+    // Fetch both data sources in parallel
+    Promise.all([loadSnowflakeStats(), loadCarbonStats()]);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+</script>
