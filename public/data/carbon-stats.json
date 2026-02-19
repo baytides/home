@@ -1,61 +1,69 @@
 {
-  "generatedAt": "2026-02-18T06:24:45.986Z",
+  "generatedAt": "2026-02-19T06:23:50.280Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
     "github": "live",
-    "azure": "live"
+    "snowflake": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.426",
+    "totalGrossEmissionsKg": "0.442",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
     "carbonNeutral": true
   },
-  "snowflake": null,
+  "snowflake": {
+    "totalUsersHelped": 0,
+    "last24Hours": 0,
+    "last7Days": 0,
+    "uptime": 97,
+    "lastUpdated": "2026-02-19T06:18:50.679Z"
+  },
   "usage": {
-    "cdnRequests": 173435,
-    "pageViews": 16433,
-    "cdnBytesTransferred": 9208925064,
-    "cdnCacheHitRate": "2.4",
+    "cdnRequests": 174174,
+    "pageViews": 17211,
+    "cdnBytesTransferred": 9656397406,
+    "cdnCacheHitRate": "0.8",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
       "Update Carbon Stats": 2,
+      "Lighthouse CI": 5,
       "Deploy to Cloudflare Pages": 30,
       "Push on main": 30,
-      "Update Snowflake Stats": 27,
-      "Lighthouse CI": 7,
-      "npm_and_yarn in / for @playwright/test - Update #1246428543": 1,
-      "npm_and_yarn in / for eslint - Update #1246428541": 1,
-      "github_actions in /. - Update #1246428538": 1,
-      "npm_and_yarn in /. - Update #1246428536": 1
+      "npm_and_yarn in / for @cloudflare/workers-types - Update #1248981144": 1,
+      "npm_and_yarn in / for eslint - Update #1248981129": 1,
+      "npm_and_yarn in / for @types/react - Update #1248981125": 1,
+      "npm_and_yarn in / for @types/react - Update #1248981004": 1,
+      "npm_and_yarn in / for eslint - Update #1248980999": 1,
+      "npm_and_yarn in / for @cloudflare/workers-types - Update #1248980998": 1,
+      "Update Snowflake Stats": 27
     }
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "17.3",
-      "percent": "4.1",
+      "grams": "17.4",
+      "percent": "3.9",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "328.7",
-      "percent": "77.1",
+      "grams": "344.2",
+      "percent": "77.9",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "18.8",
+      "percent": "18.1",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
   },
   "comparison": {
-    "equivalentMilesDriven": "1.07",
-    "equivalentPaperPages": 43,
+    "equivalentMilesDriven": "1.10",
+    "equivalentPaperPages": 44,
     "cleanerThanPercent": 85
   },
   "providers": {
@@ -71,13 +79,10 @@
       "renewableEnergy": 100,
       "note": "Code hosting and CI/CD"
     },
-    "azure": {
-      "name": "Microsoft Azure",
-      "carbonNeutralSince": 2012,
+    "local": {
+      "name": "Self-Hosted Mac Mini",
       "renewableEnergy": 100,
-      "renewableEnergySince": 2025,
-      "carbonNegativeTarget": 2030,
-      "note": "VM hosting for Tor Snowflake proxy"
+      "note": "Local hosting for Tor Snowflake proxy"
     }
   },
   "carbonFactors": {
@@ -93,7 +98,7 @@
       "All infrastructure providers use 100% renewable energy",
       "Cloudflare achieved net-zero emissions in 2025",
       "GitHub Actions runners are powered by renewable energy",
-      "Azure has been carbon neutral since 2012",
+      "Snowflake proxy runs on a self-hosted Mac Mini powered by local energy",
       "Usage data is updated daily via GitHub Actions"
     ]
   }
