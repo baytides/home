@@ -5,15 +5,11 @@
  * Data Sources:
  * - Cloudflare: CDN requests and bandwidth
  * - GitHub: CI/CD workflow runs
- * - Azure: VM metrics (optional, for Snowflake proxy stats)
- *
- * Note: This script uses execSync for Azure CLI commands which require shell execution.
- * All inputs are hardcoded environment variables or resource IDs, not user-provided.
+ * - Snowflake Stats Worker: Tor Snowflake proxy stats (served from Cloudflare KV)
  */
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 
 // Carbon factors (grams CO2e)
 const CARBON_FACTORS = {
@@ -36,13 +32,10 @@ const PROVIDER_STATS = {
     renewableEnergy: 100,
     note: 'Code hosting and CI/CD',
   },
-  azure: {
-    name: 'Microsoft Azure',
-    carbonNeutralSince: 2012,
+  local: {
+    name: 'Self-Hosted Mac Mini',
     renewableEnergy: 100,
-    renewableEnergySince: 2025,
-    carbonNegativeTarget: 2030,
-    note: 'VM hosting for Tor Snowflake proxy',
+    note: 'Local hosting for Tor Snowflake proxy',
   },
 };
 
@@ -170,87 +163,30 @@ async function getGitHubStats() {
   }
 }
 
-async function getAzureStats() {
-  // Check if Azure CLI is available and logged in
-  // Note: execSync is used here because Azure CLI requires shell execution.
-  // All inputs are from environment variables, not user-provided data.
-  try {
-    execSync('az account show', { stdio: 'pipe' });
-  } catch {
-    console.log('Azure CLI not available or not logged in');
-    return null;
-  }
-
-  const subscriptionId = process.env.AZURE_SUBSCRIPTION_ID;
-  const resourceGroup = process.env.AZURE_RESOURCE_GROUP || 'baytides-rg';
-  const vmName = process.env.AZURE_VM_NAME || 'carl-ai-vm';
-
-  if (!subscriptionId) {
-    console.log('Azure subscription ID not configured');
-    return null;
-  }
-
-  // Calculate date range (last 30 days)
-  const endTime = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
-  const startDate = new Date();
-  startDate.setDate(startDate.getDate() - 30);
-  const startTime = startDate.toISOString().split('T')[0] + 'T00:00:00Z';
+async function getSnowflakeStats() {
+  const statsUrl = process.env.SNOWFLAKE_STATS_URL || 'https://snowflake-stats.baytides.org/stats';
 
   try {
-    // Get VM CPU percentage (to confirm VM is running)
-    const vmResourceId = `/subscriptions/${subscriptionId}/resourceGroups/${resourceGroup}/providers/Microsoft.Compute/virtualMachines/${vmName}`;
-    const vmCmd = `az monitor metrics list --resource "${vmResourceId}" --metric "Percentage CPU" --interval P1D --aggregation Average --start-time ${startTime} --end-time ${endTime} -o json`;
-
-    let vmRunning = false;
-    let avgCpuPercent = 0;
-    try {
-      const vmResult = JSON.parse(execSync(vmCmd, { stdio: 'pipe' }).toString());
-      const timeseries = vmResult?.value?.[0]?.timeseries?.[0]?.data || [];
-      const validData = timeseries.filter((d) => d.average !== null && d.average !== undefined);
-      vmRunning = validData.length > 0;
-      avgCpuPercent =
-        validData.length > 0
-          ? (validData.reduce((sum, d) => sum + d.average, 0) / validData.length).toFixed(1)
-          : 0;
-    } catch (err) {
-      console.error('Failed to fetch VM metrics:', err.message);
+    const response = await fetch(statsUrl);
+    if (!response.ok) {
+      console.log(`Snowflake stats API returned ${response.status}`);
+      return null;
     }
 
-    // Get Snowflake proxy connection stats from the VM
-    let snowflakeStats = null;
-    if (vmRunning) {
-      try {
-        // Use Azure Run Command to get Snowflake metrics from the VM
-        // The snowflake proxy logs connection stats which we can parse
-        const runCmdResult = execSync(
-          `az vm run-command invoke --resource-group "${resourceGroup}" --name "${vmName}" --command-id RunShellScript --scripts "cat /var/log/snowflake-stats.json 2>/dev/null || echo '{}'" -o json`,
-          { stdio: 'pipe', timeout: 60000 }
-        ).toString();
-
-        const cmdOutput = JSON.parse(runCmdResult);
-        const stdoutMessage = cmdOutput?.value?.[0]?.message || '';
-
-        // Extract JSON from the output (it's in [stdout] section)
-        const stdoutMatch = stdoutMessage.match(/\[stdout\]\n([\s\S]*?)(?:\[stderr\]|$)/);
-        if (stdoutMatch && stdoutMatch[1]) {
-          const statsJson = stdoutMatch[1].trim();
-          if (statsJson && statsJson !== '{}') {
-            snowflakeStats = JSON.parse(statsJson);
-          }
-        }
-      } catch (err) {
-        console.error('Failed to fetch Snowflake stats from VM:', err.message);
-      }
-    }
-
+    const data = await response.json();
     return {
-      vmRunning,
-      avgCpuPercent: parseFloat(avgCpuPercent),
-      snowflake: snowflakeStats,
-      source: 'azure_monitor',
+      proxyRunning: data.vmStatus === 'online',
+      snowflake: {
+        totalConnections: data.totalUsersHelped || 0,
+        last24Hours: data.last24Hours || 0,
+        last7Days: data.last7Days || 0,
+        uptimeHours: data.uptimeHours || 0,
+        lastUpdated: data.lastUpdated,
+      },
+      source: 'cloudflare_kv',
     };
   } catch (error) {
-    console.error('Azure fetch error:', error.message);
+    console.error('Snowflake stats fetch error:', error.message);
     return null;
   }
 }
@@ -258,10 +194,10 @@ async function getAzureStats() {
 async function main() {
   console.log('Fetching carbon stats for Bay Tides website...');
 
-  const [cloudflareStats, githubStats, azureStats] = await Promise.all([
+  const [cloudflareStats, githubStats, snowflakeApiStats] = await Promise.all([
     getCloudflareStats(),
     getGitHubStats(),
-    getAzureStats(),
+    getSnowflakeStats(),
   ]);
 
   // Use real data where available, fall back to null
@@ -278,7 +214,7 @@ async function main() {
   const dataSources = {
     cloudflare: cloudflareStats ? 'live' : 'unavailable',
     github: githubStats ? 'live' : 'unavailable',
-    azure: azureStats ? 'live' : 'unavailable',
+    snowflake: snowflakeApiStats ? 'live' : 'unavailable',
   };
 
   // Calculate emissions (use 0 if data unavailable)
@@ -296,8 +232,8 @@ async function main() {
   const equivalentMilesDriven = (totalGrossGrams / 400).toFixed(2);
   const equivalentPaperPages = Math.round(totalGrossGrams / 10);
 
-  // Snowflake proxy stats from Azure VM
-  const snowflakeData = azureStats?.snowflake || null;
+  // Snowflake proxy stats from Cloudflare KV Worker
+  const snowflakeData = snowflakeApiStats?.snowflake || null;
 
   const stats = {
     generatedAt: new Date().toISOString(),
@@ -366,7 +302,7 @@ async function main() {
         'All infrastructure providers use 100% renewable energy',
         'Cloudflare achieved net-zero emissions in 2025',
         'GitHub Actions runners are powered by renewable energy',
-        'Azure has been carbon neutral since 2012',
+        'Snowflake proxy runs on a self-hosted Mac Mini powered by local energy',
         'Usage data is updated daily via GitHub Actions',
       ],
     },
@@ -388,7 +324,7 @@ async function main() {
   );
   console.log(`- GitHub: ${dataSources.github} (${usage.ciRuns ?? 'N/A'} CI runs)`);
   console.log(
-    `- Azure: ${dataSources.azure} (VM ${azureStats?.vmRunning ? 'running' : 'not available'})`
+    `- Snowflake: ${dataSources.snowflake} (proxy ${snowflakeApiStats?.proxyRunning ? 'running' : 'not available'})`
   );
   console.log(`- Total gross emissions: ${stats.summary.totalGrossEmissionsKg} kg CO₂e`);
 }

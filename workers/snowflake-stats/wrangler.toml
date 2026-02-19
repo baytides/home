@@ -1,0 +1,20 @@
+name = "baytides-snowflake-stats"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGIN = "https://baytides.org"
+
+# KV namespace for snowflake stats
+[[kv_namespaces]]
+binding = "SNOWFLAKE_STATS_KV"
+id = "8dd13ee5a5cd40adbd61ba6b344939e2"
+
+# Secrets to add via wrangler:
+# wrangler secret put STATS_API_KEY --cwd workers/snowflake-stats
+
+# Custom domain
+[[routes]]
+pattern = "snowflake-stats.baytides.org"
+custom_domain = true

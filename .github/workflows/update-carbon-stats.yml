@@ -8,7 +8,6 @@ on:
 
 permissions:
   contents: write
-  id-token: write
   actions: write
 
 jobs:
@@ -23,21 +22,11 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Azure Login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
       - name: Fetch Carbon Stats
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_SUSTAINABILITY_API_TOKEN }}
           CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          AZURE_RESOURCE_GROUP: 'baytides-rg'
-          AZURE_VM_NAME: 'carl-ai-vm'
         run: |
           node scripts/fetch-carbon-stats.cjs
 

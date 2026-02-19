@@ -1,14 +1,5 @@
 ---
 const currentYear = new Date().getFullYear();
-
-// Import Snowflake stats for server-side rendering
-let snowflakeStats = { totalUsersHelped: 0, vmStatus: 'unknown' };
-try {
-  const statsModule = await import('../../public/data/snowflake-stats.json');
-  snowflakeStats = statsModule.default || statsModule;
-} catch {
-  // Stats file not yet available
-}
 ---
 
 <!-- Footer -->
@@ -100,15 +91,7 @@ try {
           >
             <span class="toggle-label" id="snowflake-status">Enable</span>
           </button>
-          <span class="snowflake-stats" id="snowflake-stats">
-            {
-              snowflakeStats.totalUsersHelped > 0 && (
-                <span class="global-count" id="snowflake-global-count">
-                  · {snowflakeStats.totalUsersHelped.toLocaleString()} helped globally
-                </span>
-              )
-            }
-          </span>
+          <span class="snowflake-stats" id="snowflake-stats"></span>
         </span>
       </div>
     </div>
@@ -130,35 +113,40 @@ try {
   (function () {
     const STORAGE_KEY = 'snowflake-enabled';
     const SNOWFLAKE_URL = 'https://snowflake.torproject.org/embed.html';
+    const STATS_API_URL = 'https://snowflake-stats.baytides.org/stats';
 
     const toggleBtn = document.getElementById('snowflake-toggle');
     const statusLabel = document.getElementById('snowflake-status');
     const statsEl = document.getElementById('snowflake-stats');
-    const globalCountEl = document.getElementById('snowflake-global-count');
     const iframe = document.getElementById('snowflake-iframe');
 
     let isEnabled = localStorage.getItem(STORAGE_KEY) === 'true';
     let sessionConnections = 0;
+    let globalCount = '0';
     let pollInterval = null;
 
-    // Store global count from server-rendered value
-    const globalCountMatch = globalCountEl?.textContent?.match(/(\d[\d,]*)/);
-    const globalCount = globalCountMatch ? globalCountMatch[1] : '0';
+    // Fetch global stats from Cloudflare Worker
+    fetch(STATS_API_URL)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (data && data.totalUsersHelped > 0) {
+          globalCount = data.totalUsersHelped.toLocaleString();
+        }
+        updateUI();
+      })
+      .catch(() => {});
 
     function updateUI() {
       toggleBtn.setAttribute('aria-pressed', String(isEnabled));
       toggleBtn.classList.toggle('active', isEnabled);
       statusLabel.textContent = isEnabled ? 'Active' : 'Enable';
 
-      // Build stats display
       let statsText = '';
 
-      // Always show global count if we have it
       if (globalCount && globalCount !== '0') {
         statsText = `· ${globalCount} helped globally`;
       }
 
-      // Add session stats when proxy is enabled
       if (isEnabled && sessionConnections > 0) {
         statsText += ` · ${sessionConnections} this session`;
       } else if (isEnabled && !statsText) {
@@ -181,7 +169,6 @@ try {
     }
 
     function startPolling() {
-      // Poll the iframe for connection stats via postMessage
       stopPolling();
       pollInterval = setInterval(() => {
         try {
@@ -199,7 +186,6 @@ try {
       }
     }
 
-    // Listen for stats messages from the iframe
     window.addEventListener('message', (event) => {
       if (event.origin !== 'https://snowflake.torproject.org') return;
 
@@ -209,7 +195,6 @@ try {
       }
     });
 
-    // Handle toggle click
     toggleBtn.addEventListener('click', () => {
       isEnabled = !isEnabled;
       localStorage.setItem(STORAGE_KEY, String(isEnabled));
@@ -224,7 +209,6 @@ try {
       updateUI();
     });
 
-    // Initialize on page load
     updateUI();
     if (isEnabled) {
       startProxy();
