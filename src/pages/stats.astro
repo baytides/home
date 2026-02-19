@@ -289,7 +289,7 @@ const structuredData = [
           </div>
           <div class="panel-title-group">
             <h2 id="analytics-heading">Site Analytics</h2>
-            <p class="panel-subtitle">Traffic and infrastructure performance (last 30 days)</p>
+            <p class="panel-subtitle">Visitor analytics from Plausible (last 30 days)</p>
           </div>
           <div class="panel-badge analytics-badge" id="analytics-badge">
             <span class="badge-dot"></span>
@@ -299,34 +299,25 @@ const structuredData = [
 
         <div class="stats-grid stats-grid-4" role="list" aria-label="Site analytics">
           <div class="stat-card" role="listitem">
-            <span class="stat-value" id="an-views">&mdash;</span>
-            <span class="stat-label">Page Views</span>
+            <span class="stat-value" id="an-visitors">&mdash;</span>
+            <span class="stat-label">Unique Visitors</span>
             <span class="stat-detail">Last 30 days</span>
           </div>
           <div class="stat-card" role="listitem">
-            <span class="stat-value" id="an-requests">&mdash;</span>
-            <span class="stat-label">CDN Requests</span>
-            <span class="stat-detail">Cloudflare edge</span>
+            <span class="stat-value" id="an-pageviews">&mdash;</span>
+            <span class="stat-label">Page Views</span>
+            <span class="stat-detail">Total pages loaded</span>
           </div>
           <div class="stat-card" role="listitem">
-            <span class="stat-value" id="an-bandwidth">&mdash;</span>
-            <span class="stat-label">Bandwidth</span>
-            <span class="stat-detail">Data transferred</span>
+            <span class="stat-value" id="an-bounce">&mdash;</span>
+            <span class="stat-label">Bounce Rate</span>
+            <span class="stat-detail">Single-page visits</span>
           </div>
           <div class="stat-card" role="listitem">
-            <span class="stat-value" id="an-ci">&mdash;</span>
-            <span class="stat-label">CI/CD Runs</span>
-            <span class="stat-detail">Build &amp; deploy</span>
+            <span class="stat-value" id="an-duration">&mdash;</span>
+            <span class="stat-label">Avg. Visit</span>
+            <span class="stat-detail">Time on site</span>
           </div>
-        </div>
-
-        <!-- CI Workflow Breakdown -->
-        <div
-          class="workflow-grid"
-          id="workflow-grid"
-          role="list"
-          aria-label="CI/CD workflow breakdown"
-        >
         </div>
 
         <div class="panel-footer">
@@ -349,7 +340,7 @@ const structuredData = [
               <path d="M7 17 17 7"></path>
             </svg>
           </a>
-          <span class="panel-source" id="an-source">Source: Cloudflare Analytics API</span>
+          <span class="panel-source" id="an-source">Source: Plausible Analytics</span>
         </div>
       </div>
 
@@ -833,32 +824,6 @@ const structuredData = [
     color: var(--text-light);
   }
 
-  /* ── Workflow Grid ──────────────────────────────────────────── */
-  .workflow-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .workflow-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    padding: 0.375rem 0.75rem;
-    background: rgba(30, 90, 158, 0.06);
-    border: 1px solid rgba(30, 90, 158, 0.12);
-    border-radius: 8px;
-    font-size: 0.75rem;
-    color: var(--text-light);
-  }
-
-  /* WCAG AAA: --primary-blue (#1e5a9e) = 7.3:1 on white */
-  .workflow-chip .chip-count {
-    font-weight: 700;
-    color: var(--primary-blue);
-  }
-
   /* ── Panel Footer ───────────────────────────────────────────── */
   .panel-footer {
     display: flex;
@@ -1020,11 +985,6 @@ const structuredData = [
     border-color: rgba(255, 255, 255, 0.08);
   }
 
-  :global([data-theme='dark']) .workflow-chip {
-    background: rgba(96, 165, 250, 0.08);
-    border-color: rgba(96, 165, 250, 0.15);
-  }
-
   :global([data-theme='dark']) .transparency-note {
     background: rgba(255, 255, 255, 0.04);
   }
@@ -1066,10 +1026,6 @@ const structuredData = [
   :global([data-theme='dark']) .provider-green {
     background: rgba(34, 84, 61, 0.2);
     color: #86efac;
-  }
-
-  :global([data-theme='dark']) .workflow-chip .chip-count {
-    color: #93c5fd;
   }
 
   /* ── Responsive ─────────────────────────────────────────────── */
@@ -1148,13 +1104,6 @@ const structuredData = [
     if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + 'M';
     if (num >= 1_000) return (num / 1_000).toFixed(1) + 'K';
     return num.toLocaleString();
-  }
-
-  function formatBytes(bytes) {
-    if (!bytes || bytes === 0) return '0 B';
-    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(1024));
-    return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + units[i];
   }
 
   function animateCounter(el, target) {
@@ -1258,42 +1207,10 @@ const structuredData = [
     }
   }
 
-  // ── Build Workflow Chips (DOM-safe, no innerHTML) ──────────────
-  function buildWorkflowChips(workflows) {
-    const grid = document.getElementById('workflow-grid');
-    if (!grid || !workflows) return;
-
-    // Clear existing children
-    while (grid.firstChild) {
-      grid.removeChild(grid.firstChild);
-    }
-
-    const entries = Object.entries(workflows)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 6);
-
-    for (const [name, count] of entries) {
-      const chip = document.createElement('span');
-      chip.className = 'workflow-chip';
-      chip.setAttribute('role', 'listitem');
-
-      const countSpan = document.createElement('span');
-      countSpan.className = 'chip-count';
-      countSpan.textContent = count + '\u00d7';
-
-      const nameText = document.createTextNode(
-        ' ' + (name.length > 30 ? name.substring(0, 27) + '...' : name)
-      );
-
-      chip.appendChild(countSpan);
-      chip.appendChild(nameText);
-      grid.appendChild(chip);
-    }
-  }
-
   // ── Load Snowflake Stats ───────────────────────────────────────
   let snowflakeLoaded = false;
   let carbonLoaded = false;
+  let plausibleLoaded = false;
 
   async function loadSnowflakeStats() {
     const SNOWFLAKE_API = 'https://snowflake-stats.baytides.org/stats';
@@ -1406,43 +1323,66 @@ const structuredData = [
         if (legendCi) legendCi.textContent = '(' + emissions.ci.grams + 'g \u00b7 ' + ciPct + '%)';
       }
 
-      // Analytics panel
-      setBadge('analytics-badge', anyLive ? 'live' : '', anyLive ? 'Live Data' : 'Estimated');
-
-      const anViews = document.getElementById('an-views');
-      if (anViews) animateCounter(anViews, data.usage.pageViews);
-
-      const anRequests = document.getElementById('an-requests');
-      if (anRequests) anRequests.textContent = formatNumber(data.usage.cdnRequests);
-
-      const anBandwidth = document.getElementById('an-bandwidth');
-      if (anBandwidth) anBandwidth.textContent = formatBytes(data.usage.cdnBytesTransferred);
-
-      const anCi = document.getElementById('an-ci');
-      if (anCi) anCi.textContent = formatNumber(data.usage.ciRuns);
-
-      // Build workflow chips using safe DOM methods
-      if (data.usage.ciWorkflows) {
-        buildWorkflowChips(data.usage.ciWorkflows);
-      }
-
-      // Source timestamps
+      // Source timestamp for carbon panel
       const cbSource = document.getElementById('cb-source');
       if (cbSource && data.generatedAt) {
         const ago = getTimeAgo(new Date(data.generatedAt));
         cbSource.textContent = 'Updated ' + ago + ' \u00b7 Cloudflare & GitHub APIs';
       }
 
-      const anSource = document.getElementById('an-source');
-      if (anSource && data.generatedAt) {
-        const ago = getTimeAgo(new Date(data.generatedAt));
-        anSource.textContent = 'Updated ' + ago + ' \u00b7 Cloudflare Analytics';
-      }
-
       updateGlobalStatus();
     } catch (error) {
       console.log('Carbon stats unavailable:', error.message);
       setBadge('carbon-badge', 'offline', 'Unavailable');
+      updateGlobalStatus();
+    }
+  }
+
+  // ── Load Plausible Analytics ───────────────────────────────────
+  async function loadPlausibleStats() {
+    const PLAUSIBLE_API = 'https://stats.baytides.org/api/v1/stats/aggregate';
+    const PLAUSIBLE_KEY = '-4t5VDSC2dZqYnT-BMKoik99kF57DZQFjgfIan0sSn3kNEJhSFGMWwvB9q88BCeN';
+
+    try {
+      const response = await fetch(
+        PLAUSIBLE_API +
+          '?site_id=baytides.org&period=30d&metrics=visitors,pageviews,bounce_rate,visit_duration',
+        { headers: { Authorization: 'Bearer ' + PLAUSIBLE_KEY } }
+      );
+      if (!response.ok) throw new Error('Plausible API returned ' + response.status);
+
+      const data = await response.json();
+      plausibleLoaded = true;
+
+      const r = data.results || {};
+
+      setBadge('analytics-badge', 'live', 'Live Data');
+
+      const anVisitors = document.getElementById('an-visitors');
+      if (anVisitors) animateCounter(anVisitors, r.visitors?.value || 0);
+
+      const anPageviews = document.getElementById('an-pageviews');
+      if (anPageviews) animateCounter(anPageviews, r.pageviews?.value || 0);
+
+      const anBounce = document.getElementById('an-bounce');
+      if (anBounce) anBounce.textContent = (r.bounce_rate?.value || 0) + '%';
+
+      const anDuration = document.getElementById('an-duration');
+      if (anDuration) {
+        const secs = r.visit_duration?.value || 0;
+        const mins = Math.floor(secs / 60);
+        const rem = secs % 60;
+        anDuration.textContent = mins > 0 ? mins + 'm ' + rem + 's' : secs + 's';
+      }
+
+      const anSource = document.getElementById('an-source');
+      if (anSource) {
+        anSource.textContent = 'Live \u00b7 Plausible Analytics';
+      }
+
+      updateGlobalStatus();
+    } catch (error) {
+      console.log('Plausible stats unavailable:', error.message);
       setBadge('analytics-badge', 'offline', 'Unavailable');
       updateGlobalStatus();
     }
@@ -1456,8 +1396,8 @@ const structuredData = [
 
     if (!pulse || !statusText) return;
 
-    const allLoaded = snowflakeLoaded && carbonLoaded;
-    const anyLoaded = snowflakeLoaded || carbonLoaded;
+    const allLoaded = snowflakeLoaded && carbonLoaded && plausibleLoaded;
+    const anyLoaded = snowflakeLoaded || carbonLoaded || plausibleLoaded;
 
     if (allLoaded) {
       pulse.className = 'status-pulse live';
@@ -1484,8 +1424,8 @@ const structuredData = [
     const sparkContainer = document.getElementById('sf-sparkline-container');
     if (sparkContainer) sparkContainer.style.display = 'none';
 
-    // Fetch both data sources in parallel
-    Promise.all([loadSnowflakeStats(), loadCarbonStats()]);
+    // Fetch all three data sources in parallel
+    Promise.all([loadSnowflakeStats(), loadCarbonStats(), loadPlausibleStats()]);
   }
 
   if (document.readyState === 'loading') {

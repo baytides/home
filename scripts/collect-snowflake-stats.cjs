@@ -1,29 +1,25 @@
 #!/usr/bin/env node
 /**
  * Snowflake Stats Collector
- * Reads local Snowflake proxy log and pushes stats to Cloudflare KV via Worker API.
- * Runs every 5 minutes via launchd on the local Mac.
+ * Reads Snowflake proxy log and pushes stats to Cloudflare KV via Worker API.
+ * Runs every 5 minutes in a Docker container alongside the Snowflake proxy.
  *
  * Data flow:
- *   snowflake-proxy (local) -> proxy log -> this script -> Cloudflare KV -> Worker -> site
+ *   snowflake-proxy (Docker) -> shared log volume -> this script -> Cloudflare KV -> Worker -> site
  *
  * Environment variables:
  *   SNOWFLAKE_STATS_API_URL  - Worker URL (default: https://snowflake-stats.baytides.org)
  *   SNOWFLAKE_STATS_API_KEY  - API key for authenticating with the Worker
- *   SNOWFLAKE_LOG_PATH       - Path to proxy log (default: ~/logs/snowflake-proxy.log)
- *   SNOWFLAKE_STATS_FILE     - Path to local stats persistence file (default: ~/snowflake-stats.json)
+ *   SNOWFLAKE_LOG_PATH       - Path to proxy log (default: /var/log/snowflake/proxy.log)
+ *   SNOWFLAKE_STATS_FILE     - Path to local stats persistence file (default: /var/data/snowflake-stats.json)
  */
 
 const fs = require('fs');
-const path = require('path');
-const { execFileSync } = require('child_process');
 
 const API_URL = process.env.SNOWFLAKE_STATS_API_URL || 'https://snowflake-stats.baytides.org';
 const API_KEY = process.env.SNOWFLAKE_STATS_API_KEY;
-const LOG_PATH =
-  process.env.SNOWFLAKE_LOG_PATH || path.join(process.env.HOME, 'logs', 'snowflake-proxy.log');
-const STATS_FILE =
-  process.env.SNOWFLAKE_STATS_FILE || path.join(process.env.HOME, 'snowflake-stats.json');
+const LOG_PATH = process.env.SNOWFLAKE_LOG_PATH || '/var/log/snowflake/proxy.log';
+const STATS_FILE = process.env.SNOWFLAKE_STATS_FILE || '/var/data/snowflake-stats.json';
 
 function loadLocalStats() {
   try {
@@ -78,15 +74,13 @@ function parseProxyLog() {
     }
   }
 
-  // Check if proxy process is running (using execFileSync to avoid shell injection)
+  // Detect if proxy is running by checking if log was modified recently (within 10 min).
+  // Works across Docker containers sharing a log volume — no pgrep needed.
   let proxyRunning = false;
   try {
-    const result = execFileSync('pgrep', ['-f', 'snowflake-proxy'], {
-      stdio: 'pipe',
-    })
-      .toString()
-      .trim();
-    proxyRunning = result.length > 0;
+    const stat = fs.statSync(LOG_PATH);
+    const ageMinutes = (Date.now() - stat.mtimeMs) / 60_000;
+    proxyRunning = ageMinutes < 10;
   } catch {
     proxyRunning = false;
   }
@@ -95,15 +89,22 @@ function parseProxyLog() {
 }
 
 function calculateUptime() {
+  // Estimate proxy uptime from the first timestamp in the log file.
+  // This works in Docker (no sysctl) and survives container restarts since
+  // the log file persists on a named volume.
   try {
-    const result = execFileSync('sysctl', ['-n', 'kern.boottime'], {
-      stdio: 'pipe',
-    }).toString();
-    // Output: { sec = 1739934296, usec = 0 } ...
-    const secMatch = result.match(/sec\s*=\s*(\d+)/);
-    if (secMatch) {
-      const bootTime = parseInt(secMatch[1], 10);
-      return Math.floor((Date.now() / 1000 - bootTime) / 3600);
+    if (!fs.existsSync(LOG_PATH)) return 0;
+
+    const fd = fs.openSync(LOG_PATH, 'r');
+    const buf = Buffer.alloc(256);
+    fs.readSync(fd, buf, 0, 256, 0);
+    fs.closeSync(fd);
+
+    const firstLine = buf.toString('utf8').split('\n')[0];
+    const tsMatch = firstLine.match(/^(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2})/);
+    if (tsMatch) {
+      const startTime = new Date(tsMatch[1].replace(/\//g, '-'));
+      return Math.floor((Date.now() - startTime.getTime()) / 3_600_000);
     }
   } catch {
     // fallback
@@ -162,7 +163,7 @@ async function main() {
     uptimeHours,
     lastUpdated: now,
     vmStatus: logData.proxyRunning ? 'online' : 'offline',
-    source: 'local',
+    source: 'docker',
 
     // Keep last 168 hours (7 days) of hourly snapshots
     history: [
