@@ -59,28 +59,41 @@ function parseProxyLog() {
   let last24h = 0;
   let last7d = 0;
 
-  // Snowflake proxy logs "completed transfer" for each successful relay
-  // Log format: 2026/02/19 05:44:56 completed transfer ...
+  // Snowflake proxy logs hourly summaries:
+  //   "In the last 1h0m0s, there were 22 completed successful connections."
+  // and also individual "completed transfer" lines in older versions.
   for (const line of lines) {
-    if (!line.includes('completed transfer')) continue;
-    totalFromLog++;
-
-    // Parse timestamp from log line
     const tsMatch = line.match(/^(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2})/);
-    if (tsMatch) {
+    if (!tsMatch) continue;
+
+    // Parse hourly summary lines (current proxy format)
+    const summaryMatch = line.match(/there were (\d+) completed successful connections/);
+    if (summaryMatch) {
+      const count = parseInt(summaryMatch[1], 10);
+      totalFromLog += count;
+
+      const ts = new Date(tsMatch[1].replace(/\//g, '-'));
+      if (ts >= oneDayAgo) last24h += count;
+      if (ts >= sevenDaysAgo) last7d += count;
+      continue;
+    }
+
+    // Fallback: individual "completed transfer" lines (older proxy format)
+    if (line.includes('completed transfer')) {
+      totalFromLog++;
       const ts = new Date(tsMatch[1].replace(/\//g, '-'));
       if (ts >= oneDayAgo) last24h++;
       if (ts >= sevenDaysAgo) last7d++;
     }
   }
 
-  // Detect if proxy is running by checking if log was modified recently (within 10 min).
-  // Works across Docker containers sharing a log volume — no pgrep needed.
+  // Detect if proxy is running by checking if log was modified recently.
+  // The proxy writes hourly summaries, so allow up to 65 minutes of staleness.
   let proxyRunning = false;
   try {
     const stat = fs.statSync(LOG_PATH);
     const ageMinutes = (Date.now() - stat.mtimeMs) / 60_000;
-    proxyRunning = ageMinutes < 10;
+    proxyRunning = ageMinutes < 65;
   } catch {
     proxyRunning = false;
   }
