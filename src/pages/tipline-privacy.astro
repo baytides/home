@@ -1,0 +1,662 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
+import LegalPageHeader from '../components/LegalPageHeader.astro';
+import LegalSection from '../components/LegalSection.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Tipline Privacy Policy',
+    description:
+      'Privacy policy for the Bay Tides Secure Tipline. How we protect your anonymity and handle submitted information.',
+    publisher: {
+      '@type': 'NonprofitOrganization',
+      name: 'Bay Tides',
+      url: 'https://baytides.org',
+    },
+    dateModified: '2025-02-20',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Tipline Privacy Policy' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Tipline Privacy Policy"
+  description="Privacy policy for the Bay Tides Secure Tipline. How we protect your anonymity and handle submitted information."
+  canonicalUrl="https://baytides.org/tipline-privacy"
+  structuredData={structuredData}
+>
+  <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Tipline Privacy Policy' }]} />
+
+  <PageHero title="Tipline Privacy Policy" subtitle="Protecting your anonymity is our priority" />
+
+  <section class="content-section legal-page">
+    <div class="container">
+      <LegalPageHeader
+        version="1.0"
+        effectiveDate="February 20, 2025"
+        lastUpdated="February 20, 2025"
+        summary="This policy covers the Bay Tides Secure Tipline only. We collect zero metadata — no IP addresses, no browser fingerprints, no cookies, no analytics. We only receive what you voluntarily submit. The tipline is accessible via Tor for maximum anonymity. We never share submitted information with law enforcement without valid legal process."
+      />
+
+      <div class="legal-content">
+        <LegalSection
+          title="Introduction & Scope"
+          sectionNumber={1}
+          simpleSummary="This policy is specifically about the tipline. Our main website has its own separate privacy policy."
+          defaultOpen
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <p>
+            This Privacy Policy applies exclusively to the <strong>
+              Bay Tides Secure Tipline
+            </strong>, an anonymous reporting platform operated by Bay Tides for receiving
+            information about environmental concerns affecting the San Francisco Bay Area.
+          </p>
+          <p>
+            This policy is separate from our <a href="/privacy">main website Privacy Policy</a>,
+            which governs your use of baytides.org and its associated services. If you are browsing
+            our main website, please refer to that policy instead.
+          </p>
+          <p>
+            <strong>Bay Tides</strong> is a qualified tax-exempt nonprofit organization under Section
+            501(c)(3) of the Internal Revenue Code. We operate the tipline as part of our mission to protect
+            and preserve the San Francisco Bay's environment.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Information We Collect"
+          sectionNumber={2}
+          simpleSummary="We only receive what you choose to submit. Nothing more."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <p>
+            The tipline collects <strong>only what you voluntarily provide</strong> in your submission.
+            This may include:
+          </p>
+          <ul>
+            <li>Text descriptions of environmental concerns</li>
+            <li>Uploaded files or documents you choose to attach</li>
+            <li>Any follow-up messages you send using your receipt code</li>
+          </ul>
+          <p>
+            We do not require or request any personally identifying information. You are not asked
+            to provide your name, email address, phone number, or any other contact information.
+          </p>
+          <p>
+            If you choose to include personal details in your submission, that is your decision. We
+            recommend against including identifying information unless it is essential to your
+            report.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="How We Use Your Information"
+          sectionNumber={3}
+          simpleSummary="We use submitted information only to investigate environmental concerns. Nothing else."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <p>
+            Information submitted through the tipline is used <strong>solely</strong> for the following
+            purposes:
+          </p>
+          <ul>
+            <li>Reviewing and evaluating environmental concerns reported to Bay Tides</li>
+            <li>
+              Investigating potential environmental violations or threats to the San Francisco Bay
+              Area
+            </li>
+            <li>
+              Supporting Bay Tides' advocacy and conservation efforts related to reported issues
+            </li>
+            <li>
+              Communicating with you through the platform's anonymous messaging system (if you use
+              your receipt code)
+            </li>
+          </ul>
+          <p>
+            We <strong>never</strong> use submitted information for marketing, profiling, advertising,
+            fundraising, or any purpose unrelated to our environmental mission.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Information We Do NOT Collect"
+          sectionNumber={4}
+          simpleSummary="No IP addresses, no browser fingerprints, no cookies, no tracking. Zero."
+          defaultOpen
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
+            >
+            </path>
+            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+            <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path>
+          </svg>
+          <p>
+            The tipline is designed with <strong>privacy by default</strong>. We explicitly do not
+            collect:
+          </p>
+          <ul>
+            <li>
+              <strong>IP addresses</strong> — The tipline is accessible via Tor, and the platform does
+              not log connection metadata
+            </li>
+            <li>
+              <strong>Browser fingerprints</strong> — No scripts that identify your browser, device, or
+              operating system
+            </li>
+            <li>
+              <strong>Cookies</strong> — Zero cookies of any kind (no session cookies, no tracking cookies,
+              no analytics cookies)
+            </li>
+            <li>
+              <strong>Analytics or telemetry</strong> — No page views, no click tracking, no usage statistics
+              on the tipline
+            </li>
+            <li>
+              <strong>Geolocation data</strong> — No GPS, no IP-based location, no timezone detection
+            </li>
+            <li>
+              <strong>Referrer information</strong> — We do not track how you arrived at the tipline
+            </li>
+          </ul>
+          <p>This is by design. We cannot share what we do not have.</p>
+        </LegalSection>
+
+        <LegalSection
+          title="Data Storage & Security"
+          sectionNumber={5}
+          simpleSummary="Your submissions are encrypted and stored securely. Access is strictly limited."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <p>
+            The tipline platform implements multiple layers of security to protect submitted
+            information:
+          </p>
+          <div class="subsection">
+            <h4>Encryption</h4>
+            <p>
+              All submissions are encrypted using industry-standard cryptographic methods. Data is
+              encrypted both in transit (via Tor's layered encryption) and at rest on the server.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>Network Security</h4>
+            <p>
+              The tipline is accessible via the Tor network, which routes your connection through
+              multiple encrypted relays to prevent network surveillance. This ensures that no
+              observer — including Bay Tides — can determine your network identity.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>Access Controls</h4>
+            <p>
+              Access to submitted reports is restricted to authorized Bay Tides personnel on a
+              need-to-know basis. We maintain strict internal controls on who can view submissions.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>Infrastructure Isolation</h4>
+            <p>
+              The tipline runs in an isolated environment, separated from Bay Tides' other services
+              and systems. This ensures that a compromise of any other service does not affect the
+              tipline.
+            </p>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Data Retention & Deletion"
+          sectionNumber={6}
+          simpleSummary="We keep reports only as long as needed. You can request deletion using your receipt code."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <p>
+            We retain submitted reports only for as long as necessary to review and act on the
+            reported environmental concern. Our retention practices include:
+          </p>
+          <ul>
+            <li>
+              <strong>Active reports</strong> are retained while under review or investigation
+            </li>
+            <li>
+              <strong>Resolved reports</strong> are deleted within a reasonable timeframe after the matter
+              is concluded
+            </li>
+            <li>
+              <strong>Submitter-requested deletion:</strong> If you retained your receipt code, you may
+              request that your submission be deleted at any time by contacting us through the platform's
+              messaging system
+            </li>
+          </ul>
+          <p>
+            When data is deleted, it is permanently removed from our systems. We do not maintain
+            backup copies of deleted submissions.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Third-Party Sharing"
+          sectionNumber={7}
+          simpleSummary="We don't share your information with anyone unless legally forced to — and we'll fight broad requests."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <line x1="18" y1="8" x2="23" y2="13"></line>
+            <line x1="23" y1="8" x2="18" y2="13"></line>
+          </svg>
+          <p>
+            Bay Tides does <strong>not</strong> sell, rent, trade, or voluntarily share information submitted
+            through the tipline with any third party. This includes:
+          </p>
+          <ul>
+            <li>Law enforcement agencies</li>
+            <li>Government bodies or regulators</li>
+            <li>Other nonprofit organizations</li>
+            <li>Media outlets</li>
+            <li>Data brokers or advertisers</li>
+          </ul>
+          <p>The only exceptions are:</p>
+          <ul>
+            <li>
+              <strong>Valid legal process:</strong> If we receive a valid subpoena, court order, or warrant
+              from a court of competent jurisdiction, we may be legally required to disclose information.
+              In such cases, we will provide only what is specifically and narrowly required, challenge
+              overly broad requests, and notify affected submitters when legally permitted to do so.
+            </li>
+            <li>
+              <strong>With your consent:</strong> If you explicitly ask us to share specific information
+              with a named third party through the platform's messaging system.
+            </li>
+          </ul>
+          <p>
+            For more information about how we handle law enforcement requests, see our
+            <a href="/law-enforcement">Law Enforcement Procedures</a> page.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Your Rights"
+          sectionNumber={8}
+          simpleSummary="You can access, review, or delete your submission using your receipt code."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="8.5" cy="7" r="4"></circle>
+            <polyline points="17 11 19 13 23 9"></polyline>
+          </svg>
+          <p>
+            Because the tipline is designed for anonymous use, traditional identity-based access
+            rights work differently. Your rights include:
+          </p>
+          <div class="subsection">
+            <h4>Receipt Code Access</h4>
+            <p>
+              When you submit a report, you receive a unique receipt code. This code allows you to:
+            </p>
+            <ul>
+              <li>Access your submission and any responses from Bay Tides</li>
+              <li>Send follow-up messages or additional information</li>
+              <li>Request that your submission be deleted</li>
+            </ul>
+            <p>
+              <strong>Important:</strong> Your receipt code is the only way to access your submission.
+              We cannot recover it if lost, as we have no way to verify your identity.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>California Residents (CCPA/CPRA)</h4>
+            <p>
+              If you are a California resident and have identifiable information in your submission,
+              you have the right to:
+            </p>
+            <ul>
+              <li>Know what personal information we hold about you</li>
+              <li>Request deletion of your personal information</li>
+              <li>Opt out of the sale of personal information (we never sell data)</li>
+              <li>Non-discrimination for exercising your privacy rights</li>
+            </ul>
+            <p>
+              To exercise these rights, contact us using the information in Section 11 or through
+              the platform's messaging system with your receipt code.
+            </p>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Children's Privacy"
+          sectionNumber={9}
+          simpleSummary="We don't knowingly collect information from children under 13. Tips from minors are handled with extra care."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <p>
+            The tipline is not directed at children under the age of 13. We do not knowingly collect
+            personal information from children under 13 in compliance with the Children's Online
+            Privacy Protection Act (COPPA).
+          </p>
+          <p>
+            Because the tipline is anonymous, we generally cannot determine the age of submitters.
+            If we become aware that a submission was made by a child under 13 and contains personal
+            information, we will handle the matter with additional care and delete any personal
+            information as appropriate.
+          </p>
+          <p>
+            If you are a parent or guardian and believe your child has submitted personal
+            information through the tipline, please <a href="/contact">contact us</a> and we will work
+            to address your concerns.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Changes to This Policy"
+          sectionNumber={10}
+          simpleSummary="We'll give you 30 days' notice before any major changes take effect."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          <p>
+            We may update this Privacy Policy from time to time to reflect changes in our practices
+            or applicable laws.
+          </p>
+          <ul>
+            <li>
+              <strong>Material changes:</strong> We will provide at least <strong>
+                30 days' notice
+              </strong> before any material changes take effect by posting the updated policy with a new
+              effective date on this page
+            </li>
+            <li>
+              <strong>Minor changes:</strong> Non-material changes (such as formatting or clarification)
+              may be made without advance notice
+            </li>
+            <li>
+              <strong>Version tracking:</strong> The version number and effective date at the top of this
+              policy will always reflect the current version
+            </li>
+          </ul>
+          <p>
+            Your continued use of the tipline after any changes take effect constitutes your
+            acceptance of the revised policy.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Contact Us"
+          sectionNumber={11}
+          simpleSummary="Reach out to us with any questions about this privacy policy."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+            </path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <p>
+            If you have questions or concerns about this Privacy Policy or our data practices, you
+            can reach us through:
+          </p>
+          <ul>
+            <li>
+              <strong>Our contact page:</strong>
+              <a href="/contact">baytides.org/contact</a>
+            </li>
+            <li>
+              <strong>The tipline messaging system:</strong> Use your receipt code to send us a message
+              directly through the platform
+            </li>
+          </ul>
+          <p>
+            We will respond to privacy-related inquiries within <strong>30 days</strong>.
+          </p>
+        </LegalSection>
+
+        <div class="bottom-line-box">
+          <h3>The Bottom Line</h3>
+          <p>
+            The Bay Tides Secure Tipline is built with <strong>anonymity as the default</strong>.
+          </p>
+          <ul>
+            <li>We collect <strong>ZERO metadata</strong> — no IPs, no fingerprints, no cookies</li>
+            <li>We store <strong>only what you submit</strong> — nothing more</li>
+            <li>
+              We share information with <strong>ZERO third parties</strong> unless legally compelled
+            </li>
+            <li>Your submission is <strong>encrypted</strong> at rest and in transit</li>
+            <li>You control your data through your <strong>receipt code</strong></li>
+          </ul>
+          <p>
+            <strong>Questions?</strong>
+            <a href="/contact">Contact us</a> anytime. We will respond within 30 days with honest, transparent
+            answers.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-bottom: 4rem;
+  }
+
+  .legal-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .subsection {
+    margin: 1rem 0;
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--primary-blue);
+  }
+
+  .subsection h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+  }
+
+  .bottom-line-box {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--light-blue) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border: 1px solid rgba(43, 108, 176, 0.2);
+    border-radius: 16px;
+  }
+
+  .bottom-line-box h3 {
+    margin: 0 0 1rem;
+    color: var(--primary-blue);
+    font-size: 1.25rem;
+  }
+
+  .bottom-line-box ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .bottom-line-box li {
+    margin-bottom: 0.5rem;
+  }
+
+  .bottom-line-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  :global([data-theme='dark']) .subsection {
+    border-left-color: rgba(255, 255, 255, 0.2);
+  }
+
+  :global([data-theme='dark']) .subsection h4 {
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .bottom-line-box {
+    background: linear-gradient(135deg, rgba(99, 179, 237, 0.15) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border-color: rgba(99, 179, 237, 0.3);
+  }
+
+  :global([data-theme='dark']) .bottom-line-box h3 {
+    color: var(--accent-blue);
+  }
+</style>

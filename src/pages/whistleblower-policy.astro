@@ -1,0 +1,683 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
+import LegalPageHeader from '../components/LegalPageHeader.astro';
+import LegalSection from '../components/LegalSection.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Whistleblower Policy',
+    description:
+      'Bay Tides whistleblower policy. Our commitment to protecting those who report environmental concerns.',
+    publisher: {
+      '@type': 'NonprofitOrganization',
+      name: 'Bay Tides',
+      url: 'https://baytides.org',
+    },
+    dateModified: '2025-02-20',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Whistleblower Policy' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Whistleblower Policy"
+  description="Bay Tides whistleblower policy. Our commitment to protecting those who report environmental concerns in the San Francisco Bay Area."
+  canonicalUrl="https://baytides.org/whistleblower-policy"
+  structuredData={structuredData}
+>
+  <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Whistleblower Policy' }]} />
+
+  <PageHero title="Whistleblower Policy" subtitle="Your voice matters — and we'll protect it" />
+
+  <section class="content-section legal-page">
+    <div class="container">
+      <LegalPageHeader
+        version="1.0"
+        effectiveDate="February 20, 2025"
+        lastUpdated="February 20, 2025"
+        summary="Bay Tides welcomes anonymous reports of environmental concerns affecting the San Francisco Bay Area. We provide secure reporting channels, protect reporter anonymity with technical and organizational measures, and maintain a zero-tolerance policy against retaliation. Reports are handled confidentially by authorized personnel on a need-to-know basis."
+      />
+
+      <div class="legal-content">
+        <LegalSection
+          title="Purpose & Scope"
+          sectionNumber={1}
+          simpleSummary="This policy explains how Bay Tides handles environmental tips and protects the people who submit them."
+          defaultOpen
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <p>
+            Bay Tides is committed to transparency, accountability, and environmental stewardship.
+            We recognize that people with knowledge of environmental concerns may face barriers to
+            speaking up — whether due to fear of retaliation, uncertainty about whom to tell, or
+            lack of a secure channel.
+          </p>
+          <p>
+            This policy establishes Bay Tides' framework for receiving, handling, and acting on
+            reports of environmental concerns. It applies to:
+          </p>
+          <ul>
+            <li>
+              Members of the public reporting environmental concerns in the San Francisco Bay Area
+            </li>
+            <li>Bay Tides volunteers, staff, board members, and contractors</li>
+            <li>
+              Employees or affiliates of other organizations who wish to report environmental issues
+            </li>
+          </ul>
+          <p>
+            Anyone may submit a report, regardless of their relationship (or lack thereof) to Bay
+            Tides.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="What to Report"
+          sectionNumber={2}
+          simpleSummary="Environmental violations, pollution, illegal dumping, threats to Bay Area ecosystems, and internal concerns about Bay Tides."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+            >
+            </path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <p>We welcome reports concerning any of the following:</p>
+          <ul>
+            <li>
+              <strong>Environmental violations</strong> — Breaches of environmental laws or regulations
+            </li>
+            <li>
+              <strong>Pollution events</strong> — Spills, discharges, or contamination of waterways, land,
+              or air
+            </li>
+            <li>
+              <strong>Illegal dumping</strong> — Unauthorized disposal of waste, hazardous materials,
+              or debris
+            </li>
+            <li>
+              <strong>Regulatory non-compliance</strong> — Failure to meet environmental permit conditions
+              or reporting requirements
+            </li>
+            <li>
+              <strong>Ecosystem threats</strong> — Activities that endanger wetlands, wildlife habitats,
+              water quality, or natural resources in the Bay Area
+            </li>
+            <li>
+              <strong>Climate-related concerns</strong> — Undisclosed emissions, greenwashing, or obstruction
+              of climate policy
+            </li>
+            <li>
+              <strong>Internal concerns</strong> — Misconduct, fraud, waste, or ethical violations within
+              Bay Tides itself
+            </li>
+          </ul>
+          <p>
+            If you are unsure whether your concern is relevant, we encourage you to report it. We
+            would rather receive a report that turns out to be outside our scope than miss a genuine
+            environmental threat.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="How to Report"
+          sectionNumber={3}
+          simpleSummary="Use our secure tipline (via Tor), or contact us through other channels. Anonymous reporting is fully supported."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+            >
+            </path>
+          </svg>
+          <p>Bay Tides provides multiple channels for reporting environmental concerns:</p>
+          <div class="subsection">
+            <h4>Secure Tipline (Recommended for Anonymity)</h4>
+            <p>
+              Our secure tipline is accessible through the Tor network and provides the strongest
+              anonymity protections. It allows you to submit reports without revealing your
+              identity, and to communicate with Bay Tides using an anonymous receipt code.
+            </p>
+            <p>
+              For maximum security, access the tipline using the
+              <a
+                href="https://www.torproject.org/download/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Tor Browser
+              </a>.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>Contact Form</h4>
+            <p>
+              You can also reach us through our <a href="/contact">contact page</a>. Note that this
+              channel does not provide the same level of anonymity as the secure tipline, as
+              standard web connections may reveal your IP address and other metadata.
+            </p>
+          </div>
+          <p>
+            Anonymous reporting is fully supported and encouraged when you have concerns about
+            identifying yourself. You do not need to provide your name or any contact information to
+            submit a report.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Anonymity Protections"
+          sectionNumber={4}
+          simpleSummary="We use Tor, encryption, and strict access controls to protect your identity. We can't identify you even if we wanted to."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <p>
+            Protecting the identity of reporters is fundamental to our tipline. We implement
+            protections at both the technical and organizational level:
+          </p>
+          <div class="subsection">
+            <h4>Technical Measures</h4>
+            <ul>
+              <li>
+                <strong>Tor network access</strong> — The tipline is accessible as a Tor hidden service,
+                preventing network-level identification
+              </li>
+              <li>
+                <strong>Zero metadata collection</strong> — No IP addresses, browser fingerprints, cookies,
+                or analytics
+              </li>
+              <li>
+                <strong>End-to-end encryption</strong> — Submissions are encrypted in transit and at rest
+              </li>
+              <li>
+                <strong>Anonymous messaging</strong> — The receipt code system allows two-way communication
+                without revealing identity
+              </li>
+            </ul>
+          </div>
+          <div class="subsection">
+            <h4>Organizational Measures</h4>
+            <ul>
+              <li>
+                <strong>Need-to-know access</strong> — Only authorized personnel can view submissions
+              </li>
+              <li>
+                <strong>No identity investigation</strong> — We do not attempt to determine the identity
+                of anonymous reporters
+              </li>
+              <li>
+                <strong>Confidential handling</strong> — Report details are not shared beyond those directly
+                involved in review
+              </li>
+              <li>
+                <strong>Secure communications</strong> — Internal discussions about reports follow strict
+                confidentiality protocols
+              </li>
+            </ul>
+          </div>
+          <p>
+            For full details on our data practices, see our <a href="/tipline-privacy">
+              Tipline Privacy Policy
+            </a>.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Non-Retaliation"
+          sectionNumber={5}
+          simpleSummary="Zero tolerance for retaliation. If you report in good faith, you are protected."
+          defaultOpen
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <p>
+            Bay Tides maintains a <strong>zero-tolerance policy against retaliation</strong> toward anyone
+            who makes a good-faith report of an environmental concern or participates in the investigation
+            of a report.
+          </p>
+          <p>This non-retaliation commitment applies to:</p>
+          <ul>
+            <li>Bay Tides volunteers, staff, board members, and contractors</li>
+            <li>Anyone who submits a report through any of our reporting channels</li>
+            <li>Anyone who cooperates with or assists in the review of a report</li>
+          </ul>
+          <p>
+            Retaliation includes, but is not limited to: termination, demotion, suspension, threats,
+            harassment, intimidation, or any other adverse action taken because of a good-faith
+            report.
+          </p>
+          <p>
+            If you believe you have experienced retaliation for making a report, please notify Bay
+            Tides immediately through any of our reporting channels.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="How Reports Are Handled"
+          sectionNumber={6}
+          simpleSummary="We receive your report, review it, investigate if needed, and take appropriate action. You can check for updates using your receipt code."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="9 11 12 14 22 4"></polyline>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          <p>When a report is submitted through the tipline, the following process is followed:</p>
+          <div class="subsection">
+            <h4>1. Receipt & Acknowledgment</h4>
+            <p>
+              You will receive a unique receipt code upon submission. This code allows you to check
+              for updates and communicate with Bay Tides anonymously. We acknowledge receipt of all
+              reports through the platform.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>2. Initial Review</h4>
+            <p>
+              Authorized Bay Tides personnel will review the report to assess its nature, urgency,
+              and relevance to our environmental mission. We aim to complete initial review within a
+              reasonable timeframe.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>3. Investigation</h4>
+            <p>
+              If the report warrants further action, we may conduct research, gather publicly
+              available information, or consult with relevant experts. We may also contact you
+              through the platform to request additional details.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>4. Action</h4>
+            <p>
+              Depending on the findings, Bay Tides may take actions including but not limited to:
+              public advocacy, referrals to regulatory agencies, community alerts, investigative
+              reporting partnerships, or internal corrective measures (for reports concerning Bay
+              Tides itself).
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>5. Follow-Up</h4>
+            <p>
+              We will update you on the status of your report through the platform when possible.
+              Some details may be withheld to protect ongoing investigations or the privacy of
+              others involved.
+            </p>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Legal Protections"
+          sectionNumber={7}
+          simpleSummary="Several federal and state laws protect whistleblowers. We support and respect these protections."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+            <line x1="9" y1="9" x2="9.01" y2="9"></line>
+            <line x1="15" y1="9" x2="15.01" y2="9"></line>
+          </svg>
+          <p>
+            Individuals who report environmental concerns may be protected by various federal and
+            state laws, including but not limited to:
+          </p>
+          <ul>
+            <li>
+              <strong>California Whistleblower Protection Act</strong> (California Labor Code &sect;1102.5)
+              — Protects employees who report suspected violations of law to government or law enforcement
+              agencies
+            </li>
+            <li>
+              <strong>Clean Water Act</strong> (&sect;1367) — Protects employees who report violations
+              of water pollution laws
+            </li>
+            <li>
+              <strong>Clean Air Act</strong> (&sect;7622) — Protects employees who report violations of
+              air quality standards
+            </li>
+            <li>
+              <strong>Safe Drinking Water Act</strong> (&sect;300j-9) — Protects employees who report
+              drinking water safety violations
+            </li>
+            <li>
+              <strong>Resource Conservation and Recovery Act</strong> (&sect;6971) — Protects employees
+              who report violations of hazardous waste management laws
+            </li>
+          </ul>
+          <p>
+            <strong>Disclaimer:</strong> This information is provided for general awareness only and does
+            not constitute legal advice. If you are considering reporting environmental violations and
+            are concerned about legal protections, we recommend consulting with an attorney.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Limitations"
+          sectionNumber={8}
+          simpleSummary="We're a nonprofit, not law enforcement. We can't guarantee specific outcomes, but we take every report seriously."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+          </svg>
+          <p>
+            While Bay Tides takes all reports seriously, it is important to understand the following
+            limitations:
+          </p>
+          <ul>
+            <li>
+              <strong>We are not law enforcement.</strong> Bay Tides is a 501(c)(3) nonprofit organization.
+              We do not have enforcement authority, subpoena power, or the ability to compel action by
+              other parties.
+            </li>
+            <li>
+              <strong>No guaranteed outcomes.</strong> We cannot guarantee that any specific action will
+              be taken in response to a report, or that a reported concern will be resolved in a particular
+              way.
+            </li>
+            <li>
+              <strong>Scope limitations.</strong> Our mission focuses on the San Francisco Bay Area environment.
+              Reports outside this scope may be referred to more appropriate organizations if possible.
+            </li>
+            <li>
+              <strong>Resource constraints.</strong> As a nonprofit, our capacity to investigate and act
+              on reports is limited by our available resources and personnel.
+            </li>
+            <li>
+              <strong>No legal advice.</strong> Bay Tides does not provide legal counsel. If you need
+              legal advice regarding environmental violations or whistleblower protections, please consult
+              an attorney.
+            </li>
+          </ul>
+        </LegalSection>
+
+        <LegalSection
+          title="Good Faith Requirement"
+          sectionNumber={9}
+          simpleSummary="Reports must be honest and made in good faith. Knowingly false reports are prohibited."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <p>
+            All reports submitted through the tipline must be made in <strong>good faith</strong>.
+            This means:
+          </p>
+          <ul>
+            <li>
+              You genuinely believe the information you are reporting is true and accurate to the
+              best of your knowledge
+            </li>
+            <li>
+              You are not submitting reports with the intent to harass, defame, or cause harm to
+              individuals or organizations
+            </li>
+            <li>You are not submitting deliberately false or fabricated information</li>
+          </ul>
+          <p>
+            Good faith does not require certainty. If you have a reasonable belief that something is
+            wrong, we want to hear about it — even if you are not sure of all the details. It is
+            better to report a concern that turns out to be unfounded than to stay silent about a
+            genuine threat.
+          </p>
+          <p>
+            Knowingly false reports waste resources that could be used to address real environmental
+            concerns and may be subject to removal from the platform.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Contact & Questions"
+          sectionNumber={10}
+          simpleSummary="Reach out to us with any questions about this policy or how to submit a report."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+            </path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <p>
+            If you have questions about this policy, how to submit a report, or anything related to
+            the Bay Tides Secure Tipline, you can reach us through:
+          </p>
+          <ul>
+            <li>
+              <strong>Our contact page:</strong>
+              <a href="/contact">baytides.org/contact</a>
+            </li>
+            <li>
+              <strong>The tipline messaging system:</strong> Use your receipt code to communicate directly
+              through the platform
+            </li>
+          </ul>
+          <p>
+            We welcome feedback on this policy and are always looking for ways to better serve and
+            protect those who come forward with environmental concerns.
+          </p>
+        </LegalSection>
+
+        <div class="bottom-line-box">
+          <h3>The Bottom Line</h3>
+          <p>
+            Bay Tides believes that protecting the environment starts with protecting the people who
+            speak up.
+          </p>
+          <ul>
+            <li>You can report <strong>anonymously</strong> — we'll never try to identify you</li>
+            <li>
+              We have <strong>zero tolerance for retaliation</strong> against good-faith reporters
+            </li>
+            <li>
+              Your report is handled <strong>confidentially</strong> by authorized personnel only
+            </li>
+            <li>
+              We take <strong>every report seriously</strong>, even if we can't guarantee specific
+              outcomes
+            </li>
+          </ul>
+          <p>
+            <strong>Ready to report?</strong> Access the secure tipline through the Tor Browser for maximum
+            anonymity. If you have questions, <a href="/contact">contact us</a> anytime.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-bottom: 4rem;
+  }
+
+  .legal-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .subsection {
+    margin: 1rem 0;
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--primary-blue);
+  }
+
+  .subsection h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+  }
+
+  .bottom-line-box {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--light-blue) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border: 1px solid rgba(43, 108, 176, 0.2);
+    border-radius: 16px;
+  }
+
+  .bottom-line-box h3 {
+    margin: 0 0 1rem;
+    color: var(--primary-blue);
+    font-size: 1.25rem;
+  }
+
+  .bottom-line-box ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .bottom-line-box li {
+    margin-bottom: 0.5rem;
+  }
+
+  .bottom-line-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  :global([data-theme='dark']) .subsection {
+    border-left-color: rgba(255, 255, 255, 0.2);
+  }
+
+  :global([data-theme='dark']) .subsection h4 {
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .bottom-line-box {
+    background: linear-gradient(135deg, rgba(99, 179, 237, 0.15) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border-color: rgba(99, 179, 237, 0.3);
+  }
+
+  :global([data-theme='dark']) .bottom-line-box h3 {
+    color: var(--accent-blue);
+  }
+</style>

@@ -1,0 +1,679 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
+import LegalPageHeader from '../components/LegalPageHeader.astro';
+import LegalSection from '../components/LegalSection.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Tipline Terms of Service',
+    description: 'Terms of service for the Bay Tides Secure Tipline.',
+    publisher: {
+      '@type': 'NonprofitOrganization',
+      name: 'Bay Tides',
+      url: 'https://baytides.org',
+    },
+    dateModified: '2025-02-20',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Tipline Terms of Service' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Tipline Terms of Service"
+  description="Terms of service for the Bay Tides Secure Tipline. Guidelines for using our anonymous environmental reporting platform."
+  canonicalUrl="https://baytides.org/tipline-terms"
+  structuredData={structuredData}
+>
+  <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Tipline Terms of Service' }]} />
+
+  <PageHero
+    title="Tipline Terms of Service"
+    subtitle="Guidelines for using our secure reporting platform"
+  />
+
+  <section class="content-section legal-page">
+    <div class="container">
+      <LegalPageHeader
+        version="1.0"
+        effectiveDate="February 20, 2025"
+        lastUpdated="February 20, 2025"
+        summary="The Bay Tides Secure Tipline is a free, anonymous platform for reporting environmental concerns. Use it in good faith to report genuine environmental issues. We protect your anonymity but can't guarantee absolute security. The service is provided as-is by a nonprofit with limited resources. These terms are separate from our main website terms."
+      />
+
+      <div class="legal-content">
+        <LegalSection
+          title="Acceptance of Terms"
+          sectionNumber={1}
+          simpleSummary="By using the tipline, you agree to these terms. You must be at least 13 years old."
+          defaultOpen
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <p>
+            By accessing or using the Bay Tides Secure Tipline ("the Tipline"), you agree to be
+            bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do
+            not use the Tipline.
+          </p>
+          <p>
+            These Terms apply exclusively to the Tipline and are separate from the
+            <a href="/terms">Bay Tides main website Terms of Service</a>, which govern your use of
+            baytides.org.
+          </p>
+          <p>
+            You must be at least <strong>13 years of age</strong> to use the Tipline. By using the Tipline,
+            you represent that you meet this age requirement.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Service Description"
+          sectionNumber={2}
+          simpleSummary="The tipline is a free, anonymous platform for reporting environmental concerns in the San Francisco Bay Area."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <p>
+            The Bay Tides Secure Tipline is an anonymous reporting platform operated by
+            <strong>Bay Tides</strong>, a 501(c)(3) nonprofit organization dedicated to protecting
+            and preserving the San Francisco Bay's environment.
+          </p>
+          <p>The Tipline allows individuals to:</p>
+          <ul>
+            <li>
+              Submit anonymous reports about environmental concerns affecting the San Francisco Bay
+              Area
+            </li>
+            <li>Attach supporting documents or files to their reports</li>
+            <li>Communicate with Bay Tides through an anonymous receipt code system</li>
+          </ul>
+          <p>The Tipline is provided free of charge as part of Bay Tides' nonprofit mission.</p>
+        </LegalSection>
+
+        <LegalSection
+          title="Intended Use"
+          sectionNumber={3}
+          simpleSummary="Use the tipline for genuine environmental concerns in the Bay Area. Report in good faith."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <p>
+            The Tipline is intended for reporting <strong>environmental concerns</strong> related to the
+            San Francisco Bay Area, including but not limited to:
+          </p>
+          <ul>
+            <li>Environmental violations and regulatory non-compliance</li>
+            <li>Pollution, illegal dumping, and contamination events</li>
+            <li>Threats to wetlands, wildlife habitats, and water quality</li>
+            <li>Climate-related concerns including undisclosed emissions</li>
+            <li>Internal concerns about Bay Tides' operations</li>
+          </ul>
+          <p>
+            All reports should be submitted in <strong>good faith</strong>, meaning you genuinely
+            believe the information is true and accurate to the best of your knowledge. For details
+            on what constitutes good faith reporting, see our <a href="/whistleblower-policy">
+              Whistleblower Policy
+            </a>.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Prohibited Uses"
+          sectionNumber={4}
+          simpleSummary="Don't submit false reports, spam, harassment, or illegal content. The tipline is for genuine environmental concerns."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+          </svg>
+          <p>You agree not to use the Tipline for any of the following:</p>
+          <ul>
+            <li>
+              <strong>False or fabricated reports</strong> — Submitting information you know to be untrue
+              with the intent to deceive or cause harm
+            </li>
+            <li>
+              <strong>Harassment or threats</strong> — Using the platform to threaten, intimidate, defame,
+              or harass any individual or organization
+            </li>
+            <li>
+              <strong>Unrelated illegal content</strong> — Submitting material unrelated to environmental
+              concerns that is illegal under applicable law
+            </li>
+            <li>
+              <strong>Spam or abuse</strong> — Flooding the platform with repetitive, irrelevant, or nonsensical
+              submissions
+            </li>
+            <li>
+              <strong>Platform exploitation</strong> — Attempting to compromise, disrupt, or exploit the
+              Tipline's infrastructure, security, or functionality
+            </li>
+          </ul>
+          <p>
+            Bay Tides reserves the right to discard submissions that clearly violate these terms and
+            to take reasonable measures to prevent ongoing abuse of the platform.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Anonymity & Security"
+          sectionNumber={5}
+          simpleSummary="We protect your anonymity with strong technical measures, but no system is perfect. Use Tor and safeguard your receipt code."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <p>
+            Bay Tides takes extensive measures to protect the anonymity and security of Tipline
+            users, as described in our <a href="/tipline-privacy">Tipline Privacy Policy</a>.
+            However, you should be aware of the following:
+          </p>
+          <ul>
+            <li>
+              <strong>No absolute guarantee:</strong> While we implement strong security measures, no
+              system can guarantee absolute security or anonymity. Sophisticated adversaries with sufficient
+              resources may attempt to compromise any system.
+            </li>
+            <li>
+              <strong>Use Tor:</strong> For maximum anonymity, we strongly recommend accessing the Tipline
+              through the <a
+                href="https://www.torproject.org/download/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Tor Browser
+              </a>. Accessing the Tipline through a regular browser may expose your IP address.
+            </li>
+            <li>
+              <strong>Receipt code responsibility:</strong> Your receipt code is the only means of accessing
+              your submission. Keep it secure and private. We cannot recover lost receipt codes.
+            </li>
+            <li>
+              <strong>Content awareness:</strong> Be mindful of information you include in submissions
+              that could inadvertently reveal your identity (such as writing style, specific knowledge,
+              or attached file metadata).
+            </li>
+          </ul>
+        </LegalSection>
+
+        <LegalSection
+          title="No Legal Advice"
+          sectionNumber={6}
+          simpleSummary="We're a nonprofit, not a law firm. Submitting a tip is not a legal filing. Consult a lawyer for legal matters."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+            >
+            </path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <p>
+            Bay Tides is a 501(c)(3) nonprofit environmental organization, <strong>
+              not a law firm
+            </strong>. Nothing provided through the Tipline constitutes legal advice.
+          </p>
+          <ul>
+            <li>
+              Submitting a report through the Tipline is <strong>not</strong> a formal legal filing, complaint,
+              or regulatory submission
+            </li>
+            <li>
+              Bay Tides personnel are <strong>not</strong> attorneys and cannot provide legal counsel
+            </li>
+            <li>
+              Using the Tipline does <strong>not</strong> create an attorney-client relationship
+            </li>
+          </ul>
+          <p>
+            If you are considering reporting environmental violations and are concerned about your
+            legal rights or protections, we strongly recommend consulting with a qualified attorney.
+            Our
+            <a href="/whistleblower-policy">Whistleblower Policy</a> includes information about relevant
+            whistleblower protection laws for general awareness.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Disclaimer of Warranties"
+          sectionNumber={7}
+          simpleSummary="The tipline is provided 'as is.' We do our best, but we can't guarantee it will always work perfectly."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+            >
+            </path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <p>
+            THE TIPLINE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY
+            KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, BAY
+            TIDES DISCLAIMS ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO:
+          </p>
+          <ul>
+            <li>
+              IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+              NON-INFRINGEMENT
+            </li>
+            <li>
+              WARRANTIES REGARDING THE SECURITY, RELIABILITY, TIMELINESS, OR PERFORMANCE OF THE
+              TIPLINE
+            </li>
+            <li>
+              WARRANTIES THAT THE TIPLINE WILL BE UNINTERRUPTED, ERROR-FREE, OR FREE OF HARMFUL
+              COMPONENTS
+            </li>
+          </ul>
+          <p>Bay Tides does not warrant or guarantee that:</p>
+          <ul>
+            <li>The Tipline will be available at all times or any specific time</li>
+            <li>Reports will be reviewed within any particular timeframe</li>
+            <li>Specific actions will be taken in response to any report</li>
+            <li>The security measures will be effective against all potential threats</li>
+          </ul>
+        </LegalSection>
+
+        <LegalSection
+          title="Limitation of Liability"
+          sectionNumber={8}
+          simpleSummary="Our liability is limited to $100, consistent with our main website terms."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+          <p>
+            TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, BAY TIDES, ITS OFFICERS, DIRECTORS,
+            EMPLOYEES, VOLUNTEERS, AND AGENTS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL,
+            SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING OUT OF OR RELATING TO YOUR USE OF
+            THE TIPLINE.
+          </p>
+          <p>
+            IN NO EVENT SHALL BAY TIDES' TOTAL LIABILITY TO YOU FOR ALL CLAIMS ARISING OUT OF OR
+            RELATING TO THE TIPLINE EXCEED <strong>ONE HUNDRED DOLLARS ($100.00)</strong>.
+          </p>
+          <p>
+            This limitation applies to all causes of action, whether based in contract, tort,
+            negligence, strict liability, or any other legal theory, even if Bay Tides has been
+            advised of the possibility of such damages.
+          </p>
+          <p>
+            Some jurisdictions do not allow the exclusion or limitation of certain damages. In such
+            jurisdictions, Bay Tides' liability shall be limited to the fullest extent permitted by
+            applicable law.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Intellectual Property"
+          sectionNumber={9}
+          simpleSummary="Content you submit may be used for Bay Tides' environmental mission. We won't publish it without your consent."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M14.83 14.83a4 4 0 1 1 0-5.66"></path>
+          </svg>
+          <p>
+            By submitting content through the Tipline, you grant Bay Tides a non-exclusive,
+            royalty-free license to use the submitted information in furtherance of our
+            environmental mission. This includes:
+          </p>
+          <ul>
+            <li>Reviewing and investigating reported concerns</li>
+            <li>
+              Using factual information from reports to support advocacy and conservation efforts
+            </li>
+            <li>
+              Sharing relevant information with regulatory agencies when appropriate and with your
+              consent
+            </li>
+          </ul>
+          <p>
+            We will not publicly publish the content of your submission without your explicit
+            consent, except where required by law. Any public use of information derived from
+            tipline submissions will be done in a manner that protects the anonymity of the
+            submitter.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Modifications to Terms"
+          sectionNumber={10}
+          simpleSummary="We'll give 30 days' notice before major changes to these terms."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          <p>
+            Bay Tides reserves the right to modify these Terms at any time. Changes will be handled
+            as follows:
+          </p>
+          <ul>
+            <li>
+              <strong>Material changes:</strong> We will provide at least <strong>
+                30 days' notice
+              </strong>
+              before material changes take effect by posting updated Terms with a new effective date
+            </li>
+            <li>
+              <strong>Minor changes:</strong> Non-material changes may be made without advance notice
+            </li>
+            <li>
+              <strong>Version tracking:</strong> The version number and effective date at the top of this
+              document reflect the current version
+            </li>
+          </ul>
+          <p>
+            Your continued use of the Tipline after changes take effect constitutes acceptance of
+            the revised Terms. If you disagree with any changes, you should discontinue use of the
+            Tipline.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Governing Law & Disputes"
+          sectionNumber={11}
+          simpleSummary="California law applies. Disputes go to San Mateo County courts. We prefer informal resolution first."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path
+              d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+            >
+            </path>
+          </svg>
+          <p>
+            These Terms shall be governed by and construed in accordance with the laws of the
+            <strong>State of California</strong>, without regard to its conflict of law provisions.
+          </p>
+          <div class="subsection">
+            <h4>Informal Resolution</h4>
+            <p>
+              Before initiating any formal legal action, we encourage you to contact us to attempt
+              to resolve the dispute informally. We will make good-faith efforts to resolve any
+              concerns through direct communication.
+            </p>
+          </div>
+          <div class="subsection">
+            <h4>Jurisdiction</h4>
+            <p>
+              Any legal action or proceeding arising out of or relating to these Terms shall be
+              brought exclusively in the state or federal courts located in <strong>
+                San Mateo County, California
+              </strong>. You consent to the personal jurisdiction of such courts.
+            </p>
+          </div>
+        </LegalSection>
+
+        <LegalSection
+          title="Contact"
+          sectionNumber={12}
+          simpleSummary="Reach out to us with any questions about these terms."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+            </path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <p>If you have questions about these Terms of Service, please reach us through:</p>
+          <ul>
+            <li>
+              <strong>Our contact page:</strong>
+              <a href="/contact">baytides.org/contact</a>
+            </li>
+            <li>
+              <strong>The tipline messaging system:</strong> Use your receipt code to communicate directly
+              through the platform
+            </li>
+          </ul>
+        </LegalSection>
+
+        <div class="bottom-line-box">
+          <h3>The Bottom Line</h3>
+          <p>
+            The Bay Tides Secure Tipline is a <strong>free, anonymous service</strong> for reporting environmental
+            concerns.
+          </p>
+          <ul>
+            <li>Use it for <strong>genuine environmental concerns</strong> in good faith</li>
+            <li>Access via <strong>Tor Browser</strong> for maximum anonymity</li>
+            <li>
+              Keep your <strong>receipt code safe</strong> — it's your only access to your submission
+            </li>
+            <li>
+              We're a <strong>nonprofit, not law enforcement</strong> — consult a lawyer for legal matters
+            </li>
+          </ul>
+          <p>
+            <strong>Questions?</strong>
+            <a href="/contact">Contact us</a> anytime.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-bottom: 4rem;
+  }
+
+  .legal-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .subsection {
+    margin: 1rem 0;
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--primary-blue);
+  }
+
+  .subsection h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+  }
+
+  .bottom-line-box {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--light-blue) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border: 1px solid rgba(43, 108, 176, 0.2);
+    border-radius: 16px;
+  }
+
+  .bottom-line-box h3 {
+    margin: 0 0 1rem;
+    color: var(--primary-blue);
+    font-size: 1.25rem;
+  }
+
+  .bottom-line-box ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .bottom-line-box li {
+    margin-bottom: 0.5rem;
+  }
+
+  .bottom-line-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  :global([data-theme='dark']) .subsection {
+    border-left-color: rgba(255, 255, 255, 0.2);
+  }
+
+  :global([data-theme='dark']) .subsection h4 {
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .bottom-line-box {
+    background: linear-gradient(135deg, rgba(99, 179, 237, 0.15) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border-color: rgba(99, 179, 237, 0.3);
+  }
+
+  :global([data-theme='dark']) .bottom-line-box h3 {
+    color: var(--accent-blue);
+  }
+</style>

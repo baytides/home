@@ -1,0 +1,555 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
+import LegalPageHeader from '../components/LegalPageHeader.astro';
+import LegalSection from '../components/LegalSection.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Law Enforcement Procedures',
+    description:
+      'Bay Tides procedures for handling law enforcement requests related to the Secure Tipline.',
+    publisher: {
+      '@type': 'NonprofitOrganization',
+      name: 'Bay Tides',
+      url: 'https://baytides.org',
+    },
+    dateModified: '2025-02-20',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baytides.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Law Enforcement Procedures' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Law Enforcement Procedures"
+  description="Bay Tides procedures for handling law enforcement requests. How we respond to legal process while protecting user privacy."
+  canonicalUrl="https://baytides.org/law-enforcement"
+  structuredData={structuredData}
+>
+  <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Law Enforcement Procedures' }]} />
+
+  <PageHero
+    title="Law Enforcement Procedures"
+    subtitle="Transparency in how we handle legal requests"
+  />
+
+  <section class="content-section legal-page">
+    <div class="container">
+      <LegalPageHeader
+        version="1.0"
+        effectiveDate="February 20, 2025"
+        lastUpdated="February 20, 2025"
+        summary="Bay Tides requires valid legal process (subpoena, court order, or warrant) before disclosing any information. By design, we collect minimal data — no IP addresses, no browser fingerprints, no cookies. We will notify affected users when legally permitted, and we will challenge overly broad or legally deficient requests."
+      />
+
+      <div class="legal-content">
+        <LegalSection
+          title="Introduction"
+          sectionNumber={1}
+          simpleSummary="This page explains how Bay Tides handles requests from law enforcement. We prioritize user privacy and transparency."
+          defaultOpen
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <p>
+            Bay Tides is committed to protecting the privacy and anonymity of individuals who use
+            the Bay Tides Secure Tipline. We publish this page to be transparent about how we handle
+            requests from law enforcement agencies and other government bodies.
+          </p>
+          <p>
+            This document outlines our procedures for receiving, evaluating, and responding to legal
+            requests for information. It is intended for both law enforcement personnel and Tipline
+            users who want to understand how their information is protected.
+          </p>
+          <p>
+            Bay Tides is a 501(c)(3) nonprofit environmental organization. We are not a law
+            enforcement agency, government body, or regulated entity with mandatory reporting
+            obligations (except as required by generally applicable law).
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Legal Process Requirements"
+          sectionNumber={2}
+          simpleSummary="We require a valid subpoena, court order, or warrant before disclosing any information. No exceptions for informal requests."
+          defaultOpen
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <p>
+            Bay Tides requires <strong>valid legal process</strong> before disclosing any information
+            related to the Tipline. We do not honor informal requests, verbal requests, or requests that
+            lack proper legal authority.
+          </p>
+          <p>The types of legal process we recognize include:</p>
+          <ul>
+            <li>
+              <strong>Subpoena</strong> — A valid subpoena issued by a court of competent jurisdiction
+              or authorized government body
+            </li>
+            <li>
+              <strong>Court order</strong> — An order issued by a judge under applicable legal standards
+            </li>
+            <li>
+              <strong>Search warrant</strong> — A warrant issued by a judge upon a showing of probable
+              cause, supported by oath or affirmation, and describing with particularity the information
+              to be disclosed
+            </li>
+          </ul>
+          <p>All legal process must:</p>
+          <ul>
+            <li>Be issued by a court or agency with proper jurisdiction</li>
+            <li>Identify the specific information sought with particularity</li>
+            <li>Be properly served on Bay Tides</li>
+            <li>Comply with all applicable legal requirements</li>
+          </ul>
+          <p>
+            Bay Tides will <strong>challenge or seek to narrow</strong> any request that is overly broad,
+            legally deficient, or appears to be a fishing expedition.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="What We Can Provide"
+          sectionNumber={3}
+          simpleSummary="Very little, by design. We only store what submitters voluntarily provide — no metadata, no identifiers."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <p>
+            The Tipline is designed with <strong>data minimization</strong> as a core principle. As a
+            result, the information Bay Tides can provide in response to valid legal process is limited
+            to:
+          </p>
+          <ul>
+            <li>The text content of a specific submission (if still retained)</li>
+            <li>Files or documents attached to a specific submission (if still retained)</li>
+            <li>
+              Messages exchanged through the platform's anonymous messaging system (if still
+              retained)
+            </li>
+            <li>The date and time a submission was received</li>
+          </ul>
+          <p>
+            All of the above is information that the submitter voluntarily provided. We do not
+            possess any additional information beyond what was submitted.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="What We Cannot Provide"
+          sectionNumber={4}
+          simpleSummary="We can't give what we don't have. No IPs, no device info, no identities. Our architecture makes this impossible."
+          defaultOpen
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
+            >
+            </path>
+            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+            <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path>
+          </svg>
+          <p>
+            Due to the privacy-by-design architecture of the Tipline, Bay Tides <strong>
+              does not possess
+            </strong>
+            and <strong>cannot provide</strong> the following, regardless of the legal process presented:
+          </p>
+          <ul>
+            <li><strong>IP addresses</strong> — Not logged or stored at any point</li>
+            <li>
+              <strong>User identities</strong> — The platform is anonymous; we do not require or collect
+              names, email addresses, or other identifying information
+            </li>
+            <li>
+              <strong>Browser or device information</strong> — No fingerprinting, no user agent logging
+            </li>
+            <li>
+              <strong>Connection metadata</strong> — No timestamps of connections (only submission timestamps),
+              no session data
+            </li>
+            <li><strong>Geolocation data</strong> — Not collected in any form</li>
+            <li><strong>Cookie or tracking data</strong> — No cookies are set or used</li>
+            <li><strong>Historical access logs</strong> — No access logs are maintained</li>
+          </ul>
+          <p>
+            This is not a matter of policy — it is a <strong>technical limitation</strong>. The
+            Tipline's architecture is specifically designed to not collect this information. We
+            cannot disclose data that does not exist.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="User Notification"
+          sectionNumber={5}
+          simpleSummary="We'll notify affected users when we legally can. We'll fight gag orders when possible."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <p>
+            Bay Tides is committed to notifying affected Tipline users when we receive legal process
+            seeking their information:
+          </p>
+          <ul>
+            <li>
+              <strong>When permitted:</strong> We will attempt to notify the affected submitter through
+              the platform's messaging system before disclosing any information, unless prohibited by
+              law or court order
+            </li>
+            <li>
+              <strong>When prohibited:</strong> If a court order or law prohibits us from providing advance
+              notification (a "gag order"), we will comply with the prohibition but will challenge it
+              when we believe such a challenge is appropriate
+            </li>
+            <li>
+              <strong>After expiration:</strong> If a non-disclosure requirement expires, we will promptly
+              notify the affected user
+            </li>
+          </ul>
+          <p>
+            Note that due to the anonymous nature of the Tipline, notification is only possible
+            through the platform's messaging system. If a user does not check their submission using
+            their receipt code, they may not receive our notification.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Submission Process for Law Enforcement"
+          sectionNumber={6}
+          simpleSummary="Law enforcement requests must be in writing and include specific required information."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+            </path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <p>
+            Law enforcement requests for information must be submitted in writing and include the
+            following:
+          </p>
+          <ul>
+            <li>The requesting agency's name and contact information</li>
+            <li>The name, badge number, and contact information of the requesting officer</li>
+            <li>A valid legal instrument (subpoena, court order, or warrant)</li>
+            <li>A specific description of the information sought</li>
+            <li>The legal basis for the request</li>
+            <li>The case number or investigation reference</li>
+          </ul>
+          <p>
+            Requests should be directed to Bay Tides through our <a href="/contact">
+              contact page
+            </a>, marked as a law enforcement inquiry. We will acknowledge receipt and provide a
+            response within the timeframe required by the applicable legal process.
+          </p>
+          <p>
+            <strong>Note:</strong> Bay Tides may consult with legal counsel before responding to any law
+            enforcement request.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Emergency Requests"
+          sectionNumber={7}
+          simpleSummary="For imminent danger situations, we'll work with law enforcement in good faith — but formal legal process must follow."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+            >
+            </path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <p>
+            In situations involving <strong>
+              imminent danger to life or serious physical harm
+            </strong>, Bay Tides will work in good faith with law enforcement agencies to address
+            the emergency.
+          </p>
+          <p>Emergency requests must:</p>
+          <ul>
+            <li>Describe the specific nature of the emergency and the imminent threat</li>
+            <li>Explain why the information sought is necessary to address the emergency</li>
+            <li>Be made by a sworn law enforcement officer</li>
+            <li>Be followed by proper legal process within a reasonable timeframe</li>
+          </ul>
+          <p>
+            Even in emergency situations, Bay Tides can only provide information that we actually
+            possess. As described in Sections 3 and 4, our data collection is minimal by design.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Transparency Reporting"
+          sectionNumber={8}
+          simpleSummary="We commit to publishing aggregate statistics on law enforcement requests we receive."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          <p>
+            Bay Tides is committed to transparency about law enforcement interactions with the
+            Tipline. To that end:
+          </p>
+          <ul>
+            <li>
+              We will publish periodic transparency reports disclosing the number and type of law
+              enforcement requests received, to the extent permitted by law
+            </li>
+            <li>
+              Reports will include aggregate data such as: number of requests received, number of
+              requests complied with, number of requests challenged, and types of legal process
+              received
+            </li>
+            <li>
+              Transparency reports will not include information that could identify specific
+              submitters or compromise ongoing investigations
+            </li>
+          </ul>
+          <p>
+            As of the effective date of this document, Bay Tides has received <strong>zero</strong> law
+            enforcement requests for Tipline data.
+          </p>
+        </LegalSection>
+
+        <LegalSection
+          title="Contact"
+          sectionNumber={9}
+          simpleSummary="For law enforcement inquiries, contact us through our contact page."
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+            </path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <p>Law enforcement agencies should direct all inquiries to Bay Tides through:</p>
+          <ul>
+            <li>
+              <strong>Our contact page:</strong>
+              <a href="/contact">baytides.org/contact</a>
+              (mark as "Law Enforcement Inquiry")
+            </li>
+          </ul>
+          <p>
+            For general questions about this document from Tipline users or members of the public,
+            you may also reach us through the contact page.
+          </p>
+        </LegalSection>
+
+        <div class="bottom-line-box">
+          <h3>The Bottom Line</h3>
+          <p>
+            Bay Tides takes a firm stance on protecting Tipline user privacy when it comes to law
+            enforcement requests:
+          </p>
+          <ul>
+            <li>We require <strong>valid legal process</strong> — no informal requests honored</li>
+            <li>
+              We <strong>can't share what we don't have</strong> — no IPs, no identities, no metadata
+            </li>
+            <li>We will <strong>notify affected users</strong> when legally permitted</li>
+            <li>We will <strong>challenge overly broad requests</strong></li>
+            <li>We publish <strong>transparency reports</strong> on requests received</li>
+          </ul>
+          <p>
+            As of today, we have received <strong>zero</strong> law enforcement requests for Tipline data.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-bottom: 4rem;
+  }
+
+  .legal-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .subsection {
+    margin: 1rem 0;
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--primary-blue);
+  }
+
+  .subsection h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+  }
+
+  .bottom-line-box {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--light-blue) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border: 1px solid rgba(43, 108, 176, 0.2);
+    border-radius: 16px;
+  }
+
+  .bottom-line-box h3 {
+    margin: 0 0 1rem;
+    color: var(--primary-blue);
+    font-size: 1.25rem;
+  }
+
+  .bottom-line-box ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .bottom-line-box li {
+    margin-bottom: 0.5rem;
+  }
+
+  .bottom-line-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  :global([data-theme='dark']) .subsection {
+    border-left-color: rgba(255, 255, 255, 0.2);
+  }
+
+  :global([data-theme='dark']) .subsection h4 {
+    color: var(--accent-blue);
+  }
+
+  :global([data-theme='dark']) .bottom-line-box {
+    background: linear-gradient(135deg, rgba(99, 179, 237, 0.15) 0%, rgba(43, 108, 176, 0.1) 100%);
+    border-color: rgba(99, 179, 237, 0.3);
+  }
+
+  :global([data-theme='dark']) .bottom-line-box h3 {
+    color: var(--accent-blue);
+  }
+</style>
