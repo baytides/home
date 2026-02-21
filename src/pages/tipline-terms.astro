@@ -60,6 +60,7 @@ const structuredData = [
         >
           <svg
             slot="icon"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -99,6 +100,7 @@ const structuredData = [
         >
           <svg
             slot="icon"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -137,6 +139,7 @@ const structuredData = [
         >
           <svg
             slot="icon"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -176,6 +179,7 @@ const structuredData = [
         >
           <svg
             slot="icon"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -225,6 +229,7 @@ const structuredData = [
         >
           <svg
             slot="icon"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -277,6 +282,7 @@ const structuredData = [
         >
           <svg
             slot="icon"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -327,6 +333,7 @@ const structuredData = [
         >
           <svg
             slot="icon"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -379,6 +386,7 @@ const structuredData = [
         >
           <svg
             slot="icon"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -421,6 +429,7 @@ const structuredData = [
         >
           <svg
             slot="icon"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -464,6 +473,7 @@ const structuredData = [
         >
           <svg
             slot="icon"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -510,6 +520,7 @@ const structuredData = [
         >
           <svg
             slot="icon"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -557,6 +568,7 @@ const structuredData = [
         >
           <svg
             slot="icon"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -621,16 +633,25 @@ const structuredData = [
   }
 
   .subsection {
-    margin: 1rem 0;
-    padding-left: 1.25rem;
-    border-left: 3px solid var(--primary-blue);
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--border-color, #e2e8f0);
   }
 
   .subsection h4 {
-    margin: 0 0 0.5rem;
     font-size: 1rem;
     font-weight: 600;
-    color: var(--primary-blue);
+    margin-bottom: 0.75rem;
+    color: var(--text-dark);
+  }
+
+  .subsection p {
+    margin: 0 0 0.75rem;
+  }
+
+  .subsection p:last-child,
+  .subsection ul:last-child {
+    margin-bottom: 0;
   }
 
   .bottom-line-box {
@@ -662,10 +683,6 @@ const structuredData = [
 
   :global([data-theme='dark']) .subsection {
     border-left-color: rgba(255, 255, 255, 0.2);
-  }
-
-  :global([data-theme='dark']) .subsection h4 {
-    color: var(--accent-blue);
   }
 
   :global([data-theme='dark']) .bottom-line-box {
