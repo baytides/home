@@ -1,7 +1,7 @@
 /**
  * Bay Tides Form Handler Worker
  * Handles contact form and newsletter submissions
- * Sends email notifications via MailChannels
+ * Sends email notifications via Azure Communication Services
  * Adds newsletter subscribers to MailerLite
  * Validates Cloudflare Turnstile tokens for spam protection
  * Includes persistent rate limiting via Cloudflare KV
@@ -19,7 +19,8 @@ interface Env {
   TURNSTILE_SECRET_KEY?: string;
   MAILERLITE_API_KEY?: string;
   MAILERLITE_GROUP_ID?: string;
-  RESEND_API_KEY: string;
+  ACS_ENDPOINT: string;
+  ACS_ACCESS_KEY: string;
 }
 
 interface RateLimitRecord {
@@ -229,7 +230,7 @@ async function addToMailerLite(
 }
 
 // ==========================================================================
-// Email Sending
+// Azure Communication Services Email
 // ==========================================================================
 
 interface EmailOptions {
@@ -242,6 +243,70 @@ interface EmailOptions {
   htmlBody?: string;
 }
 
+interface AcsRecipient {
+  address: string;
+  displayName?: string;
+}
+
+async function signAcsRequest(
+  accessKey: string,
+  method: string,
+  url: string,
+  contentHash: string,
+  dateStr: string
+): Promise<string> {
+  const parsedUrl = new URL(url);
+  const pathAndQuery = parsedUrl.pathname + parsedUrl.search;
+  const stringToSign = `${method}\n${pathAndQuery}\n${dateStr};${parsedUrl.host};${contentHash}`;
+
+  const keyBytes = Uint8Array.from(atob(accessKey), (c) => c.charCodeAt(0));
+  const key = await crypto.subtle.importKey(
+    'raw',
+    keyBytes,
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
+  const signature = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(stringToSign));
+
+  return btoa(String.fromCharCode(...new Uint8Array(signature)));
+}
+
+async function sendAcsEmail(env: Env, payload: object): Promise<Response> {
+  const endpoint = env.ACS_ENDPOINT;
+  const url = `${endpoint}/emails:send?api-version=2023-03-31`;
+  const body = JSON.stringify(payload);
+
+  const contentBytes = new TextEncoder().encode(body);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', contentBytes);
+  const contentHash = btoa(String.fromCharCode(...new Uint8Array(hashBuffer)));
+
+  const dateStr = new Date().toUTCString();
+  const signature = await signAcsRequest(env.ACS_ACCESS_KEY, 'POST', url, contentHash, dateStr);
+
+  const parsedUrl = new URL(url);
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-ms-date': dateStr,
+      'x-ms-content-sha256': contentHash,
+      Authorization: `HMAC-SHA256 SignedHeaders=x-ms-date;host;x-ms-content-sha256&Signature=${signature}`,
+      'repeatability-request-id': crypto.randomUUID(),
+      'repeatability-first-sent': dateStr,
+    },
+    body,
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('ACS email error:', errorText);
+    throw new Error(`Failed to send email: ${response.status}`);
+  }
+
+  return response;
+}
+
 async function sendEmail(
   env: Env,
   subject: string,
@@ -250,73 +315,58 @@ async function sendEmail(
 ): Promise<Response> {
   const toEmail = env.TO_EMAIL || 'admin@baytides.org';
 
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json',
+  const payload: Record<string, unknown> = {
+    senderAddress: 'noreply@mail.baytides.org',
+    content: {
+      subject,
+      plainText: body,
     },
-    body: JSON.stringify({
-      from: 'Bay Tides Website <noreply@baytides.org>',
-      to: [toEmail],
-      reply_to: replyTo || undefined,
-      subject: subject,
-      text: body,
-    }),
-  });
+    recipients: {
+      to: [{ address: toEmail }],
+    },
+  };
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error('Resend error:', errorText);
-    throw new Error(`Failed to send email: ${response.status}`);
+  if (replyTo) {
+    payload.replyTo = [{ address: replyTo }];
   }
 
-  return response;
+  return sendAcsEmail(env, payload);
 }
 
 async function sendEmailAdvanced(env: Env, options: EmailOptions): Promise<Response> {
-  interface ResendEmailPayload {
-    from: string;
-    to: string[];
-    bcc?: string[];
-    reply_to?: string;
-    subject: string;
-    text: string;
-    html?: string;
+  const toRecipient: AcsRecipient = { address: options.to };
+  if (options.toName) {
+    toRecipient.displayName = options.toName;
   }
 
-  const payload: ResendEmailPayload = {
-    from: 'Bay Tides <noreply@baytides.org>',
-    to: [options.toName ? `${options.toName} <${options.to}>` : options.to],
-    reply_to: options.replyTo || undefined,
+  const content: Record<string, string> = {
     subject: options.subject,
-    text: options.body,
+    plainText: options.body,
+  };
+
+  if (options.htmlBody) {
+    content.html = options.htmlBody;
+  }
+
+  const recipients: Record<string, AcsRecipient[]> = {
+    to: [toRecipient],
   };
 
   if (options.bcc) {
-    payload.bcc = [options.bcc];
+    recipients.bcc = [{ address: options.bcc }];
   }
 
-  if (options.htmlBody) {
-    payload.html = options.htmlBody;
+  const payload: Record<string, unknown> = {
+    senderAddress: 'noreply@mail.baytides.org',
+    content,
+    recipients,
+  };
+
+  if (options.replyTo) {
+    payload.replyTo = [{ address: options.replyTo }];
   }
 
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error('Resend error:', errorText);
-    throw new Error(`Failed to send email: ${response.status}`);
-  }
-
-  return response;
+  return sendAcsEmail(env, payload);
 }
 
 // ==========================================================================

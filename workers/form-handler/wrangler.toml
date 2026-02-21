@@ -6,6 +6,7 @@ workers_dev = true
 [vars]
 ALLOWED_ORIGIN = "https://baytides.org"
 TO_EMAIL = "info@baytides.org"
+ACS_ENDPOINT = "https://baynavigator-comms.unitedstates.communication.azure.com"
 
 # KV namespace for rate limiting
 [[kv_namespaces]]
