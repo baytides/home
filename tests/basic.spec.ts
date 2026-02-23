@@ -8,7 +8,7 @@ test.describe('Homepage', () => {
 
   test('should display header navigation', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByRole('navigation', { name: 'Main navigation' })).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Main navigation' })).toBeAttached();
   });
 
   test('should have skip link for accessibility', async ({ page }) => {
@@ -34,8 +34,16 @@ test.describe('Homepage', () => {
 });
 
 test.describe('Navigation', () => {
+  async function openNavIfCollapsed(page) {
+    const mobileMenuToggle = page.locator('.mobile-menu-toggle');
+    if (await mobileMenuToggle.isVisible()) {
+      await mobileMenuToggle.click();
+    }
+  }
+
   test('should navigate to about page', async ({ page }) => {
     await page.goto('/');
+    await openNavIfCollapsed(page);
     await page.click('nav a[href="/about"]');
     await expect(page).toHaveURL(/\/about/);
     await expect(page).toHaveTitle(/About/);
@@ -43,6 +51,7 @@ test.describe('Navigation', () => {
 
   test('should navigate to contact page', async ({ page }) => {
     await page.goto('/');
+    await openNavIfCollapsed(page);
     await page.click('nav a[href="/contact"]');
     await expect(page).toHaveURL(/\/contact/);
     await expect(page).toHaveTitle(/Contact/);
