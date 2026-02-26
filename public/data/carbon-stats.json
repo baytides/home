@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-25T06:25:33.487Z",
+  "generatedAt": "2026-02-26T06:22:28.300Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -7,30 +7,30 @@
     "snowflake": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.510",
+    "totalGrossEmissionsKg": "0.512",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
     "carbonNeutral": true
   },
   "snowflake": {
-    "totalUsersHelped": 2384,
-    "last24Hours": 461,
-    "last7Days": 2384,
-    "uptime": 143,
-    "lastUpdated": "2026-02-25T06:21:31.110Z"
+    "totalUsersHelped": 2747,
+    "last24Hours": 363,
+    "last7Days": 2747,
+    "uptime": 167,
+    "lastUpdated": "2026-02-26T06:20:26.195Z"
   },
   "usage": {
-    "cdnRequests": 185988,
-    "pageViews": 20554,
-    "cdnBytesTransferred": 11455365185,
+    "cdnRequests": 187919,
+    "pageViews": 20685,
+    "cdnBytesTransferred": 11550135944,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
-      "Update Carbon Stats": 7,
-      "Deploy to Cloudflare Pages": 26,
+      "Update Carbon Stats": 8,
       "Push on main": 25,
+      "Deploy to Cloudflare Pages": 26,
       "Lighthouse CI": 22,
       "npm_and_yarn in / for @playwright/test - Update #1253321255": 1,
       "npm_and_yarn in /. - Update #1253321228": 1,
@@ -46,31 +46,31 @@
       "npm_and_yarn in / for @types/react - Update #1248981004": 1,
       "npm_and_yarn in / for eslint - Update #1248980999": 1,
       "npm_and_yarn in / for @cloudflare/workers-types - Update #1248980998": 1,
-      "Update Snowflake Stats": 6
+      "Update Snowflake Stats": 5
     }
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "18.6",
-      "percent": "3.6",
+      "grams": "18.8",
+      "percent": "3.7",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "411.1",
+      "grams": "413.7",
       "percent": "80.7",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "15.7",
+      "percent": "15.6",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
   },
   "comparison": {
-    "equivalentMilesDriven": "1.27",
+    "equivalentMilesDriven": "1.28",
     "equivalentPaperPages": 51,
     "cleanerThanPercent": 85
   },
