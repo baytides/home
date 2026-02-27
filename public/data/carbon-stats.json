@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-26T06:22:28.300Z",
+  "generatedAt": "2026-02-27T06:18:45.506Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -7,28 +7,28 @@
     "snowflake": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.512",
+    "totalGrossEmissionsKg": "0.516",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
     "carbonNeutral": true
   },
   "snowflake": {
-    "totalUsersHelped": 2747,
-    "last24Hours": 363,
-    "last7Days": 2747,
-    "uptime": 167,
-    "lastUpdated": "2026-02-26T06:20:26.195Z"
+    "totalUsersHelped": 3121,
+    "last24Hours": 374,
+    "last7Days": 2759,
+    "uptime": 191,
+    "lastUpdated": "2026-02-27T06:14:14.510Z"
   },
   "usage": {
-    "cdnRequests": 187919,
-    "pageViews": 20685,
-    "cdnBytesTransferred": 11550135944,
+    "cdnRequests": 188934,
+    "pageViews": 20864,
+    "cdnBytesTransferred": 11698794946,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
-      "Update Carbon Stats": 8,
+      "Update Carbon Stats": 9,
       "Push on main": 25,
       "Deploy to Cloudflare Pages": 26,
       "Lighthouse CI": 22,
@@ -46,32 +46,32 @@
       "npm_and_yarn in / for @types/react - Update #1248981004": 1,
       "npm_and_yarn in / for eslint - Update #1248980999": 1,
       "npm_and_yarn in / for @cloudflare/workers-types - Update #1248980998": 1,
-      "Update Snowflake Stats": 5
+      "Update Snowflake Stats": 4
     }
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "18.8",
+      "grams": "18.9",
       "percent": "3.7",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "413.7",
-      "percent": "80.7",
+      "grams": "417.3",
+      "percent": "80.8",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "15.6",
+      "percent": "15.5",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
   },
   "comparison": {
-    "equivalentMilesDriven": "1.28",
-    "equivalentPaperPages": 51,
+    "equivalentMilesDriven": "1.29",
+    "equivalentPaperPages": 52,
     "cleanerThanPercent": 85
   },
   "providers": {
