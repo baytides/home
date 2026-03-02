@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-01T06:15:45.460Z",
+  "generatedAt": "2026-03-02T06:20:09.643Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -7,32 +7,36 @@
     "snowflake": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.514",
+    "totalGrossEmissionsKg": "0.522",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
     "carbonNeutral": true
   },
   "snowflake": {
-    "totalUsersHelped": 3827,
-    "last24Hours": 319,
-    "last7Days": 2676,
-    "uptime": 239,
-    "lastUpdated": "2026-03-01T06:12:03.621Z"
+    "totalUsersHelped": 4076,
+    "last24Hours": 249,
+    "last7Days": 2497,
+    "uptime": 263,
+    "lastUpdated": "2026-03-02T06:15:37.325Z"
   },
   "usage": {
-    "cdnRequests": 188019,
-    "pageViews": 20775,
-    "cdnBytesTransferred": 11823953450,
+    "cdnRequests": 182905,
+    "pageViews": 21206,
+    "cdnBytesTransferred": 12019451621,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
-      "Update Carbon Stats": 11,
+      "Update Carbon Stats": 12,
+      "Lighthouse CI": 24,
+      "npm_and_yarn in / for astro - Update #1263299892": 1,
+      "npm_and_yarn in / for eslint - Update #1263299889": 1,
+      "npm_and_yarn in / for @playwright/test - Update #1263299891": 1,
+      "github_actions in /. - Update #1263299859": 1,
+      "Push on main": 23,
+      "Deploy to Cloudflare Pages": 23,
       "Scheduled": 2,
-      "Push on main": 25,
-      "Deploy to Cloudflare Pages": 25,
-      "Lighthouse CI": 22,
       "npm_and_yarn in / for @playwright/test - Update #1253321255": 1,
       "npm_and_yarn in /. - Update #1253321228": 1,
       "github_actions in /. - Update #1253321211": 1,
@@ -44,34 +48,32 @@
       "npm_and_yarn in / for eslint - Update #1248981129": 1,
       "npm_and_yarn in / for @types/react - Update #1248981125": 1,
       "npm_and_yarn in / for @types/react - Update #1248981004": 1,
-      "npm_and_yarn in / for eslint - Update #1248980999": 1,
-      "npm_and_yarn in / for @cloudflare/workers-types - Update #1248980998": 1,
-      "Update Snowflake Stats": 2
+      "npm_and_yarn in / for eslint - Update #1248980999": 1
     }
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "18.8",
-      "percent": "3.7",
+      "grams": "18.3",
+      "percent": "3.5",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "415.5",
-      "percent": "80.8",
+      "grams": "424.1",
+      "percent": "81.2",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "15.6",
+      "percent": "15.3",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
   },
   "comparison": {
-    "equivalentMilesDriven": "1.29",
-    "equivalentPaperPages": 51,
+    "equivalentMilesDriven": "1.31",
+    "equivalentPaperPages": 52,
     "cleanerThanPercent": 85
   },
   "providers": {
