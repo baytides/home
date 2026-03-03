@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-02T06:20:09.643Z",
+  "generatedAt": "2026-03-03T06:17:23.746Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -7,35 +7,35 @@
     "snowflake": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.522",
+    "totalGrossEmissionsKg": "0.478",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
     "carbonNeutral": true
   },
   "snowflake": {
-    "totalUsersHelped": 4076,
-    "last24Hours": 249,
-    "last7Days": 2497,
-    "uptime": 263,
-    "lastUpdated": "2026-03-02T06:15:37.325Z"
+    "totalUsersHelped": 4302,
+    "last24Hours": 226,
+    "last7Days": 2379,
+    "uptime": 287,
+    "lastUpdated": "2026-03-03T06:12:40.921Z"
   },
   "usage": {
-    "cdnRequests": 182905,
-    "pageViews": 21206,
-    "cdnBytesTransferred": 12019451621,
+    "cdnRequests": 176608,
+    "pageViews": 18998,
+    "cdnBytesTransferred": 10022483788,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
-      "Update Carbon Stats": 12,
+      "Update Carbon Stats": 13,
+      "Deploy to Cloudflare Pages": 24,
+      "Push on main": 24,
       "Lighthouse CI": 24,
       "npm_and_yarn in / for astro - Update #1263299892": 1,
       "npm_and_yarn in / for eslint - Update #1263299889": 1,
       "npm_and_yarn in / for @playwright/test - Update #1263299891": 1,
       "github_actions in /. - Update #1263299859": 1,
-      "Push on main": 23,
-      "Deploy to Cloudflare Pages": 23,
       "Scheduled": 2,
       "npm_and_yarn in / for @playwright/test - Update #1253321255": 1,
       "npm_and_yarn in /. - Update #1253321228": 1,
@@ -45,35 +45,32 @@
       "npm_and_yarn in / for @playwright/test - Update #1252014656": 1,
       "npm_and_yarn in / for @cloudflare/workers-types - Update #1252014655": 1,
       "npm_and_yarn in / for @cloudflare/workers-types - Update #1248981144": 1,
-      "npm_and_yarn in / for eslint - Update #1248981129": 1,
-      "npm_and_yarn in / for @types/react - Update #1248981125": 1,
-      "npm_and_yarn in / for @types/react - Update #1248981004": 1,
-      "npm_and_yarn in / for eslint - Update #1248980999": 1
+      "npm_and_yarn in / for eslint - Update #1248981129": 1
     }
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "18.3",
-      "percent": "3.5",
+      "grams": "17.7",
+      "percent": "3.7",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "424.1",
-      "percent": "81.2",
+      "grams": "380.0",
+      "percent": "79.6",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "15.3",
+      "percent": "16.7",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
   },
   "comparison": {
-    "equivalentMilesDriven": "1.31",
-    "equivalentPaperPages": 52,
+    "equivalentMilesDriven": "1.19",
+    "equivalentPaperPages": 48,
     "cleanerThanPercent": 85
   },
   "providers": {
