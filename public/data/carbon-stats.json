@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-05T06:17:27.921Z",
+  "generatedAt": "2026-03-06T06:15:50.250Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -7,31 +7,31 @@
     "snowflake": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.463",
+    "totalGrossEmissionsKg": "0.422",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
     "carbonNeutral": true
   },
   "snowflake": {
-    "totalUsersHelped": 4838,
-    "last24Hours": 240,
-    "last7Days": 2091,
-    "uptime": 335,
-    "lastUpdated": "2026-03-05T06:16:22.802Z"
+    "totalUsersHelped": 5202,
+    "last24Hours": 364,
+    "last7Days": 2081,
+    "uptime": 359,
+    "lastUpdated": "2026-03-06T06:15:44.416Z"
   },
   "usage": {
-    "cdnRequests": 169070,
-    "pageViews": 18314,
-    "cdnBytesTransferred": 9056290876,
+    "cdnRequests": 164871,
+    "pageViews": 16278,
+    "cdnBytesTransferred": 7594202323,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
       "Update Carbon Stats": 15,
       "Deploy to Cloudflare Pages": 26,
-      "Push on main": 25,
-      "Lighthouse CI": 21,
+      "Push on main": 26,
+      "Lighthouse CI": 20,
       "npm_and_yarn in / for astro - Update #1263299892": 1,
       "npm_and_yarn in / for eslint - Update #1263299889": 1,
       "npm_and_yarn in / for @playwright/test - Update #1263299891": 1,
@@ -48,27 +48,27 @@
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "16.9",
-      "percent": "3.7",
+      "grams": "16.5",
+      "percent": "3.9",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "366.3",
-      "percent": "79.1",
+      "grams": "325.6",
+      "percent": "77.1",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "17.3",
+      "percent": "19.0",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
   },
   "comparison": {
-    "equivalentMilesDriven": "1.16",
-    "equivalentPaperPages": 46,
+    "equivalentMilesDriven": "1.06",
+    "equivalentPaperPages": 42,
     "cleanerThanPercent": 85
   },
   "providers": {
