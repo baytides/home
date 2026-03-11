@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-10T06:15:42.537Z",
+  "generatedAt": "2026-03-11T06:17:35.801Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -14,24 +14,24 @@
     "carbonNeutral": true
   },
   "snowflake": {
-    "totalUsersHelped": 6411,
-    "last24Hours": 262,
-    "last7Days": 2109,
-    "uptime": 455,
-    "lastUpdated": "2026-03-10T06:14:41.153Z"
+    "totalUsersHelped": 6601,
+    "last24Hours": 190,
+    "last7Days": 2003,
+    "uptime": 479,
+    "lastUpdated": "2026-03-11T06:13:59.937Z"
   },
   "usage": {
-    "cdnRequests": 156363,
-    "pageViews": 13595,
-    "cdnBytesTransferred": 6382966572,
+    "cdnRequests": 148719,
+    "pageViews": 13659,
+    "cdnBytesTransferred": 6393638666,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
-      "Update Carbon Stats": 18,
-      "Push on main": 23,
+      "Update Carbon Stats": 19,
       "Deploy to Cloudflare Pages": 24,
-      "Lighthouse CI": 19,
+      "Push on main": 24,
+      "Lighthouse CI": 18,
       "npm_and_yarn in / for astro - Update #1272006204": 1,
       "npm_and_yarn in / for @playwright/test - Update #1272006200": 1,
       "npm_and_yarn in / for eslint - Update #1272006207": 1,
@@ -44,26 +44,25 @@
       "npm_and_yarn in / for @playwright/test - Update #1253321255": 1,
       "npm_and_yarn in /. - Update #1253321228": 1,
       "github_actions in /. - Update #1253321211": 1,
-      "npm_and_yarn in / for @playwright/test - Update #1252014825": 1,
-      "npm_and_yarn in / for eslint - Update #1252014654": 1
+      "npm_and_yarn in / for @playwright/test - Update #1252014825": 1
     }
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "15.6",
-      "percent": "4.3",
+      "grams": "14.9",
+      "percent": "4.0",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "271.9",
-      "percent": "74.0",
+      "grams": "273.2",
+      "percent": "74.2",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "21.8",
+      "percent": "21.7",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
