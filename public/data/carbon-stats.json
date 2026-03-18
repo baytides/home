@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-17T06:24:23.032Z",
+  "generatedAt": "2026-03-18T06:24:49.916Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -7,31 +7,31 @@
     "snowflake": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.378",
+    "totalGrossEmissionsKg": "0.379",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
     "carbonNeutral": true
   },
   "snowflake": {
-    "totalUsersHelped": 8238,
-    "last24Hours": 238,
-    "last7Days": 1827,
-    "uptime": 623,
-    "lastUpdated": "2026-03-17T06:20:28.324Z"
+    "totalUsersHelped": 8532,
+    "last24Hours": 294,
+    "last7Days": 1931,
+    "uptime": 647,
+    "lastUpdated": "2026-03-18T06:20:30.231Z"
   },
   "usage": {
-    "cdnRequests": 147592,
-    "pageViews": 14179,
-    "cdnBytesTransferred": 6586034511,
+    "cdnRequests": 153679,
+    "pageViews": 14199,
+    "cdnBytesTransferred": 6626742347,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
-      "Update Carbon Stats": 23,
-      "Deploy to Cloudflare Pages": 23,
-      "Push on main": 23,
-      "Lighthouse CI": 15,
+      "Update Carbon Stats": 24,
+      "Push on main": 24,
+      "Deploy to Cloudflare Pages": 24,
+      "Lighthouse CI": 13,
       "npm_and_yarn in / for eslint - Update #1279939115": 1,
       "npm_and_yarn in / for @playwright/test - Update #1279939142": 1,
       "npm_and_yarn in / for astro - Update #1279939117": 1,
@@ -44,20 +44,19 @@
       "npm_and_yarn in / for astro - Update #1263299892": 1,
       "npm_and_yarn in / for eslint - Update #1263299889": 1,
       "npm_and_yarn in / for @playwright/test - Update #1263299891": 1,
-      "github_actions in /. - Update #1263299859": 1,
-      "npm_and_yarn in / for @playwright/test - Update #1253321255": 1
+      "github_actions in /. - Update #1263299859": 1
     }
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "14.8",
-      "percent": "3.9",
+      "grams": "15.4",
+      "percent": "4.1",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "283.6",
-      "percent": "75.0",
+      "grams": "284.0",
+      "percent": "74.9",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
