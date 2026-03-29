@@ -34,12 +34,12 @@
   },
   "homepage": "https://baytides.org",
   "devDependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.8",
     "@cloudflare/workers-types": "^4.20260219.0",
     "@playwright/test": "^1.58.1",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.2.3",
-    "astro": "^5.17.1",
+    "astro": "^6.1.1",
     "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
@@ -61,7 +61,7 @@
     ]
   },
   "dependencies": {
-    "@astrojs/react": "^4.4.2",
+    "@astrojs/react": "^5.0.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "js-yaml": "^4.1.1",
