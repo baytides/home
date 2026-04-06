@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-05T06:27:39.701Z",
+  "generatedAt": "2026-04-06T06:38:58.194Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -7,7 +7,7 @@
     "snowflake": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.313",
+    "totalGrossEmissionsKg": "0.321",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
@@ -21,18 +21,22 @@
     "lastUpdated": "2026-03-19T05:57:20.579Z"
   },
   "usage": {
-    "cdnRequests": 169684,
-    "pageViews": 10804,
-    "cdnBytesTransferred": 5138217964,
+    "cdnRequests": 171534,
+    "pageViews": 11181,
+    "cdnBytesTransferred": 5284253896,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
-      "Update Carbon Stats": 25,
+      "Update Carbon Stats": 23,
+      "Lighthouse CI": 12,
+      "npm_and_yarn in / for @playwright/test - Update #1308044692": 1,
+      "npm_and_yarn in / for eslint - Update #1308044665": 1,
+      "npm_and_yarn in / for @astrojs/react, @astrojs/check, astro - Update #1308044663": 1,
+      "github_actions in /. - Update #1308044632": 1,
+      "Push on main": 22,
+      "Deploy to Cloudflare Pages": 22,
       "Scheduled": 4,
-      "Push on main": 25,
-      "Deploy to Cloudflare Pages": 24,
-      "Lighthouse CI": 9,
       "npm_and_yarn in / for @astrojs/react, @astrojs/check, astro - Update #1298914149": 1,
       "npm_and_yarn in / for eslint - Update #1298914154": 1,
       "npm_and_yarn in / for @playwright/test - Update #1298914137": 1,
@@ -49,27 +53,27 @@
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "17.0",
-      "percent": "5.4",
+      "grams": "17.2",
+      "percent": "5.3",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "216.1",
-      "percent": "69.0",
+      "grams": "223.6",
+      "percent": "69.7",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "25.6",
+      "percent": "24.9",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
   },
   "comparison": {
-    "equivalentMilesDriven": "0.78",
-    "equivalentPaperPages": 31,
+    "equivalentMilesDriven": "0.80",
+    "equivalentPaperPages": 32,
     "cleanerThanPercent": 85
   },
   "providers": {
