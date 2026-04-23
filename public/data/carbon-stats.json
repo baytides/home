@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-22T06:39:23.485Z",
+  "generatedAt": "2026-04-23T06:39:42.362Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -21,16 +21,16 @@
     "lastUpdated": "2026-03-19T05:57:20.579Z"
   },
   "usage": {
-    "cdnRequests": 136616,
-    "pageViews": 10300,
-    "cdnBytesTransferred": 4961989498,
+    "cdnRequests": 133325,
+    "pageViews": 10328,
+    "cdnBytesTransferred": 4938007501,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
-      "Update Carbon Stats": 24,
-      "Push on main": 23,
-      "Deploy to Cloudflare Pages": 23,
+      "Update Carbon Stats": 25,
+      "Push on main": 24,
+      "Deploy to Cloudflare Pages": 24,
       "Lighthouse CI": 12,
       "npm_and_yarn in / for eslint, prettier - Update #1329133924": 1,
       "npm_and_yarn in / for @playwright/test - Update #1329133928": 1,
@@ -44,22 +44,19 @@
       "npm_and_yarn in / for @playwright/test - Update #1308044692": 1,
       "npm_and_yarn in / for eslint - Update #1308044665": 1,
       "npm_and_yarn in / for @astrojs/react, @astrojs/check, astro - Update #1308044663": 1,
-      "github_actions in /. - Update #1308044632": 1,
-      "npm_and_yarn in / for @astrojs/react, @astrojs/check, astro - Update #1298914149": 1,
-      "npm_and_yarn in / for eslint - Update #1298914154": 1,
-      "npm_and_yarn in / for @playwright/test - Update #1298914137": 1
+      "github_actions in /. - Update #1308044632": 1
     }
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "13.7",
-      "percent": "4.6",
+      "grams": "13.3",
+      "percent": "4.4",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "206.0",
-      "percent": "68.7",
+      "grams": "206.6",
+      "percent": "68.9",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
