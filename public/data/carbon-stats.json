@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-28T06:56:01.902Z",
+  "generatedAt": "2026-04-29T06:50:52.737Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -7,7 +7,7 @@
     "snowflake": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.301",
+    "totalGrossEmissionsKg": "0.300",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
@@ -21,14 +21,14 @@
     "lastUpdated": "2026-03-19T05:57:20.579Z"
   },
   "usage": {
-    "cdnRequests": 140190,
-    "pageViews": 10372,
-    "cdnBytesTransferred": 4874111326,
+    "cdnRequests": 133290,
+    "pageViews": 10314,
+    "cdnBytesTransferred": 4748950586,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
-      "Update Carbon Stats": 23,
+      "Update Carbon Stats": 24,
       "Deploy to Cloudflare Pages": 23,
       "Push on main": 23,
       "Lighthouse CI": 12,
@@ -47,26 +47,25 @@
       "github_actions in /. - Update #1319172757": 1,
       "npm_and_yarn in / for @playwright/test - Update #1308044692": 1,
       "npm_and_yarn in / for eslint - Update #1308044665": 1,
-      "npm_and_yarn in / for @astrojs/react, @astrojs/check, astro - Update #1308044663": 1,
-      "github_actions in /. - Update #1308044632": 1
+      "npm_and_yarn in / for @astrojs/react, @astrojs/check, astro - Update #1308044663": 1
     }
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "14.0",
-      "percent": "4.7",
+      "grams": "13.3",
+      "percent": "4.4",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "207.4",
+      "grams": "206.3",
       "percent": "68.8",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "26.5",
+      "percent": "26.7",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
