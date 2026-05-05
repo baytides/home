@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-04T07:03:32.586Z",
+  "generatedAt": "2026-05-05T06:47:36.941Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -7,7 +7,7 @@
     "snowflake": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.318",
+    "totalGrossEmissionsKg": "0.317",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
@@ -21,22 +21,22 @@
     "lastUpdated": "2026-03-19T05:57:20.579Z"
   },
   "usage": {
-    "cdnRequests": 132803,
-    "pageViews": 11221,
-    "cdnBytesTransferred": 5118364099,
+    "cdnRequests": 137722,
+    "pageViews": 11139,
+    "cdnBytesTransferred": 5097343387,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
       "Update Carbon Stats": 23,
+      "Deploy to Cloudflare Pages": 23,
+      "Push on main": 23,
       "Lighthouse CI": 12,
       "npm_and_yarn in / for @astrojs/react, @astrojs/check, astro - Update #1345806252": 1,
       "npm_and_yarn in / for eslint, prettier - Update #1345806257": 1,
       "npm_and_yarn in / for @playwright/test - Update #1345806250": 1,
       "github_actions in /. - Update #1345806241": 1,
-      "Deploy to Cloudflare Pages": 23,
-      "Push on main": 22,
-      "Scheduled": 4,
+      "Scheduled": 3,
       "npm_and_yarn in / for eslint, prettier - Update #1337612956": 1,
       "npm_and_yarn in / for @astrojs/react, @astrojs/check, astro - Update #1337612958": 1,
       "npm_and_yarn in / for @playwright/test - Update #1337612957": 1,
@@ -53,20 +53,20 @@
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "13.3",
-      "percent": "4.2",
+      "grams": "13.8",
+      "percent": "4.4",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "224.4",
-      "percent": "70.6",
+      "grams": "222.8",
+      "percent": "70.4",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "25.2",
+      "percent": "25.3",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
