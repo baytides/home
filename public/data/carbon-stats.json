@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-19T07:14:12.926Z",
+  "generatedAt": "2026-05-20T07:14:38.025Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -7,7 +7,7 @@
     "snowflake": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.336",
+    "totalGrossEmissionsKg": "0.337",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
@@ -21,15 +21,15 @@
     "lastUpdated": "2026-03-19T05:57:20.579Z"
   },
   "usage": {
-    "cdnRequests": 157636,
-    "pageViews": 12019,
-    "cdnBytesTransferred": 5247441512,
+    "cdnRequests": 152341,
+    "pageViews": 12098,
+    "cdnBytesTransferred": 5312497640,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
-      "Update Carbon Stats": 23,
-      "Deploy to Cloudflare Pages": 22,
+      "Update Carbon Stats": 24,
+      "Deploy to Cloudflare Pages": 23,
       "Push on main": 23,
       "Lighthouse CI": 13,
       "npm_and_yarn in / for @astrojs/react, @astrojs/check, astro - Update #1370902742": 1,
@@ -46,27 +46,25 @@
       "npm_and_yarn in / for @playwright/test - Update #1345806250": 1,
       "github_actions in /. - Update #1345806241": 1,
       "npm_and_yarn in / for eslint, prettier - Update #1337612956": 1,
-      "npm_and_yarn in / for @astrojs/react, @astrojs/check, astro - Update #1337612958": 1,
-      "npm_and_yarn in / for @playwright/test - Update #1337612957": 1,
-      "github_actions in /. - Update #1337612925": 1
+      "npm_and_yarn in / for @astrojs/react, @astrojs/check, astro - Update #1337612958": 1
     }
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "15.8",
-      "percent": "4.7",
+      "grams": "15.2",
+      "percent": "4.5",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "240.4",
-      "percent": "71.5",
+      "grams": "242.0",
+      "percent": "71.8",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "23.8",
+      "percent": "23.7",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
