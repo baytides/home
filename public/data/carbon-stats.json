@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-13T07:19:46.027Z",
+  "generatedAt": "2026-06-14T07:36:48.705Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -7,7 +7,7 @@
     "snowflake": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.309",
+    "totalGrossEmissionsKg": "0.308",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
@@ -21,17 +21,17 @@
     "lastUpdated": "2026-03-19T05:57:20.579Z"
   },
   "usage": {
-    "cdnRequests": 118135,
-    "pageViews": 10867,
-    "cdnBytesTransferred": 4171872997,
+    "cdnRequests": 120793,
+    "pageViews": 10815,
+    "cdnBytesTransferred": 4145536537,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
-      "Update Carbon Stats": 30,
-      "Deploy to Cloudflare Pages": 29,
+      "Update Carbon Stats": 29,
+      "Scheduled": 5,
       "Push on main": 29,
-      "Scheduled": 4,
+      "Deploy to Cloudflare Pages": 29,
       "Lighthouse CI": 4,
       "npm_and_yarn in / for @astrojs/react, @astrojs/check, astro - Update #1370902742": 1,
       "npm_and_yarn in / for eslint, prettier - Update #1370902736": 1,
@@ -41,14 +41,14 @@
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "11.8",
-      "percent": "3.8",
+      "grams": "12.1",
+      "percent": "3.9",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "217.3",
-      "percent": "70.3",
+      "grams": "216.3",
+      "percent": "70.1",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
