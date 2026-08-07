@@ -41,6 +41,7 @@ export default [
         MutationObserver: 'readonly',
         FormData: 'readonly',
         indexedDB: 'readonly',
+        Buffer: 'readonly',
       },
     },
     rules: {

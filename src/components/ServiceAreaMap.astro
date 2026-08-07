@@ -1,0 +1,128 @@
+---
+/**
+ * ServiceAreaMap
+ *
+ * Inline SVG map of the counties Bay Tides serves. Self-contained: no mapping
+ * library, no third-party requests, no API token, and it renders offline for
+ * the PWA. Boundary data is generated from US Census cartographic boundaries
+ * by scripts/generate-service-area-map.js.
+ *
+ * Colors come from theme variables, so the map follows the site's dark,
+ * high-contrast and colorblind palettes.
+ */
+import mapData from '../data/service-area-map.json';
+
+const names = mapData.counties.map((c) => c.name);
+const countyList = `${names.slice(0, -1).join(', ')}, and ${names[names.length - 1]}`;
+---
+
+<figure class="service-area-map">
+  <svg
+    class="service-area-map__svg"
+    viewBox={mapData.viewBox}
+    role="list"
+    aria-label={`Map of the ${names.length} Bay Area counties Bay Tides serves`}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <title>Bay Tides service area</title>
+    <desc>
+      A map of the San Francisco Bay Area showing the {names.length} counties Bay Tides serves: {
+        countyList
+      }.
+    </desc>
+
+    {
+      mapData.counties.map((county) => (
+        <g
+          class="service-area-map__county"
+          role="listitem"
+          aria-label={`${county.name} County`}
+          tabindex="0"
+        >
+          <path class="service-area-map__shape" d={county.path} />
+          <text
+            class="service-area-map__label"
+            x={county.labelX}
+            y={county.labelY}
+            text-anchor="middle"
+            aria-hidden="true"
+          >
+            {county.name}
+          </text>
+        </g>
+      ))
+    }
+  </svg>
+</figure>
+
+<style lang="scss">
+  .service-area-map {
+    margin: 1.5rem 0;
+    padding: 0;
+  }
+
+  .service-area-map__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    // Reads as water behind the counties, and keeps the map distinct from the
+    // panel it sits in.
+    background: var(--card-bg);
+  }
+
+  .service-area-map__county {
+    // Focus is drawn on the shape itself, so the browser's default outline
+    // around the group's loose bounding box would be misleading.
+    outline: none;
+  }
+
+  .service-area-map__shape {
+    fill: var(--primary-blue);
+    fill-opacity: 0.32;
+    stroke: var(--card-bg);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    transition:
+      fill-opacity 0.15s ease,
+      stroke-width 0.15s ease;
+  }
+
+  .service-area-map__label {
+    fill: var(--text-dark);
+    font-size: 15px;
+    font-weight: 600;
+    paint-order: stroke;
+    stroke: var(--card-bg);
+    stroke-width: 3px;
+    stroke-linejoin: round;
+    pointer-events: none;
+    transition: fill 0.15s ease;
+  }
+
+  .service-area-map__county:hover .service-area-map__shape,
+  .service-area-map__county:focus-visible .service-area-map__shape {
+    fill-opacity: 0.7;
+    stroke: var(--primary-navy);
+    stroke-width: 2.5;
+  }
+
+  .service-area-map__county:focus-visible .service-area-map__shape {
+    // A dashed companion outline keeps focus distinguishable from hover for
+    // keyboard users, including when the two happen at once.
+    stroke-dasharray: 6 3;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-area-map__shape,
+    .service-area-map__label {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .service-area-map__label {
+      font-size: 19px;
+    }
+  }
+</style>

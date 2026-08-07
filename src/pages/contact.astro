@@ -2,10 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import PageHero from '../components/PageHero.astro';
-
-// Public token - URL restricted in Mapbox dashboard to baytides.org
-const mapboxToken =
-  'pk.eyJ1IjoiYmF5dGlkZXMiLCJhIjoiY21qdGt1NjVmNHQ2djNlcHlpa3p0MnViaSJ9.FHuSFIzE8EXe_9Vp5QpM2Q';
+import ServiceAreaMap from '../components/ServiceAreaMap.astro';
 
 const structuredData = [
   {
@@ -40,11 +37,8 @@ const structuredData = [
   preloadImages={['/assets/video/contact-hero-poster.webp']}
 >
   <Fragment slot="head">
-    <link rel="preconnect" href="https://api.mapbox.com" crossorigin />
     <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin />
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js" async defer></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
   </Fragment>
 
   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
@@ -165,14 +159,8 @@ const structuredData = [
           <h2>Our Service Area</h2>
           <p>We serve communities throughout the San Francisco Bay Area.</p>
 
-          <div
-            id="bay-area-map"
-            role="img"
-            aria-label="Map showing Bay Area service region"
-            data-mapbox-token={mapboxToken}
-            style="border-radius: 8px; overflow: hidden; margin: 1.5rem 0; width: 100%; height: 300px;"
-          >
-          </div>
+          <ServiceAreaMap />
+
           <div class="map-description">
             <strong>Counties we serve:</strong>
             Alameda, Contra Costa, Marin, Napa, San Francisco, San Mateo, Santa Clara, Santa Cruz, Solano,
@@ -272,87 +260,9 @@ const structuredData = [
     }
   }
 
-  function initMap() {
-    const mapContainer = document.getElementById('bay-area-map');
-    const token = mapContainer?.dataset.mapboxToken;
-    if (!token) {
-      console.error('Mapbox token not configured');
-      return;
-    }
-    mapboxgl.accessToken = token;
-
-    const map = new mapboxgl.Map({
-      container: 'bay-area-map',
-      style: 'mapbox://styles/mapbox/light-v11',
-      center: [-122.2, 37.75],
-      zoom: 7.5,
-      interactive: false,
-    });
-
-    map.on('load', async () => {
-      // Load Bay Area counties GeoJSON
-      try {
-        const response = await fetch('/data/bay-area-counties.json');
-        const countiesData = await response.json();
-
-        map.addSource('bay-area-counties', {
-          type: 'geojson',
-          data: countiesData,
-        });
-
-        // Fill layer for counties
-        map.addLayer(
-          {
-            id: 'bay-area-fill',
-            type: 'fill',
-            source: 'bay-area-counties',
-            paint: {
-              'fill-color': '#2d6a4f',
-              'fill-opacity': 0.25,
-            },
-          },
-          'waterway-label'
-        );
-
-        // Border layer for counties
-        map.addLayer(
-          {
-            id: 'bay-area-borders',
-            type: 'line',
-            source: 'bay-area-counties',
-            paint: {
-              'line-color': '#1b4332',
-              'line-width': 1.5,
-            },
-          },
-          'waterway-label'
-        );
-      } catch (error) {
-        console.error('Failed to load county boundaries:', error);
-      }
-    });
-  }
-
-  function waitForMapbox(callback: () => void, maxAttempts = 50) {
-    let attempts = 0;
-    const check = () => {
-      if (typeof mapboxgl !== 'undefined') {
-        callback();
-      } else if (attempts < maxAttempts) {
-        attempts++;
-        setTimeout(check, 100);
-      }
-    };
-    check();
-  }
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      initContactPage();
-      waitForMapbox(initMap);
-    });
+    document.addEventListener('DOMContentLoaded', initContactPage);
   } else {
     initContactPage();
-    waitForMapbox(initMap);
   }
 </script>
