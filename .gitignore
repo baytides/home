@@ -4,6 +4,13 @@ node_modules/
 # Build outputs
 dist/
 .cache/
+.astro/
+
+# Test and CI artifacts
+.lighthouseci/
+playwright-report/
+test-results/
+.playwright-mcp/
 
 # Vite
 *.local
@@ -53,3 +60,6 @@ coverage/
 *.temp
 /docs
 docs/documenso/.secrets.env
+
+# Generated at build time by scripts/generate-search-index.js
+public/search-index.json

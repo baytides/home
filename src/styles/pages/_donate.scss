@@ -1181,6 +1181,58 @@
 }
 
 // ==========================================================================
+// Donation Outcome Banner
+// ==========================================================================
+
+// Shown after Stripe redirects back with ?success or ?cancelled.
+// Colors come from theme variables so this inherits dark, high-contrast
+// and colorblind-safe palettes without any per-theme overrides.
+.donation-status {
+  margin: 2rem 0 0;
+  padding: 1.5rem 1.75rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-color, var(--primary-navy));
+  background: var(--card-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  &:focus-visible {
+    outline: 2px solid var(--accent-teal);
+    outline-offset: 3px;
+  }
+
+  &.is-success {
+    --accent-color: var(--success);
+  }
+
+  &.is-cancelled {
+    --accent-color: var(--error);
+  }
+
+  .donation-status-title {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    color: var(--accent-color, var(--text-dark));
+  }
+
+  .donation-status-text {
+    margin: 0;
+    color: var(--body-text);
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 768px) {
+  .donation-status {
+    padding: 1.25rem;
+
+    .donation-status-title {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+// ==========================================================================
 // Dark Theme
 // ==========================================================================
 

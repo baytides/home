@@ -5,8 +5,8 @@ workers_dev = true
 
 [vars]
 ALLOWED_ORIGIN = "https://baytides.org"
-SUCCESS_URL = "https://baytides.org/donate.html?success=true"
-CANCEL_URL = "https://baytides.org/donate.html?cancelled=true"
+SUCCESS_URL = "https://baytides.org/donate/?success=true"
+CANCEL_URL = "https://baytides.org/donate/?cancelled=true"
 
 # Secrets to add via wrangler:
 # wrangler secret put STRIPE_SECRET_KEY

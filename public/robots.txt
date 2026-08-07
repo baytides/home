@@ -2,8 +2,8 @@
 User-agent: *
 Allow: /
 
-# Sitemap location
-Sitemap: https://baytides.org/sitemap.xml
+# Sitemap location (auto-generated at build time by @astrojs/sitemap)
+Sitemap: https://baytides.org/sitemap-index.xml
 
 # Disallow admin/system paths (none currently, but good practice)
 Disallow: /workers/

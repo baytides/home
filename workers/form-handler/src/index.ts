@@ -284,7 +284,6 @@ async function sendAcsEmail(env: Env, payload: object): Promise<Response> {
   const dateStr = new Date().toUTCString();
   const signature = await signAcsRequest(env.ACS_ACCESS_KEY, 'POST', url, contentHash, dateStr);
 
-  const parsedUrl = new URL(url);
   const response = await fetch(url, {
     method: 'POST',
     headers: {

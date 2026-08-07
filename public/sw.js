@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v6';
+const CACHE_VERSION = 'v7';
 const STATIC_CACHE = `baytides-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `baytides-dynamic-${CACHE_VERSION}`;
 const IMAGE_CACHE = `baytides-images-${CACHE_VERSION}`;
@@ -24,18 +24,31 @@ const STATIC_ASSETS = [
 ];
 
 // Images to precache
-const IMAGE_ASSETS = ['/assets/images/hero-bg.webp', '/assets/images/egret.webp'];
+const IMAGE_ASSETS = ['/assets/images/egret.webp'];
 
 // Max items in dynamic cache
 const MAX_DYNAMIC_ITEMS = 50;
 
+// Precache a list of URLs, tolerating individual failures.
+// cache.addAll() is atomic, so a single 404 would reject the whole install
+// and leave the site with no working service worker at all.
+async function precache(cacheName, urls) {
+  const cache = await caches.open(cacheName);
+  await Promise.all(
+    urls.map((url) =>
+      cache.add(url).catch((error) => {
+        console.warn(`[sw] skipped precaching ${url}:`, error);
+      })
+    )
+  );
+}
+
 // Install - cache static assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    Promise.all([
-      caches.open(STATIC_CACHE).then((cache) => cache.addAll(STATIC_ASSETS)),
-      caches.open(IMAGE_CACHE).then((cache) => cache.addAll(IMAGE_ASSETS)),
-    ]).then(() => self.skipWaiting())
+    Promise.all([precache(STATIC_CACHE, STATIC_ASSETS), precache(IMAGE_CACHE, IMAGE_ASSETS)]).then(
+      () => self.skipWaiting()
+    )
   );
 });
 

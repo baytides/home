@@ -89,7 +89,7 @@ function parseProxyLog() {
 
   // Detect if proxy is running by checking if log was modified recently.
   // The proxy writes hourly summaries, so allow up to 65 minutes of staleness.
-  let proxyRunning = false;
+  let proxyRunning;
   try {
     const stat = fs.statSync(LOG_PATH);
     const ageMinutes = (Date.now() - stat.mtimeMs) / 60_000;

@@ -62,6 +62,16 @@ const structuredData = [
     </div>
   </section>
 
+  <!-- Donation outcome banner (populated client-side from ?success / ?cancelled) -->
+  <div class="container">
+    <div id="donation-status" class="donation-status" role="status" aria-live="polite" hidden>
+      <div class="donation-status-body">
+        <h2 class="donation-status-title" id="donation-status-title"></h2>
+        <p class="donation-status-text" id="donation-status-text"></p>
+      </div>
+    </div>
+  </div>
+
   <!-- Donate Section -->
   <section class="content-section">
     <div class="container">
@@ -436,3 +446,38 @@ const structuredData = [
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // Show a confirmation or cancellation notice when Stripe redirects back here.
+  const banner = document.getElementById('donation-status');
+  const title = document.getElementById('donation-status-title');
+  const text = document.getElementById('donation-status-text');
+
+  if (banner && title && text) {
+    const params = new URLSearchParams(window.location.search);
+    const succeeded = params.has('success');
+    const cancelled = params.has('cancelled');
+
+    if (succeeded || cancelled) {
+      if (succeeded) {
+        banner.classList.add('is-success');
+        title.textContent = 'Thank you for your donation';
+        text.textContent =
+          'Your gift is confirmed and a receipt is on its way to your email. Bay Tides is a 501(c)(3) nonprofit (EIN: 93-3889081), so your donation is tax-deductible to the fullest extent allowed by law.';
+      } else {
+        banner.classList.add('is-cancelled');
+        title.textContent = 'Your donation was cancelled';
+        text.textContent =
+          'Nothing was charged. If you ran into a problem, please get in touch and we will help sort it out.';
+      }
+
+      banner.hidden = false;
+      banner.setAttribute('tabindex', '-1');
+      banner.focus();
+
+      // Drop the query string so a refresh or shared link doesn't replay the notice.
+      const cleanUrl = window.location.pathname + window.location.hash;
+      window.history.replaceState({}, '', cleanUrl);
+    }
+  }
+</script>

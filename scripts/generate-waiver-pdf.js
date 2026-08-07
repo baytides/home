@@ -202,7 +202,8 @@ async function generateWaiverPDF() {
 
   const section6Text =
     'I grant Bay Tides permission to photograph, video record, and/or audio record me during volunteer activities and to use such materials for any lawful purpose, including marketing, social media, website, publications, and other promotional purposes. I waive any right to compensation for such use.';
-  y = drawWrappedText(page, section6Text, margin, y, contentWidth, helvetica, 10, textColor);
+  // Last block on page 1 — y is reset for page 2 below, so no need to carry it forward.
+  drawWrappedText(page, section6Text, margin, y, contentWidth, helvetica, 10, textColor);
 
   // Footer
   page.drawText('Page 1 of 2', {
