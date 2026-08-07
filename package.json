@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Bay Tides nonprofit website",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "npm run build:search && astro build",
@@ -40,7 +43,7 @@
     "@playwright/test": "^1.58.1",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.2.3",
-    "astro": "^5.17.1",
+    "astro": "^7.2.0",
     "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
@@ -64,7 +67,7 @@
     ]
   },
   "dependencies": {
-    "@astrojs/react": "^4.4.2",
+    "@astrojs/react": "^6.0.2",
     "@astrojs/sitemap": "^3.7.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
