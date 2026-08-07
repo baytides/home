@@ -1,7 +1,8 @@
 ---
 import fs from 'fs';
 import path from 'path';
-import yaml from 'js-yaml';
+// js-yaml 5 removed the default export; import the named function.
+import { load as parseYaml } from 'js-yaml';
 
 const currentPath = Astro.url.pathname;
 
@@ -23,7 +24,7 @@ let onionAddress = '';
 try {
   const configPath = path.join(process.cwd(), 'src/data/site-config.yml');
   const configContent = fs.readFileSync(configPath, 'utf8');
-  const config = yaml.load(configContent) as { onion_address?: string };
+  const config = parseYaml(configContent) as { onion_address?: string };
   onionAddress = config?.onion_address || '';
 } catch {
   // Config file not found or invalid
