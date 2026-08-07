@@ -74,6 +74,12 @@
   --success: #22543d; // 9.1:1 AAA
   --success-light: #9ae6b4;
 
+  // Service area map — water must stay distinct from --bg-alt, or the ocean
+  // dissolves into the panel the map sits in.
+  --map-water: #c3dff2;
+  --map-land: #ece7dc;
+  --map-land-border: #d3ccbd;
+
   // Toast notification colors
   --toast-success-bg: #22543d;
   --toast-success-text: #ffffff;
@@ -118,6 +124,11 @@
   --success: #a7f3d0;
   --success-light: #a7f3d0;
 
+  // Service area map
+  --map-water: #16324d;
+  --map-land: #232c38;
+  --map-land-border: #3a4655;
+
   // UI element colors for dark mode
   --border-light: #3d4a5c;
   --border-medium: #4a5568;
@@ -157,6 +168,11 @@
   --bg-secondary: #f0f0f0;
   --focus-ring: 3px solid #000;
 
+  // Service area map — maximum separation between water, land and service area
+  --map-water: #fff;
+  --map-land: #e0e0e0;
+  --map-land-border: #000;
+
   a {
     text-decoration: underline;
   }
@@ -174,6 +190,11 @@
   --bg-primary: #000;
   --bg-secondary: #1a1a1a;
   --focus-ring: 3px solid #fff;
+
+  // Service area map
+  --map-water: #000;
+  --map-land: #2b2b2b;
+  --map-land-border: #fff;
 }
 
 // ==========================================================================

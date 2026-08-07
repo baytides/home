@@ -41,6 +41,12 @@ const WIDTH = 600;
 const PADDING = 8;
 const PRECISION = 1;
 
+// How far beyond the service area to extend the canvas, as a fraction of the
+// region's size. This is the surrounding context — neighbouring California
+// counties and the ocean — that stops the service area reading as a floating
+// island. Anything past the viewBox is clipped by the SVG viewport.
+const CONTEXT_MARGIN = 0.28;
+
 /** Every [lng, lat] ring in a Polygon or MultiPolygon, as a flat list. */
 function ringsOf(geometry) {
   if (geometry.type === 'Polygon') return geometry.coordinates;
@@ -108,20 +114,60 @@ function generate() {
     }
   }
 
+  // Extend the frame outward so surrounding land and ocean are visible.
+  const marginLng = (maxLng - minLng) * CONTEXT_MARGIN;
+  const marginLat = (maxLat - minLat) * CONTEXT_MARGIN;
+  const viewMinLng = minLng - marginLng;
+  const viewMaxLng = maxLng + marginLng;
+  const viewMinLat = minLat - marginLat;
+  const viewMaxLat = maxLat + marginLat;
+
   // Equirectangular projection with longitude compressed by cos(mean latitude).
   // Over a region this small the difference from a true Mercator is sub-pixel,
   // and it keeps the output dependency-free.
-  const lngScale = Math.cos(((minLat + maxLat) / 2) * (Math.PI / 180));
-  const spanX = (maxLng - minLng) * lngScale;
-  const spanY = maxLat - minLat;
+  const lngScale = Math.cos(((viewMinLat + viewMaxLat) / 2) * (Math.PI / 180));
+  const spanX = (viewMaxLng - viewMinLng) * lngScale;
+  const spanY = viewMaxLat - viewMinLat;
   const scale = (WIDTH - PADDING * 2) / spanX;
   const height = spanY * scale + PADDING * 2;
 
   const project = ([lng, lat]) => [
-    (lng - minLng) * lngScale * scale + PADDING,
+    (lng - viewMinLng) * lngScale * scale + PADDING,
     // SVG y grows downward, latitude grows upward.
-    (maxLat - lat) * scale + PADDING,
+    (viewMaxLat - lat) * scale + PADDING,
   ];
+
+  // Neighbouring counties that fall inside the extended frame. Drawn behind the
+  // service area as muted context land; the gaps between them are the bay and
+  // the ocean, which the SVG background shows through.
+  const serviceIds = new Set(Object.keys(COUNTIES));
+  const contextPaths = [];
+  for (const county of counties) {
+    if (serviceIds.has(county.id)) continue;
+    if (!county.geometry) continue;
+
+    let rings;
+    try {
+      rings = ringsOf(county.geometry);
+    } catch {
+      continue;
+    }
+
+    // Keep only counties that actually overlap the frame, so the output stays
+    // small instead of carrying all ~3,200 US counties.
+    const overlaps = rings.some((ring) =>
+      ring.some(
+        ([lng, lat]) =>
+          lng >= viewMinLng && lng <= viewMaxLng && lat >= viewMinLat && lat <= viewMaxLat
+      )
+    );
+    if (!overlaps) continue;
+
+    for (const ring of rings) {
+      const projected = ring.map(project);
+      contextPaths.push(`M${projected.map(([x, y]) => `${round(x)},${round(y)}`).join('L')}Z`);
+    }
+  }
 
   const features = selected.map(({ fips, name, geometry }) => {
     const projected = ringsOf(geometry).map((ring) => ring.map(project));
@@ -144,6 +190,7 @@ function generate() {
     viewBox: `0 0 ${WIDTH} ${Math.round(height)}`,
     width: WIDTH,
     height: Math.round(height),
+    context: contextPaths.join(''),
     counties: features,
   };
 

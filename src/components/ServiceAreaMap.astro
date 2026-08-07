@@ -28,8 +28,14 @@ const countyList = `${names.slice(0, -1).join(', ')}, and ${names[names.length -
     <desc>
       A map of the San Francisco Bay Area showing the {names.length} counties Bay Tides serves: {
         countyList
-      }.
+      }, set against neighbouring California counties and the Pacific Ocean.
     </desc>
+
+    {
+      /* Surrounding California, drawn behind the service area. The gaps between
+        these shapes are the bay and the ocean, showing the water background. */
+    }
+    <path class="service-area-map__context" d={mapData.context} aria-hidden="true"></path>
 
     {
       mapData.counties.map((county) => (
@@ -66,9 +72,19 @@ const countyList = `${names.slice(0, -1).join(', ')}, and ${names[names.length -
     width: 100%;
     height: auto;
     border-radius: 8px;
-    // Reads as water behind the counties, and keeps the map distinct from the
-    // panel it sits in.
-    background: var(--card-bg);
+    // The water. Land is drawn on top, so the bay and the ocean are simply
+    // this background showing through the gaps between county shapes.
+    background: var(--map-water);
+  }
+
+  // Neighbouring California — neutral land, deliberately recessive so the
+  // service area still reads as the subject.
+  .service-area-map__context {
+    fill: var(--map-land);
+    stroke: var(--map-land-border);
+    stroke-width: 1;
+    stroke-linejoin: round;
+    pointer-events: none;
   }
 
   .service-area-map__county {
@@ -79,7 +95,9 @@ const countyList = `${names.slice(0, -1).join(', ')}, and ${names[names.length -
 
   .service-area-map__shape {
     fill: var(--primary-blue);
-    fill-opacity: 0.32;
+    // Higher than it would need to be over plain water — the service area now
+    // has to stand out against the neutral land around it too.
+    fill-opacity: 0.55;
     stroke: var(--card-bg);
     stroke-width: 1.5;
     stroke-linejoin: round;
