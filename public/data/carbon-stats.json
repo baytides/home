@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-25T06:09:32.230Z",
+  "generatedAt": "2026-08-26T06:10:29.919Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -7,7 +7,7 @@
     "snowflake": "live"
   },
   "summary": {
-    "totalGrossEmissionsKg": "0.322",
+    "totalGrossEmissionsKg": "0.323",
     "renewableEnergyPercent": 100,
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
@@ -21,43 +21,43 @@
     "lastUpdated": "2026-03-19T05:57:20.579Z"
   },
   "usage": {
-    "cdnRequests": 280303,
-    "pageViews": 10689,
-    "cdnBytesTransferred": 5090046165,
+    "cdnRequests": 291707,
+    "pageViews": 10693,
+    "cdnBytesTransferred": 5120970095,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
     "ciWorkflows": {
       "Update Carbon Stats": 26,
+      "Scheduled": 4,
       "Push on main": 30,
-      "Deploy to Cloudflare Pages": 31,
-      "Scheduled": 3,
+      "Deploy to Cloudflare Pages": 30,
       "Lighthouse CI": 5,
       "CI": 5
     }
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "28.0",
-      "percent": "8.7",
+      "grams": "29.2",
+      "percent": "9.0",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "213.8",
-      "percent": "66.4",
+      "grams": "213.9",
+      "percent": "66.2",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "24.9",
+      "percent": "24.8",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
   },
   "comparison": {
-    "equivalentMilesDriven": "0.80",
+    "equivalentMilesDriven": "0.81",
     "equivalentPaperPages": 32,
     "cleanerThanPercent": 85
   },
