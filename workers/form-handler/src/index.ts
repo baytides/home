@@ -123,13 +123,27 @@ function cleanupRateLimits(): void {
 // ==========================================================================
 
 function isAllowedOrigin(origin: string | null, env: Env): boolean {
+  if (!origin) return false;
+
+  let parsed: URL;
+  try {
+    parsed = new URL(origin);
+  } catch {
+    return false;
+  }
+
+  // Exact origin match only. Substring/prefix matching previously allowed any
+  // origin merely containing "baytides" (e.g. https://baytides.evil.com).
   const allowed = [
     env.ALLOWED_ORIGIN,
     'https://baytides-website.pages.dev',
     'http://localhost:8080',
     'http://127.0.0.1:8080',
   ];
-  return allowed.some((a) => origin?.startsWith(a) || origin?.includes('baytides'));
+  if (allowed.includes(parsed.origin)) return true;
+
+  // Cloudflare Pages preview deployments: <hash>.baytides-website.pages.dev
+  return parsed.protocol === 'https:' && parsed.host.endsWith('.baytides-website.pages.dev');
 }
 
 function corsHeaders(env: Env): Record<string, string> {

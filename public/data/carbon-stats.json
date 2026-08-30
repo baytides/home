@@ -3,8 +3,7 @@
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
-    "github": "live",
-    "snowflake": "live"
+    "github": "live"
   },
   "summary": {
     "totalGrossEmissionsKg": "0.328",
@@ -12,13 +11,6 @@
     "netEmissionsKg": "0.000",
     "greenRating": "A+",
     "carbonNeutral": true
-  },
-  "snowflake": {
-    "totalUsersHelped": 8832,
-    "last24Hours": 300,
-    "last7Days": 1988,
-    "uptime": 670,
-    "lastUpdated": "2026-03-19T05:57:20.579Z"
   },
   "usage": {
     "cdnRequests": 326948,
@@ -77,7 +69,7 @@
     "local": {
       "name": "Self-Hosted Mac Mini",
       "renewableEnergy": 100,
-      "note": "Local hosting for Tor Snowflake proxy"
+      "note": "Local hosting for self-hosted services"
     }
   },
   "carbonFactors": {
@@ -93,7 +85,6 @@
       "All infrastructure providers use 100% renewable energy",
       "Cloudflare achieved net-zero emissions in 2025",
       "GitHub Actions runners are powered by renewable energy",
-      "Snowflake proxy runs on a self-hosted Mac Mini powered by local energy",
       "Usage data is updated daily via GitHub Actions"
     ]
   }

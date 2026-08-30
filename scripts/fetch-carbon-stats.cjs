@@ -5,7 +5,6 @@
  * Data Sources:
  * - Cloudflare: CDN requests and bandwidth
  * - GitHub: CI/CD workflow runs
- * - Snowflake Stats Worker: Tor Snowflake proxy stats (served from Cloudflare KV)
  */
 
 const fs = require('fs');
@@ -35,7 +34,7 @@ const PROVIDER_STATS = {
   local: {
     name: 'Self-Hosted Mac Mini',
     renewableEnergy: 100,
-    note: 'Local hosting for Tor Snowflake proxy',
+    note: 'Local hosting for self-hosted services',
   },
 };
 
@@ -163,41 +162,12 @@ async function getGitHubStats() {
   }
 }
 
-async function getSnowflakeStats() {
-  const statsUrl = process.env.SNOWFLAKE_STATS_URL || 'https://snowflake-stats.baytides.org/stats';
-
-  try {
-    const response = await fetch(statsUrl);
-    if (!response.ok) {
-      console.log(`Snowflake stats API returned ${response.status}`);
-      return null;
-    }
-
-    const data = await response.json();
-    return {
-      proxyRunning: data.vmStatus === 'online',
-      snowflake: {
-        totalConnections: data.totalUsersHelped || 0,
-        last24Hours: data.last24Hours || 0,
-        last7Days: data.last7Days || 0,
-        uptimeHours: data.uptimeHours || 0,
-        lastUpdated: data.lastUpdated,
-      },
-      source: 'cloudflare_kv',
-    };
-  } catch (error) {
-    console.error('Snowflake stats fetch error:', error.message);
-    return null;
-  }
-}
-
 async function main() {
   console.log('Fetching carbon stats for Bay Tides website...');
 
-  const [cloudflareStats, githubStats, snowflakeApiStats] = await Promise.all([
+  const [cloudflareStats, githubStats] = await Promise.all([
     getCloudflareStats(),
     getGitHubStats(),
-    getSnowflakeStats(),
   ]);
 
   // Use real data where available, fall back to null
@@ -211,24 +181,9 @@ async function main() {
     ciWorkflows: githubStats?.workflowBreakdown ?? null,
   };
 
-  // The Snowflake worker serves whatever is in KV, so a successful fetch only
-  // proves reachability -- not recency. Report 'stale' when the underlying
-  // reading predates the freshness window, so the site never presents an old
-  // reading as current.
-  const SNOWFLAKE_STALE_AFTER_HOURS = 48;
-  const snowflakeLastUpdated = snowflakeApiStats?.snowflake?.lastUpdated;
-  const snowflakeAgeHours = snowflakeLastUpdated
-    ? (Date.now() - new Date(snowflakeLastUpdated).getTime()) / 3_600_000
-    : null;
-
   const dataSources = {
     cloudflare: cloudflareStats ? 'live' : 'unavailable',
     github: githubStats ? 'live' : 'unavailable',
-    snowflake: !snowflakeApiStats
-      ? 'unavailable'
-      : snowflakeAgeHours === null || snowflakeAgeHours > SNOWFLAKE_STALE_AFTER_HOURS
-        ? 'stale'
-        : 'live',
   };
 
   // Calculate emissions (use 0 if data unavailable)
@@ -246,9 +201,6 @@ async function main() {
   const equivalentMilesDriven = (totalGrossGrams / 400).toFixed(2);
   const equivalentPaperPages = Math.round(totalGrossGrams / 10);
 
-  // Snowflake proxy stats from Cloudflare KV Worker
-  const snowflakeData = snowflakeApiStats?.snowflake || null;
-
   const stats = {
     generatedAt: new Date().toISOString(),
     period: 'last30days',
@@ -261,17 +213,6 @@ async function main() {
       greenRating: 'A+',
       carbonNeutral: true,
     },
-
-    // Tor Snowflake proxy statistics
-    snowflake: snowflakeData
-      ? {
-          totalUsersHelped: snowflakeData.totalConnections || 0,
-          last24Hours: snowflakeData.last24Hours || 0,
-          last7Days: snowflakeData.last7Days || 0,
-          uptime: snowflakeData.uptimeHours || 0,
-          lastUpdated: snowflakeData.lastUpdated || new Date().toISOString(),
-        }
-      : null,
 
     usage,
 
@@ -316,7 +257,6 @@ async function main() {
         'All infrastructure providers use 100% renewable energy',
         'Cloudflare achieved net-zero emissions in 2025',
         'GitHub Actions runners are powered by renewable energy',
-        'Snowflake proxy runs on a self-hosted Mac Mini powered by local energy',
         'Usage data is updated daily via GitHub Actions',
       ],
     },
@@ -337,9 +277,6 @@ async function main() {
     `- Cloudflare: ${dataSources.cloudflare} (${usage.cdnRequests ?? 'N/A'} requests, ${usage.pageViews ?? 'N/A'} page views)`
   );
   console.log(`- GitHub: ${dataSources.github} (${usage.ciRuns ?? 'N/A'} CI runs)`);
-  console.log(
-    `- Snowflake: ${dataSources.snowflake} (proxy ${snowflakeApiStats?.proxyRunning ? 'running' : 'not available'})`
-  );
   console.log(`- Total gross emissions: ${stats.summary.totalGrossEmissionsKg} kg CO₂e`);
 }
 

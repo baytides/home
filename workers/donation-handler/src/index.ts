@@ -54,6 +54,17 @@ interface StripeSubscription {
 // ==========================================================================
 
 function isAllowedOrigin(origin: string | null, env: Env): boolean {
+  if (!origin) return false;
+
+  let parsed: URL;
+  try {
+    parsed = new URL(origin);
+  } catch {
+    return false;
+  }
+
+  // Exact origin match only. Substring/prefix matching previously allowed any
+  // origin merely containing "baytides" (e.g. https://baytides.evil.com).
   const allowed = [
     env.ALLOWED_ORIGIN,
     'https://baytides-website.pages.dev',
@@ -61,7 +72,10 @@ function isAllowedOrigin(origin: string | null, env: Env): boolean {
     'http://localhost:8080',
     'http://127.0.0.1:8080',
   ];
-  return allowed.some((a) => origin?.startsWith(a) || origin?.includes('baytides'));
+  if (allowed.includes(parsed.origin)) return true;
+
+  // Cloudflare Pages preview deployments: <hash>.baytides-website.pages.dev
+  return parsed.protocol === 'https:' && parsed.host.endsWith('.baytides-website.pages.dev');
 }
 
 function corsHeaders(origin: string | null, env: Env): Record<string, string> {
@@ -70,6 +84,9 @@ function corsHeaders(origin: string | null, env: Env): Record<string, string> {
     'Access-Control-Allow-Origin': allowedOrigin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
+    // This header varies by request Origin, so it must never be cached and
+    // replayed for a different origin.
+    Vary: 'Origin',
   };
 }
 
