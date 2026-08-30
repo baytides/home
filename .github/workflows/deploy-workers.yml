@@ -1,0 +1,91 @@
+name: Deploy Workers
+
+# The Cloudflare Workers live in this repo but were never deployed by CI --
+# they had to be pushed by hand with a locally authenticated wrangler. That
+# only works if the machine's wrangler login happens to be the nonprofit
+# account, so fixes could sit undeployed indefinitely. Deploying here uses the
+# repo's existing Bay Tides credentials instead.
+#
+# Note: secrets set with `wrangler secret put` (e.g. STRIPE_SECRET_KEY) are
+# stored server-side and are preserved across deploys. They are not in
+# wrangler.toml and are not affected by this workflow.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'workers/**'
+      - '.github/workflows/deploy-workers.yml'
+  workflow_dispatch:
+    inputs:
+      worker:
+        description: 'Which worker to deploy'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - form-handler
+          - donation-handler
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-workers
+  cancel-in-progress: false
+
+jobs:
+  typecheck:
+    name: Typecheck workers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck:worker
+
+  deploy:
+    name: Deploy ${{ matrix.worker }}
+    needs: typecheck
+    runs-on: ubuntu-latest
+    strategy:
+      # Deploy one at a time so a failure on the first doesn't leave a
+      # half-updated pair, and the logs stay readable.
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        worker: [form-handler, donation-handler]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy ${{ matrix.worker }}
+        if: >-
+          github.event_name != 'workflow_dispatch' ||
+          inputs.worker == 'all' ||
+          inputs.worker == matrix.worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: workers/${{ matrix.worker }}

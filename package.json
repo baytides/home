@@ -11,7 +11,7 @@
     "build": "npm run build:search && astro build",
     "build:search": "node scripts/generate-search-index.js",
     "build:css": "sass assets/scss/style.scss assets/css/style.css --style=compressed",
-    "build:worker": "cd workers/form-handler && wrangler deploy",
+    "build:worker": "cd workers/form-handler && wrangler deploy && cd ../donation-handler && wrangler deploy",
     "build:all": "npm run build && npm run build:worker",
     "preview": "astro preview",
     "typecheck": "astro check && tsc --noEmit",

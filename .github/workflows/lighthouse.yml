@@ -37,7 +37,6 @@ jobs:
             https://baytides.org/events/
             https://baytides.org/security/
             https://baytides.org/privacy/
-          budgetPath: ./lighthouse-budget.json
           configPath: ./.lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
