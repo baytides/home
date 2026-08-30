@@ -140,8 +140,14 @@ async function createCheckoutSession(env: Env, data: DonationData): Promise<Stri
     'line_items[0][price]': priceId,
     'line_items[0][quantity]': '1',
     billing_address_collection: 'required',
-    submit_type: data.frequency === 'monthly' ? undefined : 'donate',
   });
+
+  // submit_type is only valid for one-time payments; Stripe rejects it in
+  // subscription mode. Setting it unconditionally sent the literal string
+  // "undefined" for monthly gifts, which Stripe refuses.
+  if (data.frequency !== 'monthly') {
+    params.set('submit_type', 'donate');
+  }
 
   // Add metadata
   Object.entries(metadata).forEach(([key, value]) => {

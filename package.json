@@ -15,7 +15,7 @@
     "build:all": "npm run build && npm run build:worker",
     "preview": "astro preview",
     "typecheck": "astro check && tsc --noEmit",
-    "typecheck:worker": "tsc --noEmit -p workers/form-handler/tsconfig.json",
+    "typecheck:worker": "tsc --noEmit -p workers/form-handler/tsconfig.json && tsc --noEmit -p workers/donation-handler/tsconfig.json && tsc --noEmit -p workers/snowflake-stats/tsconfig.json",
     "typecheck:all": "npm run typecheck && npm run typecheck:worker",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -23,8 +23,8 @@
     "format:check": "prettier --check .",
     "validate": "npm run typecheck:all && npm run lint && npm run format:check",
     "prepare": "husky",
-    "test": "NO_COLOR= FORCE_COLOR=0 playwright test",
-    "test:ui": "NO_COLOR= FORCE_COLOR=0 playwright test --ui"
+    "test": "FORCE_COLOR=0 playwright test",
+    "test:ui": "FORCE_COLOR=0 playwright test --ui"
   },
   "repository": {
     "type": "git",

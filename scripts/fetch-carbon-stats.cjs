@@ -211,10 +211,24 @@ async function main() {
     ciWorkflows: githubStats?.workflowBreakdown ?? null,
   };
 
+  // The Snowflake worker serves whatever is in KV, so a successful fetch only
+  // proves reachability -- not recency. Report 'stale' when the underlying
+  // reading predates the freshness window, so the site never presents an old
+  // reading as current.
+  const SNOWFLAKE_STALE_AFTER_HOURS = 48;
+  const snowflakeLastUpdated = snowflakeApiStats?.snowflake?.lastUpdated;
+  const snowflakeAgeHours = snowflakeLastUpdated
+    ? (Date.now() - new Date(snowflakeLastUpdated).getTime()) / 3_600_000
+    : null;
+
   const dataSources = {
     cloudflare: cloudflareStats ? 'live' : 'unavailable',
     github: githubStats ? 'live' : 'unavailable',
-    snowflake: snowflakeApiStats ? 'live' : 'unavailable',
+    snowflake: !snowflakeApiStats
+      ? 'unavailable'
+      : snowflakeAgeHours === null || snowflakeAgeHours > SNOWFLAKE_STALE_AFTER_HOURS
+        ? 'stale'
+        : 'live',
   };
 
   // Calculate emissions (use 0 if data unavailable)
@@ -316,7 +330,7 @@ async function main() {
 
   // Write stats file
   const outputPath = path.join(outputDir, 'carbon-stats.json');
-  fs.writeFileSync(outputPath, JSON.stringify(stats, null, 2));
+  fs.writeFileSync(outputPath, JSON.stringify(stats, null, 2) + '\n');
 
   console.log('Carbon stats updated successfully!');
   console.log(
@@ -329,4 +343,7 @@ async function main() {
   console.log(`- Total gross emissions: ${stats.summary.totalGrossEmissionsKg} kg CO₂e`);
 }
 
-main().catch(console.error);
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
