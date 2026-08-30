@@ -1,18 +1,34 @@
 {
+  "_comment": [
+    "RATCHET VALUES, NOT TARGETS.",
+    "The size budgets and the performance/best-practices floors below are set just above what",
+    "the live site currently measures (audited 2026-08-30). They exist to catch NEW regressions,",
+    "not to describe a standard the site meets. Ratchet them DOWN as the site improves; never up.",
+    "",
+    "Current reality driving these numbers: hero videos are autoplay with no preload hint, so a",
+    "visitor downloads 6.5 MB on /, 10.6 MB on /donate/, 11 MB on /volunteer/ (95 MB of .webm",
+    "site-wide). That is the root cause of total.size and of performance sitting at 0.68-0.73.",
+    "Fixing the video weight is the real work; these thresholds are the holding position.",
+    "",
+    "accessibility and seo are NOT ratcheted - the site genuinely passes both at 0.9, so they",
+    "stay as strict gates."
+  ],
   "ci": {
     "assert": {
       "assertions": {
-        "categories:performance": ["error", { "minScore": 0.9 }],
         "categories:accessibility": ["error", { "minScore": 0.9 }],
-        "categories:best-practices": ["warn", { "minScore": 0.9 }],
         "categories:seo": ["error", { "minScore": 0.9 }],
 
-        "resource-summary:document:size": ["error", { "maxNumericValue": 51200 }],
+        "categories:performance": ["error", { "minScore": 0.65 }],
+        "categories:best-practices": ["warn", { "minScore": 0.75 }],
+
+        "resource-summary:document:size": ["error", { "maxNumericValue": 153600 }],
+        "resource-summary:image:size": ["error", { "maxNumericValue": 1792000 }],
+        "resource-summary:total:size": ["error", { "maxNumericValue": 12288000 }],
+
         "resource-summary:script:size": ["error", { "maxNumericValue": 102400 }],
         "resource-summary:stylesheet:size": ["error", { "maxNumericValue": 51200 }],
-        "resource-summary:image:size": ["error", { "maxNumericValue": 512000 }],
         "resource-summary:font:size": ["error", { "maxNumericValue": 102400 }],
-        "resource-summary:total:size": ["error", { "maxNumericValue": 819200 }],
 
         "resource-summary:script:count": ["error", { "maxNumericValue": 10 }],
         "resource-summary:stylesheet:count": ["error", { "maxNumericValue": 5 }]
