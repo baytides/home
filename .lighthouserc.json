@@ -1,23 +1,26 @@
 {
   "_comment": [
     "RATCHET VALUES, NOT TARGETS.",
-    "Thresholds are set just above what the site actually measures, to catch NEW regressions.",
+    "Thresholds sit just above what production actually measures, to catch NEW regressions.",
     "Ratchet them DOWN as the site improves; never up.",
     "",
-    "2026-08-30: hero videos were re-encoded (95 MB -> 35 MB of .webm) and moved behind",
-    "BackgroundVideo.astro, which only attaches the source on large viewports with no",
-    "reduced-motion/save-data preference. Lighthouse audits with mobile emulation, so it now",
-    "downloads no video at all. Measured totals fell from 5.44-9.98 MB to 0.34-1.48 MB and",
-    "homepage performance went 0.68 -> 0.96 locally. total.size ratcheted 12 MB -> 2 MB.",
+    "Measured against live production 2026-08-31, after hero videos were re-encoded",
+    "(95 MB -> 35 MB of .webm) and moved behind BackgroundVideo.astro, which only attaches",
+    "the source on large viewports with no reduced-motion/save-data preference. Lighthouse",
+    "audits with mobile emulation, so it downloads no video at all.",
     "",
-    "STILL TO RATCHET: categories:performance is left at 0.65 until a real production run",
-    "confirms the new score -- local numbers (0.75-0.99) come from localhost with no network",
-    "latency and do not transfer directly. document:size and image:size are unchanged because",
-    "the video work did not touch HTML or images.",
+    "  performance   0.84-0.97 (was 0.68-0.73)   -> floor 0.75",
+    "  total:size    max 1503 KB (was 9.98 MB)   -> cap 1800 KB",
+    "  image:size    max 1410 KB                 -> cap 1600 KB",
+    "  document:size max  120 KB                 -> cap  150 KB (unchanged)",
+    "  accessibility 0.93-0.97, seo 0.92         -> both stay strict at 0.9",
     "",
-    "NEXT TARGET: /projects carries ~1.4 MB of images, now the heaviest page by far.",
+    "The performance floor is 9 points below the observed minimum on purpose: Lighthouse",
+    "scores are noisy on CI runners. Tighten it once a few real runs show the actual spread.",
     "",
-    "accessibility and seo are NOT ratcheted - the site genuinely passes both at 0.9."
+    "NEXT TARGETS: /projects carries ~1.4 MB of images, now the heaviest page by far.",
+    "best-practices sits at 0.79 on every page - likely the missing Strict-Transport-Security",
+    "header, which is why it is a warning rather than an error."
   ],
   "ci": {
     "assert": {
@@ -37,7 +40,7 @@
         "categories:performance": [
           "error",
           {
-            "minScore": 0.65
+            "minScore": 0.75
           }
         ],
         "categories:best-practices": [
@@ -55,13 +58,13 @@
         "resource-summary:image:size": [
           "error",
           {
-            "maxNumericValue": 1792000
+            "maxNumericValue": 1638400
           }
         ],
         "resource-summary:total:size": [
           "error",
           {
-            "maxNumericValue": 2097152
+            "maxNumericValue": 1843200
           }
         ],
         "resource-summary:script:size": [

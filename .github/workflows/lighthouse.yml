@@ -1,17 +1,33 @@
 name: Lighthouse CI
 
+# This audits the LIVE production URLs, so it must run AFTER the deploy that
+# publishes the commit -- not alongside it. Previously it triggered on `push`,
+# which raced `Deploy to Cloudflare Pages` and reported pre-deploy numbers
+# (on 2026-08-31 it failed a commit on 6.90-10.17 MB pages that the same commit
+# had just reduced to well under 2 MB).
+#
+# `pull_request` is deliberately absent for the same reason: auditing production
+# tells you nothing about a pull request's own changes.
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_run:
+    workflows: ['Deploy to Cloudflare Pages']
+    types: [completed]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: lighthouse
+  cancel-in-progress: true
+
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
+    # Auditing a failed deploy would just measure whatever is still live.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Checkout
         uses: actions/checkout@v6
