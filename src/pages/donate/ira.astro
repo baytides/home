@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import BackgroundVideo from '../../components/BackgroundVideo.astro';
 
 const structuredData = [
   {
@@ -38,16 +39,11 @@ const structuredData = [
   />
 
   <section class="hero hero-page ira-video-hero">
-    <video
+    <BackgroundVideo
       class="ira-hero-video"
-      autoplay
-      muted
-      loop
-      playsinline
       poster="/assets/video/ira-hero-poster.webp"
-    >
-      <source src="/assets/video/ira-hero.webm" type="video/webm" />
-    </video>
+      src="/assets/video/ira-hero.webm"
+    />
     <div class="ira-hero-overlay"></div>
     <div class="container">
       <h1>IRA Charitable Rollover</h1>

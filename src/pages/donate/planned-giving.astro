@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import BackgroundVideo from '../../components/BackgroundVideo.astro';
 
 const structuredData = [
   {
@@ -38,16 +39,11 @@ const structuredData = [
   />
 
   <section class="hero hero-page planned-giving-video-hero">
-    <video
+    <BackgroundVideo
       class="planned-giving-hero-video"
-      autoplay
-      muted
-      loop
-      playsinline
       poster="/assets/video/planned-giving-hero-poster.webp"
-    >
-      <source src="/assets/video/planned-giving-hero.webm" type="video/webm" />
-    </video>
+      src="/assets/video/planned-giving-hero.webm"
+    />
     <div class="planned-giving-hero-overlay"></div>
     <div class="container">
       <h1>Planned Giving</h1>

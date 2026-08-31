@@ -1,37 +1,99 @@
 {
   "_comment": [
     "RATCHET VALUES, NOT TARGETS.",
-    "The size budgets and the performance/best-practices floors below are set just above what",
-    "the live site currently measures (audited 2026-08-30). They exist to catch NEW regressions,",
-    "not to describe a standard the site meets. Ratchet them DOWN as the site improves; never up.",
+    "Thresholds are set just above what the site actually measures, to catch NEW regressions.",
+    "Ratchet them DOWN as the site improves; never up.",
     "",
-    "Current reality driving these numbers: hero videos are autoplay with no preload hint, so a",
-    "visitor downloads 6.5 MB on /, 10.6 MB on /donate/, 11 MB on /volunteer/ (95 MB of .webm",
-    "site-wide). That is the root cause of total.size and of performance sitting at 0.68-0.73.",
-    "Fixing the video weight is the real work; these thresholds are the holding position.",
+    "2026-08-30: hero videos were re-encoded (95 MB -> 35 MB of .webm) and moved behind",
+    "BackgroundVideo.astro, which only attaches the source on large viewports with no",
+    "reduced-motion/save-data preference. Lighthouse audits with mobile emulation, so it now",
+    "downloads no video at all. Measured totals fell from 5.44-9.98 MB to 0.34-1.48 MB and",
+    "homepage performance went 0.68 -> 0.96 locally. total.size ratcheted 12 MB -> 2 MB.",
     "",
-    "accessibility and seo are NOT ratcheted - the site genuinely passes both at 0.9, so they",
-    "stay as strict gates."
+    "STILL TO RATCHET: categories:performance is left at 0.65 until a real production run",
+    "confirms the new score -- local numbers (0.75-0.99) come from localhost with no network",
+    "latency and do not transfer directly. document:size and image:size are unchanged because",
+    "the video work did not touch HTML or images.",
+    "",
+    "NEXT TARGET: /projects carries ~1.4 MB of images, now the heaviest page by far.",
+    "",
+    "accessibility and seo are NOT ratcheted - the site genuinely passes both at 0.9."
   ],
   "ci": {
     "assert": {
       "assertions": {
-        "categories:accessibility": ["error", { "minScore": 0.9 }],
-        "categories:seo": ["error", { "minScore": 0.9 }],
-
-        "categories:performance": ["error", { "minScore": 0.65 }],
-        "categories:best-practices": ["warn", { "minScore": 0.75 }],
-
-        "resource-summary:document:size": ["error", { "maxNumericValue": 153600 }],
-        "resource-summary:image:size": ["error", { "maxNumericValue": 1792000 }],
-        "resource-summary:total:size": ["error", { "maxNumericValue": 12288000 }],
-
-        "resource-summary:script:size": ["error", { "maxNumericValue": 102400 }],
-        "resource-summary:stylesheet:size": ["error", { "maxNumericValue": 51200 }],
-        "resource-summary:font:size": ["error", { "maxNumericValue": 102400 }],
-
-        "resource-summary:script:count": ["error", { "maxNumericValue": 10 }],
-        "resource-summary:stylesheet:count": ["error", { "maxNumericValue": 5 }]
+        "categories:accessibility": [
+          "error",
+          {
+            "minScore": 0.9
+          }
+        ],
+        "categories:seo": [
+          "error",
+          {
+            "minScore": 0.9
+          }
+        ],
+        "categories:performance": [
+          "error",
+          {
+            "minScore": 0.65
+          }
+        ],
+        "categories:best-practices": [
+          "warn",
+          {
+            "minScore": 0.75
+          }
+        ],
+        "resource-summary:document:size": [
+          "error",
+          {
+            "maxNumericValue": 153600
+          }
+        ],
+        "resource-summary:image:size": [
+          "error",
+          {
+            "maxNumericValue": 1792000
+          }
+        ],
+        "resource-summary:total:size": [
+          "error",
+          {
+            "maxNumericValue": 2097152
+          }
+        ],
+        "resource-summary:script:size": [
+          "error",
+          {
+            "maxNumericValue": 102400
+          }
+        ],
+        "resource-summary:stylesheet:size": [
+          "error",
+          {
+            "maxNumericValue": 51200
+          }
+        ],
+        "resource-summary:font:size": [
+          "error",
+          {
+            "maxNumericValue": 102400
+          }
+        ],
+        "resource-summary:script:count": [
+          "error",
+          {
+            "maxNumericValue": 10
+          }
+        ],
+        "resource-summary:stylesheet:count": [
+          "error",
+          {
+            "maxNumericValue": 5
+          }
+        ]
       }
     }
   }

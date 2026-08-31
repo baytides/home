@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import BackgroundVideo from '../components/BackgroundVideo.astro';
 
 const structuredData = [
   {
@@ -204,22 +205,11 @@ const selfHostedServices = [
 
   <!-- Hero Section with Video -->
   <section class="hero hero-page security-video-hero" aria-labelledby="security-hero-title">
-    <video
+    <BackgroundVideo
       class="security-hero-video"
-      autoplay
-      muted
-      loop
-      playsinline
       poster="/assets/video/security-hero-poster.jpg"
-      aria-hidden="true"
-      aria-label="Decorative background video showing digital security visualization"
-    >
-      <source src="/assets/video/security-hero.webm" type="video/webm" />
-      <p>
-        Your browser does not support the video element. A decorative security visualization video
-        plays here.
-      </p>
-    </video>
+      src="/assets/video/security-hero.webm"
+    />
     <div class="security-hero-overlay" aria-hidden="true"></div>
     <div class="container">
       <h1 id="security-hero-title">Security & Privacy</h1>

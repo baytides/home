@@ -1,0 +1,121 @@
+---
+/**
+ * Decorative background video for hero sections.
+ *
+ * These loops are purely decorative: they sit behind an overlay with the page
+ * heading on top, and they are muted. Previously each page inlined a
+ * `<video autoplay ...>` with a `<source>`, which meant every visitor
+ * downloaded the file before doing anything -- 6.5 MB on the homepage, 11 MB
+ * on /volunteer/. `autoplay` overrides `preload`, so a preload hint alone does
+ * not prevent that.
+ *
+ * Instead the source lives in `data-src` and is only attached when playing the
+ * video is actually appropriate. Until then the browser paints `poster` and
+ * fetches no video bytes at all. Visitors who get the poster only:
+ *
+ *   - small viewports (<= 768px) -- mobile data is the worst place for this
+ *   - `prefers-reduced-motion: reduce`, or the site's own accessibility toggle
+ *     (`data-reduced-motion` on <html>). CSS already hid the video for these
+ *     users, but the bytes were still downloaded.
+ *   - `Save-Data` / `navigator.connection.saveData`
+ */
+interface Props {
+  /** Path to the .webm, e.g. /assets/video/home-hero.webm */
+  src: string;
+  /** Poster image shown before (or instead of) the video. */
+  poster: string;
+  /** Class applied to the <video>, e.g. "home-hero-video". */
+  class: string;
+  /** Max viewport width that gets the poster only. */
+  posterOnlyMaxWidth?: number;
+}
+
+const { src, poster, class: className, posterOnlyMaxWidth = 768 } = Astro.props;
+---
+
+<video
+  class={className}
+  muted
+  loop
+  playsinline
+  preload="none"
+  poster={poster}
+  aria-hidden="true"
+  data-bg-video
+  data-src={src}
+  data-poster-only-max-width={posterOnlyMaxWidth}
+>
+</video>
+
+<script>
+  interface BackgroundVideoElement extends HTMLVideoElement {
+    dataset: DOMStringMap & { src?: string; posterOnlyMaxWidth?: string; bgVideoStarted?: string };
+  }
+
+  function prefersReducedMotion(): boolean {
+    return (
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      document.documentElement.getAttribute('data-reduced-motion') === 'true'
+    );
+  }
+
+  function prefersReducedData(): boolean {
+    // Not in every browser, and not in the TS DOM lib.
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } })
+      .connection;
+    return connection?.saveData === true;
+  }
+
+  function shouldPlay(video: BackgroundVideoElement): boolean {
+    if (prefersReducedMotion() || prefersReducedData()) return false;
+    const maxWidth = Number(video.dataset.posterOnlyMaxWidth ?? 768);
+    return !window.matchMedia(`(max-width: ${maxWidth}px)`).matches;
+  }
+
+  function start(video: BackgroundVideoElement): void {
+    const src = video.dataset.src;
+    if (!src || video.dataset.bgVideoStarted === 'true') return;
+
+    video.dataset.bgVideoStarted = 'true';
+    video.src = src;
+    video.load();
+
+    // Autoplay can still be refused (power saving, platform policy). The
+    // poster stays visible in that case, so there is nothing to recover.
+    void video.play().catch(() => {});
+  }
+
+  function initBackgroundVideos(): void {
+    const videos = document.querySelectorAll<BackgroundVideoElement>('video[data-bg-video]');
+
+    videos.forEach((video) => {
+      if (!shouldPlay(video)) return;
+
+      // Only fetch once the hero is actually near the viewport. Most heroes are
+      // at the top of the page, but a few (e.g. the Aegis mission block) are not.
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              observer.disconnect();
+              start(video);
+            });
+          },
+          { rootMargin: '200px' }
+        );
+        observer.observe(video);
+      } else {
+        start(video);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBackgroundVideos);
+  } else {
+    initBackgroundVideos();
+  }
+
+  document.addEventListener('astro:page-load', initBackgroundVideos);
+</script>

@@ -4,6 +4,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import PageHero from '../components/PageHero.astro';
 import Card from '../components/Card.astro';
 import SponsorsCarousel from '../components/SponsorsCarousel.astro';
+import BackgroundVideo from '../components/BackgroundVideo.astro';
 
 const structuredData = [
   {
@@ -42,16 +43,11 @@ const structuredData = [
 
   <!-- Video Hero -->
   <section class="hero hero-page donate-video-hero">
-    <video
+    <BackgroundVideo
       class="donate-hero-video"
-      autoplay
-      muted
-      loop
-      playsinline
       poster="/assets/video/donate-hero-poster.webp"
-    >
-      <source src="/assets/video/donate-hero.webm" type="video/webm" />
-    </video>
+      src="/assets/video/donate-hero.webm"
+    />
     <div class="donate-hero-overlay"></div>
     <div class="container">
       <h1>Support Our Mission</h1>

@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import PageHero from '../components/PageHero.astro';
 import Card from '../components/Card.astro';
+import BackgroundVideo from '../components/BackgroundVideo.astro';
 
 const structuredData = [
   {
@@ -44,16 +45,11 @@ const structuredData = [
 
   <!-- Video Hero -->
   <section class="hero hero-page about-video-hero">
-    <video
+    <BackgroundVideo
       class="about-hero-video"
-      autoplay
-      muted
-      loop
-      playsinline
       poster="/assets/video/about-hero-poster.webp"
-    >
-      <source src="/assets/video/about-hero.webm" type="video/webm" />
-    </video>
+      src="/assets/video/about-hero.webm"
+    />
     <div class="about-hero-overlay"></div>
     <div class="container">
       <h1>About Bay Tides</h1>

@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import PageHero from '../../components/PageHero.astro';
 import Card from '../../components/Card.astro';
+import BackgroundVideo from '../../components/BackgroundVideo.astro';
 
 const structuredData = [
   {
@@ -44,16 +45,11 @@ const structuredData = [
 
   <!-- Custom Video Hero for Aegis -->
   <section class="hero hero-page aegis-video-hero">
-    <video
+    <BackgroundVideo
       class="aegis-hero-video"
-      autoplay
-      muted
-      loop
-      playsinline
       poster="/assets/video/aegis-hero-poster.webp"
-    >
-      <source src="/assets/video/aegis-hero.webm" type="video/webm" />
-    </video>
+      src="/assets/video/aegis-hero.webm"
+    />
     <div class="aegis-hero-overlay"></div>
     <div class="container">
       <h1>Aegis Initiative</h1>
@@ -100,16 +96,11 @@ const structuredData = [
 
   <!-- Mission Alignment -->
   <section class="content-section aegis-mission-section">
-    <video
+    <BackgroundVideo
       class="aegis-mission-video"
-      autoplay
-      muted
-      loop
-      playsinline
       poster="/assets/video/aegis-mission-poster.webp"
-    >
-      <source src="/assets/video/aegis-mission.webm" type="video/webm" />
-    </video>
+      src="/assets/video/aegis-mission.webm"
+    />
     <div class="aegis-mission-overlay"></div>
     <div class="container">
       <div class="section-title">

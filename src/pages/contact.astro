@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import PageHero from '../components/PageHero.astro';
 import ServiceAreaMap from '../components/ServiceAreaMap.astro';
+import BackgroundVideo from '../components/BackgroundVideo.astro';
 
 const structuredData = [
   {
@@ -45,16 +46,11 @@ const structuredData = [
 
   <!-- Video Hero -->
   <section class="hero hero-page contact-video-hero">
-    <video
+    <BackgroundVideo
       class="contact-hero-video"
-      autoplay
-      muted
-      loop
-      playsinline
       poster="/assets/video/contact-hero-poster.webp"
-    >
-      <source src="/assets/video/contact-hero.webm" type="video/webm" />
-    </video>
+      src="/assets/video/contact-hero.webm"
+    />
     <div class="contact-hero-overlay"></div>
     <div class="container">
       <h1>Get in Touch</h1>

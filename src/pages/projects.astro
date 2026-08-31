@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import PageHero from '../components/PageHero.astro';
 import Card from '../components/Card.astro';
+import BackgroundVideo from '../components/BackgroundVideo.astro';
 
 const inDevProjects = [
   {
@@ -71,16 +72,11 @@ const structuredData = [
 
   <!-- Video Hero with Toggle -->
   <section class="hero hero-page projects-video-hero">
-    <video
+    <BackgroundVideo
       class="projects-hero-video"
-      autoplay
-      muted
-      loop
-      playsinline
       poster="/assets/video/projects-hero-poster.webp"
-    >
-      <source src="/assets/video/projects-hero.webm" type="video/webm" />
-    </video>
+      src="/assets/video/projects-hero.webm"
+    />
     <div class="projects-hero-overlay"></div>
     <div class="container">
       <h1>Our Initiatives</h1>

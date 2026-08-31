@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HoverVideo from '../components/HoverVideo.astro';
+import BackgroundVideo from '../components/BackgroundVideo.astro';
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -33,22 +34,11 @@ const structuredData = {
 >
   <!-- Hero Section -->
   <section class="hero hero-home home-video-hero" aria-labelledby="home-hero-title">
-    <video
+    <BackgroundVideo
       class="home-hero-video"
-      autoplay
-      muted
-      loop
-      playsinline
       poster="/assets/video/home-hero-poster.webp"
-      aria-hidden="true"
-      aria-label="Decorative background video showing the San Francisco Bay coastline"
-    >
-      <source src="/assets/video/home-hero.webm" type="video/webm" />
-      <p>
-        Your browser does not support the video element. A decorative video of the San Francisco Bay
-        coastline plays here.
-      </p>
-    </video>
+      src="/assets/video/home-hero.webm"
+    />
     <div class="home-hero-overlay" aria-hidden="true"></div>
     <div class="container">
       <h1 id="home-hero-title">Protecting the San Francisco Bay</h1>
