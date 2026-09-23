@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-22T06:14:47.704Z",
+  "generatedAt": "2026-09-23T06:15:05.759Z",
   "period": "last30days",
   "dataFreshness": {
     "cloudflare": "live",
@@ -13,9 +13,9 @@
     "carbonNeutral": true
   },
   "usage": {
-    "cdnRequests": 300620,
-    "pageViews": 11640,
-    "cdnBytesTransferred": 2788865196,
+    "cdnRequests": 298511,
+    "pageViews": 11637,
+    "cdnBytesTransferred": 2687642875,
     "cdnCacheHitRate": "0.0",
     "ciRuns": 100,
     "ciMinutes": 200,
@@ -31,20 +31,20 @@
   },
   "emissionsBySource": {
     "cdn": {
-      "grams": "30.1",
-      "percent": "8.8",
+      "grams": "29.9",
+      "percent": "8.7",
       "provider": "Cloudflare",
       "renewablePercent": 100
     },
     "hosting": {
-      "grams": "232.8",
+      "grams": "232.7",
       "percent": "67.9",
       "provider": "Cloudflare Pages",
       "renewablePercent": 100
     },
     "ci": {
       "grams": "80.0",
-      "percent": "23.3",
+      "percent": "23.4",
       "provider": "GitHub Actions",
       "renewablePercent": 100
     }
