@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Waiver_Signed_Date__c</fullName>
+    <label>Waiver Signed Date</label>
+    <description>Date the liability waiver was signed on the website. The full signed record is attached to the Contact as a file.</description>
+    <type>Date</type>
+</CustomField>

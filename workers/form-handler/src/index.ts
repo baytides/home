@@ -3,9 +3,12 @@
  * Handles contact form and newsletter submissions
  * Sends email notifications via Azure Communication Services
  * Adds newsletter subscribers to MailerLite
+ * Records submissions in Salesforce (see form-sync.ts)
  * Validates Cloudflare Turnstile tokens for spam protection
  * Includes persistent rate limiting via Cloudflare KV
  */
+
+import { formatPartnershipDetails, parseQuizData, syncFormToSalesforce } from './form-sync';
 
 // ==========================================================================
 // Types
@@ -21,6 +24,9 @@ interface Env {
   MAILERLITE_GROUP_ID?: string;
   ACS_ENDPOINT: string;
   ACS_ACCESS_KEY: string;
+  SF_INSTANCE_URL?: string;
+  SF_CLIENT_ID?: string;
+  SF_CLIENT_SECRET?: string;
 }
 
 interface RateLimitRecord {
@@ -896,6 +902,30 @@ This email serves as your official confirmation. Please save it for your records
           subject: waiverConfirmSubject,
           body: waiverConfirmContent,
         });
+      } else if (formType === 'corporate-partnership') {
+        // Corporate partnership inquiry with questionnaire answers
+        const contactName = formData.get('contact_name') as string;
+        const quiz = parseQuizData(formData);
+        const company = typeof quiz.companyName === 'string' ? quiz.companyName : 'Not provided';
+
+        const subject = `New Corporate Partnership Inquiry - ${company}`;
+        const emailContent = `
+New corporate partnership inquiry:
+
+Name: ${contactName}
+Title: ${(formData.get('job_title') as string | null) || 'Not provided'}
+Company: ${company}
+Email: ${email}
+Phone: ${(formData.get('phone') as string | null) || 'Not provided'}
+Website: ${(formData.get('website') as string | null) || 'Not provided'}
+
+${formatPartnershipDetails(formData, quiz)}
+
+---
+Submitted: ${new Date().toISOString()}
+        `.trim();
+
+        await sendEmail(env, subject, emailContent, email);
       } else {
         // Contact form
         const name = formData.get('name') as string;
@@ -918,6 +948,8 @@ Submitted: ${new Date().toISOString()}
 
         await sendEmail(env, subject, emailContent, email);
       }
+
+      ctx.waitUntil(syncFormToSalesforce(env, formType, formData, clientIP));
 
       // Redirect back to the page with success parameter
       const redirect =

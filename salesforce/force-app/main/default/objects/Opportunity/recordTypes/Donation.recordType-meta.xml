@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Donation</fullName>
+    <active>true</active>
+    <businessProcess>Donation_Process</businessProcess>
+    <description>Individual and household gifts, including gifts synced from Stripe.</description>
+    <label>Donation</label>
+</RecordType>

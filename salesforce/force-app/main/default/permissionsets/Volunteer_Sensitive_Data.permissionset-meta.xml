@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Read and edit medical information, accommodation requests, and service hours details (including court-ordered hours) captured from the website. Assign only to staff who need it.</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Medical_Information__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Service_Hours_Details__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Volunteer_Accommodations__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Volunteer Sensitive Data</label>
+</PermissionSet>

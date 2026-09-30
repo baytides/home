@@ -47,6 +47,7 @@ lerna-debug.log*
 .env
 .env.local
 .env.*.local
+.dev.vars
 .wrangler/
 
 # Cloudflare

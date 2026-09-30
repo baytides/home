@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Volunteer_Accommodations__c</fullName>
+    <label>Volunteer Accommodations</label>
+    <description>Accommodations requested on the website volunteer form. Restricted by the Volunteer Sensitive Data permission set.</description>
+    <length>10000</length>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

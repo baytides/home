@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>In_Kind_Gift</fullName>
+    <active>true</active>
+    <businessProcess>Donation_Process</businessProcess>
+    <description>Donated goods or services.</description>
+    <label>In-Kind Gift</label>
+</RecordType>
