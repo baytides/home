@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Donations_editable_by_website_integration</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Lets the baytides.org donation webhook post monthly installments and record refunds on Donation opportunities owned by staff.</description>
+        <label>Donations editable by website integration</label>
+        <sharedTo>
+            <group>Website_Integration</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Donation</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

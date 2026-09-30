@@ -112,6 +112,12 @@ let receiptData: ReceiptData | null = null;
 // API endpoint
 const API_URL = import.meta.env.PROD ? 'https://donate.baytides.org' : 'http://localhost:8787';
 
+// Live publishable key for the Bay Tides Stripe account (acct_1O1DD22NOxvVvB7y).
+// Publishable keys are public by design. Set VITE_STRIPE_PUBLISHABLE_KEY to
+// override it, for example with a pk_test_ key for local testing.
+const STRIPE_PUBLISHABLE_KEY =
+  'pk_live_51O1DD22NOxvVvB7yIf5Yb5xVuICZs9u2pO9ALaXrPqnxN0sfXSOPeWT3slvi43DBm2nQF6KbZPscluDYwD7hi5gZ00WBqPfuP1';
+
 // ==========================================================================
 // DOM Helpers
 // ==========================================================================
@@ -434,7 +440,7 @@ async function initializePayment(): Promise<void> {
 
   try {
     // Initialize Stripe
-    stripe = Stripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_placeholder');
+    stripe = Stripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || STRIPE_PUBLISHABLE_KEY);
 
     // Create PaymentIntent on server
     const response = await fetch(`${API_URL}/create-payment-intent`, {

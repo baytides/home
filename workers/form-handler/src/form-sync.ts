@@ -11,10 +11,11 @@ import {
   createTask,
   findOpenLead,
   isSalesforceConfigured,
+  splitName,
   upsertContact,
   upsertHouseholdMember,
   type SalesforceEnv,
-} from './salesforce';
+} from '../../shared/salesforce';
 
 const CAMPAIGNS = {
   newsletter: 'Newsletter',
@@ -32,14 +33,6 @@ function isoDate(value: string): string | undefined {
 
 function today(): string {
   return new Date().toISOString().slice(0, 10);
-}
-
-/** Splits "Jane Q. Doe" into first and last name. One word becomes the last name. */
-function splitName(name: string): { FirstName?: string; LastName: string } {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return { LastName: '(Unknown)' };
-  if (parts.length === 1) return { LastName: parts[0] };
-  return { FirstName: parts.slice(0, -1).join(' '), LastName: parts[parts.length - 1] };
 }
 
 /** Lines of "Label: value", skipping empty values. */

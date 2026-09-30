@@ -2,7 +2,10 @@
  * Bay Tides Donation Handler Worker
  * Creates Stripe PaymentIntents and Checkout Sessions with full metadata for Salesforce integration
  * Handles one-time and recurring donations with tribute/anonymous options
+ * Records completed donations in Salesforce from Stripe webhooks (see stripe-webhook.ts)
  */
+
+import { handleStripeWebhook } from './stripe-webhook';
 
 // ==========================================================================
 // Types
@@ -10,9 +13,14 @@
 
 interface Env {
   STRIPE_SECRET_KEY: string;
+  STRIPE_WEBHOOK_SECRET?: string;
   ALLOWED_ORIGIN: string;
   SUCCESS_URL: string;
   CANCEL_URL: string;
+  SF_INSTANCE_URL?: string;
+  SF_CLIENT_ID?: string;
+  SF_CLIENT_SECRET?: string;
+  SF_OWNER_ID?: string;
 }
 
 interface DonationData {
@@ -454,6 +462,12 @@ export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
     const origin = request.headers.get('Origin');
+
+    // Stripe calls this server to server, so it has no Origin header. It is
+    // authenticated by the Stripe-Signature header instead.
+    if (url.pathname === '/stripe-webhook' && request.method === 'POST') {
+      return handleStripeWebhook(request, env);
+    }
 
     // Handle CORS preflight
     if (request.method === 'OPTIONS') {

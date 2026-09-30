@@ -5,6 +5,16 @@
         <default>true</default>
         <visible>true</visible>
     </applicationVisibilities>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Anonymous_Gift__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Stripe_Payment_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <layoutAssignments>
         <layout>Account-npsp__Household Layout</layout>
         <recordType>Account.HH_Account</recordType>
