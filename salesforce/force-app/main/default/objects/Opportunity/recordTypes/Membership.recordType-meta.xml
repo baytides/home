@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Membership</fullName>
+    <active>true</active>
+    <businessProcess>Donation_Process</businessProcess>
+    <description>Membership dues.</description>
+    <label>Membership</label>
+</RecordType>

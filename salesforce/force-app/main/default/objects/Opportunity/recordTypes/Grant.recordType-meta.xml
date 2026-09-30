@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Grant</fullName>
+    <active>true</active>
+    <businessProcess>Grant_Process</businessProcess>
+    <description>Foundation, corporate, and government grants.</description>
+    <label>Grant</label>
+</RecordType>

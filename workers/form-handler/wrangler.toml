@@ -7,6 +7,9 @@ workers_dev = true
 ALLOWED_ORIGIN = "https://baytides.org"
 TO_EMAIL = "info@baytides.org"
 ACS_ENDPOINT = "https://baynavigator-comms.unitedstates.communication.azure.com"
+SF_INSTANCE_URL = "https://baytides.my.salesforce.com"
+# Steven Tsujisaka: owns new Salesforce records and receives follow-up Tasks
+SF_OWNER_ID = "005ao000009BnBVAA0"
 
 # KV namespace for rate limiting
 [[kv_namespaces]]
