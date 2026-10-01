@@ -10,6 +10,7 @@
 
 import { formatPartnershipDetails, parseQuizData, syncFormToSalesforce } from './form-sync';
 import { GIFT_LABELS, giftDetails, isGiftType, nextSteps } from './gift-intent';
+import { BAY_NAVIGATOR_ROUTES, handleBayNavigator } from './bay-navigator';
 
 // ==========================================================================
 // Types
@@ -447,6 +448,15 @@ function redirectWithError(formData: FormData, error: string): Response {
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    // baynavigator.org posts JSON to its own routes, with its own CORS policy
+    if (BAY_NAVIGATOR_ROUTES.includes(new URL(request.url).pathname)) {
+      return handleBayNavigator(request, env, ctx, {
+        isRateLimited: (ip) => isRateLimited(ip, env),
+        sendEmail: (options) => sendEmailAdvanced(env, options),
+        staffEmail: env.TO_EMAIL || 'info@baytides.org',
+      });
+    }
+
     // Handle CORS preflight
     if (request.method === 'OPTIONS') {
       return handleCORS(env);
