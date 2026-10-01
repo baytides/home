@@ -7,6 +7,9 @@ workers_dev = true
 ALLOWED_ORIGIN = "https://baytides.org"
 SUCCESS_URL = "https://baytides.org/donate/?success=true"
 CANCEL_URL = "https://baytides.org/donate/?cancelled=true"
+SF_INSTANCE_URL = "https://baytides.my.salesforce.com"
+# Steven Tsujisaka: owns new Salesforce donation records
+SF_OWNER_ID = "005ao000009BnBVAA0"
 
 # Secrets to add via wrangler:
 # wrangler secret put STRIPE_SECRET_KEY

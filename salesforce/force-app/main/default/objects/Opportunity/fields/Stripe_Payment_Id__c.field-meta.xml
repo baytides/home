@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stripe_Payment_Id__c</fullName>
+    <caseSensitive>true</caseSensitive>
+    <description>Stripe PaymentIntent ID (pi_) for a one-time gift or Invoice ID (in_) for a monthly installment. Set by the baytides.org donation webhook, which uses it to record each payment once.</description>
+    <externalId>true</externalId>
+    <label>Stripe Payment ID</label>
+    <length>255</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

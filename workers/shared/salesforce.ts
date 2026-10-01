@@ -1,13 +1,14 @@
 /**
- * Salesforce client for the form handler.
+ * Salesforce client shared by the form and donation workers.
  * Signs in with the OAuth 2.0 client credentials flow as the API-only
- * integration user, then writes Contacts, Leads, Tasks, Campaign Members,
- * and files through the REST API. The org uses NPSP, so inserting a Contact
- * without an Account lets NPSP create the household automatically.
+ * integration user, then reads and writes records through the REST API.
+ * The org uses NPSP, so inserting a Contact without an Account lets NPSP
+ * create the household automatically.
  */
 
 export interface SalesforceEnv {
-  RATE_LIMIT_KV: KVNamespace;
+  /** Caches the access token across requests. Without it, the token is cached per isolate. */
+  RATE_LIMIT_KV?: KVNamespace;
   SF_INSTANCE_URL?: string;
   SF_CLIENT_ID?: string;
   SF_CLIENT_SECRET?: string;
@@ -21,7 +22,7 @@ const TOKEN_CACHE_KEY = 'sf:token';
 // session timeout is at least 2 hours, so 30 minutes stays well inside it.
 const TOKEN_CACHE_SECONDS = 1800;
 
-type SObjectFields = Record<string, string | number | boolean | null | undefined>;
+export type SObjectFields = Record<string, string | number | boolean | null | undefined>;
 
 interface TokenResponse {
   access_token: string;
@@ -33,7 +34,7 @@ interface QueryResponse<T> {
   records: T[];
 }
 
-interface CreateResponse {
+export interface CreateResponse {
   id: string;
   success: boolean;
 }
@@ -76,21 +77,25 @@ async function fetchToken(env: SalesforceEnv): Promise<TokenResponse> {
   }
 
   const token = await response.json<TokenResponse>();
-  await env.RATE_LIMIT_KV.put(TOKEN_CACHE_KEY, JSON.stringify(token), {
+  memoryToken = { token, expiresAt: Date.now() + TOKEN_CACHE_SECONDS * 1000 };
+  await env.RATE_LIMIT_KV?.put(TOKEN_CACHE_KEY, JSON.stringify(token), {
     expirationTtl: TOKEN_CACHE_SECONDS,
   });
   return token;
 }
 
+let memoryToken: { token: TokenResponse; expiresAt: number } | null = null;
+
 async function getToken(env: SalesforceEnv, forceRefresh = false): Promise<TokenResponse> {
   if (!forceRefresh) {
-    const cached = await env.RATE_LIMIT_KV.get<TokenResponse>(TOKEN_CACHE_KEY, { type: 'json' });
+    if (memoryToken && memoryToken.expiresAt > Date.now()) return memoryToken.token;
+    const cached = await env.RATE_LIMIT_KV?.get<TokenResponse>(TOKEN_CACHE_KEY, { type: 'json' });
     if (cached) return cached;
   }
   return fetchToken(env);
 }
 
-async function sfRequest<T>(
+export async function sfRequest<T>(
   env: SalesforceEnv,
   method: 'GET' | 'POST' | 'PATCH',
   path: string,
@@ -123,11 +128,11 @@ async function sfRequest<T>(
   throw new Error('Salesforce request failed after refreshing the token');
 }
 
-function soqlString(value: string): string {
+export function soqlString(value: string): string {
   return `'${value.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
 }
 
-async function query<T>(env: SalesforceEnv, soql: string): Promise<T[]> {
+export async function query<T>(env: SalesforceEnv, soql: string): Promise<T[]> {
   const result = await sfRequest<QueryResponse<T>>(
     env,
     'GET',
@@ -137,15 +142,23 @@ async function query<T>(env: SalesforceEnv, soql: string): Promise<T[]> {
 }
 
 /** Sets the owner on new records so they are not owned by the integration user. */
-function ownerFields(env: SalesforceEnv): SObjectFields {
+export function ownerFields(env: SalesforceEnv): SObjectFields {
   return env.SF_OWNER_ID ? { OwnerId: env.SF_OWNER_ID } : {};
 }
 
 /** Drops empty values so an update never blanks out data already in Salesforce. */
-function withoutEmpty(fields: SObjectFields): SObjectFields {
+export function withoutEmpty(fields: SObjectFields): SObjectFields {
   return Object.fromEntries(
     Object.entries(fields).filter(([, v]) => v !== undefined && v !== null && v !== '')
   );
+}
+
+/** Splits "Jane Q. Doe" into first and last name. One word becomes the last name. */
+export function splitName(name: string): { FirstName?: string; LastName: string } {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return { LastName: '(Unknown)' };
+  if (parts.length === 1) return { LastName: parts[0] };
+  return { FirstName: parts.slice(0, -1).join(' '), LastName: parts[parts.length - 1] };
 }
 
 // ==========================================================================
