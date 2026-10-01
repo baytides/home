@@ -161,6 +161,65 @@ export function splitName(name: string): { FirstName?: string; LastName: string 
   return { FirstName: parts.slice(0, -1).join(' '), LastName: parts[parts.length - 1] };
 }
 
+const recordTypeIds = new Map<string, string>();
+
+/** Looks up a record type ID by object and developer name. */
+export async function getRecordTypeId(
+  env: SalesforceEnv,
+  sobject: string,
+  developerName: string
+): Promise<string> {
+  const key = `${sobject}.${developerName}`;
+  let id = recordTypeIds.get(key);
+  if (!id) {
+    const [rt] = await query<{ Id: string }>(
+      env,
+      `SELECT Id FROM RecordType WHERE SobjectType = ${soqlString(sobject)}` +
+        ` AND DeveloperName = ${soqlString(developerName)}`
+    );
+    if (!rt) throw new Error(`Salesforce record type not found: ${key}`);
+    id = rt.Id;
+    recordTypeIds.set(key, id);
+  }
+  return id;
+}
+
+/** The NPSP General Accounting Unit used when a gift names no fund or an unknown one. */
+export const DEFAULT_FUND = 'General Fund';
+
+const fundIds = new Map<string, string | null>();
+
+/** Finds the NPSP General Accounting Unit for a fund name. Unknown funds fall back to the General Fund. */
+export async function getFundId(env: SalesforceEnv, fund: string): Promise<string | null> {
+  for (const name of [fund, DEFAULT_FUND]) {
+    if (!fundIds.has(name)) {
+      const [gau] = await query<{ Id: string }>(
+        env,
+        `SELECT Id FROM npsp__General_Accounting_Unit__c WHERE Name = ${soqlString(name)}` +
+          ' AND npsp__Active__c = true LIMIT 1'
+      );
+      fundIds.set(name, gau?.Id ?? null);
+    }
+    const id = fundIds.get(name);
+    if (id) return id;
+  }
+  return null;
+}
+
+export async function allocateToFund(
+  env: SalesforceEnv,
+  parent: { npsp__Opportunity__c: string } | { npsp__Recurring_Donation__c: string },
+  fund: string | undefined
+): Promise<void> {
+  const gauId = await getFundId(env, fund?.trim() || DEFAULT_FUND);
+  if (!gauId) return;
+  await sfRequest(env, 'POST', '/sobjects/npsp__Allocation__c', {
+    ...parent,
+    npsp__General_Accounting_Unit__c: gauId,
+    npsp__Percent__c: 100,
+  });
+}
+
 // ==========================================================================
 // Records
 // ==========================================================================
@@ -249,6 +308,24 @@ export async function upsertHouseholdMember(
   return created.id;
 }
 
+/** Finds an Organization account by exact name, or creates one. */
+export async function findOrCreateOrganization(env: SalesforceEnv, name: string): Promise<string> {
+  const recordTypeId = await getRecordTypeId(env, 'Account', 'Organization');
+  const [existing] = await query<{ Id: string }>(
+    env,
+    `SELECT Id FROM Account WHERE Name = ${soqlString(name)}` +
+      ` AND RecordTypeId = ${soqlString(recordTypeId)} LIMIT 1`
+  );
+  if (existing) return existing.Id;
+
+  const created = await sfRequest<CreateResponse>(env, 'POST', '/sobjects/Account', {
+    Name: name,
+    RecordTypeId: recordTypeId,
+    ...ownerFields(env),
+  });
+  return created.id;
+}
+
 const campaignIds = new Map<string, string>();
 
 /**
@@ -289,15 +366,20 @@ export async function addToCampaign(
   }
 }
 
-/** Creates an open Task on a Contact or Lead for the staff owner to act on. */
+/**
+ * Creates an open Task on a Contact or Lead for the staff owner to act on,
+ * optionally also related to a record such as the gift it concerns.
+ */
 export async function createTask(
   env: SalesforceEnv,
   whoId: string,
   subject: string,
-  description: string
+  description: string,
+  whatId?: string
 ): Promise<void> {
   await sfRequest(env, 'POST', '/sobjects/Task', {
     WhoId: whoId,
+    ...(whatId ? { WhatId: whatId } : {}),
     Subject: subject.slice(0, 255),
     Description: description.slice(0, 32000),
     Status: 'Not Started',

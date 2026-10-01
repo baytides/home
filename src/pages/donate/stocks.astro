@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import BackgroundVideo from '../../components/BackgroundVideo.astro';
+import GiftIntentForm from '../../components/GiftIntentForm.astro';
 
 const structuredData = [
   {
@@ -30,6 +31,10 @@ const structuredData = [
   canonicalUrl="https://baytides.org/donate/stocks"
   structuredData={structuredData}
 >
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  </Fragment>
   <Breadcrumb
     items={[
       { label: 'Home', href: '/' },
@@ -196,11 +201,12 @@ const structuredData = [
           </ul>
         </div>
 
-        <div class="stocks-cta">
-          <h3>Ready to Give?</h3>
-          <p>Contact us to receive transfer instructions and maximize your charitable impact.</p>
-          <a href="/contact" class="btn btn-primary btn-large">Contact Us</a>
-        </div>
+        <GiftIntentForm
+          giftType="stock"
+          heading="Ready to Give Stock?"
+          intro="Tell us what you plan to transfer and we'll email your broker-ready transfer instructions, then confirm when the shares arrive."
+          pagePath="/donate/stocks"
+        />
       </div>
     </div>
   </section>

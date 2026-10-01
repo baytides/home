@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import BackgroundVideo from '../../components/BackgroundVideo.astro';
+import GiftIntentForm from '../../components/GiftIntentForm.astro';
 
 const structuredData = [
   {
@@ -30,6 +31,10 @@ const structuredData = [
   canonicalUrl="https://baytides.org/donate/ira"
   structuredData={structuredData}
 >
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  </Fragment>
   <Breadcrumb
     items={[
       { label: 'Home', href: '/' },
@@ -1151,11 +1156,12 @@ const structuredData = [
           </p>
         </div>
 
-        <div class="ira-cta">
-          <h3>Ready to Give?</h3>
-          <p>Contact us for assistance or to let us know a QCD is on its way.</p>
-          <a href="/contact" class="btn btn-primary btn-large">Contact Us</a>
-        </div>
+        <GiftIntentForm
+          giftType="ira"
+          heading="Let Us Know a QCD Is Coming"
+          intro="Custodians often send QCDs without donor details. Tell us about your distribution so we can match it to you and send your acknowledgment letter."
+          pagePath="/donate/ira"
+        />
       </div>
     </div>
   </section>

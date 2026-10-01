@@ -7,6 +7,10 @@
  */
 
 import {
+  allocateToFund,
+  DEFAULT_FUND,
+  findOrCreateOrganization,
+  getRecordTypeId,
   ownerFields,
   query,
   sfRequest,
@@ -25,6 +29,8 @@ export interface DonationMetadata {
   anonymous?: string;
   tribute_type?: string;
   tribute_name?: string;
+  donor_type?: string;
+  organization_name?: string;
 }
 
 export interface Donor {
@@ -36,43 +42,12 @@ export interface Donor {
   postalCode?: string;
 }
 
-const DEFAULT_FUND = 'General Fund';
-
 // ==========================================================================
 // Lookups
 // ==========================================================================
 
-let donationRecordTypeId: string | null = null;
-
-async function getDonationRecordTypeId(env: SalesforceEnv): Promise<string> {
-  if (!donationRecordTypeId) {
-    const [rt] = await query<{ Id: string }>(
-      env,
-      "SELECT Id FROM RecordType WHERE SobjectType = 'Opportunity' AND DeveloperName = 'Donation'"
-    );
-    if (!rt) throw new Error('Salesforce Donation record type not found');
-    donationRecordTypeId = rt.Id;
-  }
-  return donationRecordTypeId;
-}
-
-const fundIds = new Map<string, string | null>();
-
-/** Finds the NPSP General Accounting Unit for a fund name. Unknown funds fall back to the General Fund. */
-async function getFundId(env: SalesforceEnv, fund: string): Promise<string | null> {
-  for (const name of [fund, DEFAULT_FUND]) {
-    if (!fundIds.has(name)) {
-      const [gau] = await query<{ Id: string }>(
-        env,
-        `SELECT Id FROM npsp__General_Accounting_Unit__c WHERE Name = ${soqlString(name)}` +
-          ' AND npsp__Active__c = true LIMIT 1'
-      );
-      fundIds.set(name, gau?.Id ?? null);
-    }
-    const id = fundIds.get(name);
-    if (id) return id;
-  }
-  return null;
+function getDonationRecordTypeId(env: SalesforceEnv): Promise<string> {
+  return getRecordTypeId(env, 'Opportunity', 'Donation');
 }
 
 async function findOpportunityByStripeId(
@@ -115,8 +90,32 @@ function tributeFields(metadata: DonationMetadata): SObjectFields {
   return { npsp__Tribute_Type__c: type, npsp__Honoree_Name__c: metadata.tribute_name };
 }
 
-function opportunityName(donor: Donor, amount: number, date: string, label: string): string {
-  const who = donor.name?.trim() || donor.email;
+function organizationName(metadata: DonationMetadata): string | undefined {
+  const name = metadata.organization_name?.trim();
+  return metadata.donor_type === 'organization' && name ? name : undefined;
+}
+
+/**
+ * The organization's Account ID when the donor gave on behalf of one. The gift
+ * then belongs to that account, and the person who gave stays the primary
+ * contact so NPSP soft-credits them.
+ */
+async function organizationAccountId(
+  env: SalesforceEnv,
+  metadata: DonationMetadata
+): Promise<string | undefined> {
+  const name = organizationName(metadata);
+  return name ? findOrCreateOrganization(env, name) : undefined;
+}
+
+function opportunityName(
+  donor: Donor,
+  metadata: DonationMetadata,
+  amount: number,
+  date: string,
+  label: string
+): string {
+  const who = organizationName(metadata) || donor.name?.trim() || donor.email;
   return `${who} $${amount.toFixed(2)} ${label} ${date}`.slice(0, 120);
 }
 
@@ -124,20 +123,6 @@ function opportunityName(donor: Donor, amount: number, date: string, label: stri
 function describeFund(metadata: DonationMetadata): string | undefined {
   const fund = metadata.fund?.trim();
   return fund && fund !== DEFAULT_FUND ? `Designated on the website: ${fund}` : undefined;
-}
-
-async function allocateToFund(
-  env: SalesforceEnv,
-  parent: { npsp__Opportunity__c: string } | { npsp__Recurring_Donation__c: string },
-  fund: string | undefined
-): Promise<void> {
-  const gauId = await getFundId(env, fund?.trim() || DEFAULT_FUND);
-  if (!gauId) return;
-  await sfRequest(env, 'POST', '/sobjects/npsp__Allocation__c', {
-    ...parent,
-    npsp__General_Accounting_Unit__c: gauId,
-    npsp__Percent__c: 100,
-  });
 }
 
 // ==========================================================================
@@ -157,17 +142,20 @@ export async function recordOneTimeGift(
   if (await findOpportunityByStripeId(env, gift.paymentIntentId)) return;
 
   const contactId = await upsertDonor(env, gift.donor);
+  const organizationId = await organizationAccountId(env, gift.metadata);
   const amount = toDollars(gift.amountCents);
 
   const created = await sfRequest<CreateResponse>(env, 'POST', '/sobjects/Opportunity', {
     RecordTypeId: await getDonationRecordTypeId(env),
-    Name: opportunityName(gift.donor, amount, gift.date, 'Donation'),
+    Name: opportunityName(gift.donor, gift.metadata, amount, gift.date, 'Donation'),
+    ...(organizationId ? { AccountId: organizationId } : {}),
     npsp__Primary_Contact__c: contactId,
     Amount: amount,
     CloseDate: gift.date,
     StageName: 'Posted',
     LeadSource: 'Web',
     Stripe_Payment_Id__c: gift.paymentIntentId,
+    Gift_Vehicle__c: 'Online',
     Anonymous_Gift__c: gift.metadata.anonymous === 'true',
     ...withoutEmpty({ Description: describeFund(gift.metadata), ...tributeFields(gift.metadata) }),
     ...ownerFields(env),
@@ -202,6 +190,7 @@ async function createRecurringDonation(
   }
 ): Promise<string> {
   const contactId = await upsertDonor(env, sub.donor);
+  const organizationId = await organizationAccountId(env, sub.metadata);
   const day = String(Number(sub.date.slice(8, 10)));
 
   const created = await sfRequest<CreateResponse>(
@@ -209,8 +198,15 @@ async function createRecurringDonation(
     'POST',
     '/sobjects/npe03__Recurring_Donation__c',
     {
-      Name: opportunityName(sub.donor, toDollars(sub.amountCents), sub.date, 'Monthly'),
+      Name: opportunityName(
+        sub.donor,
+        sub.metadata,
+        toDollars(sub.amountCents),
+        sub.date,
+        'Monthly'
+      ),
       npe03__Contact__c: contactId,
+      ...(organizationId ? { npe03__Organization__c: organizationId } : {}),
       npe03__Amount__c: toDollars(sub.amountCents),
       npsp__RecurringType__c: 'Open',
       npe03__Installment_Period__c: 'Monthly',
@@ -257,6 +253,7 @@ export async function recordRecurringInstallment(
     CloseDate: installment.date,
     StageName: 'Posted',
     Stripe_Payment_Id__c: installment.invoiceId,
+    Gift_Vehicle__c: 'Online',
     Anonymous_Gift__c: installment.metadata.anonymous === 'true',
     ...withoutEmpty(tributeFields(installment.metadata)),
   };
@@ -272,13 +269,21 @@ export async function recordRecurringInstallment(
     return;
   }
 
-  const [rd] = await query<{ npe03__Contact__c: string }>(
+  const [rd] = await query<{ npe03__Contact__c: string; npe03__Organization__c: string | null }>(
     env,
-    `SELECT npe03__Contact__c FROM npe03__Recurring_Donation__c WHERE Id = ${soqlString(rdId)}`
+    'SELECT npe03__Contact__c, npe03__Organization__c FROM npe03__Recurring_Donation__c' +
+      ` WHERE Id = ${soqlString(rdId)}`
   );
   await sfRequest(env, 'POST', '/sobjects/Opportunity', {
     RecordTypeId: await getDonationRecordTypeId(env),
-    Name: opportunityName(installment.donor, amount, installment.date, 'Monthly Donation'),
+    Name: opportunityName(
+      installment.donor,
+      installment.metadata,
+      amount,
+      installment.date,
+      'Monthly Donation'
+    ),
+    ...(rd.npe03__Organization__c ? { AccountId: rd.npe03__Organization__c } : {}),
     npsp__Primary_Contact__c: rd.npe03__Contact__c,
     npe03__Recurring_Donation__c: rdId,
     LeadSource: 'Web',

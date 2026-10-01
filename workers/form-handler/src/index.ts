@@ -9,6 +9,7 @@
  */
 
 import { formatPartnershipDetails, parseQuizData, syncFormToSalesforce } from './form-sync';
+import { GIFT_LABELS, giftDetails, isGiftType, nextSteps } from './gift-intent';
 
 // ==========================================================================
 // Types
@@ -901,6 +902,60 @@ This email serves as your official confirmation. Please save it for your records
           toName: `${firstName} ${lastName}`,
           subject: waiverConfirmSubject,
           body: waiverConfirmContent,
+        });
+      } else if (formType === 'gift_intent') {
+        // "Tell us about your gift" form on the Other Ways to Give pages
+        const giftType = (formData.get('gift_type') as string | null) || '';
+        if (!isGiftType(giftType)) {
+          return redirectWithError(formData, 'spam');
+        }
+        const name = formData.get('name') as string;
+        const label = GIFT_LABELS[giftType];
+        const details = giftDetails(formData);
+
+        await sendEmailAdvanced(env, {
+          to: env.TO_EMAIL || 'info@baytides.org',
+          toName: 'Bay Tides',
+          replyTo: email,
+          subject: `New ${label.toLowerCase()} - ${name}`,
+          body: `
+A donor told us about a ${label.toLowerCase()} on the website:
+
+Name: ${name}
+Email: ${email}
+Phone: ${(formData.get('phone') as string | null) || 'Not provided'}
+
+${details}
+
+This gift is in Salesforce with an open follow-up Task.
+
+---
+Submitted: ${new Date().toISOString()}
+          `.trim(),
+        });
+
+        await sendEmailAdvanced(env, {
+          to: email,
+          toName: name,
+          subject: `Thank you for your ${label.toLowerCase()} - Bay Tides`,
+          body: `
+Dear ${name},
+
+Thank you for letting us know about your ${label.toLowerCase()}. Here is what you told us:
+
+${details}
+
+=== NEXT STEPS ===
+
+${nextSteps(giftType)}
+
+If anything changes, reply to this email or write to info@baytides.org.
+
+Thank you for protecting the San Francisco Bay.
+
+The Bay Tides Team
+https://baytides.org
+          `.trim(),
         });
       } else if (formType === 'corporate-partnership') {
         // Corporate partnership inquiry with questionnaire answers
