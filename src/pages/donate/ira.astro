@@ -1341,6 +1341,7 @@ const structuredData = [
   }
 
   .ira-steps li ul li {
+    counter-increment: none; /* sub-points must not advance the step number */
     padding: 0.25rem 0;
     border-bottom: none;
   }
@@ -1509,6 +1510,17 @@ const structuredData = [
 
     .example-carousel {
       padding: 0 2.5rem;
+    }
+
+    /* Too narrow for side arrows; the dots below switch scenarios */
+    @media (max-width: 600px) {
+      .example-carousel {
+        padding: 0;
+      }
+
+      .carousel-arrow {
+        display: none;
+      }
     }
 
     .carousel-arrow {
@@ -2034,29 +2046,40 @@ const structuredData = [
   .carousel-dots {
     display: flex;
     justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
 
+  /* The button keeps the site's 44px touch target. The visible dot is drawn
+     inside it, so the target size no longer stretches the dot itself. */
   .carousel-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #cbd5e0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
     border: none;
+    border-radius: 8px;
     cursor: pointer;
     padding: 0;
+  }
+
+  .carousel-dot::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background: #cbd5e0;
     transition: all 0.2s;
   }
 
-  .carousel-dot:hover {
+  .carousel-dot:hover::before {
     background: #a0aec0;
   }
 
-  .carousel-dot.active {
+  .carousel-dot.active::before {
     background: var(--primary-blue);
     width: 24px;
-    border-radius: 5px;
   }
 
   /* Focus styles for accessibility */
@@ -2368,15 +2391,15 @@ const structuredData = [
     border-color: var(--accent-blue);
   }
 
-  :global([data-theme='dark']) .carousel-dot {
+  :global([data-theme='dark']) .carousel-dot::before {
     background: rgba(255, 255, 255, 0.2);
   }
 
-  :global([data-theme='dark']) .carousel-dot:hover {
+  :global([data-theme='dark']) .carousel-dot:hover::before {
     background: rgba(255, 255, 255, 0.4);
   }
 
-  :global([data-theme='dark']) .carousel-dot.active {
+  :global([data-theme='dark']) .carousel-dot.active::before {
     background: var(--accent-blue);
   }
 

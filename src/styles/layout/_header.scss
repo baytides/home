@@ -43,7 +43,7 @@ header {
 // Navigation
 // ==========================================================================
 
-nav {
+#main-nav {
   ul {
     display: flex;
     list-style: none;
@@ -204,7 +204,7 @@ nav {
     padding: 2px;
   }
 
-  nav a {
+  #main-nav a {
     color: var(--text-dark);
   }
 
@@ -222,7 +222,7 @@ nav {
     display: flex;
   }
 
-  nav ul {
+  #main-nav ul {
     display: none;
     position: absolute;
     top: 100%;
@@ -239,7 +239,7 @@ nav {
     }
   }
 
-  nav li {
+  #main-nav li {
     border-bottom: 1px solid var(--divider);
 
     &:last-child {
@@ -248,7 +248,7 @@ nav {
     }
   }
 
-  nav a {
+  #main-nav a {
     display: block;
     padding: 1rem;
 

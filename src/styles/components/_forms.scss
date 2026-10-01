@@ -33,7 +33,8 @@
     font-family: inherit;
     font-size: 1rem;
     transition: border-color 0.3s ease;
-    background: var(--card-bg);
+    // background-color, not the shorthand, so the mobile select chevron survives
+    background-color: var(--card-bg);
     color: var(--text-dark);
 
     &:focus {
@@ -96,7 +97,7 @@ textarea[aria-invalid='true'] {
     input,
     select,
     textarea {
-      background: var(--bg-secondary);
+      background-color: var(--bg-secondary);
       border-color: rgba(255, 255, 255, 0.1);
       color: var(--text-dark);
     }
@@ -457,7 +458,8 @@ textarea[aria-invalid='true'] {
     font-family: inherit;
     font-size: 1rem;
     transition: border-color 0.3s ease;
-    background: var(--card-bg);
+    // background-color, not the shorthand, so the mobile select chevron survives
+    background-color: var(--card-bg);
     color: var(--text-dark);
 
     &:focus {
@@ -499,7 +501,9 @@ textarea[aria-invalid='true'] {
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  // Column gap only. Each .form-group already has a bottom margin, so a row
+  // gap doubled the space between fields once the row stacked on mobile.
+  gap: 0 1rem;
 
   &.form-row-3 {
     grid-template-columns: 2fr 1fr 1fr;
@@ -512,6 +516,12 @@ textarea[aria-invalid='true'] {
       grid-template-columns: 1fr;
     }
   }
+}
+
+// A checkbox label inside a .form-group must stay flex, not the group's
+// block labels, or the box and its text misalign.
+.form-group .checkbox-label {
+  display: flex;
 }
 
 // Checkbox grid for interests
@@ -537,6 +547,7 @@ textarea[aria-invalid='true'] {
   input[type='checkbox'] {
     width: 20px;
     height: 20px;
+    padding: 0;
     flex-shrink: 0;
     margin-top: 0.125rem;
     accent-color: var(--primary-blue);
@@ -1037,7 +1048,7 @@ textarea[aria-invalid='true'] {
     input,
     select,
     textarea {
-      background: var(--bg-primary);
+      background-color: var(--bg-primary);
       border-color: rgba(255, 255, 255, 0.1);
       color: var(--text-dark);
 
@@ -1224,7 +1235,7 @@ textarea[aria-invalid='true'] {
   }
 
   .form-row {
-    gap: 0.875rem;
+    column-gap: 0.875rem;
   }
 
   .availability-header,
@@ -1326,8 +1337,6 @@ textarea[aria-invalid='true'] {
 @media (max-width: 480px) {
   .volunteer-form-container {
     padding: 1.25rem;
-    margin: 0 -0.5rem;
-    border-radius: 0;
   }
 
   .form-fieldset legend {

@@ -11,6 +11,7 @@ const SITEMAP_EXCLUDE = ['/checkout/', '/offline/', '/404/'];
 // https://astro.build/config
 export default defineConfig({
   site: 'https://baytides.org',
+  compressHTML: false,
   outDir: './dist',
   publicDir: './public',
 

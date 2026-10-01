@@ -1,2 +1,6 @@
 # Legacy sitemap URL -> auto-generated sitemap index
 /sitemap.xml  /sitemap-index.xml  301
+
+# The live stats page was combined into the sustainability page
+/stats  /sustainability  301
+/stats/  /sustainability  301

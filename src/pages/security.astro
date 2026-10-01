@@ -1457,7 +1457,7 @@ const selfHostedServices = [
     background: var(--primary-navy);
   }
 
-  .security-hero-video {
+  :global(.security-hero-video) {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -1501,7 +1501,7 @@ const selfHostedServices = [
 
   /* Reduced motion: hide video, show poster */
   @media (prefers-reduced-motion: reduce) {
-    .security-hero-video {
+    :global(.security-hero-video) {
       display: none;
     }
     .security-video-hero {
@@ -1511,7 +1511,7 @@ const selfHostedServices = [
     }
   }
 
-  :global([data-reduced-motion='true']) .security-hero-video {
+  :global([data-reduced-motion='true'] .security-hero-video) {
     display: none;
   }
 

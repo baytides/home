@@ -523,68 +523,71 @@
   }
 }
 
-// Button styles
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.875rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  text-decoration: none;
-  border: none;
+// Button styles. Scoped to the checkout page: at the top level these
+// overrode the site's shared button styles on every page.
+.checkout-main {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    border: 2px solid transparent;
 
-  svg {
-    flex-shrink: 0;
-  }
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--primary-blue) 0%, #3182ce 100%);
-  color: #fff;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(59, 143, 194, 0.35);
+    svg {
+      flex-shrink: 0;
+    }
   }
 
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-.btn-secondary {
-  background: var(--card-bg);
-  color: var(--text-dark);
-  border: 2px solid var(--border-light);
-
-  &:hover {
-    border-color: var(--border-medium);
-    background: var(--hover-bg);
-  }
-}
-
-.btn-outline {
-  background: transparent;
-  color: var(--primary-blue);
-  border: 2px solid var(--primary-blue);
-
-  &:hover {
-    background: var(--primary-blue);
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #3182ce 100%);
     color: #fff;
-  }
-}
 
-.btn-large {
-  padding: 1rem 2rem;
-  font-size: 1.0625rem;
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 143, 194, 0.35);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  .btn-secondary {
+    background: var(--card-bg);
+    color: var(--text-dark);
+    border: 2px solid var(--border-light);
+
+    &:hover {
+      border-color: var(--border-medium);
+      background: var(--hover-bg);
+    }
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--primary-blue);
+    border: 2px solid var(--primary-blue);
+
+    &:hover {
+      background: var(--primary-blue);
+      color: #fff;
+    }
+  }
+
+  .btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.0625rem;
+  }
 }
 
 // Button spinner

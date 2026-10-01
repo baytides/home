@@ -54,7 +54,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p>These pages are available offline</p>
       </div>
 
-      <div class="cards-grid">
+      <div class="cards-grid cards-grid-4">
         <a href="/" class="card card-link">
           <div class="card-icon" aria-hidden="true">&#127968;</div>
           <h3>Home</h3>
@@ -105,7 +105,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .offline-icon {
-    color: var(--accent-teal);
+    color: var(--primary-navy);
     margin-bottom: 1.5rem;
     opacity: 0.9;
   }
@@ -170,25 +170,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .offline-tip {
     margin-top: 3rem;
     padding: 1.5rem;
-    background: var(--light-navy);
+    background: var(--light-blue);
+    max-width: 800px;
+    margin-inline: auto;
     border-radius: 0.5rem;
     text-align: center;
   }
 
   .offline-tip h3 {
-    color: var(--accent-teal);
+    color: var(--primary-navy);
     margin-bottom: 0.5rem;
   }
 
   .offline-tip p {
-    color: var(--body-text);
+    color: var(--text-dark);
     margin: 0;
   }
 
   .offline-forms-section {
     margin-top: 3rem;
     padding-top: 2rem;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-light);
   }
 
   .queued-forms-list {
@@ -204,7 +206,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding: 1rem;
     background: var(--card-bg);
     border-radius: 0.5rem;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-light);
   }
 
   .queued-form-info {
@@ -215,12 +217,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .queued-form-type {
     font-weight: 600;
-    color: var(--heading-color);
+    color: var(--primary-navy);
   }
 
   .queued-form-time {
     font-size: 0.875rem;
-    color: var(--body-text);
+    color: var(--text-dark);
     opacity: 0.7;
   }
 
