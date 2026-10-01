@@ -32,6 +32,8 @@ interface DonationData {
   anonymous: boolean;
   donorEmail?: string;
   donorName?: string;
+  donorType?: 'individual' | 'organization';
+  organizationName?: string;
 }
 
 interface StripeCheckoutSession {
@@ -157,6 +159,12 @@ async function createCheckoutSession(env: Env, data: DonationData): Promise<Stri
     }
   }
 
+  // Lets the webhook record the gift under the organization's account in Salesforce
+  if (data.donorType === 'organization' && data.organizationName?.trim()) {
+    metadata.donor_type = 'organization';
+    metadata.organization_name = data.organizationName.trim().slice(0, 255);
+  }
+
   // Build checkout session params
   const params = new URLSearchParams({
     mode: data.frequency === 'monthly' ? 'subscription' : 'payment',
@@ -233,6 +241,12 @@ async function createPaymentIntent(env: Env, data: DonationData): Promise<Stripe
     if (data.tributeName) {
       metadata.tribute_name = data.tributeName;
     }
+  }
+
+  // Lets the webhook record the gift under the organization's account in Salesforce
+  if (data.donorType === 'organization' && data.organizationName?.trim()) {
+    metadata.donor_type = 'organization';
+    metadata.organization_name = data.organizationName.trim().slice(0, 255);
   }
 
   if (data.donorName) {
@@ -317,6 +331,12 @@ async function createSubscription(
     if (data.tributeName) {
       metadata.tribute_name = data.tributeName;
     }
+  }
+
+  // Lets the webhook record the gift under the organization's account in Salesforce
+  if (data.donorType === 'organization' && data.organizationName?.trim()) {
+    metadata.donor_type = 'organization';
+    metadata.organization_name = data.organizationName.trim().slice(0, 255);
   }
 
   // Create subscription

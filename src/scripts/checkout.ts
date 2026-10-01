@@ -455,6 +455,9 @@ async function initializePayment(): Promise<void> {
         anonymous: donationData.anonymous,
         donorEmail: donorInfo.email,
         donorName: `${donorInfo.firstName} ${donorInfo.lastName}`,
+        donorType: donationData.donorType,
+        organizationName:
+          donationData.donorType === 'organization' ? donorInfo.organizationName : undefined,
       }),
     });
 

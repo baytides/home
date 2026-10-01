@@ -6,6 +6,12 @@
 
 import {
   addToCampaign,
+  allocateToFund,
+  findOrCreateOrganization,
+  getRecordTypeId,
+  ownerFields,
+  sfRequest,
+  type CreateResponse,
   attachTextFile,
   createLead,
   createTask,
@@ -16,9 +22,11 @@ import {
   upsertHouseholdMember,
   type SalesforceEnv,
 } from '../../shared/salesforce';
+import { GIFT_LABELS, giftDetails, isGiftType, type GiftType } from './gift-intent';
 
 const CAMPAIGNS = {
   newsletter: 'Newsletter',
+  legacy: 'Legacy Society',
   aegis: 'Aegis Initiative Interest',
   volunteer: 'Volunteer Opportunities',
 } as const;
@@ -277,6 +285,105 @@ async function syncPartnership(
 }
 
 // ==========================================================================
+// Other Ways to Give
+// ==========================================================================
+
+/** Gift_Vehicle__c picklist value for each gift type. */
+const GIFT_VEHICLES: Record<GiftType, string> = {
+  stock: 'Stock',
+  daf: 'Donor-Advised Fund',
+  ira: 'IRA QCD',
+  in_kind: 'In-Kind',
+  matching: 'Matching Gift',
+  planned: 'Planned Gift',
+};
+
+const FOLLOW_UP_TASKS: Record<GiftType, string> = {
+  stock: 'Send stock transfer instructions',
+  daf: 'Watch for donor-advised fund grant',
+  ira: 'Watch for IRA qualified charitable distribution',
+  in_kind: 'Review in-kind offer and arrange delivery',
+  matching: 'Verify gift for employer match',
+  planned: 'Thank and follow up on planned gift',
+};
+
+function daysFromToday(days: number): string {
+  return new Date(Date.now() + days * 86_400_000).toISOString().slice(0, 10);
+}
+
+function amountOrUndefined(value: string): number | undefined {
+  const n = Number(value);
+  return value && Number.isFinite(n) && n > 0 ? n : undefined;
+}
+
+async function syncGiftIntent(env: SalesforceEnv, formData: FormData): Promise<void> {
+  const giftType = field(formData, 'gift_type');
+  if (!isGiftType(giftType)) return;
+
+  const name = field(formData, 'name');
+  const label = GIFT_LABELS[giftType];
+  const details = giftDetails(formData);
+  const contactId = await upsertContact(env, field(formData, 'email'), {
+    ...splitName(name),
+    Phone: field(formData, 'phone'),
+  });
+
+  // Bequests and other planned gifts are not dated pledges, so they are
+  // tracked through Legacy Society membership rather than an opportunity.
+  if (giftType === 'planned') {
+    await addToCampaign(env, CAMPAIGNS.legacy, contactId);
+    await createTask(env, contactId, FOLLOW_UP_TASKS.planned, details);
+    return;
+  }
+
+  const closeDate = isoDate(field(formData, 'expected_date')) || daysFromToday(30);
+  const opportunity: Record<string, string | number | boolean | undefined> = {
+    Name: `${name} ${label} ${today()}`.slice(0, 120),
+    npsp__Primary_Contact__c: contactId,
+    Amount: amountOrUndefined(field(formData, 'amount')),
+    CloseDate: closeDate,
+    StageName: 'Pledged',
+    LeadSource: 'Web',
+    Gift_Vehicle__c: GIFT_VEHICLES[giftType],
+    Description: details.slice(0, 32000),
+    ...ownerFields(env),
+  };
+
+  if (giftType === 'in_kind') {
+    Object.assign(opportunity, {
+      RecordTypeId: await getRecordTypeId(env, 'Opportunity', 'In_Kind_Gift'),
+      npsp__In_Kind_Type__c: field(formData, 'in_kind_type') || 'Goods',
+      npsp__In_Kind_Description__c: field(formData, 'description'),
+    });
+  } else if (giftType === 'matching') {
+    const employer = field(formData, 'employer');
+    Object.assign(opportunity, {
+      RecordTypeId: await getRecordTypeId(env, 'Opportunity', 'Matching_Gift'),
+      Name: `${employer} match for ${name}`.slice(0, 120),
+      AccountId: await findOrCreateOrganization(env, employer),
+      CloseDate: isoDate(field(formData, 'expected_date')) || daysFromToday(90),
+      npsp__Matching_Gift_Employer__c: employer,
+      npsp__Matching_Gift_Status__c: field(formData, 'match_status') || 'Potential',
+    });
+  } else {
+    opportunity.RecordTypeId = await getRecordTypeId(env, 'Opportunity', 'Donation');
+  }
+
+  const created = await sfRequest<CreateResponse>(
+    env,
+    'POST',
+    '/sobjects/Opportunity',
+    opportunity
+  );
+
+  if (giftType === 'stock' || giftType === 'daf' || giftType === 'ira') {
+    await allocateToFund(env, { npsp__Opportunity__c: created.id }, field(formData, 'fund'));
+  }
+
+  await createTask(env, contactId, FOLLOW_UP_TASKS[giftType], details, created.id);
+}
+
+// ==========================================================================
 // Shared with the notification email
 // ==========================================================================
 
@@ -338,6 +445,8 @@ export async function syncFormToSalesforce(
         return await syncVolunteer(env, formData);
       case 'waiver':
         return await syncWaiver(env, formData, ip);
+      case 'gift_intent':
+        return await syncGiftIntent(env, formData);
       case 'corporate-partnership':
         return await syncPartnership(env, formData, parseQuizData(formData));
       default:

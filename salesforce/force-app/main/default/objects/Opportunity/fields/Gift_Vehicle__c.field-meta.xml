@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Gift_Vehicle__c</fullName>
+    <description>How the gift is given. Set by the baytides.org donation webhook (Online) and the Other Ways to Give forms.</description>
+    <label>Gift Vehicle</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Online</fullName><default>false</default><label>Online (card or digital wallet)</label></value>
+            <value><fullName>Stock</fullName><default>false</default><label>Stock</label></value>
+            <value><fullName>Donor-Advised Fund</fullName><default>false</default><label>Donor-Advised Fund</label></value>
+            <value><fullName>IRA QCD</fullName><default>false</default><label>IRA Qualified Charitable Distribution</label></value>
+            <value><fullName>In-Kind</fullName><default>false</default><label>In-Kind</label></value>
+            <value><fullName>Matching Gift</fullName><default>false</default><label>Matching Gift</label></value>
+            <value><fullName>Planned Gift</fullName><default>false</default><label>Planned Gift</label></value>
+            <value><fullName>Check</fullName><default>false</default><label>Check</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

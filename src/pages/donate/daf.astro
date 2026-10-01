@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import BackgroundVideo from '../../components/BackgroundVideo.astro';
+import GiftIntentForm from '../../components/GiftIntentForm.astro';
 
 const structuredData = [
   {
@@ -30,6 +31,10 @@ const structuredData = [
   canonicalUrl="https://baytides.org/donate/daf"
   structuredData={structuredData}
 >
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  </Fragment>
   <Breadcrumb
     items={[
       { label: 'Home', href: '/' },
@@ -405,6 +410,13 @@ const structuredData = [
             your fund administrator requires.
           </p>
         </div>
+
+        <GiftIntentForm
+          giftType="daf"
+          heading="Tell Us About Your DAF Grant"
+          intro="DAF grants often arrive without donor details. Let us know a grant is coming so we can thank you personally and credit it to the right fund."
+          pagePath="/donate/daf"
+        />
 
         <div class="daf-cta">
           <p>Don't have a DAF? You can still support our mission directly.</p>

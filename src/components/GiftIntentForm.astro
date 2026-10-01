@@ -1,0 +1,395 @@
+---
+/**
+ * "Tell us about your gift" form for the Other Ways to Give pages.
+ * Posts to the form worker (forms.baytides.org), which emails staff, sends the
+ * donor a confirmation with next steps, and records the gift in Salesforce.
+ * The page that uses it must load the Turnstile script in its head slot.
+ */
+export type GiftType = 'stock' | 'daf' | 'ira' | 'in_kind' | 'matching' | 'planned';
+
+interface Props {
+  giftType: GiftType;
+  heading: string;
+  intro: string;
+  /** Page path used for the redirect back after submitting, e.g. "/donate/stocks". */
+  pagePath: string;
+}
+
+const { giftType, heading, intro, pagePath } = Astro.props;
+const id = (name: string) => `gift-${giftType}-${name}`;
+const showFund = giftType !== 'in_kind' && giftType !== 'matching';
+
+const funds = [
+  { value: 'General Fund', label: 'Where needed most (General Fund)' },
+  { value: 'Aegis Initiative', label: 'Aegis Initiative' },
+  { value: 'Bay Navigator', label: 'Bay Navigator' },
+  { value: 'Events', label: 'Events' },
+];
+
+const submitLabels: Record<GiftType, string> = {
+  stock: 'Request Transfer Instructions',
+  daf: 'Tell Us About Your Grant',
+  ira: 'Tell Us About Your QCD',
+  in_kind: 'Offer This Donation',
+  matching: 'Tell Us About Your Match',
+  planned: 'Share Your Plans',
+};
+---
+
+<div class="volunteer-form-container gift-intent" id="gift-form">
+  <h3>{heading}</h3>
+  <p>{intro}</p>
+
+  <div class="gift-intent-status" aria-live="polite" aria-atomic="true"></div>
+
+  <form action="https://forms.baytides.org" method="POST" class="gift-intent-form">
+    <input type="hidden" name="form_type" value="gift_intent" />
+    <input type="hidden" name="gift_type" value={giftType} />
+    <input type="hidden" name="redirect" value={`https://baytides.org${pagePath}#gift-form`} />
+    <input
+      type="checkbox"
+      name="botcheck"
+      class="hidden"
+      style="display: none"
+      aria-hidden="true"
+      tabindex="-1"
+    />
+
+    <fieldset class="form-fieldset">
+      <legend>Your contact information</legend>
+      <div class="form-row">
+        <div class="form-group">
+          <label for={id('name')}>
+            Full name <span aria-hidden="true">*</span><span class="sr-only">(required)</span>
+          </label>
+          <input type="text" id={id('name')} name="name" required autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label for={id('email')}>
+            Email <span aria-hidden="true">*</span><span class="sr-only">(required)</span>
+          </label>
+          <input type="email" id={id('email')} name="email" required autocomplete="email" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for={id('phone')}>Phone</label>
+        <input type="tel" id={id('phone')} name="phone" autocomplete="tel" />
+      </div>
+    </fieldset>
+
+    <fieldset class="form-fieldset">
+      <legend>About your gift</legend>
+
+      {
+        giftType === 'stock' && (
+          <>
+            <div class="form-row">
+              <div class="form-group">
+                <label for={id('security')}>
+                  Stock, fund, or ticker symbol <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input
+                  type="text"
+                  id={id('security')}
+                  name="security"
+                  required
+                  placeholder="e.g. AAPL"
+                />
+              </div>
+              <div class="form-group">
+                <label for={id('shares')}>Number of shares</label>
+                <input type="number" id={id('shares')} name="shares" min="0" step="any" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for={id('brokerage')}>Brokerage firm</label>
+                <input
+                  type="text"
+                  id={id('brokerage')}
+                  name="institution"
+                  placeholder="e.g. Fidelity, Schwab, Vanguard"
+                />
+              </div>
+              <div class="form-group">
+                <label for={id('amount')}>Estimated value (USD)</label>
+                <input type="number" id={id('amount')} name="amount" min="0" step="0.01" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for={id('date')}>When do you expect to transfer the shares?</label>
+              <input type="date" id={id('date')} name="expected_date" />
+            </div>
+          </>
+        )
+      }
+
+      {
+        giftType === 'daf' && (
+          <>
+            <div class="form-row">
+              <div class="form-group">
+                <label for={id('sponsor')}>
+                  DAF sponsor <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input
+                  type="text"
+                  id={id('sponsor')}
+                  name="institution"
+                  required
+                  list={id('sponsors')}
+                  placeholder="e.g. Fidelity Charitable"
+                />
+                <datalist id={id('sponsors')}>
+                  <option value="Fidelity Charitable" />
+                  <option value="Schwab Charitable" />
+                  <option value="Vanguard Charitable" />
+                  <option value="National Philanthropic Trust" />
+                  <option value="Silicon Valley Community Foundation" />
+                </datalist>
+              </div>
+              <div class="form-group">
+                <label for={id('amount')}>Grant amount (USD)</label>
+                <input type="number" id={id('amount')} name="amount" min="0" step="0.01" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for={id('date')}>When do you expect to recommend the grant?</label>
+              <input type="date" id={id('date')} name="expected_date" />
+            </div>
+          </>
+        )
+      }
+
+      {
+        giftType === 'ira' && (
+          <>
+            <div class="form-row">
+              <div class="form-group">
+                <label for={id('custodian')}>
+                  IRA custodian <span aria-hidden="true">*</span>
+                  <span class="sr-only">(required)</span>
+                </label>
+                <input
+                  type="text"
+                  id={id('custodian')}
+                  name="institution"
+                  required
+                  placeholder="e.g. Fidelity, Schwab, Vanguard"
+                />
+              </div>
+              <div class="form-group">
+                <label for={id('amount')}>Distribution amount (USD)</label>
+                <input type="number" id={id('amount')} name="amount" min="0" step="0.01" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for={id('date')}>When do you expect the distribution?</label>
+              <input type="date" id={id('date')} name="expected_date" />
+              <p class="field-hint">
+                Custodians often mail QCD checks, so this helps us match the check to you.
+              </p>
+            </div>
+          </>
+        )
+      }
+
+      {
+        giftType === 'in_kind' && (
+          <>
+            <div class="form-group">
+              <label for={id('kind')}>What are you offering?</label>
+              <select id={id('kind')} name="in_kind_type">
+                <option value="Goods">Supplies or equipment</option>
+                <option value="Services">Professional services</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for={id('description')}>
+                Description <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </label>
+              <textarea
+                id={id('description')}
+                name="description"
+                rows="4"
+                required
+                placeholder="What it is, quantity, and condition, or the services you can provide"
+              />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for={id('amount')}>Estimated value (USD)</label>
+                <input type="number" id={id('amount')} name="amount" min="0" step="0.01" />
+              </div>
+              <div class="form-group">
+                <label for={id('date')}>Available from</label>
+                <input type="date" id={id('date')} name="expected_date" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for={id('delivery')}>Drop-off or pickup</label>
+              <select id={id('delivery')} name="delivery">
+                <option value="">No preference</option>
+                <option value="I can drop it off">I can drop it off</option>
+                <option value="Pickup needed">Pickup needed</option>
+                <option value="Not applicable (services)">Not applicable (services)</option>
+              </select>
+            </div>
+          </>
+        )
+      }
+
+      {
+        giftType === 'matching' && (
+          <>
+            <div class="form-group">
+              <label for={id('employer')}>
+                Employer <span aria-hidden="true">*</span>
+                <span class="sr-only">(required)</span>
+              </label>
+              <input
+                type="text"
+                id={id('employer')}
+                name="employer"
+                required
+                autocomplete="organization"
+              />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for={id('original-amount')}>Your gift amount (USD)</label>
+                <input
+                  type="number"
+                  id={id('original-amount')}
+                  name="original_amount"
+                  min="0"
+                  step="0.01"
+                />
+              </div>
+              <div class="form-group">
+                <label for={id('original-date')}>Date of your gift</label>
+                <input type="date" id={id('original-date')} name="original_date" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for={id('amount')}>Expected match (USD)</label>
+                <input type="number" id={id('amount')} name="amount" min="0" step="0.01" />
+              </div>
+              <div class="form-group">
+                <label for={id('status')}>Match request status</label>
+                <select id={id('status')} name="match_status">
+                  <option value="Potential">I plan to submit it</option>
+                  <option value="Submitted">I've already submitted it</option>
+                </select>
+              </div>
+            </div>
+          </>
+        )
+      }
+
+      {
+        giftType === 'planned' && (
+          <>
+            <div class="form-group">
+              <label for={id('vehicle')}>Type of planned gift</label>
+              <select id={id('vehicle')} name="planned_type">
+                <option value="Bequest in a will or trust">Bequest in a will or trust</option>
+                <option value="Beneficiary designation">
+                  Beneficiary designation (IRA, 401(k), life insurance)
+                </option>
+                <option value="Charitable remainder trust">Charitable remainder trust</option>
+                <option value="Charitable gift annuity">Charitable gift annuity</option>
+                <option value="Other or not sure yet">Other or not sure yet</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for={id('stage')}>Where are you in the process?</label>
+              <select id={id('stage')} name="planned_stage">
+                <option value="Considering">I'm considering it and would like information</option>
+                <option value="Arranged">I've already included Bay Tides in my plans</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for={id('amount')}>Estimated value (USD, optional)</label>
+              <input type="number" id={id('amount')} name="amount" min="0" step="0.01" />
+            </div>
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="recognition_anonymous" value="true" />
+                Please keep my plans anonymous in any recognition
+              </label>
+            </div>
+          </>
+        )
+      }
+
+      {
+        showFund && (
+          <div class="form-group">
+            <label for={id('fund')}>Designate your gift to</label>
+            <select id={id('fund')} name="fund">
+              {funds.map((f) => (
+                <option value={f.value}>{f.label}</option>
+              ))}
+            </select>
+          </div>
+        )
+      }
+
+      <div class="form-group">
+        <label for={id('notes')}>Anything else we should know?</label>
+        <textarea id={id('notes')} name="notes" rows="3"></textarea>
+      </div>
+    </fieldset>
+
+    <fieldset class="turnstile-fieldset" style="border: none; padding: 0; margin: 0 0 1rem">
+      <legend class="sr-only">Security verification</legend>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAACJ4PUuzOaD_Xf63" data-theme="auto"></div>
+    </fieldset>
+
+    <button type="submit" class="btn btn-primary btn-large">{submitLabels[giftType]}</button>
+  </form>
+</div>
+
+<script>
+  const ERRORS: Record<string, string> = {
+    captcha: 'Please complete the security check and try again.',
+    disposable_email: 'Please use a permanent email address.',
+    invalid_email: 'That email address does not appear to be deliverable.',
+    spam: 'Your submission could not be sent.',
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const status = document.querySelector<HTMLElement>('.gift-intent-status');
+  const form = document.querySelector<HTMLFormElement>('.gift-intent-form');
+  const error = params.get('error');
+
+  if (status && params.get('submitted') === 'true') {
+    status.className = 'gift-intent-status form-status success';
+    status.textContent =
+      'Thank you. We received your information and sent a confirmation to your email. A member of our team will follow up within two business days.';
+    if (form) form.hidden = true;
+  } else if (status && error) {
+    status.className = 'gift-intent-status form-status error';
+    status.textContent = ERRORS[error] ?? 'Something went wrong. Please try again.';
+  }
+</script>
+
+<style>
+  .gift-intent {
+    margin-top: 2.5rem;
+    text-align: left;
+  }
+
+  .gift-intent h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .gift-intent textarea {
+    width: 100%;
+  }
+</style>
