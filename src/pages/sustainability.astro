@@ -91,7 +91,8 @@ const environmentalPractices = [
       'Our hosting and infrastructure choices prioritize renewable energy and energy efficiency.',
     items: [
       'Cloudflare runs on 100% renewable energy',
-      'Azure data centers committed to carbon negative by 2030',
+      'Salesforce, which holds our donor and volunteer records, reports net zero emissions across its value chain',
+      'Azure, which sends our form emails, is committed to being carbon negative by 2030',
       'Edge computing reduces data center load',
       'Efficient DNS and CDN routing',
     ],
@@ -147,8 +148,9 @@ const providerStats = {
           <span class="dashboard-status" id="dashboard-status">Loading...</span>
         </div>
         <p class="dashboard-intro">
-          Estimated environmental impact based on our Cloudflare and GitHub infrastructure.
-          According to their published reports, all providers aim to use 100% renewable energy.
+          Estimated environmental impact of our Cloudflare and GitHub infrastructure over the last
+          30 days, fetched live and refreshed hourly. According to their published reports, all
+          providers aim to use 100% renewable energy.
         </p>
 
         <!-- Usage Stats -->
@@ -203,7 +205,6 @@ const providerStats = {
         <div class="data-sources">
           <span class="source-badge" id="source-cloudflare">Cloudflare: &mdash;</span>
           <span class="source-badge" id="source-github">GitHub: &mdash;</span>
-          <span class="source-badge" id="source-azure">Azure: &mdash;</span>
         </div>
 
         <!-- Equivalents -->
@@ -1276,9 +1277,9 @@ const providerStats = {
 </style>
 
 <script>
-  // Fetch carbon stats from static JSON
+  // Fetch live carbon stats (Cloudflare Pages Function, cached for an hour)
   async function loadCarbonStats() {
-    const STATS_URL = '/data/carbon-stats.json';
+    const STATS_URL = '/api/carbon-stats';
 
     try {
       const response = await fetch(STATS_URL);
@@ -1327,7 +1328,6 @@ const providerStats = {
       // Update data source indicators
       const sourceCloudflare = document.getElementById('source-cloudflare');
       const sourceGithub = document.getElementById('source-github');
-      const sourceAzure = document.getElementById('source-azure');
 
       const getStatusClass = (status) => {
         if (status === 'live') return 'source-badge live';
@@ -1342,10 +1342,6 @@ const providerStats = {
       if (sourceGithub) {
         sourceGithub.textContent = `GitHub: ${data.dataFreshness.github}`;
         sourceGithub.className = getStatusClass(data.dataFreshness.github);
-      }
-      if (sourceAzure) {
-        sourceAzure.textContent = `Azure: ${data.dataFreshness.azure || 'unavailable'}`;
-        sourceAzure.className = getStatusClass(data.dataFreshness.azure);
       }
 
       // Update equivalents

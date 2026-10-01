@@ -30,6 +30,19 @@ jobs:
       - name: Build
         run: npm run build
 
+      # functions/api/carbon-stats.ts reads Cloudflare analytics at request time.
+      # Its secrets come from repo secrets here, so they never need setting by hand.
+      # They are set before the deploy so the new deployment picks them up.
+      - name: Set Pages Function secrets
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          ANALYTICS_TOKEN: ${{ secrets.CLOUDFLARE_SUSTAINABILITY_API_TOKEN }}
+          ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        run: |
+          printf '%s' "$ANALYTICS_TOKEN" | npx wrangler pages secret put CLOUDFLARE_ANALYTICS_TOKEN --project-name=baytides-website
+          printf '%s' "$ZONE_ID" | npx wrangler pages secret put CLOUDFLARE_ZONE_ID --project-name=baytides-website
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v4
         with:

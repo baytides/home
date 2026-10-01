@@ -151,9 +151,9 @@ const structuredData = [
             <span class="provider-badge provider-green">Carbon Neutral</span>
           </div>
           <div class="provider-card" role="listitem">
-            <span class="provider-name">Self-Hosted</span>
-            <span class="provider-detail">Self-Hosted Analytics</span>
-            <span class="provider-badge provider-neutral">Mac Mini (Local)</span>
+            <span class="provider-name">Salesforce</span>
+            <span class="provider-detail">Donor &amp; Volunteer Records</span>
+            <span class="provider-badge provider-green">Net Zero</span>
           </div>
         </div>
 
@@ -201,7 +201,7 @@ const structuredData = [
           </div>
           <div class="panel-title-group">
             <h2 id="analytics-heading">Site Analytics</h2>
-            <p class="panel-subtitle">Visitor analytics from Plausible (last 30 days)</p>
+            <p class="panel-subtitle">Visitor traffic from Cloudflare (last 30 days)</p>
           </div>
           <div class="panel-badge analytics-badge" id="analytics-badge">
             <span class="badge-dot"></span>
@@ -212,8 +212,8 @@ const structuredData = [
         <div class="stats-grid stats-grid-4" role="list" aria-label="Site analytics">
           <div class="stat-card" role="listitem">
             <span class="stat-value" id="an-visitors">&mdash;</span>
-            <span class="stat-label">Unique Visitors</span>
-            <span class="stat-detail">Last 30 days</span>
+            <span class="stat-label">Visitors</span>
+            <span class="stat-detail">Daily unique visitors, summed</span>
           </div>
           <div class="stat-card" role="listitem">
             <span class="stat-value" id="an-pageviews">&mdash;</span>
@@ -221,38 +221,19 @@ const structuredData = [
             <span class="stat-detail">Total pages loaded</span>
           </div>
           <div class="stat-card" role="listitem">
-            <span class="stat-value" id="an-bounce">&mdash;</span>
-            <span class="stat-label">Bounce Rate</span>
-            <span class="stat-detail">Single-page visits</span>
+            <span class="stat-value" id="an-countries">&mdash;</span>
+            <span class="stat-label">Countries Reached</span>
+            <span class="stat-detail">Where visitors are</span>
           </div>
           <div class="stat-card" role="listitem">
-            <span class="stat-value" id="an-duration">&mdash;</span>
-            <span class="stat-label">Avg. Visit</span>
-            <span class="stat-detail">Time on site</span>
+            <span class="stat-value" id="an-data">&mdash;</span>
+            <span class="stat-label">Data Served</span>
+            <span class="stat-detail">Delivered from the edge</span>
           </div>
         </div>
 
         <div class="panel-footer">
-          <a href="https://stats.baytides.org" target="_blank" rel="noopener" class="panel-link">
-            Plausible Analytics
-            <span class="sr-only">(opens in new tab)</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M7 7h10v10"></path>
-              <path d="M7 17 17 7"></path>
-            </svg>
-          </a>
-          <span class="panel-source" id="an-source">Source: Plausible Analytics</span>
+          <span class="panel-source" id="an-source">Source: Cloudflare</span>
         </div>
       </div>
 
@@ -275,9 +256,8 @@ const structuredData = [
           <path d="M12 8h.01"></path>
         </svg>
         <p>
-          All data is fetched live from our infrastructure APIs. Carbon and analytics data updates
-          daily via GitHub Actions. We believe in full transparency about how our resources are
-          used.
+          All data is fetched live from our infrastructure APIs and refreshed hourly. We believe in
+          full transparency about how our resources are used.
         </p>
       </div>
     </div>
@@ -990,144 +970,120 @@ const structuredData = [
     return Math.floor(seconds / 86400) + 'd ago';
   }
 
-  let carbonLoaded = false;
-  let plausibleLoaded = false;
-
-  // ── Load Carbon & Analytics Stats ──────────────────────────────
-  async function loadCarbonStats() {
-    try {
-      const response = await fetch('/data/carbon-stats.json');
-      if (!response.ok) throw new Error('Carbon stats unavailable');
-
-      const data = await response.json();
-      carbonLoaded = true;
-
-      // Carbon badge
-      const anyLive = Object.values(data.dataFreshness).some((v) => v === 'live');
-      setBadge('carbon-badge', anyLive ? 'live' : '', anyLive ? 'Live Data' : 'Estimated');
-
-      // Carbon values
-      const cbNet = document.getElementById('cb-net');
-      if (cbNet) cbNet.textContent = data.summary.netEmissionsKg;
-
-      const cbGross = document.getElementById('cb-gross');
-      if (cbGross) cbGross.textContent = data.summary.totalGrossEmissionsKg;
-
-      const cbRenewable = document.getElementById('cb-renewable');
-      if (cbRenewable) cbRenewable.textContent = data.summary.renewableEnergyPercent + '%';
-
-      const cbRating = document.getElementById('cb-rating');
-      if (cbRating) cbRating.textContent = data.summary.greenRating;
-
-      // Emissions bar animation
-      const emissions = data.emissionsBySource;
-      if (emissions) {
-        const cdnPct = parseFloat(emissions.cdn.percent) || 0;
-        const hostingPct = parseFloat(emissions.hosting.percent) || 0;
-        const ciPct = parseFloat(emissions.ci.percent) || 0;
-
-        setTimeout(function () {
-          const barCdn = document.getElementById('bar-cdn');
-          const barHosting = document.getElementById('bar-hosting');
-          const barCi = document.getElementById('bar-ci');
-
-          if (barCdn) barCdn.style.width = cdnPct + '%';
-          if (barHosting) barHosting.style.width = hostingPct + '%';
-          if (barCi) barCi.style.width = ciPct + '%';
-        }, 300);
-
-        const legendCdn = document.getElementById('legend-cdn-val');
-        const legendHosting = document.getElementById('legend-hosting-val');
-        const legendCi = document.getElementById('legend-ci-val');
-
-        if (legendCdn)
-          legendCdn.textContent = '(' + emissions.cdn.grams + 'g \u00b7 ' + cdnPct + '%)';
-        if (legendHosting)
-          legendHosting.textContent =
-            '(' + emissions.hosting.grams + 'g \u00b7 ' + hostingPct + '%)';
-        if (legendCi) legendCi.textContent = '(' + emissions.ci.grams + 'g \u00b7 ' + ciPct + '%)';
-      }
-
-      // Source timestamp for carbon panel
-      const cbSource = document.getElementById('cb-source');
-      if (cbSource && data.generatedAt) {
-        const ago = getTimeAgo(new Date(data.generatedAt));
-        cbSource.textContent = 'Updated ' + ago + ' \u00b7 Cloudflare & GitHub APIs';
-      }
-
-      updateGlobalStatus();
-    } catch (error) {
-      console.log('Carbon stats unavailable:', error.message);
-      setBadge('carbon-badge', 'offline', 'Unavailable');
-      updateGlobalStatus();
+  function formatBytes(bytes) {
+    if (!bytes) return '0';
+    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+    let i = 0;
+    let value = bytes;
+    while (value >= 1024 && i < units.length - 1) {
+      value /= 1024;
+      i++;
     }
+    return value.toFixed(value >= 10 ? 0 : 1) + ' ' + units[i];
   }
 
-  // ── Load Plausible Analytics ───────────────────────────────────
-  async function loadPlausibleStats() {
-    const PLAUSIBLE_API = 'https://stats.baytides.org/api/v1/stats/aggregate';
-    const PLAUSIBLE_KEY = '-4t5VDSC2dZqYnT-BMKoik99kF57DZQFjgfIan0sSn3kNEJhSFGMWwvB9q88BCeN';
-
+  // ── Load live stats (one request fills both panels) ────────────
+  async function loadStats() {
+    let data;
     try {
-      const response = await fetch(
-        PLAUSIBLE_API +
-          '?site_id=baytides.org&period=30d&metrics=visitors,pageviews,bounce_rate,visit_duration',
-        { headers: { Authorization: 'Bearer ' + PLAUSIBLE_KEY } }
-      );
-      if (!response.ok) throw new Error('Plausible API returned ' + response.status);
+      const response = await fetch('/api/carbon-stats');
+      if (!response.ok) throw new Error('Stats returned ' + response.status);
+      data = await response.json();
+    } catch (error) {
+      console.log('Stats unavailable:', error.message);
+      setBadge('carbon-badge', 'offline', 'Unavailable');
+      setBadge('analytics-badge', 'offline', 'Unavailable');
+      updateGlobalStatus(false, false);
+      return;
+    }
 
-      const data = await response.json();
-      plausibleLoaded = true;
+    const updated = data.generatedAt ? getTimeAgo(new Date(data.generatedAt)) : null;
+    const carbonLive = Object.values(data.dataFreshness).some((v) => v === 'live');
+    const trafficLive = data.dataFreshness.cloudflare === 'live';
 
-      const r = data.results || {};
+    // Carbon panel
+    setBadge('carbon-badge', carbonLive ? 'live' : '', carbonLive ? 'Live Data' : 'Estimated');
 
+    const cbNet = document.getElementById('cb-net');
+    if (cbNet) cbNet.textContent = data.summary.netEmissionsKg;
+
+    const cbGross = document.getElementById('cb-gross');
+    if (cbGross) cbGross.textContent = data.summary.totalGrossEmissionsKg;
+
+    const cbRenewable = document.getElementById('cb-renewable');
+    if (cbRenewable) cbRenewable.textContent = data.summary.renewableEnergyPercent + '%';
+
+    const cbRating = document.getElementById('cb-rating');
+    if (cbRating) cbRating.textContent = data.summary.greenRating;
+
+    const emissions = data.emissionsBySource;
+    if (emissions) {
+      const cdnPct = parseFloat(emissions.cdn.percent) || 0;
+      const hostingPct = parseFloat(emissions.hosting.percent) || 0;
+      const ciPct = parseFloat(emissions.ci.percent) || 0;
+
+      setTimeout(function () {
+        const barCdn = document.getElementById('bar-cdn');
+        const barHosting = document.getElementById('bar-hosting');
+        const barCi = document.getElementById('bar-ci');
+
+        if (barCdn) barCdn.style.width = cdnPct + '%';
+        if (barHosting) barHosting.style.width = hostingPct + '%';
+        if (barCi) barCi.style.width = ciPct + '%';
+      }, 300);
+
+      const legendCdn = document.getElementById('legend-cdn-val');
+      const legendHosting = document.getElementById('legend-hosting-val');
+      const legendCi = document.getElementById('legend-ci-val');
+
+      if (legendCdn) legendCdn.textContent = '(' + emissions.cdn.grams + 'g · ' + cdnPct + '%)';
+      if (legendHosting)
+        legendHosting.textContent = '(' + emissions.hosting.grams + 'g · ' + hostingPct + '%)';
+      if (legendCi) legendCi.textContent = '(' + emissions.ci.grams + 'g · ' + ciPct + '%)';
+    }
+
+    const cbSource = document.getElementById('cb-source');
+    if (cbSource && updated) {
+      cbSource.textContent = 'Updated ' + updated + ' · Cloudflare & GitHub APIs';
+    }
+
+    // Site analytics panel
+    if (trafficLive) {
       setBadge('analytics-badge', 'live', 'Live Data');
 
       const anVisitors = document.getElementById('an-visitors');
-      if (anVisitors) animateCounter(anVisitors, r.visitors?.value || 0);
+      if (anVisitors) animateCounter(anVisitors, data.usage.uniqueVisitors || 0);
 
       const anPageviews = document.getElementById('an-pageviews');
-      if (anPageviews) animateCounter(anPageviews, r.pageviews?.value || 0);
+      if (anPageviews) animateCounter(anPageviews, data.usage.pageViews || 0);
 
-      const anBounce = document.getElementById('an-bounce');
-      if (anBounce) anBounce.textContent = (r.bounce_rate?.value || 0) + '%';
+      const anCountries = document.getElementById('an-countries');
+      if (anCountries) anCountries.textContent = formatNumber(data.usage.countriesReached || 0);
 
-      const anDuration = document.getElementById('an-duration');
-      if (anDuration) {
-        const secs = r.visit_duration?.value || 0;
-        const mins = Math.floor(secs / 60);
-        const rem = secs % 60;
-        anDuration.textContent = mins > 0 ? mins + 'm ' + rem + 's' : secs + 's';
-      }
+      const anData = document.getElementById('an-data');
+      if (anData) anData.textContent = formatBytes(data.usage.cdnBytesTransferred || 0);
 
       const anSource = document.getElementById('an-source');
-      if (anSource) {
-        anSource.textContent = 'Live \u00b7 Plausible Analytics';
-      }
-
-      updateGlobalStatus();
-    } catch (error) {
-      console.log('Plausible stats unavailable:', error.message);
+      if (anSource && updated) anSource.textContent = 'Updated ' + updated + ' · Cloudflare';
+    } else {
       setBadge('analytics-badge', 'offline', 'Unavailable');
-      updateGlobalStatus();
     }
+
+    updateGlobalStatus(carbonLive, trafficLive);
   }
 
   // ── Global Status ──────────────────────────────────────────────
-  function updateGlobalStatus() {
+  function updateGlobalStatus(carbonLive, trafficLive) {
     const pulse = document.getElementById('global-pulse');
     const statusText = document.getElementById('global-status');
     const timestamp = document.getElementById('global-timestamp');
 
     if (!pulse || !statusText) return;
 
-    const allLoaded = carbonLoaded && plausibleLoaded;
-    const anyLoaded = carbonLoaded || plausibleLoaded;
-
-    if (allLoaded) {
+    if (carbonLive && trafficLive) {
       pulse.className = 'status-pulse live';
       statusText.textContent = 'All systems operational';
-    } else if (anyLoaded) {
+    } else if (carbonLive || trafficLive) {
       pulse.className = 'status-pulse partial';
       statusText.textContent = 'Partial data available';
     } else {
@@ -1145,8 +1101,7 @@ const structuredData = [
 
   // ── Initialize ─────────────────────────────────────────────────
   function init() {
-    // Fetch both data sources in parallel
-    Promise.all([loadCarbonStats(), loadPlausibleStats()]);
+    loadStats();
   }
 
   if (document.readyState === 'loading') {
