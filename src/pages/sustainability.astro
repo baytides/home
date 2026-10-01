@@ -148,20 +148,36 @@ const providerStats = {
           <span class="dashboard-status" id="dashboard-status">Loading...</span>
         </div>
         <p class="dashboard-intro">
-          Estimated environmental impact of our Cloudflare and GitHub infrastructure over the last
-          30 days, fetched live and refreshed hourly. According to their published reports, all
-          providers aim to use 100% renewable energy.
+          Site traffic and the estimated environmental impact of our Cloudflare and GitHub
+          infrastructure over the last 30 days, fetched live and refreshed hourly. According to
+          their published reports, all providers aim to use 100% renewable energy.
         </p>
 
         <!-- Usage Stats -->
-        <div class="usage-grid" role="list" aria-label="Usage statistics">
+        <div class="usage-grid" role="list" aria-label="Traffic and usage statistics, last 30 days">
+          <div class="usage-card" role="listitem">
+            <span class="usage-value" id="stat-visitors">&mdash;</span>
+            <span class="usage-label">Visitors</span>
+          </div>
+          <div class="usage-card" role="listitem">
+            <span class="usage-value" id="stat-page-views">&mdash;</span>
+            <span class="usage-label">Page Views</span>
+          </div>
+          <div class="usage-card" role="listitem">
+            <span class="usage-value" id="stat-countries">&mdash;</span>
+            <span class="usage-label">Countries Reached</span>
+          </div>
+          <div class="usage-card" role="listitem">
+            <span class="usage-value" id="stat-data-served">&mdash;</span>
+            <span class="usage-label">Data Served</span>
+          </div>
           <div class="usage-card" role="listitem">
             <span class="usage-value" id="stat-cdn-requests">&mdash;</span>
             <span class="usage-label">CDN Requests</span>
           </div>
           <div class="usage-card" role="listitem">
-            <span class="usage-value" id="stat-page-views">&mdash;</span>
-            <span class="usage-label">Page Views</span>
+            <span class="usage-value" id="stat-cache-hit">&mdash;</span>
+            <span class="usage-label">Cache Hit Rate</span>
           </div>
           <div class="usage-card" role="listitem">
             <span class="usage-value" id="stat-ci-runs">&mdash;</span>
@@ -831,7 +847,7 @@ const providerStats = {
   .tech-card {
     background: var(--card-bg);
     border-radius: 12px;
-    padding: 1.75rem;
+    padding: 3rem 1.75rem 1.75rem; /* room for the corner impact badge */
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -964,7 +980,7 @@ const providerStats = {
 
   .tips-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
   }
 
@@ -1245,6 +1261,7 @@ const providerStats = {
     .tech-card {
       flex-direction: column;
       text-align: center;
+      padding-top: 1.75rem; /* the badge is in the flow on mobile */
     }
 
     .tech-icon {
@@ -1256,6 +1273,7 @@ const providerStats = {
     }
 
     .tech-card .impact-badge {
+      align-self: center;
       position: static;
       margin-top: 0.5rem;
     }
@@ -1301,6 +1319,29 @@ const providerStats = {
       const statCiRuns = document.getElementById('stat-ci-runs');
       const statRenewable = document.getElementById('stat-renewable');
 
+      const formatBytes = (bytes) => {
+        if (!bytes) return '—';
+        const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+        let i = 0;
+        let value = bytes;
+        while (value >= 1024 && i < units.length - 1) {
+          value /= 1024;
+          i++;
+        }
+        return value.toFixed(value >= 10 ? 0 : 1) + ' ' + units[i];
+      };
+      const setText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+      };
+
+      setText('stat-visitors', formatNumber(data.usage.uniqueVisitors));
+      setText('stat-countries', formatNumber(data.usage.countriesReached));
+      setText('stat-data-served', formatBytes(data.usage.cdnBytesTransferred));
+      setText(
+        'stat-cache-hit',
+        data.usage.cdnCacheHitRate === null ? '—' : `${data.usage.cdnCacheHitRate}%`
+      );
       if (statCdnRequests) statCdnRequests.textContent = formatNumber(data.usage.cdnRequests);
       if (statPageViews) statPageViews.textContent = formatNumber(data.usage.pageViews);
       if (statCiRuns) statCiRuns.textContent = formatNumber(data.usage.ciRuns);
