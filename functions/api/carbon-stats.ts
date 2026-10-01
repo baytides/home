@@ -8,6 +8,8 @@
 interface Env {
   CLOUDFLARE_ANALYTICS_TOKEN?: string;
   CLOUDFLARE_ZONE_ID?: string;
+  /** Read-only token. GitHub refuses most unauthenticated requests from Cloudflare's shared IPs. */
+  GITHUB_STATS_TOKEN?: string;
 }
 
 const CACHE_SECONDS = 3600;
@@ -122,15 +124,14 @@ async function getCloudflareUsage(env: Env): Promise<CloudflareUsage | null> {
   }
 }
 
-async function getGitHubUsage(): Promise<GitHubUsage | null> {
+async function getGitHubUsage(env: Env): Promise<GitHubUsage | null> {
   try {
-    // The repository is public, so no token is needed. Results are cached for
-    // an hour, which keeps this well inside the unauthenticated rate limit.
     const response = await fetch(GITHUB_RUNS_URL, {
       headers: {
         Accept: 'application/vnd.github+json',
         'X-GitHub-Api-Version': '2022-11-28',
         'User-Agent': 'baytides.org carbon stats',
+        ...(env.GITHUB_STATS_TOKEN ? { Authorization: `Bearer ${env.GITHUB_STATS_TOKEN}` } : {}),
       },
     });
     if (!response.ok) return null;
@@ -156,7 +157,7 @@ function percentOf(part: number, total: number): string {
 }
 
 async function buildStats(env: Env) {
-  const [cloudflare, github] = await Promise.all([getCloudflareUsage(env), getGitHubUsage()]);
+  const [cloudflare, github] = await Promise.all([getCloudflareUsage(env), getGitHubUsage(env)]);
 
   const usage = {
     cdnRequests: cloudflare?.requests ?? null,
