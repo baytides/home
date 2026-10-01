@@ -39,9 +39,13 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           ANALYTICS_TOKEN: ${{ secrets.CLOUDFLARE_SUSTAINABILITY_API_TOKEN }}
           ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          GITHUB_STATS_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
         run: |
           printf '%s' "$ANALYTICS_TOKEN" | npx wrangler pages secret put CLOUDFLARE_ANALYTICS_TOKEN --project-name=baytides-website
           printf '%s' "$ZONE_ID" | npx wrangler pages secret put CLOUDFLARE_ZONE_ID --project-name=baytides-website
+          if [ -n "$GITHUB_STATS_TOKEN" ]; then
+            printf '%s' "$GITHUB_STATS_TOKEN" | npx wrangler pages secret put GITHUB_STATS_TOKEN --project-name=baytides-website
+          fi
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v4
