@@ -1688,8 +1688,17 @@ const structuredData = [
     margin-top: 2rem;
   }
 
+  /* A legend sits on the fieldset's top border by default, which cuts across
+     the blue box. Floating it puts it inside the box like a heading. */
   .signature-fieldset legend {
+    float: left;
+    width: 100%;
+    margin-bottom: 1rem;
     color: var(--primary-navy);
+  }
+
+  .signature-fieldset legend + * {
+    clear: both;
   }
 
   .signature-group {

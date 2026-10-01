@@ -575,6 +575,7 @@ const structuredData = [
 
   .daf-cta {
     text-align: center;
+    margin-top: 3rem;
     padding: 2rem 0;
     border-top: 1px solid var(--border-color, #e2e8f0);
   }
@@ -679,7 +680,8 @@ const structuredData = [
 
   .provider-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    /* Three across on desktop, so the six providers fill two even rows */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
   }
 
@@ -710,6 +712,7 @@ const structuredData = [
   }
 
   .provider-tag {
+    margin-top: auto; /* tags line up even when a name wraps */
     font-size: 0.75rem;
     color: var(--text-light);
     background: var(--light-blue);
@@ -737,7 +740,8 @@ const structuredData = [
 
   .benefits-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /* Two across on desktop, so the four benefits fill two even rows */
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 1.5rem;
   }
 

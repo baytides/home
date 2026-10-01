@@ -320,7 +320,7 @@ const submitLabels: Record<GiftType, string> = {
             <div class="form-group">
               <label class="checkbox-label">
                 <input type="checkbox" name="recognition_anonymous" value="true" />
-                Please keep my plans anonymous in any recognition
+                <span>Please keep my plans anonymous in any recognition</span>
               </label>
             </div>
           </>
@@ -381,8 +381,16 @@ const submitLabels: Record<GiftType, string> = {
 
 <style>
   .gift-intent {
-    margin-top: 2.5rem;
+    max-width: 900px;
+    margin: 2.5rem auto 0;
+    padding: 2rem;
     text-align: left;
+  }
+
+  @media (max-width: 480px) {
+    .gift-intent {
+      padding: 1.25rem;
+    }
   }
 
   .gift-intent h3 {

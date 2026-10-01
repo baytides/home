@@ -21,6 +21,13 @@
     padding: 0 1rem;
   }
 
+  // The projects carousel bleeds to the screen edge by cancelling the
+  // container padding, so it must use the same 1rem here.
+  .projects-scroll {
+    margin: 0 -1rem;
+    padding: 0 1rem;
+  }
+
   .hero-buttons,
   .cta-buttons {
     flex-direction: column;

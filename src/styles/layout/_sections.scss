@@ -142,6 +142,12 @@
   &.alt-bg {
     background: var(--bg-secondary);
   }
+
+  // Two consecutive sections with the same background read as one block, so
+  // stacking both sections' padding left a doubled gap between them.
+  &.alt-bg + &.alt-bg {
+    padding-top: 0;
+  }
 }
 
 .content-grid {

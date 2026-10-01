@@ -99,7 +99,7 @@ img {
 // Content links (underlined)
 main p a:not(.btn),
 main li a:not(.btn),
-.content-section a:not(.btn) {
+.content-section a:not(.btn):not(.card) {
   text-decoration: underline;
   text-underline-offset: 2px;
 
