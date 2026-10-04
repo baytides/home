@@ -52,7 +52,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.97.1",
     "topojson-client": "^3.1.0",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "us-atlas": "^3.0.1",
     "wrangler": "^4.61.1"
   },
