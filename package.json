@@ -54,7 +54,7 @@
     "topojson-client": "^3.1.0",
     "typescript": "^6.0.3",
     "us-atlas": "^3.0.1",
-    "wrangler": "^4.61.1"
+    "wrangler": "^4.146.0"
   },
   "lint-staged": {
     "*.{js,ts,json,astro}": [
