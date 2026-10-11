@@ -42,7 +42,7 @@
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.58.1",
     "@types/node": "^26.1.2",
-    "astro": "^7.2.0",
+    "astro": "^7.3.8",
     "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
@@ -66,7 +66,7 @@
     ]
   },
   "dependencies": {
-    "@astrojs/react": "^6.0.2",
+    "@astrojs/react": "^7.0.1",
     "@astrojs/sitemap": "^3.7.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
